@@ -1,0 +1,182 @@
+/* ===== Fonte Inter ===== */
+body {
+    font-family: 'Inter', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400 !important;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* ===== Títulos ===== */
+  h1, h2, h3 {
+    font-weight: 700 !important;
+  }
+  
+  p {
+    font-weight: 400 !important;
+  }
+  
+  small {
+    font-weight: 300 !important;
+  }
+  
+  /* ===== Cores principais (paleta personalizada) ===== */
+  :root {
+    --cor-primaria: #503296;
+    --cor-secundaria: #c83296;
+    --cor-terciaria: #fa3296;
+    --texto-cinza: #646464;
+    --texto-secundario: #2a2a2aab;
+  }
+  
+  /* ===== Logo ===== */
+  .logo-oficial {
+    width: 65% !important;
+  }
+  
+  /* ===== Primeira Seção ===== */
+  .tt-sctn-one {
+    font-size: 3.2rem !important;
+  }
+  
+  .tt-sctn-one span {
+    font-size: 2.2rem !important;
+    color: var(--cor-primaria);
+  }
+  
+  .lead {
+    font-size: 17px !important;
+    color: var(--texto-cinza);
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .btn-section-primary {
+    background-color: var(--cor-primaria);
+    color: #fff;
+    border: none;
+    font-size: 15px;
+    padding: 15px 60px;
+    font-weight: 600;
+  }
+  
+  .btn-section-primary:hover {
+    background-color: var(--cor-secundaria);
+    color: #fff !important;
+  }
+  
+  .tex-down-btn {
+    color: var(--texto-secundario);
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    margin: 6px 0 0 0 !important;
+  }
+  
+  .img-mokup-primary {
+    max-width: 800px;
+    width: 100%;
+  }
+  
+  .stcn-prs-one {
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+  }
+  
+  .wdt-prs-01 {
+    width: 35% !important;
+  }
+  
+  .wdt-prs-02 {
+    width: 60%;
+  }
+
+  #mkp-mobile {
+    display: block;
+  }
+
+
+  
+  /* ===== Responsividade (Mobile First) ===== */
+  @media (max-width: 991.98px) {
+
+    #mkp-desktop {
+        display: none;
+    }
+    .stcn-prs-one {
+      flex-wrap: wrap !important;
+      text-align: center;
+    }
+  
+    .wdt-prs-01,
+    .wdt-prs-02 {
+      width: 100% !important;
+    }
+  
+    .tt-sctn-one {
+      font-size: 2rem !important;
+    }
+  
+    .tt-sctn-one span {
+      font-size: 1.6rem !important;
+    }
+  
+    .lead {
+      font-size: 16px !important;
+      max-width: 100%;
+      margin: 15px auto;
+    }
+  
+    .btn-section-primary {
+      width: 100%;
+      font-size: 16px;
+      padding: 14px 20px;
+    }
+  
+    .tex-down-btn {
+      font-size: 12px !important;
+    }
+  
+    .img-mokup-primary {
+      max-width: 100%;
+      margin-top: 30px;
+    }
+  
+    .logo-oficial {
+      width: 80% !important;
+      margin: 0 auto;
+    }
+  }
+  
+  /* ===== Responsivo para smartphones pequenos ===== */
+  @media (max-width: 575.98px) {
+    #mkp-desktop {
+        display: none;
+    }
+    .tt-sctn-one {
+      font-size: 1.6rem !important;
+    }
+  
+    .tt-sctn-one span {
+      font-size: 1.3rem !important;
+    }
+  
+    .btn-section-primary {
+      font-size: 15px;
+      padding: 12px 18px;
+    }
+  
+    .lead {
+      font-size: 15px !important;
+    }
+  }
+  
+  /* ===== Footer ===== */
+  footer {
+    background-color: var(--cor-primaria);
+    color: #fff;
+    text-align: center;
+    padding: 1.5rem 0;
+  }
+  
