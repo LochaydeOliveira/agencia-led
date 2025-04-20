@@ -34,6 +34,35 @@ body {
   
   /* 🟡 Telas muito pequenas (até 480px) */
   @media (max-width: 480px) {
+    .shadow-bg {
+        box-shadow: 1px 0 12px 4px #d0c2ef40;
+    }
+
+    .bg-section-cinza {
+        background: #cfcfcf47;
+    }
+
+    .nav-prsn {
+        gap: 20px;
+        font-weight: 600;
+    }
+
+    .nav-prsn-item {
+        color: #56545E;
+    }
+
+    .nav-prsn-item:hover {
+        color: #c83296;
+    } 
+    .logo-pstion {
+        width: 100%;
+        max-width: 220px;
+    }
+
+    .logo-oficial {
+        width: 85% !important;
+    }
+
     .wdt-prs-01 {
         width: 100% !important;
         display: flex;
@@ -92,6 +121,35 @@ body {
   
   /* 🔵 Celulares (481px a 768px) */
   @media (min-width: 481px) and (max-width: 768px) {
+    .shadow-bg {
+        box-shadow: 1px 0 12px 4px #d0c2ef40;
+    }
+
+    .bg-section-cinza {
+        background: #cfcfcf47;
+    }
+
+    .nav-prsn {
+        gap: 20px;
+        font-weight: 600;
+    }
+
+    .nav-prsn-item {
+        color: #56545E;
+    }
+
+    .nav-prsn-item:hover {
+        color: #c83296;
+    } 
+    .logo-pstion {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .logo-oficial {
+        width: 60% !important;
+    }
+
     .wdt-prs-01 {
         width: 100% !important;
         display: flex;
@@ -168,6 +226,29 @@ body {
   
   /* 🟣 Tablets (769px a 1024px) */
   @media (min-width: 769px) and (max-width: 1024px) {
+    .shadow-bg {
+        box-shadow: 1px 0 12px 4px #d0c2ef40;
+    }
+
+    .bg-section-cinza {
+        background: #cfcfcf47;
+    }
+
+    .nav-prsn {
+        gap: 20px;
+        font-weight: 600;
+    }
+
+    .nav-prsn-item {
+        color: #56545E;
+    }
+
+    .nav-prsn-item:hover {
+        color: #c83296;
+    } 
+    #mkp-mobile {
+        display: none;
+    }
 
     .stcn-prs-one {
       flex-wrap: wrap !important;
@@ -226,12 +307,31 @@ body {
   
   /* 🔴 Desktops médios (1025px a 1366px) */
   @media (min-width: 1025px) and (max-width: 1366px) {
-  /* ===== Logo ===== */
+    .shadow-bg {
+        box-shadow: 1px 0 12px 4px #d0c2ef40;
+    }
+
+    .bg-section-cinza {
+        background: #cfcfcf47;
+    }
+
+    .nav-prsn {
+        gap: 20px;
+        font-weight: 600;
+    }
+
+    .nav-prsn-item {
+        color: #56545E;
+    }
+
+    .nav-prsn-item:hover {
+        color: #c83296;
+    } 
+
   .logo-oficial {
     width: 65% !important;
   }
   
-  /* ===== Primeira Seção ===== */
   .tt-sctn-one {
     font-size: 3.2rem !important;
   }
@@ -318,6 +418,26 @@ body {
   
   /* 🟢 Telas grandes (acima de 1366px) */
   @media (min-width: 1367px) {
+    .shadow-bg {
+        box-shadow: 1px 0 12px 4px #d0c2ef40;
+    }
+
+    .bg-section-cinza {
+        background: #cfcfcf47;
+    }
+
+    .nav-prsn {
+        gap: 20px;
+        font-weight: 600;
+    }
+
+    .nav-prsn-item {
+        color: #56545E;
+    }
+
+    .nav-prsn-item:hover {
+        color: #c83296;
+    } 
 
   .logo-oficial {
     width: 65% !important;
