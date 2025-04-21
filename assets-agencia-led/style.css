@@ -30,6 +30,54 @@ body {
     --texto-cinza: #646464;
     --texto-secundario: #2a2a2aab;
   }
+
+ #mkp-desktop-scrool {
+  z-index: 9;
+  position: absolute;
+  max-width: 502px;
+  width: 100%;
+  right: 3.89%;
+  top: 3.35%;
+}
+
+.scroll-animation-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 362px;
+  overflow: hidden;
+  right: 19.23%;
+  max-width: 560px;
+  top: 15.42%;
+}
+
+  @keyframes scrollLoop {
+    0% {
+      transform: translateY(0);
+    }
+    30% {
+      transform: translateY(-600px);
+    }
+    50% {
+      transform: translateY(-1070px);
+    }
+    55% {
+      transform: translateY(-1070px);
+    }
+    60% {
+      transform: translateY(-1070px);
+    }
+    90% {
+      transform: translateY(0);
+    }    
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+  .scroll-animation {
+    animation: scrollLoop 18s ease-in-out infinite;
+  }
+  
   
   
   /* 🟡 Telas muito pequenas (até 480px) */
@@ -372,6 +420,8 @@ body {
   .img-mokup-primary {
     max-width: 800px;
     width: 100%;
+    position: relative;
+    z-index: 9;
   }
   
   .stcn-prs-one {
@@ -483,6 +533,8 @@ body {
   .img-mokup-primary {
     max-width: 800px;
     width: 100%;
+    position: relative;
+    z-index: 9;
   }
   
   .stcn-prs-one {
@@ -522,4 +574,9 @@ body {
       padding: 16px 70px;
     }
   }
+
+
+
+
+  
   
