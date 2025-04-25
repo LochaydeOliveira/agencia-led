@@ -116,6 +116,10 @@ tbody, td, tfoot, th, thead, tr {
   color: red;
 }
 
+.bg-footer-agld {
+  background: #503296;
+}
+
 /* 🟡 Telas muito pequenas (até 480px) */
 @media (max-width: 480px) {
   .scroll-animation-wrapper-mbl  {
