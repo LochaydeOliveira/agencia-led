@@ -69,11 +69,55 @@ small {
   }
 }
 
+tbody, td, tfoot, th, thead, tr {
+  border-color: inherit;
+  border-style: hidden!important;
+  border-width: 0;
+}
 
+
+.clr-icons {
+  color: #c83296!important;
+}
+
+.bg-section-cinza {
+  background: #e6e6e634;
+}
+
+.bg-section-cinza-2 {
+  background: #a7a7a73a;
+}
+
+.bg-section-wt {
+  background: #ffffff;
+}
+
+.py-6 {
+  padding: 6rem 0;
+}
+
+.txt-rast {
+  font-size: 12px;
+  color: #5a5a5a;
+  font-weight: 300;
+  position: relative;
+  top: -8px;
+}
+
+.h3--- {
+  margin: 0!important;
+}
+
+.clr-green-icn {
+  color: green;
+}
+
+.clr-red-icn {
+  color: red;
+}
 
 /* 🟡 Telas muito pequenas (até 480px) */
 @media (max-width: 480px) {
-
   .scroll-animation-wrapper-mbl  {
     position: absolute;
     width: 100%;
@@ -108,9 +152,6 @@ small {
       box-shadow: 1px 0 12px 4px #d0c2ef40;
   }
 
-  .bg-section-cinza {
-      background: #cfcfcf47;
-  }
 
   .nav-prsn {
       gap: 20px;
@@ -155,7 +196,8 @@ small {
   }
 
   .tt-sctn-one {
-    font-size: 2.3rem !important;
+    font-size: 1.6rem !important;
+    text-align: left;
   }
 
   .tex-down-btn {
@@ -166,7 +208,8 @@ small {
     }
 
   .tt-sctn-one span {
-    font-size: 1.9rem !important;
+    font-size: 1.5rem !important;
+    color: #513396;
   }
 
   .btn-section-primary {
@@ -176,6 +219,7 @@ small {
       font-size: 15px;
       padding: 15px 25px;
       font-weight: 600;
+      width: 100%;
     }
     
     .btn-section-primary:hover {
@@ -188,11 +232,17 @@ small {
       color: var(--texto-cinza);
       width: 100%;
       max-width: 400px;
+      text-align: left;
   }
 }
 
 /* 🔵 Celulares (481px a 768px) */
 @media (min-width: 481px) and (max-width: 768px) {
+  .span-tt-dwn {
+    color: #513396;
+    font-size: 20px;
+  }
+
   #mkp-desktop-scrool {
       display: none;
     }
@@ -205,9 +255,7 @@ small {
       box-shadow: 1px 0 12px 4px #d0c2ef40;
   }
 
-  .bg-section-cinza {
-      background: #cfcfcf47;
-  }
+
 
   .nav-prsn {
       gap: 20px;
@@ -255,7 +303,8 @@ small {
   }
 
   .tt-sctn-one {
-    font-size: 2.7rem !important;
+    font-size: 1.6rem !important;
+    text-align: left;
   }
 
   .tt-sctn-one span {
@@ -267,6 +316,7 @@ small {
       color: var(--texto-cinza);
       width: 100%;
       max-width: 600px;
+      text-align: left;
   }
 
   .btn-section-primary {
@@ -306,6 +356,7 @@ small {
 
 /* 🟣 Tablets (769px a 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
+
   #mkp-desktop-scrool {
     display: none;
   }
@@ -316,10 +367,6 @@ small {
 
 .shadow-bg {
     box-shadow: 1px 0 12px 4px #d0c2ef40;
-}
-
-.bg-section-cinza {
-    background: #cfcfcf47;
 }
 
 .nav-prsn {
@@ -372,7 +419,8 @@ small {
 }
 
 .tt-sctn-one span {
-  font-size: 2.4rem !important;
+  font-size: 2.1rem !important;
+  color: #513396;
 }
 
 .lead {
@@ -380,6 +428,7 @@ small {
     color: var(--texto-cinza);
     width: 100%;
     max-width: 600px;
+    text-align: left;
 }
 
 .btn-section-primary {
@@ -419,6 +468,11 @@ small {
 
 /* 🔴 Desktops médios (1025px a 1366px) */
 @media (min-width: 1025px) and (max-width: 1200px) {
+  .span-tt-dwn {
+    color: #513396;
+    font-size: 35px;
+  }
+
   #mkp-desktop-scrool {
     z-index: 9;
     position: absolute;
@@ -444,9 +498,7 @@ small {
       box-shadow: 1px 0 12px 4px #d0c2ef40;
   }
 
-  .bg-section-cinza {
-      background: #cfcfcf47;
-  }
+
 
   .nav-prsn {
       gap: 20px;
@@ -553,6 +605,10 @@ footer {
 
 /* 🟢 Telas grandes (acima de 1366px) */
 @media (min-width: 1201px) {
+  .span-tt-dwn {
+    color: #513396;
+    font-size: 35px;
+  }
 
   .scroll-animation-wrapper-mbl  {
     display: none;
@@ -589,9 +645,6 @@ footer {
       box-shadow: 1px 0 12px 4px #d0c2ef40;
   }
 
-  .bg-section-cinza {
-      background: #cfcfcf47;
-  }
 
   .nav-prsn {
       gap: 20px;
@@ -691,5 +744,7 @@ footer {
     padding: 16px 70px;
   }
 }
+
+
 
 
