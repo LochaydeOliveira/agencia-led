@@ -120,6 +120,10 @@ tbody, td, tfoot, th, thead, tr {
   background: #503296;
 }
 
+.btn-section-primary { 
+  text-transform: uppercase!important;
+}
+
 /* 🟡 Telas muito pequenas (até 480px) */
 @media (max-width: 480px) {
   .scroll-animation-wrapper-mbl  {
