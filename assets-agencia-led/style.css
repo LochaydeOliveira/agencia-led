@@ -1,4 +1,4 @@
-/* ===== Fonte Inter ===== */
+
 body {
   font-family: 'Inter', sans-serif;
   font-optical-sizing: auto;
@@ -9,7 +9,6 @@ body {
   box-sizing: border-box;
 }
 
-/* ===== Títulos ===== */
 h1, h2, h3 {
   font-weight: 700 !important;
 }
@@ -22,7 +21,6 @@ small {
   font-weight: 300 !important;
 }
 
-/* ===== Paleta de Cores ===== */
 :root {
   --cor-primaria: #503296;
   --cor-secundaria: #c83296;
@@ -30,8 +28,6 @@ small {
   --texto-cinza: #646464;
   --texto-secundario: #2a2a2aab;
 }
-
-
 
 @keyframes scrollLoopMobile {
   0% {
@@ -74,7 +70,6 @@ tbody, td, tfoot, th, thead, tr {
   border-style: hidden!important;
   border-width: 0;
 }
-
 
 .clr-icons {
   color: #c83296!important;
@@ -240,8 +235,40 @@ tbody, td, tfoot, th, thead, tr {
   position: relative;
   z-index: 1;
 }
+
+.area-pay {
+  display: flex;
+  position: absolute;
+  bottom: 25px;
+  flex-direction: column;
+  width: 100%;
+}
+
+.card-body-pers {
+  display: flex;
+  position: relative;
+  height: 650px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tx-ftr {
+  font-size: 12px;
+  font-weight: 200!important;
+  margin: 15px 0;
+}
+
 /* 🟡 Telas muito pequenas (até 480px) */
 @media (max-width: 480px) {
+  .card-body-pers {
+    height: 750px;
+  }
+  .area-pay {
+    width: 85%;
+}
+  .pd-ps-card {
+    padding: 1rem 0.8rem!important;
+}
   .scroll-animation-wrapper-mbl  {
     position: absolute;
     width: 100%;
@@ -362,6 +389,19 @@ tbody, td, tfoot, th, thead, tr {
 
 /* 🔵 Celulares (481px a 768px) */
 @media (min-width: 481px) and (max-width: 768px) {
+  .area-pay {
+    display: flex;
+    position: absolute;
+    bottom: 25px;
+    flex-direction: column;
+    width: 100%;
+  }
+  .area-pay {
+    width: 85%;
+}
+  .pd-ps-card {
+    padding: 1rem 0.8rem!important;
+}
   .span-tt-dwn {
     color: #513396;
     font-size: 20px;
@@ -480,6 +520,25 @@ tbody, td, tfoot, th, thead, tr {
 
 /* 🟣 Tablets (769px a 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
+  .pd-container-ps {
+    padding: 0 7rem;
+  }
+  .card-body-pers {
+    height: 650px;
+  }
+  .area-pay {
+    display: flex;
+    position: absolute;
+    bottom: 25px;
+    flex-direction: column;
+    width: 100%;
+  }
+  .area-pay {
+    width: 85%;
+}
+  .pd-ps-card {
+    padding: 1rem 0.8rem!important;
+}
 
   #mkp-desktop-scrool {
     display: none;
@@ -592,6 +651,12 @@ tbody, td, tfoot, th, thead, tr {
 
 /* 🔴 Desktops médios (1025px a 1366px) */
 @media (min-width: 1025px) and (max-width: 1200px) {
+  .pd-container-ps {
+    padding: 0 15rem;
+  }
+  .card-body-pers {
+    height: 650px;
+  }
   .span-tt-dwn {
     color: #513396;
     font-size: 35px;
@@ -729,6 +794,12 @@ footer {
 
 /* 🟢 Telas grandes (acima de 1366px) */
 @media (min-width: 1201px) {
+  .pd-container-ps {
+    padding: 0 15rem;
+  }
+  .card-body-pers {
+    height: 650px;
+  }
   .span-tt-dwn {
     color: #513396;
     font-size: 35px;
