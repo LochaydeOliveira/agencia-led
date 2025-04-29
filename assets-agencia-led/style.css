@@ -247,7 +247,7 @@ tbody, td, tfoot, th, thead, tr {
 .card-body-pers {
   display: flex;
   position: relative;
-  height: 650px;
+  height: 900px;
   flex-direction: column;
   align-items: center;
 }
@@ -258,10 +258,14 @@ tbody, td, tfoot, th, thead, tr {
   margin: 15px 0;
 }
 
+.img-cards-vnd {
+  margin: 2rem 0 0;
+}
+
 /* 🟡 Telas muito pequenas (até 480px) */
 @media (max-width: 480px) {
   .card-body-pers {
-    height: 750px;
+    height: 900px;
   }
   .area-pay {
     width: 85%;
@@ -524,7 +528,7 @@ tbody, td, tfoot, th, thead, tr {
     padding: 0 7rem;
   }
   .card-body-pers {
-    height: 650px;
+    height: 900px;
   }
   .area-pay {
     display: flex;
@@ -655,7 +659,7 @@ tbody, td, tfoot, th, thead, tr {
     padding: 0 15rem;
   }
   .card-body-pers {
-    height: 650px;
+    height: 900px;
   }
   .span-tt-dwn {
     color: #513396;
@@ -798,7 +802,7 @@ footer {
     padding: 0 15rem;
   }
   .card-body-pers {
-    height: 650px;
+    height: 900px;
   }
   .span-tt-dwn {
     color: #513396;

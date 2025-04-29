@@ -17,6 +17,7 @@ fetch('assets-agencia-led/conteudo-cards.json')
               </svg>
               ${card.title}
             </h5>
+            <img class="img-cards-vnd" width="300" src="assets-agencia-led/img/img-loja-01.png" alt="Imagem de Vendas Loja 1">
             <div class="mt-3">
               <p class="mb-1 price-main"><span>R$</span>${card.price}</p>
             </div>
