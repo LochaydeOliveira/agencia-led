@@ -262,8 +262,47 @@ tbody, td, tfoot, th, thead, tr {
   margin: 2rem 0 0;
 }
 
+.col-texts h2 {
+  color: #1b1b1b;
+}
+
+.btn-sctn-spfy {
+  background: #4c8125!important;
+}
+
+.btn-sctn-spfy:hover {
+  background: #4f7037!important;
+}
+
+
+
 /* 🟡 Telas muito pequenas (até 480px) */
 @media (max-width: 480px) {
+  .sctn-prm-spfy {
+    background-color: #f6f6f7;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 620px;
+    padding: 0 1rem;
+  }
+  
+  .img-oft-spfy {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 420px;
+  }
+
+  .sctn-prm-spfy h2 {
+    margin: 10rem 0 0.5rem!important;
+  }
+
+  .sctn-prm-spfy ul li {
+    font-size: 14px;
+  }
+
   .card-body-pers {
     height: 900px;
   }
@@ -393,6 +432,25 @@ tbody, td, tfoot, th, thead, tr {
 
 /* 🔵 Celulares (481px a 768px) */
 @media (min-width: 481px) and (max-width: 768px) {
+
+  .sctn-prm-spfy {
+    background-color: #f6f6f7;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 400px;
+  }
+  
+  
+  .img-oft-spfy {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: 750px;
+    height: 100%;
+  }
+
   .area-pay {
     display: flex;
     position: absolute;
@@ -524,6 +582,24 @@ tbody, td, tfoot, th, thead, tr {
 
 /* 🟣 Tablets (769px a 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
+  .sctn-prm-spfy {
+    background-color: #f6f6f7;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 400px;
+  }
+  
+  
+  .img-oft-spfy {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: 750px;
+    height: 100%;
+  }
+
   .pd-container-ps {
     padding: 0 7rem;
   }
@@ -655,6 +731,24 @@ tbody, td, tfoot, th, thead, tr {
 
 /* 🔴 Desktops médios (1025px a 1366px) */
 @media (min-width: 1025px) and (max-width: 1200px) {
+  .sctn-prm-spfy {
+    background-color: #f6f6f7;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 400px;
+  }
+  
+  
+  .img-oft-spfy {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: 750px;
+    height: 100%;
+  }
+
   .pd-container-ps {
     padding: 0 15rem;
   }
@@ -798,6 +892,24 @@ footer {
 
 /* 🟢 Telas grandes (acima de 1366px) */
 @media (min-width: 1201px) {
+  .sctn-prm-spfy {
+    background-color: #f6f6f7;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 400px;
+  }
+  
+  
+  .img-oft-spfy {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: 750px;
+    height: 100%;
+  }
+
   .pd-container-ps {
     padding: 0 15rem;
   }
