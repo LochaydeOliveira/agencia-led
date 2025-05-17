@@ -1,4 +1,4 @@
-/* ===== Fonte Inter ===== */
+
 body {
   font-family: 'Inter', sans-serif;
   font-optical-sizing: auto;
@@ -9,7 +9,6 @@ body {
   box-sizing: border-box;
 }
 
-/* ===== Títulos ===== */
 h1, h2, h3 {
   font-weight: 700 !important;
 }
@@ -22,7 +21,6 @@ small {
   font-weight: 300 !important;
 }
 
-/* ===== Paleta de Cores ===== */
 :root {
   --cor-primaria: #503296;
   --cor-secundaria: #c83296;
@@ -30,8 +28,6 @@ small {
   --texto-cinza: #646464;
   --texto-secundario: #2a2a2aab;
 }
-
-
 
 @keyframes scrollLoopMobile {
   0% {
@@ -75,7 +71,6 @@ tbody, td, tfoot, th, thead, tr {
   border-width: 0;
 }
 
-
 .clr-icons {
   color: #c83296!important;
 }
@@ -116,8 +111,207 @@ tbody, td, tfoot, th, thead, tr {
   color: red;
 }
 
+.bg-footer-agld {
+  background: #503296;
+}
+
+.btn-section-primary { 
+  text-transform: uppercase!important;
+}
+
+.h5-agl-plans-tt {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  margin: 0 0 -20px 0;
+}
+
+.sub-tt-plans {
+  display: flex;
+  justify-content: center;
+  margin: -20px 0 20px 0;
+  color: #000000;
+  font-weight: 700;
+}
+
+.des-plans {
+  font-weight: 300!important;
+  font-size: 15px;
+  margin: 10px 0;
+  text-align: center;
+  font-weight: 800!important;
+  color: #317b99;
+}
+
+.font-sz-itns-pls {
+  font-size: 14px;
+}
+
+.p-tp-dw {
+  padding: 0 0 2rem 0;
+}
+
+.price-main {
+  display: flex;
+  justify-content: center;
+  font-size: 50px;
+  font-weight: 900!important;
+  color: #c83296!important;
+  align-items: center;
+}
+
+.price-main span {
+  font-size: 30px;
+  font-weight: 700!important;
+}
+
+.sub-tt-plans-expl {
+  display: flex;
+  margin: -20px auto 20px auto;
+  font-size: 13px;
+  color: #4b4b4be0;
+  font-weight: 300;
+  max-width: 300px;
+  width: 80%;
+  text-align: center;
+}
+
+.mg-left-gd {
+  margin-left: 20px;
+  color: #7b9b0e!important;
+}
+
+.btn-pay {
+  background-color: #7b9b0e!important;
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-section-orc {
+  background-color: #7b9b0e;
+  color: #fff;
+  border: none;
+  font-size: 15px;
+  padding: 15px 25px;
+  font-weight: 600;
+  width: 100%;
+  max-width: 375px;
+}
+
+.btn-section-orc:hover {
+  background-color: #6b831c;
+  box-shadow: 0px 6px 18px 7px #aedf10de;
+  border: solid 1px #c4ff097d;
+}
+
+.btn-pay:hover {
+  background-color: #627428!important;
+}
+
+.forms-pay {
+  margin: 10px 0;
+  text-align: center;
+  font-weight: 800!important;
+  color: #317b99;
+}
+
+.text-contions {
+  font-size: 12px;
+  text-align: center;
+  margin: -10px 0 0 0;
+}
+
+.cens-temp {
+  background: #000;
+  position: relative;
+  z-index: 9;
+}
+
+.zindex-temp {
+  position: relative;
+  z-index: 1;
+}
+
+.area-pay {
+  display: flex;
+  position: absolute;
+  bottom: 25px;
+  flex-direction: column;
+  width: 100%;
+}
+
+.card-body-pers {
+  display: flex;
+  position: relative;
+  height: 900px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tx-ftr {
+  font-size: 12px;
+  font-weight: 200!important;
+  margin: 15px 0;
+}
+
+.img-cards-vnd {
+  margin: 2rem 0 0;
+}
+
+.col-texts h2 {
+  color: #1b1b1b;
+}
+
+.btn-sctn-spfy {
+  background: #4c8125!important;
+}
+
+.btn-sctn-spfy:hover {
+  background: #4f7037!important;
+}
+
+
+
 /* 🟡 Telas muito pequenas (até 480px) */
 @media (max-width: 480px) {
+  .sctn-prm-spfy {
+    background-color: #f6f6f7;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 620px;
+    padding: 0 1rem;
+  }
+  
+  .img-oft-spfy {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 420px;
+  }
+
+  .sctn-prm-spfy h2 {
+    margin: 10rem 0 0.5rem!important;
+  }
+
+  .sctn-prm-spfy ul li {
+    font-size: 14px;
+  }
+
+  .card-body-pers {
+    height: 900px;
+  }
+  .area-pay {
+    width: 85%;
+}
+  .pd-ps-card {
+    padding: 1rem 0.8rem!important;
+}
   .scroll-animation-wrapper-mbl  {
     position: absolute;
     width: 100%;
@@ -238,6 +432,38 @@ tbody, td, tfoot, th, thead, tr {
 
 /* 🔵 Celulares (481px a 768px) */
 @media (min-width: 481px) and (max-width: 768px) {
+
+  .sctn-prm-spfy {
+    background-color: #f6f6f7;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 400px;
+  }
+  
+  
+  .img-oft-spfy {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: 750px;
+    height: 100%;
+  }
+
+  .area-pay {
+    display: flex;
+    position: absolute;
+    bottom: 25px;
+    flex-direction: column;
+    width: 100%;
+  }
+  .area-pay {
+    width: 85%;
+}
+  .pd-ps-card {
+    padding: 1rem 0.8rem!important;
+}
   .span-tt-dwn {
     color: #513396;
     font-size: 20px;
@@ -356,6 +582,43 @@ tbody, td, tfoot, th, thead, tr {
 
 /* 🟣 Tablets (769px a 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
+  .sctn-prm-spfy {
+    background-color: #f6f6f7;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 400px;
+  }
+  
+  
+  .img-oft-spfy {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: 750px;
+    height: 100%;
+  }
+
+  .pd-container-ps {
+    padding: 0 7rem;
+  }
+  .card-body-pers {
+    height: 900px;
+  }
+  .area-pay {
+    display: flex;
+    position: absolute;
+    bottom: 25px;
+    flex-direction: column;
+    width: 100%;
+  }
+  .area-pay {
+    width: 85%;
+}
+  .pd-ps-card {
+    padding: 1rem 0.8rem!important;
+}
 
   #mkp-desktop-scrool {
     display: none;
@@ -468,6 +731,30 @@ tbody, td, tfoot, th, thead, tr {
 
 /* 🔴 Desktops médios (1025px a 1366px) */
 @media (min-width: 1025px) and (max-width: 1200px) {
+  .sctn-prm-spfy {
+    background-color: #f6f6f7;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 400px;
+  }
+  
+  
+  .img-oft-spfy {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: 750px;
+    height: 100%;
+  }
+
+  .pd-container-ps {
+    padding: 0 15rem;
+  }
+  .card-body-pers {
+    height: 900px;
+  }
   .span-tt-dwn {
     color: #513396;
     font-size: 35px;
@@ -605,6 +892,30 @@ footer {
 
 /* 🟢 Telas grandes (acima de 1366px) */
 @media (min-width: 1201px) {
+  .sctn-prm-spfy {
+    background-color: #f6f6f7;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 400px;
+  }
+  
+  
+  .img-oft-spfy {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: 750px;
+    height: 100%;
+  }
+
+  .pd-container-ps {
+    padding: 0 15rem;
+  }
+  .card-body-pers {
+    height: 900px;
+  }
   .span-tt-dwn {
     color: #513396;
     font-size: 35px;

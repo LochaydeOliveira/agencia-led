@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Verificar Código do Pedido</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      background: #f2f2f2;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      background-color: #503296;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      font-weight: bold;
+    }
+
+    button:hover:enabled {
+      background-color: #39206c;
+    }
+
+    button:disabled {
+      background-color: #999;
+      cursor: not-allowed;
+    }
+
+    .mensagem {
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+
+    .mensagem.sucesso {
+      color: #38b97e;
+    }
+
+    .mensagem.erro {
+      color: #b00020;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Insira seu código para baixar o eBook</h2>
+    <form id="form-codigo">
+      <input type="text" name="codigo" id="codigo" placeholder="Digite o código" required>
+      <input type="email" name="email" id="email" placeholder="Digite seu e-mail" required>
+      <button type="submit">Liberar eBook</button>
+    </form>
+    <div id="mensagem-resultado" class="mensagem"></div>
+  </div>
+
+  <script>
+    document.getElementById('form-codigo').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const codigo = document.getElementById('codigo').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const mensagem = document.getElementById('mensagem-resultado');
+      const botao = document.querySelector('button');
+
+      mensagem.textContent = '';
+      mensagem.className = 'mensagem';
+      botao.disabled = true;
+
+      fetch('verificar-codigo.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ codigo, email })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 'sucesso') {
+          mensagem.textContent = "✅ " + data.mensagem;
+          mensagem.classList.add('sucesso');
+
+          const link = document.createElement('a');
+          link.href = 'https://agencialed.com/listas-fornecedores-pdf/fornecedores-nacionais-decoracao.pdf'; 
+          link.download = 'fornecedores-nacionais-decoracao.pdf';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        } else {
+          mensagem.textContent = "❌ " + data.mensagem;
+          mensagem.classList.add('erro');
+        }
+      })
+
+      .catch(() => {
+        mensagem.textContent = "Erro ao verificar o código.";
+        mensagem.classList.add('erro');
+      })
+      .finally(() => {
+        botao.disabled = false;
+      });
+    });
+  </script>
+</body>
+</html>
