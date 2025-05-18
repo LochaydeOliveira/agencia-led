@@ -1,4 +1,5 @@
 <?php
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 header('Content-Type: application/json');
@@ -62,8 +63,8 @@ require_once '/home1/paymen58/agencialed.com/email/PHPMailer/PHPMailer.php';
 require_once '/home1/paymen58/agencialed.com/email/PHPMailer/SMTP.php';
 require_once '/home1/paymen58/agencialed.com/email/PHPMailer/Exception.php';
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+use PHPMailer\\PHPMailer\\PHPMailer;
+use PHPMailer\\PHPMailer\\Exception;
 
 define('SMTP_PASSWORD', 'Lochayde@154719');
 
