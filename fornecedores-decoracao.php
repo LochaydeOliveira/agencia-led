@@ -10,11 +10,9 @@
             padding: 30px;
             background-color: #f5f5f5;
         }
-
         h1 {
             color: #333;
         }
-
         form {
             background-color: white;
             padding: 25px;
@@ -23,18 +21,15 @@
             max-width: 400px;
             margin: auto;
         }
-
         label, input {
             display: block;
             width: 100%;
             margin-bottom: 15px;
         }
-
         input[type="text"] {
             padding: 10px;
             font-size: 16px;
         }
-
         button {
             padding: 12px;
             font-size: 16px;
@@ -44,20 +39,16 @@
             border-radius: 6px;
             cursor: pointer;
         }
-
         button:hover {
             background-color: #1565c0;
         }
-
         #mensagem {
             margin-top: 20px;
             font-weight: bold;
         }
-
         #mensagem.sucesso {
             color: green;
         }
-
         #mensagem.erro {
             color: red;
         }
@@ -94,13 +85,19 @@
                 const resposta = await fetch('verificar-codigo.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: `codigo=${encodeURIComponent(codigo)}&email=fake@exemplo.com`
+                    body: `codigo=${encodeURIComponent(codigo)}`
                 });
 
                 const resultado = await resposta.json();
 
                 mensagem.textContent = resultado.mensagem;
                 mensagem.className = resultado.status === 'sucesso' ? 'sucesso' : 'erro';
+
+                if (resultado.status === 'sucesso' && resultado.link) {
+                    setTimeout(() => {
+                        window.location.href = resultado.link;
+                    }, 2000); // espera 2s e inicia download
+                }
             } catch (error) {
                 mensagem.textContent = "Erro na comunicação com o servidor.";
                 mensagem.className = "erro";

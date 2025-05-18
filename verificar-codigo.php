@@ -1,82 +1,54 @@
 <?php
+// verificar-codigo.php
 
 header('Content-Type: application/json');
 
+$codigo = $_POST['codigo'] ?? '';
+
+if (!preg_match('/^\d{15}$/', $codigo)) {
+    echo json_encode(['status' => 'erro', 'mensagem' => 'Código inválido.']);
+    exit;
+}
+
+// Conexão
 $host = 'localhost';
-$dbname = 'paymen58_fornecedores_nacionais';
-$username = 'paymen58';
-$password = 'u4q7+B6ly)obP_gxN9sNe';
+$db = 'paymen58_lista_decoracao';
+$user = 'SEU_USUARIO';
+$pass = 'SUA_SENHA';
+$charset = 'utf8mb4';
 
-$conn = new mysqli($host, $username, $password, $dbname);
-if ($conn->connect_error) {
-    http_response_code(500);
-    echo json_encode(['status' => 'erro', 'mensagem' => 'Erro de conexão com o banco de dados.']);
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+$options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION];
+
+try {
+    $pdo = new PDO($dsn, $user, $pass, $options);
+} catch (\PDOException $e) {
+    echo json_encode(['status' => 'erro', 'mensagem' => 'Erro ao conectar.']);
     exit;
 }
 
-// Define charset seguro
-$conn->set_charset('utf8mb4');
+// Verifica se o código já foi usado
+$stmt = $pdo->prepare("SELECT * FROM pedidos WHERE codigo = ?");
+$stmt->execute([$codigo]);
+$pedido = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$codigoPedido = trim($_POST['codigo'] ?? '');
-
-// Validação inicial: apenas o código
-if (!$codigoPedido) {
-    http_response_code(400);
-    echo json_encode(['status' => 'erro', 'mensagem' => 'O código do pedido é obrigatório.']);
-    exit;
-}
-
-// Verifica se o código tem exatamente 15 dígitos numéricos
-if (!preg_match('/^\d{15}$/', $codigoPedido)) {
-    http_response_code(400);
-    echo json_encode(['status' => 'erro', 'mensagem' => 'Formato de código inválido.']);
-    exit;
-}
-
-// Verifica se o código existe
-$stmt = $conn->prepare("SELECT * FROM pedidos WHERE codigo_pedido = ?");
-$stmt->bind_param("s", $codigoPedido);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result->num_rows === 0) {
+if (!$pedido) {
     echo json_encode(['status' => 'erro', 'mensagem' => 'Código não encontrado.']);
-} else {
-    $row = $result->fetch_assoc();
-
-    if ((int)$row['usado'] === 1) {
-        echo json_encode(['status' => 'erro', 'mensagem' => 'Este código já foi utilizado.']);
-        exit;
-    }
-
-    $sku = $row['sku'];
-
-    // Atualiza para marcar como usado (sem email)
-    $update = $conn->prepare("UPDATE pedidos SET usado = 1 WHERE codigo_pedido = ?");
-    $update->bind_param("s", $codigoPedido);
-
-    if ($update->execute()) {
-        // Define cookie válido por 30 minutos com opções seguras
-        setcookie('ebook_decoracao_liberado', '1', [
-            'expires' => time() + 1800,
-            'path' => '/',
-            'secure' => true,
-            'httponly' => false,
-            'samesite' => 'Lax'
-        ]);
-
-        echo json_encode([
-            'status' => 'sucesso',
-            'mensagem' => 'Código validado com sucesso.',
-            'sku' => $sku
-        ]);
-    } else {
-        http_response_code(500);
-        echo json_encode(['status' => 'erro', 'mensagem' => 'Erro ao atualizar o pedido.']);
-    }
-
-    $update->close();
+    exit;
 }
 
-$stmt->close();
-$conn->close();
+if ($pedido['usado']) {
+    echo json_encode(['status' => 'erro', 'mensagem' => 'Este código já foi utilizado.']);
+    exit;
+}
+
+// Atualiza para "usado"
+$stmt = $pdo->prepare("UPDATE pedidos SET usado = 1 WHERE id = ?");
+$stmt->execute([$pedido['id']]);
+
+// Resposta com link para download
+echo json_encode([
+    'status' => 'sucesso',
+    'mensagem' => 'Código verificado com sucesso! O download iniciará automaticamente.',
+    'link' => 'https://agencialed.com/ebooks/fornecedores-nacionais-decoracao.pdf'
+]);
