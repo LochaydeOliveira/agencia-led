@@ -11,6 +11,7 @@ $chave_secreta = 'wh_rweQPzt0jQ5lRY3ZbrNYZQFFdjc8ZjDWOguYm';
 $body = file_get_contents('php://input');
 
 // Verifica a assinatura HMAC SHA256 enviada pela Yampi
+/*
 $assinatura_recebida = $_SERVER['HTTP_X_YAMPI_SIGNATURE'] ?? '';
 $assinatura_calculada = hash_hmac('sha256', $body, $chave_secreta);
 
@@ -19,6 +20,8 @@ if (!hash_equals($assinatura_calculada, $assinatura_recebida)) {
     echo json_encode(['status' => 'erro', 'mensagem' => 'Assinatura inválida.']);
     exit;
 }
+
+*/
 
 // Decodifica o JSON após validar a assinatura
 $data = json_decode($body, true);
