@@ -20,19 +20,12 @@ if (!hash_equals($assinatura_calculada, $assinatura_recebida)) {
     echo json_encode(['status' => 'erro', 'mensagem' => 'Assinatura inválida.']);
     exit;
 }
+
 */
 
 // Decodifica o JSON após validar a assinatura
 $data = json_decode($body, true);
 
-// Verifica se o evento é "order_created"
-$evento = $data['event'] ?? '';
-if ($evento !== 'order_created') {
-    echo json_encode(['status' => 'ignorado', 'mensagem' => 'Evento não é PEDIDO CRIADO.']);
-    exit;
-}
-
-// Valida os dados principais
 if (!$data || empty($data['code']) || empty($data['customer']['email']) || empty($data['items'][0]['product']['sku'])) {
     http_response_code(400);
     echo json_encode(['status' => 'erro', 'mensagem' => 'Dados inválidos ou incompletos.']);
