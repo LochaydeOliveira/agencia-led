@@ -10,9 +10,10 @@ $chave_secreta = 'wh_rweQPzt0jQ5lRY3ZbrNYZQFFdjc8ZjDWOguYm';
 // Lê o corpo bruto da requisição
 $body = file_get_contents('php://input');
 
+// Log para debug (apagar após testes)
+file_put_contents('log_yampi.txt', $body . PHP_EOL, FILE_APPEND);
 
 // Verifica a assinatura HMAC SHA256 enviada pela Yampi
-
 $assinatura_recebida = $_SERVER['HTTP_X_YAMPI_SIGNATURE'] ?? '';
 $assinatura_calculada = hash_hmac('sha256', $body, $chave_secreta);
 
@@ -22,30 +23,23 @@ if (!hash_equals($assinatura_calculada, $assinatura_recebida)) {
     exit;
 }
 
-
 // Decodifica o JSON após validar a assinatura
 $data = json_decode($body, true);
 
-if (!isset($data['event']) || $data['event'] !== 'PEDIDO_CRIADO') {
-    echo json_encode(['status' => 'ignorado', 'mensagem' => 'Evento não é PEDIDO CRIADO.']);
+// Corrigido: evento vem em inglês
+if (!isset($data['event']) || $data['event'] !== 'order_created') {
+    echo json_encode(['status' => 'ignorado', 'mensagem' => 'Evento não é order_created.']);
     exit;
 }
 
+// Validação de dados essenciais
+$codigo = trim($data['code'] ?? '');
+$email = filter_var($data['customer']['email'] ?? '', FILTER_VALIDATE_EMAIL);
+$sku = trim($data['items'][0]['product']['sku'] ?? '');
 
-// Valida os dados principais
-if (!$data || empty($data['code']) || empty($data['customer']['email']) || empty($data['items'][0]['product']['sku'])) {
+if (!$codigo || !$email || !$sku) {
     http_response_code(400);
     echo json_encode(['status' => 'erro', 'mensagem' => 'Dados inválidos ou incompletos.']);
-    exit;
-}
-
-$codigo = trim($data['code']);
-$email = filter_var($data['customer']['email'], FILTER_VALIDATE_EMAIL);
-$sku = trim($data['items'][0]['product']['sku']);
-
-if (!$email) {
-    http_response_code(400);
-    echo json_encode(['status' => 'erro', 'mensagem' => 'E-mail inválido.']);
     exit;
 }
 
@@ -55,7 +49,6 @@ $dbname = 'paymen58_lista_decoracao';
 $username = 'paymen58';
 $password = 'u4q7+B6ly)obP_gxN9sNe';
 $charset = 'utf8mb4';
-
 $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
 
 try {
@@ -69,6 +62,7 @@ try {
     $stmt->execute([$codigo]);
 
     if ($stmt->rowCount() > 0) {
+        http_response_code(200);
         echo json_encode(['status' => 'ok', 'mensagem' => 'Pedido já registrado.']);
         exit;
     }
@@ -122,4 +116,5 @@ try {
     error_log('Erro ao enviar e-mail webhook.php: ' . $mail->ErrorInfo);
 }
 
+http_response_code(200);
 echo json_encode(['status' => 'sucesso', 'mensagem' => 'Pedido registrado e e-mail enviado.']);
