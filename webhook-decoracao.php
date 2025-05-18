@@ -4,15 +4,24 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 header('Content-Type: application/json');
 
-// Configuração do banco
-$host = 'localhost';
-$dbname = 'paymen58_lista_decoracao';
-$username = 'paymen58';
-$password = 'u4q7+B6ly)obP_gxN9sNe';
-$charset = 'utf8mb4';
+// Chave secreta da Yampi
+$chave_secreta = 'wh_rweQPzt0jQ5lRY3ZbrNYZQFFdjc8ZjDWOguYm';
 
-// Lê dados JSON do webhook
-$data = json_decode(file_get_contents('php://input'), true);
+// Lê o corpo bruto da requisição
+$body = file_get_contents('php://input');
+
+// Verifica a assinatura HMAC SHA256 enviada pela Yampi
+$assinatura_recebida = $_SERVER['HTTP_X_YAMPI_SIGNATURE'] ?? '';
+$assinatura_calculada = hash_hmac('sha256', $body, $chave_secreta);
+
+if (!hash_equals($assinatura_calculada, $assinatura_recebida)) {
+    http_response_code(403);
+    echo json_encode(['status' => 'erro', 'mensagem' => 'Assinatura inválida.']);
+    exit;
+}
+
+// Decodifica o JSON após validar a assinatura
+$data = json_decode($body, true);
 
 if (!$data || empty($data['code']) || empty($data['customer']['email']) || empty($data['items'][0]['product']['sku'])) {
     http_response_code(400);
@@ -29,6 +38,13 @@ if (!$email) {
     echo json_encode(['status' => 'erro', 'mensagem' => 'E-mail inválido.']);
     exit;
 }
+
+// Configuração do banco
+$host = 'localhost';
+$dbname = 'paymen58_lista_decoracao';
+$username = 'paymen58';
+$password = 'u4q7+B6ly)obP_gxN9sNe';
+$charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
 
@@ -63,8 +79,8 @@ require_once '/home1/paymen58/agencialed.com/email/PHPMailer/PHPMailer.php';
 require_once '/home1/paymen58/agencialed.com/email/PHPMailer/SMTP.php';
 require_once '/home1/paymen58/agencialed.com/email/PHPMailer/Exception.php';
 
-use PHPMailer\\PHPMailer\\PHPMailer;
-use PHPMailer\\PHPMailer\\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 define('SMTP_PASSWORD', 'Lochayde@154719');
 
@@ -94,7 +110,6 @@ try {
     $mail->send();
 } catch (Exception $e) {
     error_log('Erro ao enviar e-mail webhook.php: ' . $mail->ErrorInfo);
-    // Não interrompe o processo, mas avisa no log
 }
 
 echo json_encode(['status' => 'sucesso', 'mensagem' => 'Pedido registrado e e-mail enviado.']);
