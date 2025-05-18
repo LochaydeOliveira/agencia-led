@@ -18,18 +18,11 @@ if ($conn->connect_error) {
 $conn->set_charset('utf8mb4');
 
 $codigoPedido = trim($_POST['codigo'] ?? '');
-$emailCliente = trim($_POST['email'] ?? '');
 
-// Validações iniciais
-if (!$codigoPedido || !$emailCliente) {
+// Validação inicial: apenas o código
+if (!$codigoPedido) {
     http_response_code(400);
-    echo json_encode(['status' => 'erro', 'mensagem' => 'Código e e-mail são obrigatórios.']);
-    exit;
-}
-
-if (!filter_var($emailCliente, FILTER_VALIDATE_EMAIL)) {
-    http_response_code(400);
-    echo json_encode(['status' => 'erro', 'mensagem' => 'E-mail inválido.']);
+    echo json_encode(['status' => 'erro', 'mensagem' => 'O código do pedido é obrigatório.']);
     exit;
 }
 
@@ -58,9 +51,9 @@ if ($result->num_rows === 0) {
 
     $sku = $row['sku'];
 
-    // Atualiza para marcar como usado
-    $update = $conn->prepare("UPDATE pedidos SET usado = 1, email_cliente = ? WHERE codigo_pedido = ?");
-    $update->bind_param("ss", $emailCliente, $codigoPedido);
+    // Atualiza para marcar como usado (sem email)
+    $update = $conn->prepare("UPDATE pedidos SET usado = 1 WHERE codigo_pedido = ?");
+    $update->bind_param("s", $codigoPedido);
 
     if ($update->execute()) {
         // Define cookie válido por 30 minutos com opções seguras

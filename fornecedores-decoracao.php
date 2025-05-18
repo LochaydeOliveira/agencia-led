@@ -1,270 +1,112 @@
-<?php
-session_start();
-$liberado = false;
-
-if (isset($_COOKIE['ebook_liberado']) && $_COOKIE['ebook_liberado'] == '1') {
-  $liberado = true;
-}
-?>
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>Download do eBook</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validação de Pedido</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            background-color: #f5f5f5;
+        }
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+        h1 {
+            color: #333;
+        }
 
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #f5f7fa, #e4ebf5);
-      color: #333;
-    }
+        form {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 400px;
+            margin: auto;
+        }
 
-    .container {
-      max-width: 600px;
-      margin: 6vh auto;
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-      padding: 3rem 2rem;
-      text-align: center;
-      display: <?= $liberado ? 'block' : 'none' ?>;
-      animation: fadeIn 0.6s ease;
-    }
+        label, input {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+        }
 
-    .container h1 {
-      font-size: 1.8rem;
-      margin-bottom: 0.8rem;
-    }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+        }
 
-    .container p {
-      font-size: 1rem;
-      margin-bottom: 1.5rem;
-    }
+        button {
+            padding: 12px;
+            font-size: 16px;
+            background-color: #1e88e5;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
 
-    .btn-dwnld {
-      background: #503296;
-      color: white;
-      padding: 14px 26px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      display: inline-block;
-    }
+        button:hover {
+            background-color: #1565c0;
+        }
 
-    .btn-dwnld:hover {
-      background: #3f2479;
-      transform: scale(1.03);
-    }
+        #mensagem {
+            margin-top: 20px;
+            font-weight: bold;
+        }
 
-    .img-ebook {
-      width: 180px;
-      margin: 1.5rem auto;
-      border-radius: 10px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-    }
+        #mensagem.sucesso {
+            color: green;
+        }
 
-    #timer {
-      margin-top: 20px;
-      font-weight: bold;
-      color: #d63031;
-    }
-
-    /* POPUP */
-    .popup {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.55);
-      display: <?= $liberado ? 'none' : 'flex' ?>;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      padding: 1rem;
-    }
-
-    .popup-content {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 20px;
-      width: 100%;
-      max-width: 420px;
-      text-align: center;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-      animation: fadeIn 0.6s ease;
-    }
-
-    .popup-content h2 {
-      margin-bottom: 1rem;
-      font-size: 1.4rem;
-    }
-
-    input {
-      padding: 12px;
-      width: 100%;
-      margin-top: 15px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-
-    button {
-      margin-top: 18px;
-      padding: 12px 20px;
-      background: #38b97e;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background: #2c9b68;
-    }
-
-    .error {
-      color: red;
-      margin-top: 12px;
-      font-size: 0.9rem;
-    }
-
-    #codigo-expirado {
-      display: none;
-      margin-top: 20px;
-    }
-
-    .expirado-links {
-      margin-top: 15px;
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .expirado-links a {
-      padding: 10px 16px;
-      border-radius: 8px;
-      text-decoration: none;
-      color: white;
-      font-weight: bold;
-    }
-
-    .expirado-links a:first-child {
-      background: #503296;
-    }
-
-    .expirado-links a:last-child {
-      background: #25d366;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 500px) {
-      .container {
-        padding: 2rem 1.5rem;
-        margin: 3vh 1rem;
-      }
-
-      .img-ebook {
-        width: 140px;
-      }
-    }
-  </style>
+        #mensagem.erro {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 
-<div class="popup" id="popup">
-  <div class="popup-content">
-    <h2>🔐 Acesso exclusivo</h2>
-    <p>Insira o código do seu pedido para liberar o download:</p>
-    <input type="text" id="codigo" placeholder="Ex: #123456" />
-    <button onclick="verificarCodigo()">Verificar</button>
-    <div class="error" id="mensagem-erro"></div>
+    <h1>Verificação de Código</h1>
 
-    <div id="codigo-expirado">
-      <p style="color:#b00020; font-weight:bold;">⏱️ Código expirado! Tempo de download encerrado.</p>
-      <div class="expirado-links">
-        <a href="https://seguro.agencialed.com/r/NEOYZECNBO" target="_blank">Comprar Novamente</a>
-        <a href="https://wa.me/558599671024" target="_blank">Falar com Suporte</a>
-      </div>
-    </div>
-  </div>
-</div>
+    <form id="form-verificacao">
+        <label for="codigo">Código do Pedido (15 dígitos):</label>
+        <input type="text" id="codigo" name="codigo" maxlength="15" required>
+        <button type="submit">Verificar</button>
+    </form>
 
-<div class="container" id="conteudo">
-  <h1>🎉 Seu eBook está pronto!</h1>
-  <img class="img-ebook" src="capa-lista-decoração-slim.jpg" alt="Capa do eBook" />
-  <p><strong>Fornecedores Nacionais de Decoração</strong></p>
-  <a href="fornecedores-nacionais-decoracao.pdf" class="btn-dwnld" download>📥 Baixar eBook Agora</a>
-  <div id="timer"></div>
-</div>
+    <div id="mensagem"></div>
 
-<script>
-function verificarCodigo() {
-  const codigo = document.getElementById('codigo').value.trim();
-  const erro = document.getElementById('mensagem-erro');
-  erro.textContent = '';
+    <script>
+        const form = document.getElementById('form-verificacao');
+        const mensagem = document.getElementById('mensagem');
 
-  if (!codigo) {
-    erro.textContent = 'Por favor, digite o código do pedido.';
-    return;
-  }
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
 
-  fetch('verificar-codigo.php', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    body: 'codigo=' + encodeURIComponent(codigo)
-  })
-  .then(res => res.text())
-  .then(res => {
-    if (res === 'sucesso') {
-      setTimeout(() => window.location.reload(), 1000);
-    } else {
-      erro.textContent = res;
-    }
-  })
-  .catch(() => {
-    erro.textContent = 'Erro na verificação. Tente novamente.';
-  });
-}
+            const codigo = document.getElementById('codigo').value.trim();
 
-<?php if ($liberado): ?>
-const tempoRestante = 30 * 60 * 1000;
-const fim = new Date().getTime() + tempoRestante;
-const timerDiv = document.getElementById('timer');
+            if (!/^\d{15}$/.test(codigo)) {
+                mensagem.textContent = "O código deve conter exatamente 15 dígitos numéricos.";
+                mensagem.className = "erro";
+                return;
+            }
 
-const x = setInterval(() => {
-  const agora = new Date().getTime();
-  const dist = fim - agora;
+            try {
+                const resposta = await fetch('verificar-codigo.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `codigo=${encodeURIComponent(codigo)}&email=fake@exemplo.com`
+                });
 
-  if (dist <= 0) {
-    clearInterval(x);
-    document.cookie = "ebook_liberado=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    document.getElementById('popup').style.display = 'flex';
-    document.getElementById('conteudo').style.display = 'none';
-    document.getElementById('codigo-expirado').style.display = 'block';
-    timerDiv.innerHTML = '';
-  } else {
-    const min = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
-    const seg = Math.floor((dist % (1000 * 60)) / 1000);
-    timerDiv.innerHTML = `⏳ Tempo restante para download: ${min}m ${seg}s`;
-  }
-}, 1000);
-<?php endif; ?>
-</script>
+                const resultado = await resposta.json();
+
+                mensagem.textContent = resultado.mensagem;
+                mensagem.className = resultado.status === 'sucesso' ? 'sucesso' : 'erro';
+            } catch (error) {
+                mensagem.textContent = "Erro na comunicação com o servidor.";
+                mensagem.className = "erro";
+            }
+        });
+    </script>
 
 </body>
 </html>

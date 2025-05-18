@@ -1,252 +1,81 @@
 <?php
 
-
-
-ini_set('display_errors', 1);
-
-ini_set('display_startup_errors', 1);
-
-error_reporting(E_ALL);
-
-
-
-// Dados de conexão
+header('Content-Type: application/json');
 
 $host = 'localhost';
-
 $dbname = 'paymen58_fornecedores_nacionais';
-
 $username = 'paymen58';
-
 $password = 'u4q7+B6ly)obP_gxN9sNe';
 
-
-
-// Secret da Yampi (caso ative depois)
-
-$secret = 'wh_rweQPzt0jQ5lRY3ZbrNYZQFFdjc8ZjDWOguYm';
-
-
-
-// Captura o corpo bruto da requisição
-
-$rawPost = file_get_contents('php://input');
-
-
-
-// (Desativado por enquanto)
-
-// $headers = getallheaders();
-
-// $signatureYampi = $headers['X-Yampi-Signature'] ?? '';
-
-// $signatureLocal = hash_hmac('sha256', $rawPost, $secret);
-
-// if (!hash_equals($signatureYampi, $signatureLocal)) {
-
-//     http_response_code(401);
-
-//     exit('Requisição não autorizada.');
-
-// }
-
-
-
-// Conecta ao banco
-
 $conn = new mysqli($host, $username, $password, $dbname);
-
 if ($conn->connect_error) {
-
     http_response_code(500);
-
-    exit('Erro de conexão: ' . $conn->connect_error);
-
+    echo json_encode(['status' => 'erro', 'mensagem' => 'Erro de conexão com o banco de dados.']);
+    exit;
 }
 
+$conn->set_charset('utf8mb4');
 
+// Apenas o código agora é necessário
+$codigoPedido = trim($_POST['codigo'] ?? '');
 
-// Decodifica JSON
-
-$data = json_decode($rawPost, true);
-
-if (!$data) {
-
+// Validação do código
+if (!$codigoPedido) {
     http_response_code(400);
-
-    exit('JSON inválido ou vazio.');
-
+    echo json_encode(['status' => 'erro', 'mensagem' => 'Código é obrigatório.']);
+    exit;
 }
 
-
-
-// Extrai dados
-
-$orderCode = $data['code'] ?? null;
-
-$email = $data['customer']['email'] ?? null;
-
-$sku = $data['items'][0]['product']['sku'] ?? '';
-
-
-
-if (!$orderCode || !$email) {
-
+if (!preg_match('/^\d{15}$/', $codigoPedido)) {
     http_response_code(400);
-
-    exit('Dados incompletos.');
-
+    echo json_encode(['status' => 'erro', 'mensagem' => 'Formato de código inválido.']);
+    exit;
 }
 
+// Verifica se o código existe
+$stmt = $conn->prepare("SELECT * FROM pedidos WHERE codigo_pedido = ?");
+$stmt->bind_param("s", $codigoPedido);
+$stmt->execute();
+$result = $stmt->get_result();
 
+if ($result->num_rows === 0) {
+    echo json_encode(['status' => 'erro', 'mensagem' => 'Código não encontrado.']);
+} else {
+    $row = $result->fetch_assoc();
 
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    if ((int)$row['usado'] === 1) {
+        echo json_encode(['status' => 'erro', 'mensagem' => 'Este código já foi utilizado.']);
+        exit;
+    }
 
-    http_response_code(400);
+    $sku = $row['sku'];
 
-    exit('E-mail inválido.');
+    // Marca como usado (sem o email agora)
+    $update = $conn->prepare("UPDATE pedidos SET usado = 1 WHERE codigo_pedido = ?");
+    $update->bind_param("s", $codigoPedido);
 
-}
+    if ($update->execute()) {
+        // Define cookie válido por 30 minutos com opções seguras
+        setcookie('ebook_decoracao_liberado', '1', [
+            'expires' => time() + 1800,
+            'path' => '/',
+            'secure' => true,
+            'httponly' => false,
+            'samesite' => 'Lax'
+        ]);
 
+        echo json_encode([
+            'status' => 'sucesso',
+            'mensagem' => 'Código validado com sucesso.',
+            'sku' => $sku
+        ]);
+    } else {
+        http_response_code(500);
+        echo json_encode(['status' => 'erro', 'mensagem' => 'Erro ao atualizar o pedido.']);
+    }
 
-
-// Verifica duplicidade
-
-$check = $conn->prepare("SELECT id FROM pedidos WHERE codigo_pedido = ?");
-
-$check->bind_param("s", $orderCode);
-
-$check->execute();
-
-$check->store_result();
-
-
-
-if ($check->num_rows > 0) {
-
-    $check->close();
-
-    http_response_code(200);
-
-    exit('Pedido já registrado.');
-
-}
-
-$check->close();
-
-
-
-// Insere pedido
-
-$stmt = $conn->prepare("INSERT INTO pedidos (codigo_pedido, email_cliente, ebook, usado, sku) VALUES (?, ?, 'decoracao', 0, ?)");
-
-$stmt->bind_param("sss", $orderCode, $email, $sku);
-
-
-
-if (!$stmt->execute()) {
-
-    http_response_code(500);
-
-    exit('Erro ao inserir pedido.');
-
+    $update->close();
 }
 
 $stmt->close();
-
-
-
-// Envia o e-mail com link de acesso
-
-require_once '/home1/paymen58/agencialed.com/email/PHPMailer/PHPMailer.php';
-
-require_once '/home1/paymen58/agencialed.com/email/PHPMailer/SMTP.php';
-
-require_once '/home1/paymen58/agencialed.com/email/PHPMailer/Exception.php';
-
-
-
-use PHPMailer\PHPMailer\PHPMailer;
-
-use PHPMailer\PHPMailer\Exception;
-
-
-
-// Idealmente, use variável de ambiente ou um arquivo seguro para senhas
-
-define('SMTP_PASSWORD', 'Lochayde@154719');
-
-
-
-$mail = new PHPMailer(true);
-
-
-
-try {
-
-    $mail->CharSet = 'UTF-8'; // CORREÇÃO PARA UTF-8
-
-    $mail->isSMTP();
-
-    $mail->Host = 'smtp.zoho.com';
-
-    $mail->SMTPAuth = true;
-
-    $mail->Username = 'contato@agencialed.com';
-
-    $mail->Password = SMTP_PASSWORD;
-
-    $mail->SMTPSecure = 'tls';
-
-    $mail->Port = 587;
-
-
-
-    $mail->setFrom('contato@agencialed.com', 'Agência LED');
-
-    $mail->addAddress($email);
-
-
-
-    $mail->isHTML(true);
-
-    $mail->Subject = 'Pronto! Baixe Sua Lista de Fonecedores Agora!';
-
-    $mail->Body = "
-
-        <h2>Obrigado pela sua compra!</h2>
-
-        <p>Seu código de pedido é: <strong>{$orderCode}</strong></p>
-
-        <p>Para fazer o download da lista, clique no botão abaixo e informe seu código quando solicitado:</p>
-
-        <p><a href='https://agencialed.com/fornecedores-decoracao.php' target='_blank' style='padding: 10px 20px; background-color: #38b97e; color: white; text-decoration: none; border-radius: 5px;'>Acessar PDF da Lista</a></p>
-
-        <p><em>Guarde seu código com segurança. Ele só poderá ser usado uma vez.</em></p>
-
-    ";
-
-
-
-    $mail->send();
-
-} catch (Exception $e) {
-
-    error_log('Erro ao enviar e-mail: ' . $mail->ErrorInfo);
-
-}
-
-
-
-// Fecha conexão
-
 $conn->close();
-
-
-
-http_response_code(200);
-
-echo 'Webhook processado com sucesso.';
-
-?>
-
