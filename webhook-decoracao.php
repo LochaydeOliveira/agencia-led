@@ -10,9 +10,6 @@ $chave_secreta = 'wh_rweQPzt0jQ5lRY3ZbrNYZQFFdjc8ZjDWOguYm';
 // Lê o corpo bruto da requisição
 $body = file_get_contents('php://input');
 
-// Log para debug (apagar após testes)
-file_put_contents('log_yampi.txt', $body . PHP_EOL, FILE_APPEND);
-
 // Verifica a assinatura HMAC SHA256 enviada pela Yampi
 $assinatura_recebida = $_SERVER['HTTP_X_YAMPI_SIGNATURE'] ?? '';
 $assinatura_calculada = hash_hmac('sha256', $body, $chave_secreta);
@@ -26,17 +23,21 @@ if (!hash_equals($assinatura_calculada, $assinatura_recebida)) {
 // Decodifica o JSON após validar a assinatura
 $data = json_decode($body, true);
 
-// Corrigido: evento vem em inglês
-if (!isset($data['event']) || $data['event'] !== 'order_created') {
-    echo json_encode(['status' => 'ignorado', 'mensagem' => 'Evento não é order_created.']);
+// Log de debug detalhado
+file_put_contents('log_yampi.txt', date('Y-m-d H:i:s') . "\n" . print_r($data, true) . "\n\n", FILE_APPEND);
+
+// Verifica se é o evento correto
+if (!isset($data['event']) || $data['event'] !== 'order.created') {
+    echo json_encode(['status' => 'ignorado', 'mensagem' => 'Evento não é order.created.']);
     exit;
 }
 
-// Validação de dados essenciais
-$codigo = trim($data['code'] ?? '');
-$email = filter_var($data['customer']['email'] ?? '', FILTER_VALIDATE_EMAIL);
-$sku = trim($data['items'][0]['product']['sku'] ?? '');
+// Extrai dados essenciais
+$codigo = trim($data['data']['reference'] ?? '');
+$email = filter_var($data['data']['customer']['email'] ?? '', FILTER_VALIDATE_EMAIL);
+$sku = trim($data['data']['products'][0]['sku'] ?? '');
 
+// Validação
 if (!$codigo || !$email || !$sku) {
     http_response_code(400);
     echo json_encode(['status' => 'erro', 'mensagem' => 'Dados inválidos ou incompletos.']);
