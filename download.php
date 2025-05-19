@@ -45,10 +45,11 @@ try {
     }
 
     // Define cabeçalhos para forçar download e evitar cache
+
     header('Content-Type: application/pdf');
     header('Content-Disposition: attachment; filename="fornecedores-nacionais-decoracao.pdf"');
     header('Content-Length: ' . filesize($arquivo));
-    header('Cache-Control: no-store, no-cache, must-revalidate');
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
     header('Pragma: no-cache');
     header('Expires: 0');
 
