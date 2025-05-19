@@ -1,12 +1,6 @@
 <?php
 /**
- * Webhook Yampi – versão com melhorias
- * Ambiente de teste usa o evento order.created; em produção só envia e‑mail se status === 'paid'.
- * Configure variáveis de ambiente em seu painel de hospedagem ou no .htaccess:
- *   SetEnv APP_ENV "prod"
- *   SetEnv YAMPI_SECRET "wh_xxx"
- *   SetEnv DB_PASS "<senha_mysql>"
- *   SetEnv SMTP_PASS "<senha_smtp>"
+ * Webhook Yampi – versão com melhorias (ajustada para agencialed.com na HostGator)
  */
 
 declare(strict_types=1);
@@ -25,28 +19,21 @@ header('Pragma: no-cache');
 // ⚙️ Configurações de ambiente
 // ───────────────────────────────────────────────────────────
 
-define('ENV', getenv('APP_ENV') ?: 'test');       // 'test' | 'prod'
+define('ENV', getenv('APP_ENV') ?: 'test');
 $YAMPI_SECRET = getenv('YAMPI_SECRET') ?: 'wh_rweQPzt0jQ5lRY3ZbrNYZQFFdjc8ZjDWOguYm';
 
-// Banco de dados - ideal passar também por variável de ambiente
 $dbHost = getenv('DB_HOST') ?: 'localhost';
 $dbName = getenv('DB_NAME') ?: 'paymen58_lista_decoracao';
 $dbUser = getenv('DB_USER') ?: 'paymen58';
 $dbPass = getenv('DB_PASS') ?: 'u4q7+B6ly)obP_gxN9sNe';
 $dsn     = "mysql:host=$dbHost;dbname=$dbName;charset=utf8mb4";
 
-// SMTP
 $SMTP_HOST = getenv('SMTP_HOST') ?: 'smtp.zoho.com';
 $SMTP_PORT = getenv('SMTP_PORT') ?: 587;
 $SMTP_USER = getenv('SMTP_USER') ?: 'contato@agencialed.com';
 $SMTP_PASS = getenv('SMTP_PASS') ?: 'SENHA_EM_TESTE';
 
-// Diretório de logs (fora da raiz pública, se possível)
 $logFile = __DIR__ . '/../logs/yampi_webhook.log';
-
-// ───────────────────────────────────────────────────────────
-// 🚦 Valida método HTTP
-// ───────────────────────────────────────────────────────────
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -54,12 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// ───────────────────────────────────────────────────────────
-// 🔐 Validação da assinatura HMAC
-// ───────────────────────────────────────────────────────────
-
-$body               = file_get_contents('php://input');
-$assinaturaRecebida  = $_SERVER['HTTP_X_YAMPI_SIGNATURE'] ?? '';
+$body = file_get_contents('php://input');
+$assinaturaRecebida = $_SERVER['HTTP_X_YAMPI_SIGNATURE'] ?? '';
 $assinaturaCalculada = hash_hmac('sha256', $body, $YAMPI_SECRET);
 
 if (!hash_equals($assinaturaCalculada, $assinaturaRecebida)) {
@@ -68,13 +51,8 @@ if (!hash_equals($assinaturaCalculada, $assinaturaRecebida)) {
     exit;
 }
 
-// ───────────────────────────────────────────────────────────
-// 📥 Decodifica payload
-// ───────────────────────────────────────────────────────────
-
 $payload = json_decode($body, true);
 
-// Log só em ambiente de teste para evitar dados sensíveis em produção
 if (ENV === 'test') {
     file_put_contents($logFile, date('Y-m-d H:i:s') . "\n" . print_r($payload, true) . "\n", FILE_APPEND);
 }
@@ -84,21 +62,16 @@ if (!isset($payload['event']) || $payload['event'] !== 'order.created') {
     exit;
 }
 
-// ───────────────────────────────────────────────────────────
-// 🗃️ Extrai campos principais e valida
-// ───────────────────────────────────────────────────────────
-
-$order     = $payload['data'] ?? [];
-$codigo    = trim($order['reference'] ?? '');
-$email     = filter_var($order['customer']['email'] ?? '', FILTER_VALIDATE_EMAIL) ?: '';
-$status    = $order['status']['alias'] ?? '';
-$valor     = (float)($order['value_total'] ?? 0);
+$order = $payload['data'] ?? [];
+$codigo = trim($order['reference'] ?? '');
+$email = filter_var($order['customer']['email'] ?? '', FILTER_VALIDATE_EMAIL) ?: '';
+$status = $order['status']['alias'] ?? '';
+$valor = (float)($order['value_total'] ?? 0);
 $createdAtRaw = $order['created_at'] ?? null;
 $pagamento = $order['payments'][0]['method'] ?? '';
-$skus      = array_column($order['products'] ?? [], 'sku');
-$skuStr    = implode(',', array_map('trim', $skus));
+$skus = array_column($order['products'] ?? [], 'sku');
+$skuStr = implode(',', array_map('trim', $skus));
 
-// Valida data criada no formato ISO 8601 e converte para MySQL
 $createdAt = null;
 if ($createdAtRaw) {
     $dt = DateTime::createFromFormat(DateTime::ATOM, $createdAtRaw);
@@ -113,17 +86,12 @@ if (!$codigo || !$email || !$skuStr || !$createdAt) {
     exit;
 }
 
-// ───────────────────────────────────────────────────────────
-// 🏦 Conexão PDO & inserção / duplicidade
-// ───────────────────────────────────────────────────────────
-
 try {
     $pdo = new PDO($dsn, $dbUser, $dbPass, [
-        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
 
-    // Já existe? Se não, insere
     $chk = $pdo->prepare("SELECT id FROM pedidos WHERE codigo = ? LIMIT 1");
     $chk->execute([$codigo]);
 
@@ -142,16 +110,12 @@ try {
     exit;
 }
 
-// ───────────────────────────────────────────────────────────
-// ✉️ Envio de e‑mail (apenas se permitido)
-// ───────────────────────────────────────────────────────────
-
 $enviarEmail = (ENV === 'test') || ($status === 'paid');
 
 if ($enviarEmail) {
-    require_once '/home1/paymen58/agencialed.com/email/PHPMailer/PHPMailer.php';
-    require_once '/home1/paymen58/agencialed.com/email/PHPMailer/SMTP.php';
-    require_once '/home1/paymen58/agencialed.com/email/PHPMailer/Exception.php';
+    require_once '/home1/paymen58/agencialed.com/email/PHPMailer/src/PHPMailer.php';
+    require_once '/home1/paymen58/agencialed.com/email/PHPMailer/src/SMTP.php';
+    require_once '/home1/paymen58/agencialed.com/email/PHPMailer/src/Exception.php';
 
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
@@ -172,16 +136,13 @@ if ($enviarEmail) {
 
         $mail->isHTML(true);
         $mail->Subject = 'Pronto! Baixe Sua Lista de Fornecedores Agora!';
-        $mail->Body    = "<h2>Obrigado pela sua compra!</h2>
+        $mail->Body = "<h2>Obrigado pela sua compra!</h2>
             <p>Seu código de pedido é: <strong>{$codigo}</strong></p>
             <p>Para baixar sua lista, clique no botão abaixo e informe o código quando solicitado:</p>
             <p><a href='https://agencialed.com/fornecedores-decoracao.php' target='_blank' style='padding: 10px 20px; background-color: #38b97e; color: white; text-decoration: none; border-radius: 5px;'>Acessar PDF da Lista</a></p>
             <p><em>Guarde seu código com segurança. Ele só poderá ser usado uma vez.</em></p>";
 
         $mail->send();
-
-        // Opcional: marcar email_enviado=1 na tabela (se criar a coluna)
-        // $pdo->prepare("UPDATE pedidos SET email_enviado = 1 WHERE codigo = ?")->execute([$codigo]);
 
     } catch (Exception $e) {
         error_log('Mailer error webhook: ' . $e->getMessage());
