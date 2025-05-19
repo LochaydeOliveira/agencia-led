@@ -1,12 +1,10 @@
 <?php
-header('Content-Type: text/plain; charset=utf-8');
-
-$numero = $_GET['numero'] ?? '';
+$numero = $_GET['pedido'] ?? '';
 $numero = preg_replace('/\D/', '', $numero);
 
 if (!preg_match('/^\d+$/', $numero)) {
     http_response_code(400);
-    echo "Número inválido.";
+    echo "Número do pedido inválido.";
     exit;
 }
 
@@ -19,12 +17,23 @@ try {
     $stmt->execute([$numero]);
     $pedido = $stmt->fetch();
 
-    if (!$pedido || !$pedido['usado']) {
+    if (!$pedido) {
         http_response_code(403);
-        echo "Número inválido ou ainda não verificado.";
+        echo "Pedido não encontrado.";
         exit;
     }
 
+    if ($pedido['usado']) {
+        http_response_code(403);
+        echo "Este pedido já foi utilizado para download.";
+        exit;
+    }
+
+    // Marcar como usado
+    $update = $pdo->prepare("UPDATE pedidos SET usado = 1 WHERE numero_pedido = ?");
+    $update->execute([$numero]);
+
+    // Caminho real do arquivo PDF
     $arquivo = realpath(__DIR__ . '/arquivos/fornecedores-nacionais-decoracao.pdf');
     $diretorioPermitido = realpath(__DIR__ . '/arquivos');
 
@@ -34,6 +43,7 @@ try {
         exit;
     }
 
+    // Força o download do PDF
     header('Content-Type: application/pdf');
     header('Content-Disposition: attachment; filename="fornecedores-nacionais-decoracao.pdf"');
     header('Content-Length: ' . filesize($arquivo));
@@ -47,6 +57,6 @@ try {
 } catch (Exception $e) {
     error_log('Erro no download: ' . $e->getMessage());
     http_response_code(500);
-    echo "Erro interno no servidor.";
+    echo "Erro interno ao processar seu pedido.";
     exit;
 }
