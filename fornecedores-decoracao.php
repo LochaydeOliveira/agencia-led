@@ -31,6 +31,9 @@
             padding: 10px;
             font-size: 16px;
         }
+        input[type="text"]:invalid {
+            border-color: red;
+        }
         button {
             padding: 12px;
             font-size: 16px;
@@ -61,10 +64,10 @@
 
     <h1>Verificação de Código</h1>
 
-    <form id="form-verificacao" novalidate>
+    <form id="form-verificacao" novalidate autocomplete="off">
         <label for="codigo">Código do Pedido (15 dígitos):</label>
-        <input type="text" id="codigo" name="codigo" maxlength="15" pattern="\d{15}" required>
-        <button type="submit">Verificar</button>
+        <input type="text" id="codigo" name="codigo" maxlength="15" pattern="\d{15}" required autocomplete="off">
+        <button type="submit" id="botao">Verificar</button>
     </form>
 
     <div id="mensagem"></div>
@@ -73,6 +76,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('form-verificacao');
             const mensagem = document.getElementById('mensagem');
+            const botao = document.getElementById('botao');
 
             form.addEventListener('submit', async function (e) {
                 e.preventDefault();
@@ -84,6 +88,8 @@
                     mensagem.className = "erro";
                     return;
                 }
+
+                botao.disabled = true;
 
                 try {
                     const resposta = await fetch('verificar-codigo.php', {
@@ -107,6 +113,8 @@
                     console.error('Erro na requisição:', error);
                     mensagem.textContent = "Erro na comunicação com o servidor. Tente novamente mais tarde.";
                     mensagem.className = "erro";
+                } finally {
+                    botao.disabled = false;
                 }
             });
         });

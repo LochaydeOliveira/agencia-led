@@ -1,8 +1,18 @@
 <?php
 header('Content-Type: application/json');
 
+// Verifica método POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode(['status' => 'erro', 'mensagem' => 'Método não permitido.']);
+    exit;
+}
+
 $codigo = $_POST['codigo'] ?? '';
 
+// Remove tudo que não for número
+$codigo = preg_replace('/\D/', '', $codigo);
+
+// Validação do código
 if (!preg_match('/^\d{15}$/', $codigo)) {
     echo json_encode(['status' => 'erro', 'mensagem' => 'O código deve conter exatamente 15 dígitos.']);
     exit;
@@ -29,8 +39,8 @@ try {
 }
 
 try {
-    // Verifica se o código existe
-    $stmt = $pdo->prepare("SELECT id, usado FROM pedidos WHERE codigo = ?");
+    // Verifica se o código existe e ainda não foi usado
+    $stmt = $pdo->prepare("SELECT id, usado FROM pedidos WHERE codigo = ? LIMIT 1");
     $stmt->execute([$codigo]);
     $pedido = $stmt->fetch();
 
@@ -44,8 +54,8 @@ try {
         exit;
     }
 
-    // Atualiza como usado
-    $update = $pdo->prepare("UPDATE pedidos SET usado = 1 WHERE id = ?");
+    // Marca como usado e registra data/hora
+    $update = $pdo->prepare("UPDATE pedidos SET usado = 1, data_uso = NOW() WHERE id = ?");
     $update->execute([$pedido['id']]);
 
     echo json_encode([
