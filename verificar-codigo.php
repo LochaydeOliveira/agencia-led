@@ -8,12 +8,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$codigo = $_POST['codigo'] ?? '';
-$codigo = preg_replace('/\D/', '', $codigo);
+$numero = $_POST['codigo'] ?? '';
+$numero = preg_replace('/\D/', '', $numero);
 
-if (strlen($codigo) !== 15) {
+if (strlen($numero) < 5 || strlen($numero) > 20) {
     http_response_code(400);
-    echo json_encode(['status' => 'erro', 'mensagem' => 'O código deve conter exatamente 15 dígitos.']);
+    echo json_encode(['status' => 'erro', 'mensagem' => 'Número do pedido inválido.']);
     exit;
 }
 
@@ -40,31 +40,28 @@ try {
 }
 
 try {
-    // Busca o pedido pelo código
-    $stmt = $pdo->prepare("SELECT id, usado FROM pedidos WHERE codigo = ? LIMIT 1");
-    $stmt->execute([$codigo]);
+    $stmt = $pdo->prepare("SELECT id, usado FROM pedidos WHERE numero = ? LIMIT 1");
+    $stmt->execute([$numero]);
     $pedido = $stmt->fetch();
 
     if (!$pedido) {
         http_response_code(404);
-        echo json_encode(['status' => 'erro', 'mensagem' => 'Código não encontrado.']);
+        echo json_encode(['status' => 'erro', 'mensagem' => 'Número do pedido não encontrado.']);
         exit;
     }
 
     if ((int)$pedido['usado'] === 1) {
-        echo json_encode(['status' => 'erro', 'mensagem' => 'Este código já foi utilizado.']);
+        echo json_encode(['status' => 'erro', 'mensagem' => 'Este número de pedido já foi utilizado.']);
         exit;
     }
 
-    // Marca o código como usado - aqui se quiser permitir múltiplos usos, retire essa parte
     $update = $pdo->prepare("UPDATE pedidos SET usado = 1 WHERE id = ?");
     $update->execute([$pedido['id']]);
 
-    // Resposta com o link para download (front pode usar para redirecionar)
     echo json_encode([
         'status' => 'sucesso',
-        'mensagem' => 'Código verificado com sucesso! O download iniciará automaticamente.',
-        'link' => 'https://agencialed.com/download.php?codigo=' . $codigo,
+        'mensagem' => 'Pedido verificado com sucesso! O download iniciará automaticamente.',
+        'link' => 'https://agencialed.com/download.php?numero=' . $numero,
     ]);
 
 } catch (Exception $e) {

@@ -1,6 +1,6 @@
 <?php
 
-// Salvar o conteúdo bruto da requisição para análise
+// Salvar o conteúdo bruto da requisição para log
 file_put_contents('log_webhook_yampi.txt', file_get_contents('php://input'));
 
 // ─────────────── CONFIGURAÇÕES ───────────────
@@ -60,12 +60,13 @@ if ($evento !== 'order.paid') {
 }
 
 // ─────────────── EXTRAÇÃO DOS DADOS ───────────────
+$numero = $dados['number'] ?? null;
+$cliente = $dados['customer']['name'] ?? null;
 $email = $dados['customer']['email'] ?? null;
+$telefone = $dados['customer']['phone'] ?? null;
 $sku = $dados['items'][0]['sku'] ?? null;
-$status = $dados['status']['current'] ?? null;
-$codigo = substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 15); // Gera código único
 
-if (!$email || !$sku || !$status) {
+if (!$numero || !$email || !$sku) {
     http_response_code(400);
     echo json_encode(['erro' => 'Dados incompletos']);
     exit;
@@ -73,8 +74,8 @@ if (!$email || !$sku || !$status) {
 
 // ─────────────── INSERE PEDIDO NO BANCO ───────────────
 try {
-    $stmt = $pdo->prepare("INSERT INTO pedidos (email, sku, status, codigo, usado, data_criacao) VALUES (?, ?, ?, ?, 0, NOW())");
-    $stmt->execute([$email, $sku, $status, $codigo]);
+    $stmt = $pdo->prepare("INSERT INTO pedidos (numero, usado, sku, email, cliente, telefone, email_enviado) VALUES (?, 0, ?, ?, ?, ?, 0)");
+    $stmt->execute([$numero, $sku, $email, $cliente, $telefone]);
 } catch (Exception $e) {
     error_log('Erro insert: ' . $e->getMessage());
     http_response_code(500);
@@ -82,16 +83,20 @@ try {
     exit;
 }
 
-// ─────────────── ENVIO DE E-MAIL COM O CÓDIGO ───────────────
-$assunto = 'Seu código exclusivo para download';
-$mensagem = "Olá,\n\nSeu pedido foi aprovado com sucesso!\n\nCódigo: $codigo\n\nUse esse código na página para liberar o download.\n\nAgradecemos sua compra!";
+// ─────────────── ENVIO DE E-MAIL COM O NÚMERO ───────────────
+$assunto = 'Seu código de acesso à lista de fornecedores de decoração';
+$mensagem = "Olá $cliente,\n\nSeu pedido foi aprovado com sucesso!\n\nAqui está seu código de acesso: $numero\n\nUse esse código em:\nhttps://agencialed.com/fornecedores-decoracao.php\n\nAtenciosamente,\nEquipe Agência LED";
+
 $headers = 'From: contato@agencialed.com' . "\r\n" .
            'Reply-To: contato@agencialed.com' . "\r\n" .
            'X-Mailer: PHP/' . phpversion();
 
-mail($email, $assunto, $mensagem, $headers);
+if (mail($email, $assunto, $mensagem, $headers)) {
+    // Atualiza status de e-mail enviado
+    $pdo->prepare("UPDATE pedidos SET email_enviado = 1 WHERE numero = ?")->execute([$numero]);
+}
 
 // ─────────────── RESPOSTA FINAL ───────────────
 http_response_code(200);
 echo json_encode(['status' => 'sucesso', 'mensagem' => 'Pedido processado com sucesso.']);
-
+?>

@@ -68,11 +68,11 @@
 </head>
 <body>
 
-    <h1>Verificação de Código</h1>
+    <h1>Verificação de Pedido</h1>
 
     <form id="form-verificacao" novalidate autocomplete="off">
-        <label for="codigo">Código do Pedido (15 dígitos):</label>
-        <input type="text" id="codigo" name="codigo" maxlength="15" pattern="\d{15}" required autocomplete="off" inputmode="numeric" />
+        <label for="codigo">Número do Pedido:</label>
+        <input type="text" id="codigo" name="codigo" required autocomplete="off" inputmode="numeric" />
         <button type="submit" id="botao">Verificar</button>
     </form>
 
@@ -90,16 +90,15 @@
 
                 const codigo = inputCodigo.value.trim();
 
-                // Validação client-side extra
-                if (!/^\d{15}$/.test(codigo)) {
-                    mensagem.textContent = "O código deve conter exatamente 15 dígitos numéricos.";
+                if (!/^\d+$/.test(codigo)) {
+                    mensagem.textContent = "Digite apenas números.";
                     mensagem.className = "erro";
                     inputCodigo.focus();
                     return;
                 }
 
                 botao.disabled = true;
-                mensagem.textContent = "Verificando código...";
+                mensagem.textContent = "Verificando número do pedido...";
                 mensagem.className = "";
 
                 try {
@@ -109,24 +108,18 @@
                         body: `codigo=${encodeURIComponent(codigo)}`
                     });
 
-                    if (!resposta.ok) {
-                        throw new Error(`HTTP error! status: ${resposta.status}`);
-                    }
-
                     const resultado = await resposta.json();
 
                     mensagem.textContent = resultado.mensagem;
                     mensagem.className = resultado.status === 'sucesso' ? 'sucesso' : 'erro';
 
                     if (resultado.status === 'sucesso' && resultado.link) {
-                        // Pequena pausa para o usuário ler a mensagem, depois redireciona
                         setTimeout(() => {
                             window.location.href = resultado.link;
                         }, 2000);
                     }
                 } catch (error) {
-                    console.error('Erro na requisição:', error);
-                    mensagem.textContent = "Erro na comunicação com o servidor. Tente novamente mais tarde.";
+                    mensagem.textContent = "Erro de comunicação. Tente novamente.";
                     mensagem.className = "erro";
                 } finally {
                     botao.disabled = false;
