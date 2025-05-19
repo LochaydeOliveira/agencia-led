@@ -3,6 +3,11 @@
  * Webhook Yampi – versão com logs e suporte a eventos múltiplos
  */
 
+// Logar todos os cabeçalhos recebidos (para debug)
+$headers = getallheaders();
+file_put_contents($logFile, date('Y-m-d H:i:s') . " - Cabeçalhos recebidos:\n" . print_r($headers, true) . "\n", FILE_APPEND);
+
+
 declare(strict_types=1);
 
 ini_set('display_errors', '1');
