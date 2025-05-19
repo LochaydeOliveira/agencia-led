@@ -16,6 +16,10 @@ error_reporting(E_ALL);
 
 header('Content-Type: application/json');
 header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: SAMEORIGIN');
+header('X-XSS-Protection: 1; mode=block');
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
 
 // ───────────────────────────────────────────────────────────
 // ⚙️ Configurações de ambiente
@@ -24,17 +28,17 @@ header('X-Content-Type-Options: nosniff');
 define('ENV', getenv('APP_ENV') ?: 'test');       // 'test' | 'prod'
 $YAMPI_SECRET = getenv('YAMPI_SECRET') ?: 'wh_rweQPzt0jQ5lRY3ZbrNYZQFFdjc8ZjDWOguYm';
 
-// Banco de dados
-$dbHost = 'localhost';
-$dbName = 'paymen58_lista_decoracao';
-$dbUser = 'paymen58';
+// Banco de dados - ideal passar também por variável de ambiente
+$dbHost = getenv('DB_HOST') ?: 'localhost';
+$dbName = getenv('DB_NAME') ?: 'paymen58_lista_decoracao';
+$dbUser = getenv('DB_USER') ?: 'paymen58';
 $dbPass = getenv('DB_PASS') ?: 'u4q7+B6ly)obP_gxN9sNe';
 $dsn     = "mysql:host=$dbHost;dbname=$dbName;charset=utf8mb4";
 
 // SMTP
-$SMTP_HOST = 'smtp.zoho.com';
-$SMTP_PORT = 587;
-$SMTP_USER = 'contato@agencialed.com';
+$SMTP_HOST = getenv('SMTP_HOST') ?: 'smtp.zoho.com';
+$SMTP_PORT = getenv('SMTP_PORT') ?: 587;
+$SMTP_USER = getenv('SMTP_USER') ?: 'contato@agencialed.com';
 $SMTP_PASS = getenv('SMTP_PASS') ?: 'SENHA_EM_TESTE';
 
 // Diretório de logs (fora da raiz pública, se possível)
@@ -69,7 +73,11 @@ if (!hash_equals($assinaturaCalculada, $assinaturaRecebida)) {
 // ───────────────────────────────────────────────────────────
 
 $payload = json_decode($body, true);
-file_put_contents($logFile, date('Y-m-d H:i:s') . "\n" . print_r($payload, true) . "\n", FILE_APPEND);
+
+// Log só em ambiente de teste para evitar dados sensíveis em produção
+if (ENV === 'test') {
+    file_put_contents($logFile, date('Y-m-d H:i:s') . "\n" . print_r($payload, true) . "\n", FILE_APPEND);
+}
 
 if (!isset($payload['event']) || $payload['event'] !== 'order.created') {
     echo json_encode(['status' => 'ignorado', 'mensagem' => 'Evento não é order.created.']);
@@ -77,7 +85,7 @@ if (!isset($payload['event']) || $payload['event'] !== 'order.created') {
 }
 
 // ───────────────────────────────────────────────────────────
-// 🗃️ Extrai campos principais
+// 🗃️ Extrai campos principais e valida
 // ───────────────────────────────────────────────────────────
 
 $order     = $payload['data'] ?? [];
@@ -85,14 +93,23 @@ $codigo    = trim($order['reference'] ?? '');
 $email     = filter_var($order['customer']['email'] ?? '', FILTER_VALIDATE_EMAIL) ?: '';
 $status    = $order['status']['alias'] ?? '';
 $valor     = (float)($order['value_total'] ?? 0);
-$createdAt = $order['created_at'] ?? null;
+$createdAtRaw = $order['created_at'] ?? null;
 $pagamento = $order['payments'][0]['method'] ?? '';
 $skus      = array_column($order['products'] ?? [], 'sku');
 $skuStr    = implode(',', array_map('trim', $skus));
 
-if (!$codigo || !$email || !$skuStr) {
+// Valida data criada no formato ISO 8601 e converte para MySQL
+$createdAt = null;
+if ($createdAtRaw) {
+    $dt = DateTime::createFromFormat(DateTime::ATOM, $createdAtRaw);
+    if ($dt !== false) {
+        $createdAt = $dt->format('Y-m-d H:i:s');
+    }
+}
+
+if (!$codigo || !$email || !$skuStr || !$createdAt) {
     http_response_code(400);
-    echo json_encode(['status' => 'erro', 'mensagem' => 'Dados incompletos.']);
+    echo json_encode(['status' => 'erro', 'mensagem' => 'Dados incompletos ou inválidos.']);
     exit;
 }
 
@@ -106,7 +123,7 @@ try {
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
 
-    // Já existe?
+    // Já existe? Se não, insere
     $chk = $pdo->prepare("SELECT id FROM pedidos WHERE codigo = ? LIMIT 1");
     $chk->execute([$codigo]);
 
@@ -167,7 +184,7 @@ if ($enviarEmail) {
         // $pdo->prepare("UPDATE pedidos SET email_enviado = 1 WHERE codigo = ?")->execute([$codigo]);
 
     } catch (Exception $e) {
-        error_log('Mailer error webhook: ' . $mail->ErrorInfo);
+        error_log('Mailer error webhook: ' . $e->getMessage());
     }
 }
 
