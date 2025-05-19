@@ -1,4 +1,8 @@
 <?php
+
+file_put_contents(__DIR__ . '/log_webhook_yampi.txt', date('Y-m-d H:i:s') . ' - Webhook recebido: ' . file_get_contents('php://input') . "\n", FILE_APPEND);
+
+
 // ─────────────── CONFIGURAÇÕES ───────────────
 $webhookSecret = 'wh_rweQPzt0jQ5lRY3ZbrNYZQFFdjc8ZjDWOguYm';
 require '/home1/paymen58/agencialed.com/email/PHPMailer/src/PHPMailer.php';
