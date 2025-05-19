@@ -1,8 +1,8 @@
 <?php
 $numero = $_GET['pedido'] ?? '';
-$numero = preg_replace('/\D/', '', $numero);
+$numero = preg_replace('/\D/', '', $numero); // mantém só números
 
-if (!preg_match('/^\d+$/', $numero)) {
+if ($numero === '') {
     http_response_code(400);
     echo "Número do pedido inválido.";
     exit;
@@ -15,7 +15,7 @@ try {
 
     $stmt = $pdo->prepare("SELECT id, usado FROM pedidos WHERE numero_pedido = ? LIMIT 1");
     $stmt->execute([$numero]);
-    $pedido = $stmt->fetch();
+    $pedido = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$pedido) {
         http_response_code(403);
@@ -33,17 +33,14 @@ try {
     $update = $pdo->prepare("UPDATE pedidos SET usado = 1 WHERE numero_pedido = ?");
     $update->execute([$numero]);
 
-    // Caminho real do arquivo PDF
-    $arquivo = realpath(__DIR__ . '/arquivos/fornecedores-nacionais-decoracao.pdf');
-    $diretorioPermitido = realpath(__DIR__ . '/arquivos');
+    $arquivo = __DIR__ . '/arquivos/fornecedores-nacionais-decoracao.pdf';
 
-    if (!$arquivo || strpos($arquivo, $diretorioPermitido) !== 0 || !file_exists($arquivo)) {
+    if (!file_exists($arquivo)) {
         http_response_code(404);
         echo "Arquivo não encontrado.";
         exit;
     }
 
-    // Força o download do PDF
     header('Content-Type: application/pdf');
     header('Content-Disposition: attachment; filename="fornecedores-nacionais-decoracao.pdf"');
     header('Content-Length: ' . filesize($arquivo));
