@@ -2,7 +2,6 @@
 
 file_put_contents(__DIR__ . '/log_webhook_yampi.txt', date('Y-m-d H:i:s') . ' - Webhook recebido: ' . file_get_contents('php://input') . "\n", FILE_APPEND);
 
-
 // ─────────────── CONFIGURAÇÕES ───────────────
 $webhookSecret = 'wh_rweQPzt0jQ5lRY3ZbrNYZQFFdjc8ZjDWOguYm';
 require '/home1/paymen58/agencialed.com/email/PHPMailer/src/PHPMailer.php';
@@ -37,6 +36,14 @@ $dados = json_decode($bodyRaw, true);
 if (!is_array($dados)) {
     http_response_code(400);
     echo json_encode(['erro' => 'JSON inválido']);
+    exit;
+}
+
+// ─────────────── VERIFICA SE O EVENTO É order.created ───────────────
+$evento = $dados['event'] ?? '';
+if ($evento !== 'order.created') {
+    http_response_code(200);
+    echo json_encode(['status' => 'ignorado', 'mensagem' => 'Evento não processado']);
     exit;
 }
 
