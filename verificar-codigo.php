@@ -1,17 +1,15 @@
 <?php
-// ─────────────── CONFIGURAÇÕES GERAIS ───────────────
-header('Content-Type: application/json');
+// verificar-codigo.php
+header('Content-Type: application/json; charset=utf-8');
 
-// ─────────────── VERIFICAÇÃO DE MÉTODO ───────────────
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['status' => 'erro', 'mensagem' => 'Método não permitido.']);
     exit;
 }
 
-// ─────────────── VALIDAÇÃO DO CÓDIGO ───────────────
 $codigo = $_POST['codigo'] ?? '';
-$codigo = preg_replace('/\D/', '', $codigo); // Mantém apenas dígitos
+$codigo = preg_replace('/\D/', '', $codigo);
 
 if (strlen($codigo) !== 15) {
     http_response_code(400);
@@ -19,7 +17,6 @@ if (strlen($codigo) !== 15) {
     exit;
 }
 
-// ─────────────── CONEXÃO COM BANCO DE DADOS ───────────────
 $dbConfig = [
     'host' => 'localhost',
     'dbname' => 'paymen58_lista_decoracao',
@@ -33,7 +30,7 @@ $dsn = "mysql:host={$dbConfig['host']};dbname={$dbConfig['dbname']};charset={$db
 try {
     $pdo = new PDO($dsn, $dbConfig['user'], $dbConfig['pass'], [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
 } catch (PDOException $e) {
     error_log('Erro de conexão: ' . $e->getMessage());
@@ -42,8 +39,8 @@ try {
     exit;
 }
 
-// ─────────────── VERIFICA E MARCA O CÓDIGO ───────────────
 try {
+    // Busca o pedido pelo código
     $stmt = $pdo->prepare("SELECT id, usado FROM pedidos WHERE codigo = ? LIMIT 1");
     $stmt->execute([$codigo]);
     $pedido = $stmt->fetch();
@@ -59,15 +56,17 @@ try {
         exit;
     }
 
+    // Marca o código como usado - aqui se quiser permitir múltiplos usos, retire essa parte
     $update = $pdo->prepare("UPDATE pedidos SET usado = 1 WHERE id = ?");
     $update->execute([$pedido['id']]);
 
+    // Resposta com o link para download (front pode usar para redirecionar)
     echo json_encode([
         'status' => 'sucesso',
         'mensagem' => 'Código verificado com sucesso! O download iniciará automaticamente.',
-        'link' => 'https://agencialed.com/download.php?codigo=' . $codigo
-
+        'link' => 'https://agencialed.com/download.php?codigo=' . $codigo,
     ]);
+
 } catch (Exception $e) {
     error_log('Erro na verificação: ' . $e->getMessage());
     http_response_code(500);

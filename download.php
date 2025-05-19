@@ -1,6 +1,6 @@
 <?php
 // download.php
-// Ex: chamada via https://agencialed.com/download.php?codigo=123456789012345
+header('Content-Type: text/plain; charset=utf-8');
 
 $codigo = $_GET['codigo'] ?? '';
 $codigo = preg_replace('/\D/', '', $codigo);
@@ -11,7 +11,6 @@ if (!preg_match('/^\d{15}$/', $codigo)) {
     exit;
 }
 
-// Conexão com o banco
 $host = 'localhost';
 $dbname = 'paymen58_lista_decoracao';
 $username = 'paymen58';
@@ -34,19 +33,26 @@ try {
         exit;
     }
 
-    // Caminho seguro do arquivo (ajuste se necessário)
-    $arquivo = __DIR__ . '/arquivos/fornecedores-nacionais-decoracao.pdf';
+    // Caminho absoluto e verificação extra
+    $arquivo = realpath(__DIR__ . '/arquivos/fornecedores-nacionais-decoracao.pdf');
 
-    if (!file_exists($arquivo)) {
+    // Verifica se arquivo existe e está dentro do diretório esperado
+    $diretorioPermitido = realpath(__DIR__ . '/arquivos');
+    if (!$arquivo || strpos($arquivo, $diretorioPermitido) !== 0 || !file_exists($arquivo)) {
         http_response_code(404);
         echo "Arquivo não encontrado.";
         exit;
     }
 
-    // Força o download
+    // Define cabeçalhos para forçar download e evitar cache
     header('Content-Type: application/pdf');
     header('Content-Disposition: attachment; filename="fornecedores-nacionais-decoracao.pdf"');
     header('Content-Length: ' . filesize($arquivo));
+    header('Cache-Control: no-store, no-cache, must-revalidate');
+    header('Pragma: no-cache');
+    header('Expires: 0');
+
+    // Lê o arquivo e envia para o cliente
     readfile($arquivo);
     exit;
 
