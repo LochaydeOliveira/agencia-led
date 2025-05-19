@@ -1,6 +1,6 @@
 <?php
 /**
- * Webhook Yampi – versão com melhorias (ajustada para agencialed.com na HostGator)
+ * Webhook Yampi – versão com logs e suporte a eventos múltiplos
  */
 
 declare(strict_types=1);
@@ -43,22 +43,35 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $body = file_get_contents('php://input');
 $assinaturaRecebida = $_SERVER['HTTP_X_YAMPI_SIGNATURE'] ?? '';
-$assinaturaCalculada = hash_hmac('sha256', $body, $YAMPI_SECRET);
 
-if (!hash_equals($assinaturaCalculada, $assinaturaRecebida)) {
+// Calcula HMAC em hex (original)
+$assinaturaCalculadaHex = hash_hmac('sha256', $body, $YAMPI_SECRET);
+// Calcula HMAC em base64 (possível formato enviado)
+$assinaturaCalculadaBase64 = base64_encode(hash_hmac('sha256', $body, $YAMPI_SECRET, true));
+
+// Log para debug da assinatura
+file_put_contents($logFile, date('Y-m-d H:i:s') . " - Assinatura recebida: $assinaturaRecebida\n", FILE_APPEND);
+file_put_contents($logFile, date('Y-m-d H:i:s') . " - Assinatura calculada (hex): $assinaturaCalculadaHex\n", FILE_APPEND);
+file_put_contents($logFile, date('Y-m-d H:i:s') . " - Assinatura calculada (base64): $assinaturaCalculadaBase64\n", FILE_APPEND);
+
+// Validação da assinatura: aceita hex ou base64
+if (!hash_equals($assinaturaCalculadaHex, $assinaturaRecebida) && !hash_equals($assinaturaCalculadaBase64, $assinaturaRecebida)) {
     http_response_code(403);
     echo json_encode(['status' => 'erro', 'mensagem' => 'Assinatura inválida.']);
+    file_put_contents($logFile, date('Y-m-d H:i:s') . " - Erro: assinatura inválida.\n", FILE_APPEND);
     exit;
 }
 
 $payload = json_decode($body, true);
+file_put_contents($logFile, date('Y-m-d H:i:s') . " - Payload recebido:\n" . print_r($payload, true) . "\n", FILE_APPEND);
 
-if (ENV === 'test') {
-    file_put_contents($logFile, date('Y-m-d H:i:s') . "\n" . print_r($payload, true) . "\n", FILE_APPEND);
-}
+// Aceitar vários eventos que interessam para processar
+$event = $payload['event'] ?? '';
+$eventAceitos = ['order.created', 'order.paid', 'order.approved'];
 
-if (!isset($payload['event']) || $payload['event'] !== 'order.created') {
-    echo json_encode(['status' => 'ignorado', 'mensagem' => 'Evento não é order.created.']);
+if (!in_array($event, $eventAceitos, true)) {
+    file_put_contents($logFile, date('Y-m-d H:i:s') . " - Evento ignorado: $event\n", FILE_APPEND);
+    echo json_encode(['status' => 'ignorado', 'mensagem' => "Evento '$event' não processado."]);
     exit;
 }
 
@@ -82,6 +95,7 @@ if ($createdAtRaw) {
 
 if (!$codigo || !$email || !$skuStr || !$createdAt) {
     http_response_code(400);
+    file_put_contents($logFile, date('Y-m-d H:i:s') . " - Dados incompletos. Código: $codigo, Email: $email, SKU: $skuStr, CreatedAt: $createdAt\n", FILE_APPEND);
     echo json_encode(['status' => 'erro', 'mensagem' => 'Dados incompletos ou inválidos.']);
     exit;
 }
@@ -101,16 +115,25 @@ try {
             VALUES
             (?, ?, ?, 0, NOW(), ?, ?, ?, ?)");
         $ins->execute([$codigo, $email, $skuStr, $status, $valor, $createdAt, $pagamento]);
+        file_put_contents($logFile, date('Y-m-d H:i:s') . " - Pedido inserido: $codigo\n", FILE_APPEND);
+    } else {
+        // Opcional: atualizar status/valor em pedidos já existentes se necessário
+        file_put_contents($logFile, date('Y-m-d H:i:s') . " - Pedido já existe: $codigo\n", FILE_APPEND);
     }
 
 } catch (PDOException $e) {
     error_log('DB error webhook: ' . $e->getMessage());
     http_response_code(500);
+    file_put_contents($logFile, date('Y-m-d H:i:s') . " - Erro DB: " . $e->getMessage() . "\n", FILE_APPEND);
     echo json_encode(['status' => 'erro', 'mensagem' => 'Erro no banco de dados.']);
     exit;
 }
 
+// Enviar e-mail apenas se ambiente for teste ou status for pago
 $enviarEmail = (ENV === 'test') || ($status === 'paid');
+
+file_put_contents($logFile, date('Y-m-d H:i:s') . " - Status pedido: $status\n", FILE_APPEND);
+file_put_contents($logFile, date('Y-m-d H:i:s') . " - Enviar email? " . ($enviarEmail ? 'SIM' : 'NÃO') . "\n", FILE_APPEND);
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -119,7 +142,6 @@ if ($enviarEmail) {
     require_once '/home1/paymen58/agencialed.com/email/PHPMailer/src/PHPMailer.php';
     require_once '/home1/paymen58/agencialed.com/email/PHPMailer/src/SMTP.php';
     require_once '/home1/paymen58/agencialed.com/email/PHPMailer/src/Exception.php';
-
 
     $mail = new PHPMailer(true);
     try {
@@ -144,9 +166,11 @@ if ($enviarEmail) {
             <p><em>Guarde seu código com segurança. Ele só poderá ser usado uma vez.</em></p>";
 
         $mail->send();
+        file_put_contents($logFile, date('Y-m-d H:i:s') . " - Email enviado para: $email\n", FILE_APPEND);
 
     } catch (Exception $e) {
         error_log('Mailer error webhook: ' . $e->getMessage());
+        file_put_contents($logFile, date('Y-m-d H:i:s') . " - Erro email: " . $e->getMessage() . "\n", FILE_APPEND);
     }
 }
 
