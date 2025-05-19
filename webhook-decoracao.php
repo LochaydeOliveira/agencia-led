@@ -53,29 +53,52 @@ try {
 // ─────────────── TRATAMENTO DO EVENTO ───────────────
 $evento = $_SERVER['HTTP_X_YAMPI_EVENT'] ?? '';
 
-if ($evento !== 'order.paid') {
+if ($evento !== 'order.created') {
     http_response_code(200);
     echo json_encode(['mensagem' => 'Evento ignorado: ' . $evento]);
     exit;
 }
 
 // ─────────────── EXTRAÇÃO DOS DADOS ───────────────
-$numero = $dados['number'] ?? null;
-$cliente = $dados['customer']['name'] ?? null;
-$email = $dados['customer']['email'] ?? null;
-$telefone = $dados['customer']['phone'] ?? null;
-$sku = $dados['items'][0]['sku'] ?? null;
+$email = $dados['customer']['email'] ?? '';
+$sku = $dados['items'][0]['sku'] ?? '';
+$produto = $dados['items'][0]['name'] ?? '';
+$status = $dados['status']['name'] ?? '';
+$pagamento = $dados['payment_method']['name'] ?? '';
+$nome = $dados['customer']['name'] ?? '';
+$cpf = $dados['customer']['document'] ?? '';
+$telefone = $dados['customer']['phone'] ?? '';
+$valor = $dados['total'] ?? 0;
+$created_at = $dados['created_at'] ?? date('Y-m-d H:i:s');
+$pedido_id = $dados['id'] ?? null;
+$numero_pedido = $dados['number'] ?? null;
 
-if (!$numero || !$email || !$sku) {
+if (!$email || !$sku || !$pedido_id || !$numero_pedido) {
     http_response_code(400);
-    echo json_encode(['erro' => 'Dados incompletos']);
+    echo json_encode(['erro' => 'Dados essenciais ausentes']);
     exit;
 }
 
 // ─────────────── INSERE PEDIDO NO BANCO ───────────────
 try {
-    $stmt = $pdo->prepare("INSERT INTO pedidos (numero, usado, sku, email, cliente, telefone, email_enviado) VALUES (?, 0, ?, ?, ?, ?, 0)");
-    $stmt->execute([$numero, $sku, $email, $cliente, $telefone]);
+    $stmt = $pdo->prepare("INSERT INTO pedidos (
+        email, sku, produto, status, pagamento, nome, cpf, telefone, valor, created_at, pedido_id, numero_pedido
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+    $stmt->execute([
+        $email,
+        $sku,
+        $produto,
+        $status,
+        $pagamento,
+        $nome,
+        $cpf,
+        $telefone,
+        $valor,
+        $created_at,
+        $pedido_id,
+        $numero_pedido
+    ]);
 } catch (Exception $e) {
     error_log('Erro insert: ' . $e->getMessage());
     http_response_code(500);
@@ -83,20 +106,8 @@ try {
     exit;
 }
 
-// ─────────────── ENVIO DE E-MAIL COM O NÚMERO ───────────────
-$assunto = 'Seu código de acesso à lista de fornecedores de decoração';
-$mensagem = "Olá $cliente,\n\nSeu pedido foi aprovado com sucesso!\n\nAqui está seu código de acesso: $numero\n\nUse esse código em:\nhttps://agencialed.com/fornecedores-decoracao.php\n\nAtenciosamente,\nEquipe Agência LED";
-
-$headers = 'From: contato@agencialed.com' . "\r\n" .
-           'Reply-To: contato@agencialed.com' . "\r\n" .
-           'X-Mailer: PHP/' . phpversion();
-
-if (mail($email, $assunto, $mensagem, $headers)) {
-    // Atualiza status de e-mail enviado
-    $pdo->prepare("UPDATE pedidos SET email_enviado = 1 WHERE numero = ?")->execute([$numero]);
-}
-
 // ─────────────── RESPOSTA FINAL ───────────────
 http_response_code(200);
-echo json_encode(['status' => 'sucesso', 'mensagem' => 'Pedido processado com sucesso.']);
+echo json_encode(['status' => 'sucesso', 'mensagem' => 'Pedido registrado com sucesso.']);
+
 ?>

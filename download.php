@@ -1,5 +1,4 @@
 <?php
-// download.php
 header('Content-Type: text/plain; charset=utf-8');
 
 $numero = $_GET['numero'] ?? '';
@@ -11,19 +10,12 @@ if (!preg_match('/^\d+$/', $numero)) {
     exit;
 }
 
-$host = 'localhost';
-$dbname = 'paymen58_lista_decoracao';
-$username = 'paymen58';
-$password = 'u4q7+B6ly)obP_gxN9sNe';
-$charset = 'utf8mb4';
-$dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
-
 try {
-    $pdo = new PDO($dsn, $username, $password, [
+    $pdo = new PDO('mysql:host=localhost;dbname=paymen58_lista_decoracao;charset=utf8mb4', 'paymen58', 'u4q7+B6ly)obP_gxN9sNe', [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ]);
 
-    $stmt = $pdo->prepare("SELECT id, usado FROM pedidos WHERE numero = ? LIMIT 1");
+    $stmt = $pdo->prepare("SELECT id, usado FROM pedidos WHERE numero_pedido = ? LIMIT 1");
     $stmt->execute([$numero]);
     $pedido = $stmt->fetch();
 
