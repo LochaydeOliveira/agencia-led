@@ -31,7 +31,7 @@ $dsn     = "mysql:host=$dbHost;dbname=$dbName;charset=utf8mb4";
 $SMTP_HOST = getenv('SMTP_HOST') ?: 'smtp.zoho.com';
 $SMTP_PORT = getenv('SMTP_PORT') ?: 587;
 $SMTP_USER = getenv('SMTP_USER') ?: 'contato@agencialed.com';
-$SMTP_PASS = getenv('SMTP_PASS') ?: 'SENHA_EM_TESTE';
+$SMTP_PASS = getenv('SMTP_PASS') ?: 'Lochayde@154719';
 
 $logFile = __DIR__ . '/../logs/yampi_webhook.log';
 
