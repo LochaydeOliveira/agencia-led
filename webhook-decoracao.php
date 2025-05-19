@@ -1,4 +1,8 @@
 <?php
+
+// Salvar o conteúdo bruto da requisição para análise
+file_put_contents('log_webhook_yampi.txt', file_get_contents('php://input'));
+
 // ─────────────── CONFIGURAÇÕES ───────────────
 $webhookSecret = 'wh_rweQPzt0jQ5lRY3ZbrNYZQFFdjc8ZjDWOguYm';
 $logFile = __DIR__ . '/webhook-log.txt';
