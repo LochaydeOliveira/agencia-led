@@ -1,4 +1,8 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 declare(strict_types=1);
 
 ini_set('display_errors', '1');
@@ -140,8 +144,6 @@ if ($enviarEmail) {
     require_once '/home1/paymen58/agencialed.com/email/PHPMailer/src/SMTP.php';
     require_once '/home1/paymen58/agencialed.com/email/PHPMailer/src/Exception.php';
 
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
 
     $mail = new PHPMailer(true);
     try {
