@@ -186,13 +186,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <h4 class="alert-heading">Token Válido!</h4>
 
-                    <p>Se o seu download não começar automaticamente em alguns segundos, clique no botão abaixo e faça o download.</p>
+                    <p>clique no botão abaixo e faça o download.</p>
 
-                    <a href="download.php?token=<?php echo urlencode($token); ?>" class="download-button animate__animated animate__pulse animate__infinite">
-
-                        Baixar Agora
-
+                    <a id="botao-download"
+                        href="#"
+                        class="download-button animate__animated animate__pulse animate__infinite"
+                        onclick="iniciarDownload('<?php echo urlencode($token); ?>'); return false;">
+                            Baixar Agora
                     </a>
+
+                    <div id="download-loading" class="text-center mt-4" style="display: none;">
+                        <div class="spinner-border text-success" role="status">
+                            <span class="visually-hidden">Carregando...</span>
+                        </div>
+                        <p class="mt-2">Preparando o seu download...</p>
+                    </div>
 
                     <p class="mt-3 text-muted small">
 
@@ -205,31 +213,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
 
-<a id="botao-download"
-   href="#"
-   class="download-button animate__animated animate__pulse animate__infinite"
-   onclick="iniciarDownload('<?php echo urlencode($token); ?>'); return false;">
-    Baixar Agora
-</a>
-
-<div id="download-loading" class="text-center mt-4" style="display: none;">
-    <div class="spinner-border text-success" role="status">
-        <span class="visually-hidden">Carregando...</span>
-    </div>
-    <p class="mt-2">Preparando o seu download...</p>
-</div>
 
 <script>
-    function iniciarDownload(token) {
-        // Oculta o botão
-        document.getElementById('botao-download').style.display = 'none';
-        // Mostra o spinner
-        document.getElementById('download-loading').style.display = 'block';
-        // Aguarda 3 segundos e redireciona
-        setTimeout(function () {
-            window.location.href = 'download.php?token=' + encodeURIComponent(token);
-        }, 3000);
-    }
+function iniciarDownload(token) {
+    document.getElementById('botao-download').style.display = 'none';
+    const spinner = document.getElementById('download-loading');
+    spinner.style.display = 'block';
+
+    setTimeout(function () {
+        // Esconde o spinner se quiser
+        spinner.style.display = 'none';
+        // Redireciona para o download
+        window.location.href = 'download.php?token=' + encodeURIComponent(token);
+    }, 2000);
+}
+
 </script>
 
 
