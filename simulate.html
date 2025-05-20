@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulação de Webhook</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #0066cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 3px;
+            margin: 5px;
+        }
+        .button:hover {
+            background-color: #0052a3;
+        }
+        .instructions {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Simulação de Webhook</h1>
+        
+        <div class="instructions">
+            <h2>Instruções:</h2>
+            <p>Use os botões abaixo para simular diferentes eventos de webhook:</p>
+            <ol>
+                <li>Clique em "Simular Pedido Criado" para criar um novo pedido</li>
+                <li>Clique em "Simular Pedido Pago" para marcar o pedido como pago</li>
+                <li>Clique em "Simular Atualização de Status" para atualizar o status do pedido</li>
+            </ol>
+        </div>
+
+        <form action="simulate.php" method="post">
+            <input type="hidden" name="event" value="order.created">
+            <button type="submit" class="button">Simular Pedido Criado</button>
+        </form>
+
+        <form action="simulate.php" method="post">
+            <input type="hidden" name="event" value="order.paid">
+            <button type="submit" class="button">Simular Pedido Pago</button>
+        </form>
+
+        <form action="simulate.php" method="post">
+            <input type="hidden" name="event" value="order.status.updated">
+            <button type="submit" class="button">Simular Atualização de Status</button>
+        </form>
+    </div>
+</body>
+</html> 
