@@ -298,7 +298,7 @@ class Mailer {
 
                 <div style='text-align: center; padding: 20px 0; border-bottom: 2px solid #f0f0f0;'>
 
-                    <h1 style='color: #e74c3c; margin: 0; font-size: 24px;'>🚨 PAGAMENTO PENDENTE</h1>
+                    <h1 style='color: #e74c3c; margin: 0; font-size: 24px;'>PAGUE COM O PIX AGORA!</h1>
 
                 </div>
 
