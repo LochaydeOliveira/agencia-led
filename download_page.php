@@ -92,7 +92,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $success = true;
 
-                $alreadyDownloaded = false;
 
                 app_log("Token válido encontrado para o pedido #" . $result['order_number']);
 
