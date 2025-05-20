@@ -186,7 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <h4 class="alert-heading">Token Válido!</h4>
 
-                    <p>clique no botão abaixo e faça o download.</p>
+                    <p>Clique no botão abaixo e faça o download.</p>
 
                     <a id="botao-download"
                         href="#"
