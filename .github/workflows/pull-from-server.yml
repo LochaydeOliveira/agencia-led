@@ -13,6 +13,8 @@ jobs:
     steps:
     - name: 🚚 Get latest code
       uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.PAT_TOKEN }}
     
     - name: 📂 Pull files from server
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
@@ -32,4 +34,6 @@ jobs:
     - name: 💾 Commit and push if changes
       run: |
         git add .
-        git diff --quiet && git diff --staged --quiet || (git commit -m "🔄 Sync with server [skip ci]" && git push) 
+        git diff --quiet && git diff --staged --quiet || (git commit -m "🔄 Sync with server [skip ci]" && git push)
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }} 
