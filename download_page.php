@@ -204,15 +204,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 </div>
 
-                <script>
 
-                    setTimeout(function() {
+<a id="botao-download"
+   href="#"
+   class="download-button animate__animated animate__pulse animate__infinite"
+   onclick="iniciarDownload('<?php echo urlencode($token); ?>'); return false;">
+    Baixar Agora
+</a>
 
-                        window.location.href = 'download.php?token=<?php echo urlencode($token); ?>';
+<div id="download-loading" class="text-center mt-4" style="display: none;">
+    <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Carregando...</span>
+    </div>
+    <p class="mt-2">Preparando o seu download...</p>
+</div>
 
-                    }, 3000);
+<script>
+    function iniciarDownload(token) {
+        // Oculta o botão
+        document.getElementById('botao-download').style.display = 'none';
+        // Mostra o spinner
+        document.getElementById('download-loading').style.display = 'block';
+        // Aguarda 3 segundos e redireciona
+        setTimeout(function () {
+            window.location.href = 'download.php?token=' + encodeURIComponent(token);
+        }, 3000);
+    }
+</script>
 
-                </script>
+
 
             <?php endif; ?>
 
