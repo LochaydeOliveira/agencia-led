@@ -320,40 +320,34 @@ try {
 
             if (!$existingToken) {
 
-                // Gera token de download
+            // Gera token de download
+            $token = bin2hex(random_bytes(16));
+            $expiresAt = date('Y-m-d H:i:s', strtotime('+24 hours'));
 
-                $token = bin2hex(random_bytes(16));
+            // Extrai o product_id do primeiro item do pedido
+            $productId = null;
+            if (isset($order['items']['data'][0]['product_id'])) {
+                $productId = $order['items']['data'][0]['product_id'];
+            }
 
-                $expiresAt = date('Y-m-d H:i:s', strtotime('+24 hours'));
+            // Insere token no banco com o product_id
+            $sql = "INSERT INTO download_tokens (order_id, token, expires_at, product_id) VALUES (?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$existingOrder['id'], $token, $expiresAt, $productId]);
 
-                
+            app_log("Token gerado para pedido #" . $order['number'] . " (Produto: $productId): $token");
 
-                $sql = "INSERT INTO download_tokens (order_id, token, expires_at) VALUES (?, ?, ?)";
-
-                $stmt = $conn->prepare($sql);
-
-                $stmt->execute([$existingOrder['id'], $token, $expiresAt]);
-
-                
-
-                app_log("Token gerado para pedido #" . $order['number'] . ": $token");
 
                 
 
                 // Envia email com link de download
 
                 $mailer = new Mailer();
-
                 $result = $mailer->sendDownloadLink(
-
                     $order['customer']['data']['email'],
-
                     $order['customer']['data']['name'],
-
                     $order['number'],
-
                     $token
-
                 );
 
                 
