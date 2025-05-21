@@ -45,10 +45,12 @@ try {
     app_log("Token válido encontrado para o pedido #" . $result['order_number']);
     
     // Verifica se o arquivo já foi baixado
+    /*
     if ($result['downloaded']) {
         app_log("Arquivo já foi baixado anteriormente para o pedido #" . $result['order_number']);
         die('Este arquivo já foi baixado anteriormente. Por favor, entre em contato conosco se precisar de uma nova cópia.');
     }
+        */
     
     // Verifica se o arquivo existe
     $filePath = __DIR__ . '/files/Lista_Secreta_Fornecedores.pdf';
