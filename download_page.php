@@ -92,19 +92,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $success = true;
 
-                $alreadyDownloaded = $result['downloaded'];
+                //$alreadyDownloaded = $result['downloaded'];
 
                 app_log("Token válido encontrado para o pedido #" . $result['order_number']);
 
             } 
             
-            /*else {
+            else {
 
                 $error = 'Token inválido ou expirado.';
 
                 app_log("Token inválido ou expirado: $token");
 
-            }*/
+            }
 
         } catch (Exception $e) {
 
