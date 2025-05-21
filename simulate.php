@@ -38,6 +38,16 @@ if (!$lastOrder && ($event === 'order.paid' || $event === 'order.status.updated'
 $orderId = $event === 'order.created' ? rand(100000000, 999999999) : $lastOrder['yampi_order_id'];
 $orderNumber = $event === 'order.created' ? rand(100000000, 999999999) : $lastOrder['order_number'];
 
+
+
+// Define o status correto conforme o evento
+$statusAlias = match ($event) {
+    'order.created' => 'waiting_payment',
+    'order.paid' => 'paid',
+    'order.status.updated' => 'completed', // ou outro status conforme seu sistema
+    default => 'unknown',
+};
+
 // Cria um payload de exemplo
 $payload = [
     'event' => $event,
@@ -70,11 +80,12 @@ $payload = [
         ],
         'status' => [
             'data' => [
-                'alias' => 'paid'
+                'alias' => $statusAlias
             ]
         ]
     ]
 ];
+
 
 // Gera a assinatura do webhook
 $signature = hash_hmac('sha256', json_encode($payload), WEBHOOK_SECRET);
