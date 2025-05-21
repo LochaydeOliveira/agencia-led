@@ -92,6 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $success = true;
 
+                $alreadyDownloaded = flase;
 
                 app_log("Token válido encontrado para o pedido #" . $result['order_number']);
 
