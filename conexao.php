@@ -1,5 +1,5 @@
 <?php
-$host = "192.185.222.27";
+$host = "localhost";
 $db = "paymen58_area_de_membros";
 $user = "paymen58";
 $pass = "u4q7+B6ly)obP_gxN9sNe";
