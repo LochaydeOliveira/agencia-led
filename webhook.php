@@ -323,8 +323,7 @@ try {
                 // Gera token de download
 
                 $token = bin2hex(random_bytes(16));
-                
-                date_default_timezone_set('America/Sao_Paulo');
+
                 $expiresAt = date('Y-m-d H:i:s', strtotime('+24 hours'));
 
                 
