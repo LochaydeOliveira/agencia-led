@@ -1,9 +1,7 @@
 name: Pull from Hostgator Server
 
 on:
-  schedule:
-    - cron: '0 */6 * * *'  # Roda a cada 6 horas
-  workflow_dispatch:  # Permite execução manual
+  workflow_dispatch:  # Permite execução manual pelo GitHub
 
 jobs:
   pull-from-server:
@@ -15,25 +13,13 @@ jobs:
       uses: actions/checkout@v2
       with:
         token: ${{ secrets.PAT_TOKEN }}
-    
+
     - name: 📂 Pull files from server
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USER }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./
+        local-dir: ./  # Onde os arquivos vão ser baixados
         server-dir: /home1/paymen58/agencialed.com/
-        dangerous-clean-slate: true
-    
-    - name: ⚙️ Configure Git
-      run: |
-        git config --global user.name 'GitHub Actions'
-        git config --global user.email 'actions@github.com'
-    
-    - name: 💾 Commit and push if changes
-      run: |
-        git add .
-        git diff --quiet && git diff --staged --quiet || (git commit -m "🔄 Sync with server [skip ci]" && git push)
-      env:
-        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }} 
+        dangerous-clean-slate: true  # Apaga tudo antes de baixar
