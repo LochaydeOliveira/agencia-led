@@ -80,7 +80,7 @@ try {
 
         app_log("Token inválido ou expirado: $token");
 
-        die('Token inválido ou expirado - é aqui');
+        die('Token inválido ou expirado');
 
     }
 
