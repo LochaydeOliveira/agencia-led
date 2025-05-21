@@ -1,8 +1,20 @@
 {
     "description": "DO NOT DELETE THIS FILE. This file is used to keep track of which files have been synced in the most recent deployment. If you delete this file a resync will need to be done (which can take a while) - read more: https://github.com/SamKirkland/FTP-Deploy-Action",
     "version": "1.0.0",
-    "generatedTime": 1747776544726,
+    "generatedTime": 1747788875946,
     "data": [
+        {
+            "type": "file",
+            "name": ".ftp-deploy-sync-state.json",
+            "size": 14559,
+            "hash": "e77146e3c60741c8e56ac5f69bb385e2a0454313c1e4b3b3f1d0db7c6a536641"
+        },
+        {
+            "type": "file",
+            "name": ".ftpquota",
+            "size": 4,
+            "hash": "4516f6eaaa675488778d6ca333df14bc68c27fb7d7b8015073220d4571aa9c51"
+        },
         {
             "type": "file",
             "name": "agencia-led-backup.html",
@@ -20,6 +32,10 @@
             "name": "assets-agencia-led"
         },
         {
+            "type": "folder",
+            "name": "bkp-arquivos"
+        },
+        {
             "type": "file",
             "name": "checkout-transpatente.html",
             "size": 4145,
@@ -27,9 +43,31 @@
         },
         {
             "type": "file",
+            "name": "cleanup.php",
+            "size": 1221,
+            "hash": "122a9f43c3ad05ce9f6ee2842476d0914479379543ea09f999ce2d2d4f00b71c"
+        },
+        {
+            "type": "folder",
+            "name": "config"
+        },
+        {
+            "type": "file",
             "name": "download.php",
-            "size": 1724,
-            "hash": "7ea644e9e04bcc396da92bcfd14c4686096f8b783da9ad7e1a2002f4b3c1c449"
+            "size": 3398,
+            "hash": "0b3d560d3c06113dbd07cbba8cfcfb846977a4c83b9054147dc6afe7fb1f91c9"
+        },
+        {
+            "type": "file",
+            "name": "download_page.php",
+            "size": 7480,
+            "hash": "ecc401b7ef473f4e7dc9f6f798b70aa643da6780e3384003298ac83bcaac4009"
+        },
+        {
+            "type": "file",
+            "name": "download_page_edits.html",
+            "size": 0,
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         },
         {
             "type": "folder",
@@ -38,6 +76,22 @@
         {
             "type": "folder",
             "name": "email"
+        },
+        {
+            "type": "file",
+            "name": "error_log",
+            "size": 254844,
+            "hash": "6cec5c54fb76864174c17c9cd16ccb86cca6d24202da06329568717c28131451"
+        },
+        {
+            "type": "folder",
+            "name": "files"
+        },
+        {
+            "type": "file",
+            "name": "fix_phpmailer.php",
+            "size": 942,
+            "hash": "12eaaade54c29aeff03ab575b5beb3dd903a0ed816d8dcde5aec93113be1f458"
         },
         {
             "type": "file",
@@ -70,6 +124,10 @@
             "hash": "dc5ddbe745b1f528a1921fe0ea68b97b1e6f23e847c630e001c70bf8a1e291a9"
         },
         {
+            "type": "folder",
+            "name": "logs"
+        },
+        {
             "type": "file",
             "name": "loja-na-yampi.html",
             "size": 6757,
@@ -77,21 +135,35 @@
         },
         {
             "type": "file",
-            "name": "teste-email.php",
-            "size": 950,
-            "hash": "521515ebe08741f05b91bedb88673539310b1a174f8854a834655a87944a069d"
+            "name": "simulate.html",
+            "size": 2514,
+            "hash": "e1e477626fdd05a269e0000e2ddb123a0415ae19ecbe6361fba1f7ab512a3dec"
         },
         {
             "type": "file",
-            "name": "verificar-codigo.php",
-            "size": 1407,
-            "hash": "e193a2381cd97e135cf369d684407f822c36077935750a2348c41fec072553dc"
+            "name": "simulate.php",
+            "size": 4713,
+            "hash": "a0b11b3e306bb77ff8a3f869d92a3039feb55718bda3019331d5e7959e3cd44d"
+        },
+        {
+            "type": "folder",
+            "name": "src"
         },
         {
             "type": "file",
-            "name": "webhook-decoracao.php",
-            "size": 5066,
-            "hash": "b0f1770e834cfe3c6c402befa91bac09842118de329b1d9809aae6cb1e60f9af"
+            "name": "test_webhook.php",
+            "size": 2730,
+            "hash": "b22f300c81ead4a0a6187b653928c325c3d197851ce0df6f3ff2d112ff8a8e43"
+        },
+        {
+            "type": "folder",
+            "name": "vendor"
+        },
+        {
+            "type": "file",
+            "name": "webhook.php",
+            "size": 8293,
+            "hash": "065dd0f8b766cfe5768908ce903136dbb5323490189eaf6ec1559b2e76dc8b76"
         },
         {
             "type": "file",
@@ -133,15 +205,57 @@
         },
         {
             "type": "file",
+            "name": "assets-agencia-led/style-sobre-checkout.css",
+            "size": 600,
+            "hash": "62439dbc0cb45ad589c0580f4329420094ed2cd3a3572e3ddfaffc7d06928c0c"
+        },
+        {
+            "type": "file",
             "name": "assets-agencia-led/style.css",
             "size": 16239,
             "hash": "307e56c53094932566ececb63e032a6d165790a492417941a553fd2271e9507e"
         },
         {
             "type": "file",
-            "name": "assets-agencia-led/style-sobre-checkout.css",
-            "size": 600,
-            "hash": "62439dbc0cb45ad589c0580f4329420094ed2cd3a3572e3ddfaffc7d06928c0c"
+            "name": "bkp-arquivos/agencia-led-backup.html",
+            "size": 13642,
+            "hash": "050fe592bf51cef3bcce5fc707225ab4c4ad65772f1246be76db803fedea6c9b"
+        },
+        {
+            "type": "file",
+            "name": "bkp-arquivos/download.php",
+            "size": 1724,
+            "hash": "7ea644e9e04bcc396da92bcfd14c4686096f8b783da9ad7e1a2002f4b3c1c449"
+        },
+        {
+            "type": "file",
+            "name": "bkp-arquivos/fornecedores-decoracao.php",
+            "size": 1970,
+            "hash": "ce23841f5f76808aaa7850c5981f2e10ec20f21c2b35b39608c6bc6c6268394b"
+        },
+        {
+            "type": "file",
+            "name": "bkp-arquivos/teste-email.php",
+            "size": 950,
+            "hash": "521515ebe08741f05b91bedb88673539310b1a174f8854a834655a87944a069d"
+        },
+        {
+            "type": "file",
+            "name": "bkp-arquivos/verificar-codigo.php",
+            "size": 1407,
+            "hash": "e193a2381cd97e135cf369d684407f822c36077935750a2348c41fec072553dc"
+        },
+        {
+            "type": "file",
+            "name": "bkp-arquivos/webhook-decoracao.php",
+            "size": 5066,
+            "hash": "b0f1770e834cfe3c6c402befa91bac09842118de329b1d9809aae6cb1e60f9af"
+        },
+        {
+            "type": "file",
+            "name": "config/config.php",
+            "size": 1211,
+            "hash": "274b3a5bf1aac48a93c3a60f4c92cf0dba3cfcb5e117ebe65004f48fad25aa85"
         },
         {
             "type": "file",
@@ -157,6 +271,12 @@
         },
         {
             "type": "file",
+            "name": "ebooks/download.php",
+            "size": 1832,
+            "hash": "3d63be57737af0ac8a33762b33ebaf9dff4116c648edc1518d150f57bc3c2fb5"
+        },
+        {
+            "type": "file",
             "name": "ebooks/fornecedores-decoracao.html",
             "size": 4656,
             "hash": "4ba59ba8d262d0cec7cef4af5fd62febeea052a3513e4324b9aa19cce0883bc2"
@@ -168,8 +288,54 @@
             "hash": "39a74068e2b38cf0b7e492234c9a66b05c64bc211917c277d6050020972e8d62"
         },
         {
+            "type": "file",
+            "name": "ebooks/simulate.html",
+            "size": 2482,
+            "hash": "00d4c895062f10485c28bcea04c0e83a7740d7e21fd9e08bd10b56c494cac7bb"
+        },
+        {
+            "type": "file",
+            "name": "ebooks/simulate.php",
+            "size": 2406,
+            "hash": "9d7bbdcfb531b38fdd0c40b6f99054acb67bca6babd22d99fb1f96dcac3e5a54"
+        },
+        {
+            "type": "file",
+            "name": "ebooks/webhook.php",
+            "size": 5785,
+            "hash": "d52d40dd21edb8b56f7edee6dc85621951ca4656f5d5d19bb8e12fe3664a99f3"
+        },
+        {
             "type": "folder",
             "name": "email/PHPMailer"
+        },
+        {
+            "type": "file",
+            "name": "files/Lista_Secreta_Fornecedores.pdf",
+            "size": 147488,
+            "hash": "39a74068e2b38cf0b7e492234c9a66b05c64bc211917c277d6050020972e8d62"
+        },
+        {
+            "type": "file",
+            "name": "logs/app.log",
+            "size": 322577,
+            "hash": "8042e82b9483f64158de47e185356aca1d01000c2fff6ed7897d26172e49988c"
+        },
+        {
+            "type": "file",
+            "name": "src/Database.php",
+            "size": 811,
+            "hash": "521ee9f0464f4b002d262b02aca8d2042f4697d88d1930aede742743a7501403"
+        },
+        {
+            "type": "file",
+            "name": "src/Mailer.php",
+            "size": 12793,
+            "hash": "8bff95de92b3dccf0d545a80464bb023d0f7338aecbf09e61ad6700459230591"
+        },
+        {
+            "type": "folder",
+            "name": "vendor/PHPMailer"
         },
         {
             "type": "file",
@@ -384,6 +550,24 @@
         {
             "type": "file",
             "name": "email/PHPMailer/SMTP.php",
+            "size": 50097,
+            "hash": "9bc105018f6ef2576c2c4a246a46fc41ada546111fc8fb1ffce86421af35e78c"
+        },
+        {
+            "type": "file",
+            "name": "vendor/PHPMailer/Exception.php",
+            "size": 1256,
+            "hash": "22ab858ae438d98f58f41f38ad2191d1b0d59570aebea0463a7948cfae1021b7"
+        },
+        {
+            "type": "file",
+            "name": "vendor/PHPMailer/PHPMailer.php",
+            "size": 187770,
+            "hash": "835a15b6067083d7c92ea245c9ffab3ef23a8ac16bfe14a61e953741a661b9e2"
+        },
+        {
+            "type": "file",
+            "name": "vendor/PHPMailer/SMTP.php",
             "size": 50097,
             "hash": "9bc105018f6ef2576c2c4a246a46fc41ada546111fc8fb1ffce86421af35e78c"
         }
