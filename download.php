@@ -26,9 +26,9 @@ try {
     $conn = $db->getConnection();
 
     // Verifica se o token é válido e não expirou
-    $sql = "SELECT o.id, o.order_number, o.customer_name, o.product_id_ymp, dt.expires_at, dt.downloaded 
-            FROM orders o 
-            JOIN download_tokens dt ON o.id = dt.order_id 
+    $sql = "SELECT dt.id AS token_id, dt.product_id, dt.expires_at, dt.downloaded, o.id AS order_id, o.order_number, o.customer_name
+            FROM download_tokens dt
+            JOIN orders o ON dt.order_id = o.id
             WHERE dt.token = ? AND dt.expires_at > NOW()";
 
     app_log("Verificando token no banco de dados");
@@ -42,16 +42,16 @@ try {
         die('Token inválido ou expirado');
     }
 
-    app_log("Token válido encontrado para o pedido #" . $result['order_number']);
+    app_log("Token válido para o pedido #" . $result['order_number'] . " | product_id: " . $result['product_id']);
 
-    // Busca o caminho do arquivo PDF associado ao product_id_ymp
+    // Busca o PDF baseado no product_id vindo da tabela download_tokens
     $sql = "SELECT nome, caminho FROM arquivos_pdf WHERE product_id_ymp = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->execute([$result['product_id_ymp']]);
+    $stmt->execute([$result['product_id']]);
     $pdf = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$pdf) {
-        app_log("Nenhum PDF cadastrado para o product_id_ymp: " . $result['product_id_ymp']);
+        app_log("Nenhum PDF cadastrado para o product_id_ymp: " . $result['product_id']);
         die('Nenhum arquivo PDF encontrado para este produto.');
     }
 
