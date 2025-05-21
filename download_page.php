@@ -152,7 +152,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <h2 class="mb-3">Download do Material</h2>
 
-            <p class="text-muted">Valide seu token de acesso para baixar o material</p>
+            <p id="texto-inicial" class="text-muted">Valide seu token de acesso para baixar o material</p>
+
 
         </div>
 
@@ -184,53 +185,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <?php else: ?>
 
-                <div class="alert alert-success animate__animated animate__fadeIn">
+<div class="alert alert-success animate__animated animate__fadeIn">
+    <h4 class="alert-heading" id="titulo-token">Token Válido!</h4>
+    <p id="texto-download">Clique no botão abaixo e faça o download.</p>
 
-                    <h4 class="alert-heading">Token Válido!</h4>
+    <a id="botao-download"
+        href="#"
+        class="download-button animate__animated animate__pulse animate__infinite"
+        onclick="iniciarDownload('<?php echo urlencode($token); ?>'); return false;">
+            Baixar Agora
+    </a>
 
-                    <p>Clique no botão abaixo e faça o download.</p>
+    <div id="download-loading" class="text-center mt-4" style="display: none;">
+        <div class="spinner-border text-success" role="status">
+            <span class="visually-hidden">Carregando...</span>
+        </div>
+        <p class="mt-2">Preparando o seu download...</p>
+    </div>
 
-                    <a id="botao-download"
-                        href="#"
-                        class="download-button animate__animated animate__pulse animate__infinite"
-                        onclick="iniciarDownload('<?php echo urlencode($token); ?>'); return false;">
-                            Baixar Agora
-                    </a>
+    <p class="mt-3 text-muted small">
+        <i class="fas fa-info-circle"></i> Se não conseguiu baixar o arquivo, entre em contato pelo email 
+        <a href="mailto:contato@agencialed.com">contato@agencialed.com</a>
+    </p>
+</div>
 
-                    <div id="download-loading" class="text-center mt-4" style="display: none;">
-                        <div class="spinner-border text-success" role="status">
-                            <span class="visually-hidden">Carregando...</span>
-                        </div>
-                        <p class="mt-2">Preparando o seu download...</p>
-                    </div>
-
-                    <p class="mt-3 text-muted small">
-
-                        <i class="fas fa-info-circle"></i> Se não conseguiu baixar o arquivo, entre em contato pelo email 
-
-                        <a href="mailto:contato@agencialed.com">contato@agencialed.com</a>
-
-                    </p>
-
-                </div>
 
 
 
 <script>
 function iniciarDownload(token) {
-    document.getElementById('botao-download').style.display = 'none';
     const spinner = document.getElementById('download-loading');
-    spinner.style.display = 'block';
+    const botao = document.getElementById('botao-download');
+    const titulo = document.getElementById('titulo-token');
+    const textoDownload = document.getElementById('texto-download');
+    const textoInicial = document.getElementById('texto-inicial');
+
+    if (textoInicial) textoInicial.style.display = 'none'; // Oculta o texto de instrução inicial
+    if (botao) botao.style.display = 'none';
+    if (spinner) spinner.style.display = 'block';
+    if (textoDownload) textoDownload.style.display = 'none';
 
     setTimeout(function () {
-        // Esconde o spinner se quiser
-        spinner.style.display = 'none';
-        // Redireciona para o download
+        if (spinner) spinner.style.display = 'none';
+        if (titulo) titulo.textContent = 'Download Concluído!';
         window.location.href = 'download.php?token=' + encodeURIComponent(token);
     }, 2000);
 }
-
 </script>
+
 
 
 
