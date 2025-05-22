@@ -42,7 +42,7 @@ try {
     $db = Database::getInstance();
     $conn = $db->getConnection();
 
-    if ($event === 'order.paid') {
+    if (in_array($event, ['order.created', 'order.paid'])) {
         $order = $data['resource'] ?? null;
         if (!$order) {
             app_log("Erro: Dados do pedido não encontrados");
@@ -56,62 +56,75 @@ try {
         $name = $customer['name'];
         $email = $customer['email'];
         $whatsapp = $customer['phone']['full_number'] ?? '';
-
-        app_log("Processando order.paid para pedido #" . $orderNumber);
+        $statusAlias = $order['status']['data']['alias'];
+        $productId = $order['items']['data'][0]['product_id'] ?? null;
 
         $stmt = $conn->prepare("SELECT id FROM orders WHERE yampi_order_id = ?");
         $stmt->execute([$orderId]);
         $existingOrder = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$existingOrder) {
-            app_log("Erro: Pedido não encontrado");
-            http_response_code(404);
-            die('Pedido não encontrado');
+        if ($event === 'order.created') {
+            if (!$existingOrder) {
+                $stmt = $conn->prepare("INSERT INTO orders (yampi_order_id, order_number, customer_name, customer_email, status, created_at, product_id) VALUES (?, ?, ?, ?, ?, NOW(), ?)");
+                $stmt->execute([$orderId, $orderNumber, $name, $email, $statusAlias, $productId]);
+                app_log("Novo pedido inserido: $orderNumber ($email)");
+            } else {
+                $stmt = $conn->prepare("UPDATE orders SET status = ? WHERE yampi_order_id = ?");
+                $stmt->execute([$statusAlias, $orderId]);
+                app_log("Pedido existente atualizado: $orderNumber");
+            }
         }
 
-        $stmt = $conn->prepare("UPDATE orders SET status = ? WHERE yampi_order_id = ?");
-        $stmt->execute([$order['status']['data']['alias'], $orderId]);
+        if ($event === 'order.paid') {
+            if (!$existingOrder) {
+                app_log("Erro: Pedido não encontrado");
+                http_response_code(404);
+                die('Pedido não encontrado');
+            }
 
-        // 🔐 Criação de usuário na área de membros
-        $stmt = $conn->prepare("SELECT id FROM usuarios WHERE email = ?");
-        $stmt->execute([$email]);
-        $existingUser = $stmt->fetch(PDO::FETCH_ASSOC);
+            // Atualiza status
+            $stmt = $conn->prepare("UPDATE orders SET status = ? WHERE yampi_order_id = ?");
+            $stmt->execute([$statusAlias, $orderId]);
 
-        if (!$existingUser) {
-            $senhaVisivel = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
-            $senhaHash = password_hash($senhaVisivel, PASSWORD_DEFAULT);
+            // Criação de usuário
+            $stmt = $conn->prepare("SELECT id FROM usuarios WHERE email = ?");
+            $stmt->execute([$email]);
+            $existingUser = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            $stmt = $conn->prepare("INSERT INTO usuarios (nome, email, whatsapp, senha) VALUES (?, ?, ?, ?)");
-            $stmt->execute([$name, $email, $whatsapp, $senhaHash]);
+            if (!$existingUser) {
+                $senhaVisivel = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
+                $senhaHash = password_hash($senhaVisivel, PASSWORD_DEFAULT);
 
-            app_log("Usuário criado na área de membros: $email");
+                $stmt = $conn->prepare("INSERT INTO usuarios (nome, email, whatsapp, senha) VALUES (?, ?, ?, ?)");
+                $stmt->execute([$name, $email, $whatsapp, $senhaHash]);
 
-            $mailer = new Mailer();
-            $mailer->sendMemberAccess($email, $name, $senhaVisivel);
-        } else {
-            app_log("Usuário já existente: $email");
-        }
+                app_log("Usuário criado: $email");
 
-        // 🔑 Geração de token de download
-        $stmt = $conn->prepare("SELECT id FROM download_tokens WHERE order_id = ?");
-        $stmt->execute([$existingOrder['id']]);
-        $existingToken = $stmt->fetch(PDO::FETCH_ASSOC);
+                $mailer = new Mailer();
+                $mailer->sendMemberAccess($email, $name, $senhaVisivel);
+            } else {
+                app_log("Usuário já existe: $email");
+            }
 
-        if (!$existingToken) {
-            $token = bin2hex(random_bytes(16));
-            $expiresAt = date('Y-m-d H:i:s', strtotime('+24 hours'));
+            // Geração de token de download
+            $stmt = $conn->prepare("SELECT id FROM download_tokens WHERE order_id = ?");
+            $stmt->execute([$existingOrder['id']]);
+            $existingToken = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            $productId = $order['items']['data'][0]['product_id'] ?? null;
+            if (!$existingToken) {
+                $token = bin2hex(random_bytes(16));
+                $expiresAt = date('Y-m-d H:i:s', strtotime('+24 hours'));
 
-            $stmt = $conn->prepare("INSERT INTO download_tokens (order_id, token, expires_at, product_id) VALUES (?, ?, ?, ?)");
-            $stmt->execute([$existingOrder['id'], $token, $expiresAt, $productId]);
+                $stmt = $conn->prepare("INSERT INTO download_tokens (order_id, token, expires_at, product_id) VALUES (?, ?, ?, ?)");
+                $stmt->execute([$existingOrder['id'], $token, $expiresAt, $productId]);
 
-            app_log("Token de download gerado: $token");
+                app_log("Token de download gerado: $token");
 
-            $mailer = new Mailer();
-            $mailer->sendDownloadLink($email, $name, $orderNumber, $token);
-        } else {
-            app_log("Token já existe para este pedido.");
+                $mailer = new Mailer();
+                $mailer->sendDownloadLink($email, $name, $orderNumber, $token);
+            } else {
+                app_log("Token já existe para este pedido.");
+            }
         }
 
         http_response_code(200);
