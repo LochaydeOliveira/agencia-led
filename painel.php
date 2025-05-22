@@ -135,12 +135,6 @@
         color: #0000008c;
         width: 15%;
         cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .form-select:hover {
-        color: #000000;
-        font-weight: 600;
     }
 
 
