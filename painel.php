@@ -133,7 +133,16 @@
         border: 0;
         padding: 8px;
         color: #0000008c;
+        width: 15%;
+        cursor: pointer;
     }
+
+    .form-select {
+        color: #000000;
+        font-weight: 600;
+    }
+
+
     header {
         padding: 20px 10px;
         text-align: left;
