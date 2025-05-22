@@ -6,22 +6,17 @@ require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/src/Database.php';
 require_once __DIR__ . '/src/Mailer.php';
 
-// Verifica se é uma requisição POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     die('Método não permitido');
 }
 
-// Obtém o evento a ser simulado
 $event = $_POST['event'] ?? '';
-
-// Lista de eventos permitidos
 $allowed_events = ['order.created', 'order.paid', 'order.status.updated'];
 
 if (!in_array($event, $allowed_events)) {
     die('Evento inválido');
 }
 
-// Obtém o último pedido criado
 $db = Database::getInstance();
 $conn = $db->getConnection();
 $sql = "SELECT yampi_order_id, order_number FROM orders ORDER BY id DESC LIMIT 1";
@@ -29,26 +24,20 @@ $stmt = $conn->prepare($sql);
 $stmt->execute();
 $lastOrder = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Se não houver pedido criado e o evento for order.paid ou order.status.updated
 if (!$lastOrder && ($event === 'order.paid' || $event === 'order.status.updated')) {
     die('Nenhum pedido encontrado para simular pagamento ou atualização de status');
 }
 
-// Gera um novo ID e número de pedido apenas para order.created
 $orderId = $event === 'order.created' ? rand(100000000, 999999999) : $lastOrder['yampi_order_id'];
 $orderNumber = $event === 'order.created' ? rand(100000000, 999999999) : $lastOrder['order_number'];
 
-
-
-// Define o status correto conforme o evento
 $statusAlias = match ($event) {
     'order.created' => 'waiting_payment',
     'order.paid' => 'paid',
-    'order.status.updated' => 'completed', // ou outro status conforme seu sistema
+    'order.status.updated' => 'completed',
     default => 'unknown',
 };
 
-// Cria um payload de exemplo
 $payload = [
     'event' => $event,
     'time' => date('Y-m-d H:i:s'),
@@ -86,11 +75,8 @@ $payload = [
     ]
 ];
 
-
-// Gera a assinatura do webhook
 $signature = hash_hmac('sha256', json_encode($payload), WEBHOOK_SECRET);
 
-// Simula a requisição para o webhook
 $ch = curl_init(WEBHOOK_URL);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_POST, true);
@@ -104,28 +90,38 @@ $response = curl_exec($ch);
 $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
 
-// Exibe o resultado
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Simulação de Webhook</title>
-    <style>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light py-5">
     <div class="container">
-        <h1>Simulação de Webhook</h1>
+        <div class="mb-4">
+            <?php if ($http_code === 200): ?>
+                <div class="alert alert-success">
+                    ✅ Simulação do evento <strong><?php echo htmlspecialchars($event); ?></strong> executada com sucesso!
+                </div>
+            <?php else: ?>
+                <div class="alert alert-danger">
+                    ❌ A simulação do evento <strong><?php echo htmlspecialchars($event); ?></strong> falhou. Código HTTP: <?php echo $http_code; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <h2>Detalhes da Simulação</h2>
         <p><strong>Evento:</strong> <?php echo htmlspecialchars($event); ?></p>
         <p><strong>Código HTTP:</strong> <?php echo $http_code; ?></p>
-        
-        <h2>Resposta:</h2>
+
+        <h4>Resposta:</h4>
         <pre><?php echo htmlspecialchars($response); ?></pre>
-        
-        <h2>Payload:</h2>
+
+        <h4>Payload Enviado:</h4>
         <pre><?php echo htmlspecialchars(json_encode($payload, JSON_PRETTY_PRINT)); ?></pre>
-        
-        <a href="simulate.html" class="back-link">Voltar</a>
+
+        <a href="simulate.html" class="btn btn-secondary mt-3">← Voltar</a>
     </div>
 </body>
-</html> 
+</html>
