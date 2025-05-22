@@ -200,35 +200,34 @@
                 </a>
             </div>
         </div>
-    </div>        
-</header>
-
-
-<nav class="main-nav">
-    <div class="container">
-        <div class="row">             
-            <div class="col-md-3 mb-4">       
-                <!-- Filtro -->
-                <div>
-                    <select class="form-select" id="categoryFilter">
-                    <option value="all">Todas as Categorias</option>
-                    <option value="decoração">Decoração</option>
-                    <option value="bebê">Bebê, Enxoval, Decoração e Pet</option>
-                    <option value="brinquedos">Brinquedos</option>
-                    <option value="joias">Joias, Folheados e Acessórios</option>
-                    <option value="calçados">Calçados e Vestuário</option>
-                    <option value="relógios">Relógios</option>
-                    <option value="perfumes">Perfumes</option>
-                    <option value="ferramentas">Ferramentas e Autopeças</option>
-                    <option value="eletrônicos">Eletrônicos, Segurança, Informática</option>
-                    <option value="diversas">Diversas Categorias</option>
-                    <option value="plataformas">Plataformas de Drop Nacional</option>
-                    </select>
+    </div> 
+    <nav class="main-nav">
+        <div class="container">
+            <div class="row">             
+                <div class="">       
+                    <!-- Filtro -->
+                    <div>
+                        <select class="form-select" id="categoryFilter">
+                        <option value="all">Todas as Categorias</option>
+                        <option value="decoração">Decoração</option>
+                        <option value="bebê">Bebê, Enxoval, Decoração e Pet</option>
+                        <option value="brinquedos">Brinquedos</option>
+                        <option value="joias">Joias, Folheados e Acessórios</option>
+                        <option value="calçados">Calçados e Vestuário</option>
+                        <option value="relógios">Relógios</option>
+                        <option value="perfumes">Perfumes</option>
+                        <option value="ferramentas">Ferramentas e Autopeças</option>
+                        <option value="eletrônicos">Eletrônicos, Segurança, Informática</option>
+                        <option value="diversas">Diversas Categorias</option>
+                        <option value="plataformas">Plataformas de Drop Nacional</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</nav>
+    </nav>       
+</header>
+
     
 
 <main class="container py-5 main-content">        
