@@ -199,10 +199,6 @@
     </header>
 
     <main class="container py-5 main-content">
-        <div>
-            <h1 class="mb-4">Lista de Fornecedores Nacionais</h1>
-            <p class="mb-5">Confira abaixo a lista organizada de fornecedores nacionais por categoria, com links diretos.</p>
-        </div>
         
         <div class="row">
             <!-- Coluna lateral: filtro -->
@@ -228,21 +224,25 @@
 
             <!-- Coluna principal: fornecedores -->
             <div class="col-md-9">
+                <div>
+                    <h1 class="mb-4">Lista de Fornecedores Nacionais</h1>
+                    <p class="mb-5">Confira abaixo a lista organizada de fornecedores nacionais por categoria, com links diretos.</p>
+                </div>
                 <div class="row" id="fornecedores">
 
                     <!-- Decoração -->
                     <div class="col-md-6 col-lg-4 mb-4 fornecedor fade-in" data-category="decoração">
-                    <div class="card h-100 rounded-2 border-0">
-                        <h5 class="card-title">Decoração</h5>
-                        <div class="card-body">
-                        <a href="https://moveistrovarelli.com.br/" target="_blank" class="btn btn-link-custom">Moveis Trovarelli</a><br>
-                        <a href="https://www.decormoveis.com.br/" target="_blank" class="btn btn-link-custom">Decor Moveis</a><br>
-                        <a href="https://www.gazinatacado.com.br/" target="_blank" class="btn btn-link-custom">Gazin Atacado</a><br>
-                        <a href="https://www.lenobre.com.br/" target="_blank" class="btn btn-link-custom">Le Nobre</a><br>
-                        <a href="https://www.printile.com.br/" target="_blank" class="btn btn-link-custom">Printile</a><br>
-                        <a href="https://www.souflorir.com.br/" target="_blank" class="btn btn-link-custom">Sou Florir</a>
+                        <div class="card h-100 rounded-2 border-0">
+                            <h5 class="card-title">Decoração</h5>
+                            <div class="card-body">
+                                <a href="https://moveistrovarelli.com.br/" target="_blank" class="btn btn-link-custom">Moveis Trovarelli</a><br>
+                                <a href="https://www.decormoveis.com.br/" target="_blank" class="btn btn-link-custom">Decor Moveis</a><br>
+                                <a href="https://www.gazinatacado.com.br/" target="_blank" class="btn btn-link-custom">Gazin Atacado</a><br>
+                                <a href="https://www.lenobre.com.br/" target="_blank" class="btn btn-link-custom">Le Nobre</a><br>
+                                <a href="https://www.printile.com.br/" target="_blank" class="btn btn-link-custom">Printile</a><br>
+                                <a href="https://www.souflorir.com.br/" target="_blank" class="btn btn-link-custom">Sou Florir</a>
+                            </div>
                         </div>
-                    </div>
                     </div>
         
                     <!-- Bebê, Enxoval, Decoração e Pet -->

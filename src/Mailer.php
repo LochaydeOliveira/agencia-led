@@ -53,7 +53,7 @@ class Mailer {
                 <div style='text-align: center; margin: 30px;'>
                     <a href='https://agencialed.com/download_page.php?token={$token}'
                        style='background-color: #28a745; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px;'>
-                       Acessar Lista de Fornecedores
+                       Acessar Lista
                     </a>
                 </div>
                 <div style='background-color: #fff3cd; padding: 15px; border-radius: 8px;'>
@@ -134,7 +134,7 @@ class Mailer {
                 </div>
                 <div style='text-align: center; margin: 30px;'>
                     <a href='https://agencialed.com/login.php'
-                       style='max-width: 60%;margin: 0 auto;background: #28a745;color: white;padding: 15px 30px;text-decoration: none;border-radius: 8px;font-size: 18px;font-weight: bold;display: inline-block;width: 100%;'>
+                       style='max-width: 40%;margin: 0 auto;background: #28a745;color: white;padding: 15px 30px;text-decoration: none;border-radius: 8px;font-size: 16px;font-weight: bold;display: inline-block;width: 100%;'>
                        Acessar Área de Clientes
                     </a>
                 </div>
