@@ -161,18 +161,17 @@
         font-size: 15px;
         color: #9590ad;
     }
+    .tt-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 </style>
 </head>
 <body>
 
 
     <header>
-    <!-- <div class="container">
-        <h2>Bem-vindo à Área de Membros</h2>
-        <p>Olá, <strong><?php echo $usuario; ?></strong>! Você está logado.</p>
-        <a href="logout.php" class="btn-logout">Sair</a>
-    </div>
-     -->
     <div class="container content-header">
         <div class="content-user">
             <h2>Área do Cliente</h2>
@@ -182,9 +181,31 @@
         </div>
 
         <div class="content-logof">
+                <!-- Coluna lateral: filtro -->
+                <div class="col-md-3 mb-4">       
+                <!-- Filtro -->
+                    <div>
+                    <select class="form-select" id="categoryFilter">
+                    <option value="all">Todas as Categorias</option>
+                    <option value="decoração">Decoração</option>
+                    <option value="bebê">Bebê, Enxoval, Decoração e Pet</option>
+                    <option value="brinquedos">Brinquedos</option>
+                    <option value="joias">Joias, Folheados e Acessórios</option>
+                    <option value="calçados">Calçados e Vestuário</option>
+                    <option value="relógios">Relógios</option>
+                    <option value="perfumes">Perfumes</option>
+                    <option value="ferramentas">Ferramentas e Autopeças</option>
+                    <option value="eletrônicos">Eletrônicos, Segurança, Informática</option>
+                    <option value="diversas">Diversas Categorias</option>
+                    <option value="plataformas">Plataformas de Drop Nacional</option>
+                    </select>
+                    </div>
+                </div>
+
             <div class="">
                 <input style="background: #ededed;" type="text" class="form-control" id="searchInput" placeholder="Buscar fornecedor...">
             </div>
+            
             <div>
                 <a href="logout.php" class="btn-logout">
                     Sair 
@@ -201,30 +222,10 @@
     <main class="container py-5 main-content">
         
         <div class="row">
-            <!-- Coluna lateral: filtro -->
-            <div class="col-md-3 mb-4">       
-                <!-- Filtro -->
-                <div>
-                    <select class="form-select" id="categoryFilter">
-                    <option value="all">Todas as Categorias</option>
-                    <option value="decoração">Decoração</option>
-                    <option value="bebê">Bebê, Enxoval, Decoração e Pet</option>
-                    <option value="brinquedos">Brinquedos</option>
-                    <option value="joias">Joias, Folheados e Acessórios</option>
-                    <option value="calçados">Calçados e Vestuário</option>
-                    <option value="relógios">Relógios</option>
-                    <option value="perfumes">Perfumes</option>
-                    <option value="ferramentas">Ferramentas e Autopeças</option>
-                    <option value="eletrônicos">Eletrônicos, Segurança, Informática</option>
-                    <option value="diversas">Diversas Categorias</option>
-                    <option value="plataformas">Plataformas de Drop Nacional</option>
-                    </select>
-                </div>
-            </div>
 
             <!-- Coluna principal: fornecedores -->
             <div class="col-md-9">
-                <div>
+                <div class="tt-list">
                     <h1 class="mb-4">Lista de Fornecedores Nacionais</h1>
                     <p class="mb-5">Confira abaixo a lista organizada de fornecedores nacionais por categoria, com links diretos.</p>
                 </div>
