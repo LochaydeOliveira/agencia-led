@@ -82,22 +82,21 @@ try {
         // 🔹 EVENTO order.created: quando o cliente finaliza o pedido
         if ($event === 'order.created') {
             if (!$existingOrder) {
-                // Insere novo pedido no banco
-                $stmt = $conn->prepare("
-                    INSERT INTO orders (yampi_order_id, order_number, customer_name, customer_email, status, created_at, product_id) 
-                    VALUES (?, ?, ?, ?, ?, NOW(), ?)
-                ");
+                $stmt = $conn->prepare("INSERT INTO orders (yampi_order_id, order_number, customer_name, customer_email, status, created_at, product_id) VALUES (?, ?, ?, ?, ?, NOW(), ?)");
                 $stmt->execute([$orderId, $orderNumber, $name, $email, $statusAlias, $productId]);
-
                 app_log("Novo pedido inserido: $orderNumber ($email)");
             } else {
-                // Atualiza status se já existir
                 $stmt = $conn->prepare("UPDATE orders SET status = ? WHERE yampi_order_id = ?");
                 $stmt->execute([$statusAlias, $orderId]);
-
                 app_log("Pedido existente atualizado: $orderNumber");
             }
+        
+            // ✅ Envia o email de aviso de pagamento pendente
+            $mailer = new Mailer();
+            $mailer->sendOrderConfirmation($email, $name, $orderNumber, $order['value_total']);
+            app_log("Email de pagamento pendente enviado para $email");
         }
+        
 
         // 🔹 EVENTO order.paid: pagamento confirmado
         if ($event === 'order.paid') {
