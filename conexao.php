@@ -1,6 +1,6 @@
 <?php
 $host = "localhost";
-$db = "paymen58_area_de_membros";
+$db = "paymen58_sistema_integrado_led";
 $user = "paymen58";
 $pass = "u4q7+B6ly)obP_gxN9sNe";
 
