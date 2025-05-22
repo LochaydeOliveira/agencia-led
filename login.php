@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = $stmt->fetch();
     if ($user && password_verify($senha, $user["senha"])) {
         $_SESSION["usuario"] = $email;
-        header("Location: membro.php");
+        header("Location: painel.php");
         exit;
     } else {
         $erro = "Email ou senha incorretos.";

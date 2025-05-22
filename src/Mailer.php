@@ -458,4 +458,67 @@ class Mailer {
 
     }
 
+
+    public function sendMemberAccess($email, $name, $senha) {
+            try {
+                app_log("Enviando dados de acesso da área de clientes para $email");
+
+                $this->mailer->clearAddresses();
+                $this->mailer->addAddress($email, $name);
+                $this->mailer->Subject = '🔐 Acesso Liberado - Área dos Clientes | Agência LED';
+
+                $html = "
+                <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;'>
+                    <div style='text-align: center; padding: 20px 0; border-bottom: 2px solid #f0f0f0;'>
+                        <h1 style='color: #0d6efd; margin: 0; font-size: 24px;'>SEU ACESSO FOI LIBERADO!</h1>
+                    </div>
+                    <div style='padding: 30px 20px;'>
+                        <h2 style='color: #2c3e50; margin-top: 0;'>Olá {$name},</h2>
+                        <p style='color: #34495e; font-size: 16px; line-height: 1.6;'>
+                            Seu pagamento foi confirmado com sucesso!<br>
+                            Agora você tem acesso à nossa <strong>área exclusiva dos clientes</strong>.
+                        </p>
+                        <p style='color: #34495e; font-size: 16px;'>Use os dados abaixo para fazer login:</p>
+                        <div style='background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;'>
+                            <p style='margin: 0;'><strong>Email:</strong> {$email}</p>
+                            <p style='margin: 0;'><strong>Senha:</strong> {$senha}</p>
+                        </div>
+                        <div style='text-align: center; margin: 30px 0;'>
+                            <a href='https://agencialed.com/login.php'
+                            style='background: #0d6efd; color: white; padding: 12px 25px;
+                                    text-decoration: none; border-radius: 8px; font-size: 16px; display: inline-block;'>
+                                Acessar Área de Clientes
+                            </a>
+                        </div>
+                    </div>
+                    <div style='text-align: center; padding: 20px; border-top: 2px solid #f0f0f0; background-color: #f8f9fa;'>
+                        <p style='color: #7f8c8d; margin: 0; font-size: 14px;'>
+                            Se precisar de ajuda, fale com a gente:<br>
+                            <a href='mailto:contato@agencialed.com' style='color: #3498db;'>contato@agencialed.com</a>
+                        </p>
+                    </div>
+                </div>";
+
+                $this->mailer->Body = $html;
+                $this->mailer->AltBody = "Olá {$name},
+
+    "
+                    . "Seu acesso à área dos clientes foi liberado!
+    "
+                    . "Login: {$email}
+    Senha: {$senha}
+
+    "
+                    . "Acesse: https://agencialed.com/login.php
+
+    "
+                    . "Dúvidas? contato@agencialed.com";
+
+                return $this->mailer->send();
+            } catch (Exception $e) {
+                app_log("Erro ao enviar dados de acesso para $email: " . $e->getMessage());
+                return false;
+            }
+        }
+
 } 
