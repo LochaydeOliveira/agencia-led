@@ -2,14 +2,18 @@
 require 'conexao.php';
 session_start();
 $erro = '';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $senha = $_POST["senha"];
+
     $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE email = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch();
+
     if ($user && password_verify($senha, $user["senha"])) {
-        $_SESSION["usuario"] = $email;
+        $_SESSION["usuario"] = $email;           // mantém se quiser
+        $_SESSION["nome"] = $user["nome"];       // salva o nome
         header("Location: painel.php");
         exit;
     } else {
