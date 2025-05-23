@@ -555,6 +555,16 @@ if ($cliente) {
                 transition: filter 0.3s ease;
             }
 
+            .blur .bloqueio .bloqueio-overlay {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 10;
+                background: rgba(255, 255, 255, 0.85);
+                padding: 1rem;
+            }
+
 
     </style>
 
@@ -676,6 +686,18 @@ if ($cliente) {
                                         <?php echo $liberado ? $lista['conteudo_html'] : ''; ?>
                                     </div>
 
+                                    <?php if (!$liberado): ?>
+                                        <div class="bloqueio-overlay">
+                                            <div class="style-bloqueio">
+                                                <img src="assets-agencia-led/icones-svg/trancar.svg" alt="trancar">
+                                                <strong>Lista bloqueada!</strong>
+                                            </div>
+                                            <div class="style-bloqueio-btn">
+                                                <p>Libere agora mesmo realizando o pagamento via Pix.</p>
+                                                <button class="btn btn-comprar-lista">Liberar Lista</button>
+                                            </div>                                      
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
