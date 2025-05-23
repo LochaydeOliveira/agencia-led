@@ -550,10 +550,15 @@ if ($cliente) {
                 align-items: center;
             }
 
-            #listaDisponivel.bloqueado {
+            #listaDisponivel {
                 opacity: 0.6;
                 position: relative;
             }
+
+            /* #listaDisponivel.bloqueado {
+                opacity: 0.6;
+                position: relative;
+            } */
 
             /* Sobrescreve opacidade do conteúdo bloqueado */
             #listaDisponivel .bloqueado {
