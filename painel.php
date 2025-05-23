@@ -686,7 +686,7 @@ if ($cliente) {
                     <?php foreach ($todas_listas as $lista): ?>
                         <?php $liberado = in_array($lista['id'], $listas_com_acesso); ?>
                         <div class="col-md-6 col-lg-4 mb-4 fornecedor fade-in" data-category="<?php echo htmlspecialchars($lista['nome']); ?>" data-lista-id="<?php echo $lista['id']; ?>">
-                            <div id="listaDisponivel" class="card h-100 rounded-2 border-0">
+                            <div class="card h-100 rounded-2 border-0">
                                 <h5 class="card-title"><?php echo htmlspecialchars($lista['nome']); ?></h5>
                                 <div class="card-body <?php echo $liberado ? '' : 'bloqueado'; ?>">
                                     <div class="conteudo-lista">
