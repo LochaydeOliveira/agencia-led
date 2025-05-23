@@ -438,13 +438,22 @@ if ($cliente) {
 
         .btn-comprar-lista {
             background: #198754;
+            background: none;
             margin: 1rem 0 0;
-            color: #fff;
+            color: #000000;
             font-size: 14px;
             width: 100%;
             padding: 0.75rem 0;
             text-transform: uppercase;
-        }       
+            border: 1px solid #000000;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }    
+        
+        .btn-comprar-lista {
+            background: #198754;
+            color: #fff;
+            border: none;
+        }  
 
 
 
