@@ -1,12 +1,35 @@
 <?php
+session_start();
+require 'conexao.php';
 
-    session_start();
-    if (!isset($_SESSION['usuario'])) {
-        header("Location: login.php");
-        exit;
-    }
-    $nome = htmlspecialchars($_SESSION['nome']);
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login.php");
+    exit;
+}
 
+$email = $_SESSION['usuario'];
+$nome = htmlspecialchars($_SESSION['nome']);
+
+// Buscar cliente
+$stmt = $pdo->prepare("SELECT id FROM clientes WHERE email = ? AND status = 'ativo'");
+$stmt->execute([$email]);
+$cliente = $stmt->fetch();
+
+$listas_com_acesso = [];
+$todas_listas = [];
+
+if ($cliente) {
+    $cliente_id = $cliente['id'];
+
+    // Buscar IDs das listas liberadas para esse cliente
+    $stmt = $pdo->prepare("SELECT lista_id FROM clientes_listas WHERE cliente_id = ? AND status = 'ativo'");
+    $stmt->execute([$cliente_id]);
+    $listas_com_acesso = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+    // Buscar todas as listas do sistema
+    $stmt = $pdo->query("SELECT id, nome, descricao, conteudo_html FROM listas");
+    $todas_listas = $stmt->fetchAll();
+}
 ?>
 
 <!DOCTYPE html>
@@ -600,9 +623,32 @@
                 <h1 class="mb-4">Lista de Fornecedores Nacionais</h1>
                 <p class="mb-5">Confira abaixo a lista organizada de fornecedores nacionais por categoria, com links diretos.</p>
             </div>
+
             <div class="row" id="fornecedores">
 
+            <div class="row">
+                <?php foreach ($todas_listas as $lista): ?>
+                    <?php $liberado = in_array($lista['id'], $listas_com_acesso); ?>
+                    <div class="col-md-6 col-lg-4 mb-4 fornecedor fade-in" data-category="<?php echo htmlspecialchars($lista['nome']); ?>" data-lista-id="<?php echo $lista['id']; ?>">
+                        <div class="card h-100 rounded-2 border-0">
+                            <h5 class="card-title"><?php echo htmlspecialchars($lista['nome']); ?></h5>
+                            <div class="card-body <?php echo $liberado ? '' : 'bloqueado'; ?>">
+                                <div class="conteudo-lista">
+                                    <?php echo $liberado ? $lista['conteudo_html'] : ''; ?>
+                                </div>
 
+                                <?php if (!$liberado): ?>
+                                    <div class="bloqueio-overlay">
+                                        🚫 <strong>Lista bloqueada!</strong><br>
+                                        Libere agora mesmo realizando o pagamento via Pix.
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+<!-- 
                 <div class="col-md-6 col-lg-4 mb-4 fornecedor fade-in" data-category="decoração">
                     <div class="card h-100 rounded-2 border-0">
                         <h5 class="card-title">Decoração</h5>
@@ -616,130 +662,116 @@
                         </div>
                     </div>
                 </div>
-    
-
                 <div class="col-md-6 col-lg-4 mb-4 fornecedor fade-in" data-category="bebê">
-                <div class="card h-100 rounded-2 border-0">
-                    <h5 class="card-title">Bebê, Enxoval, Decoração e Pet</h5>
-                    <div class="card-body">
-                    <a href="https://www.dropet.com.br/" target="_blank" class="btn btn-link-custom">Dropet</a><br>
-                    <a href="https://www.maisquedistribuidora.com.br/" target="_blank" class="btn btn-link-custom">Mais que Distribuidora</a><br>
-                    <a href="https://linkme.bio/deccoralle" target="_blank" class="btn btn-link-custom">Deccoralle Decor</a><br>
-                    <a href="https://www.lp.gugadistribuidoraibitinga.com.br/" target="_blank" class="btn btn-link-custom">Guga Distribuidora</a><br>
-                    <a href="https://www.gugadistribuidoraibitinga.com.br/" target="_blank" class="btn btn-link-custom">Guga Distribuidora - Catálogo</a><br>
-                    <a href="https://www.molinaspet.com.br/" target="_blank" class="btn btn-link-custom">Molinas Pet</a>
+                    <div class="card h-100 rounded-2 border-0">
+                        <h5 class="card-title">Bebê, Enxoval, Decoração e Pet</h5>
+                        <div class="card-body">
+                        <a href="https://www.dropet.com.br/" target="_blank" class="btn btn-link-custom">Dropet</a><br>
+                        <a href="https://www.maisquedistribuidora.com.br/" target="_blank" class="btn btn-link-custom">Mais que Distribuidora</a><br>
+                        <a href="https://linkme.bio/deccoralle" target="_blank" class="btn btn-link-custom">Deccoralle Decor</a><br>
+                        <a href="https://www.lp.gugadistribuidoraibitinga.com.br/" target="_blank" class="btn btn-link-custom">Guga Distribuidora</a><br>
+                        <a href="https://www.gugadistribuidoraibitinga.com.br/" target="_blank" class="btn btn-link-custom">Guga Distribuidora - Catálogo</a><br>
+                        <a href="https://www.molinaspet.com.br/" target="_blank" class="btn btn-link-custom">Molinas Pet</a>
+                        </div>
                     </div>
                 </div>
-                </div>
-    
-
                 <div class="col-md-6 col-lg-4 mb-4 fornecedor fade-in" data-category="brinquedos">
-                <div class="card h-100 rounded-2 border-0">
-                    <h5 class="card-title">Brinquedos</h5>
-                    <div class="card-body">
-                    <a href="https://europio.catalogomobile.com.br/dashboard/products" target="_blank" class="btn btn-link-custom">Europio</a>
+                    <div class="card h-100 rounded-2 border-0">
+                        <h5 class="card-title">Brinquedos</h5>
+                        <div class="card-body">
+                        <a href="https://europio.catalogomobile.com.br/dashboard/products" target="_blank" class="btn btn-link-custom">Europio</a>
+                        </div>
                     </div>
                 </div>
-                </div>
-
                 <div class="col-md-6 col-lg-4 mb-4 fornecedor fade-in" data-category="joias">
-                <div class="card h-100 rounded-2 border-0">
-                    <h5 class="card-title">Joias, Folheados e Acessórios</h5>
-                    <div class="card-body">                    
-                        <a href="https://www.luxjoias.com/dropshipping-revenda-i-47.html" target="_blank" class="btn btn-link-custom">Lux Joias</a><br>
-                        <a href="https://dropse.com.br/" target="_blank" class="btn btn-link-custom">Dropse</a><br>
-                        <a href="https://www.florattajoias.com.br/" target="_blank" class="btn btn-link-custom">Floratta Joias</a><br>
-                        <a href="https://www.sobellavariedades.com.br/" target="_blank" class="btn btn-link-custom">Sobella Variedades</a><br>
-                        <a href="https://www.imagemfolheados.com.br/" target="_blank" class="btn btn-link-custom">Imagem Folheados</a>
+                    <div class="card h-100 rounded-2 border-0">
+                        <h5 class="card-title">Joias, Folheados e Acessórios</h5>
+                        <div class="card-body">                    
+                            <a href="https://www.luxjoias.com/dropshipping-revenda-i-47.html" target="_blank" class="btn btn-link-custom">Lux Joias</a><br>
+                            <a href="https://dropse.com.br/" target="_blank" class="btn btn-link-custom">Dropse</a><br>
+                            <a href="https://www.florattajoias.com.br/" target="_blank" class="btn btn-link-custom">Floratta Joias</a><br>
+                            <a href="https://www.sobellavariedades.com.br/" target="_blank" class="btn btn-link-custom">Sobella Variedades</a><br>
+                            <a href="https://www.imagemfolheados.com.br/" target="_blank" class="btn btn-link-custom">Imagem Folheados</a>
+                        </div>
                     </div>
                 </div>
-                </div>
-
                 <div class="col-md-6 col-lg-4 mb-4 fornecedor fade-in" data-category="calçados">
-                <div class="card h-100 rounded-2 border-0">
-                    <h5 class="card-title">Calçados e Vestuário</h5>
-                    <div class="card-body">                    
-                        <a href="https://www.imperiodasrasteiras.com.br/" target="_blank" class="btn btn-link-custom">Império das Rasteiras</a><br>
-                        <a href="https://www.atacadobarato.com/" target="_blank" class="btn btn-link-custom">Atacado Barato</a><br>
-                        <a href="https://www.revendadecalcados.com.br/painel_acesso.php" target="_blank" class="btn btn-link-custom">Revenda de Calçados</a><br>
-                        <a href="https://www.parishoes.com.br/pagina/revenda.html" target="_blank" class="btn btn-link-custom">Pari Shoes</a><br>
-                        <a href="https://rickshoes.com.br/" target="_blank" class="btn btn-link-custom">Rick Shoes</a><br>
-                        <a href="https://www.bmshopdrop.com.br/pagina/dropshipping-manual-do-lojista-reveendedor.html" target="_blank" class="btn btn-link-custom">BM Shop Drop</a><br>
-                        <a href="https://cftdropshipping.com.br/" target="_blank" class="btn btn-link-custom">CFT Dropshipping</a><br>
-                        <a href="https://www.francasapatos.com.br/" target="_blank" class="btn btn-link-custom">Franca Sapatos</a><br>
-                        <a href="https://www.dropaaqui.com.br/" target="_blank" class="btn btn-link-custom">Dropa Aqui</a><br>
-                        <a href="https://suafabrica.com.br/blogs/como-funciona/quais-as-vantagens-de-fazer-dropshipping" target="_blank" class="btn btn-link-custom">Sua Fábrica</a><br>
-                        <a href="https://www.kaisan.com.br/" target="_blank" class="btn btn-link-custom">Kaisan</a><br>
-                        <a href="https://www.atacadaodaroupa.com/" target="_blank" class="btn btn-link-custom">Atacadão da Roupa</a><br>
+                    <div class="card h-100 rounded-2 border-0">
+                        <h5 class="card-title">Calçados e Vestuário</h5>
+                        <div class="card-body">                    
+                            <a href="https://www.imperiodasrasteiras.com.br/" target="_blank" class="btn btn-link-custom">Império das Rasteiras</a><br>
+                            <a href="https://www.atacadobarato.com/" target="_blank" class="btn btn-link-custom">Atacado Barato</a><br>
+                            <a href="https://www.revendadecalcados.com.br/painel_acesso.php" target="_blank" class="btn btn-link-custom">Revenda de Calçados</a><br>
+                            <a href="https://www.parishoes.com.br/pagina/revenda.html" target="_blank" class="btn btn-link-custom">Pari Shoes</a><br>
+                            <a href="https://rickshoes.com.br/" target="_blank" class="btn btn-link-custom">Rick Shoes</a><br>
+                            <a href="https://www.bmshopdrop.com.br/pagina/dropshipping-manual-do-lojista-reveendedor.html" target="_blank" class="btn btn-link-custom">BM Shop Drop</a><br>
+                            <a href="https://cftdropshipping.com.br/" target="_blank" class="btn btn-link-custom">CFT Dropshipping</a><br>
+                            <a href="https://www.francasapatos.com.br/" target="_blank" class="btn btn-link-custom">Franca Sapatos</a><br>
+                            <a href="https://www.dropaaqui.com.br/" target="_blank" class="btn btn-link-custom">Dropa Aqui</a><br>
+                            <a href="https://suafabrica.com.br/blogs/como-funciona/quais-as-vantagens-de-fazer-dropshipping" target="_blank" class="btn btn-link-custom">Sua Fábrica</a><br>
+                            <a href="https://www.kaisan.com.br/" target="_blank" class="btn btn-link-custom">Kaisan</a><br>
+                            <a href="https://www.atacadaodaroupa.com/" target="_blank" class="btn btn-link-custom">Atacadão da Roupa</a><br>
+                        </div>
                     </div>
                 </div>
-                </div>
-
                 <div class="col-md-6 col-lg-4 mb-4 fornecedor fade-in" data-category="relógios">
-                <div class="card h-100 rounded-2 border-0">
-                    <h5 class="card-title">Relógios</h5>
-                    <div class="card-body">
-                    <a href="https://www.relogiosnoatacado.com/m/dropshipping/" target="_blank" class="btn btn-link-custom">Relógios no Atacado</a>
+                    <div class="card h-100 rounded-2 border-0">
+                        <h5 class="card-title">Relógios</h5>
+                        <div class="card-body">
+                        <a href="https://www.relogiosnoatacado.com/m/dropshipping/" target="_blank" class="btn btn-link-custom">Relógios no Atacado</a>
+                        </div>
                     </div>
-                </div>
-                </div>
- 
+                </div> 
                 <div class="col-md-6 col-lg-4 mb-4 fornecedor fade-in" data-category="perfumes">
-                <div class="card h-100 rounded-2 border-0">
-                    <h5 class="card-title">Perfumes</h5>
-                    <div class="card-body">
-                    <a href="https://www.bmshopdrop.com.br/pagina/dropshipping-manual-do-lojista-reveendedor.html" target="_blank" class="btn btn-link-custom">BM Shop Drop</a>
+                    <div class="card h-100 rounded-2 border-0">
+                        <h5 class="card-title">Perfumes</h5>
+                        <div class="card-body">
+                        <a href="https://www.bmshopdrop.com.br/pagina/dropshipping-manual-do-lojista-reveendedor.html" target="_blank" class="btn btn-link-custom">BM Shop Drop</a>
+                        </div>
                     </div>
-                </div>
-                </div>
-    
- 
+                </div> 
                 <div class="col-md-6 col-lg-4 mb-4 fornecedor fade-in" data-category="ferramentas">
-                <div class="card h-100 rounded-2 border-0">
-                    <h5 class="card-title">Ferramentas e Autopeças</h5>
-                    <div class="card-body">
-                    <a href="https://www.laquila.com.br/seja-um-revendedor" target="_blank" class="btn btn-link-custom">Laquila</a><br>
-                    <a href="https://www.gb.com.br/dropshipping/" target="_blank" class="btn btn-link-custom">GB</a><br>
-                    <a href="https://www.shoppecas.com.br/" target="_blank" class="btn btn-link-custom">Shop Peças</a>
+                    <div class="card h-100 rounded-2 border-0">
+                        <h5 class="card-title">Ferramentas e Autopeças</h5>
+                        <div class="card-body">
+                        <a href="https://www.laquila.com.br/seja-um-revendedor" target="_blank" class="btn btn-link-custom">Laquila</a><br>
+                        <a href="https://www.gb.com.br/dropshipping/" target="_blank" class="btn btn-link-custom">GB</a><br>
+                        <a href="https://www.shoppecas.com.br/" target="_blank" class="btn btn-link-custom">Shop Peças</a>
+                        </div>
                     </div>
-                </div>
-                </div>
-    
+                </div>    
                 <div class="col-md-6 col-lg-4 mb-4 fornecedor fade-in" data-category="eletrônicos">
-                <div class="card h-100 rounded-2 border-0">
-                    <h5 class="card-title">Eletrônicos, Segurança, Informática</h5>
-                    <div class="card-body">
-                    <a href="https://hayamax.com.br/dropshipping" target="_blank" class="btn btn-link-custom">Hayamax</a><br>
-                    <a href="https://www.hayonik.com.br/" target="_blank" class="btn btn-link-custom">Hayonik</a><br>
-                    <a href="https://www.uwebdistribuidora.com.br/" target="_blank" class="btn btn-link-custom">Uweb Distribuidora</a><br>
-                    <a href="https://cemstoretec.com.br/" target="_blank" class="btn btn-link-custom">Cemstoretec</a>
+                    <div class="card h-100 rounded-2 border-0">
+                        <h5 class="card-title">Eletrônicos, Segurança, Informática</h5>
+                        <div class="card-body">
+                        <a href="https://hayamax.com.br/dropshipping" target="_blank" class="btn btn-link-custom">Hayamax</a><br>
+                        <a href="https://www.hayonik.com.br/" target="_blank" class="btn btn-link-custom">Hayonik</a><br>
+                        <a href="https://www.uwebdistribuidora.com.br/" target="_blank" class="btn btn-link-custom">Uweb Distribuidora</a><br>
+                        <a href="https://cemstoretec.com.br/" target="_blank" class="btn btn-link-custom">Cemstoretec</a>
+                        </div>
                     </div>
-                </div>
-                </div>
-    
+                </div>    
                 <div class="col-md-6 col-lg-4 mb-4 fornecedor fade-in" data-category="diversas">
-                <div class="card h-100 rounded-2 border-0">
-                    <h5 class="card-title">Diversas Categorias</h5>
-                    <div class="card-body">
-                    <a href="https://fornecedornacional.com.br/" target="_blank" class="btn btn-link-custom">Fornecedor Nacional</a><br>
-                    <a href="https://atacaly.com/" target="_blank" class="btn btn-link-custom">Atacaly</a><br>
-                    <a href="https://dinka.com.br/categoria-produto/fornecedor-dropshipping/todos-produtos/" target="_blank" class="btn btn-link-custom">Dinka</a>
+                    <div class="card h-100 rounded-2 border-0">
+                        <h5 class="card-title">Diversas Categorias</h5>
+                        <div class="card-body">
+                        <a href="https://fornecedornacional.com.br/" target="_blank" class="btn btn-link-custom">Fornecedor Nacional</a><br>
+                        <a href="https://atacaly.com/" target="_blank" class="btn btn-link-custom">Atacaly</a><br>
+                        <a href="https://dinka.com.br/categoria-produto/fornecedor-dropshipping/todos-produtos/" target="_blank" class="btn btn-link-custom">Dinka</a>
+                        </div>
                     </div>
                 </div>
-                </div>
-    
-
                 <div class="col-md-6 col-lg-4 mb-4 fornecedor fade-in" data-category="plataformas">
-                <div class="card h-100 rounded-2 border-0">
-                    <h5 class="card-title">Plataformas de Drop Nacional</h5>
-                    <div class="card-body">
-                    <a href="https://primodrop.online/" target="_blank" class="btn btn-link-custom">Primodrop</a><br>
-                    <a href="https://www.updrop.com.br/" target="_blank" class="btn btn-link-custom">Updrop</a><br>
-                    <a href="https://updrop.online/" target="_blank" class="btn btn-link-custom">Catálogo Updrop</a>
+                    <div class="card h-100 rounded-2 border-0">
+                        <h5 class="card-title">Plataformas de Drop Nacional</h5>
+                        <div class="card-body">
+                        <a href="https://primodrop.online/" target="_blank" class="btn btn-link-custom">Primodrop</a><br>
+                        <a href="https://www.updrop.com.br/" target="_blank" class="btn btn-link-custom">Updrop</a><br>
+                        <a href="https://updrop.online/" target="_blank" class="btn btn-link-custom">Catálogo Updrop</a>
+                        </div>
                     </div>
                 </div>
-                </div>
-    
+     -->
             </div>
         </div>
     </div>
