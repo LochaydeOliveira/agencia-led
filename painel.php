@@ -816,12 +816,16 @@ if ($cliente) {
         };
     });
 
-    if(listaBloqueada) {
+</script>
+
+<script>
+    const listaBloqueada = <?= $lista_bloqueada ? 'true' : 'false'; ?>;
+    
+    if (listaBloqueada) {
         document.getElementById('listaDisponivel').classList.add('bloqueado');
     } else {
         document.getElementById('listaDisponivel').classList.remove('bloqueado');
     }
-
 </script>
 
 
