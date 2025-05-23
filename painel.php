@@ -437,7 +437,6 @@ if ($cliente) {
         }
 
         .btn-comprar-lista {
-            background: #198754;
             background: none;
             margin: 1rem 0 0;
             color: #000000;
@@ -449,7 +448,7 @@ if ($cliente) {
             transition: background-color 0.3s ease, transform 0.3s ease;
         }    
         
-        .btn-comprar-lista {
+        .btn-comprar-lista:hover {
             background: #198754;
             color: #fff;
             border: none;
