@@ -555,7 +555,7 @@ if ($cliente) {
                 transition: filter 0.3s ease;
             }
 
-            .blur.bloqueio.bloqueio-overlay {
+            .blur.bloqueado.bloqueio-overlay {
                 position: absolute;
                 top: 50%;
                 left: 50%;
