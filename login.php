@@ -7,13 +7,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $senha = $_POST["senha"];
 
-    $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE email = ?");
+    // Consulta na tabela clientes
+    $stmt = $pdo->prepare("SELECT * FROM clientes WHERE email = ?");
     $stmt->execute([$email]);
-    $user = $stmt->fetch();
+    $cliente = $stmt->fetch();
 
-    if ($user && password_verify($senha, $user["senha"])) {
-        $_SESSION["usuario"] = $email;           // mantém se quiser
-        $_SESSION["nome"] = $user["nome"];       // salva o nome
+    if ($cliente && password_verify($senha, $cliente["senha"])) {
+        $_SESSION["usuario"] = $email;
+        $_SESSION["nome"] = $cliente["nome"];
+        $_SESSION["nivel_acesso"] = $cliente["nivel_acesso"]; // cliente, admin, suporte
+        $_SESSION["status"] = $cliente["status"]; // ativo, inativo, suspenso
+
+        // Redireciona para o painel
         header("Location: painel.php");
         exit;
     } else {
@@ -26,17 +31,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Login - Área de Membros</title>
+    <title>Login - Área de Clientes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
-        body { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-               min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-        .form-container { background: #fff; border-radius: 15px; padding: 2rem;
-                          box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
-        .btn-custom { background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
-                      border: none; color: white; }
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .form-container {
+            background: #fff;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        .btn-custom {
+            background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+            border: none;
+            color: white;
+        }
     </style>
 </head>
 <body>
