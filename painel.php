@@ -133,8 +133,10 @@ if ($cliente) {
 
             .main-content p {
                 margin: 0;
-                font-size: 15px;
-                color: #9590ad;
+                font-size: 13px;
+                color: #7878788f;
+                text-align: center;
+                line-height: 14px;
             }
             .tt-list {
                 display: flex;
@@ -395,8 +397,10 @@ if ($cliente) {
 
             .main-content p {
                 margin: 0;
-                font-size: 15px;
-                color: #9590ad;
+                font-size: 13px;
+                color: #7878788f;
+                text-align: center;
+                line-height: 14px;
             }
             .tt-list {
                 display: flex;
@@ -431,6 +435,16 @@ if ($cliente) {
                 display: flex!important;
             }
         }
+
+        .btn-comprar-lista {
+            background: #198754;
+            margin: 1rem 0 0;
+            color: #fff;
+            font-size: 14px;
+            width: 100%;
+            padding: 0.75rem 0;
+            text-transform: uppercase;
+        }       
 
 
 
