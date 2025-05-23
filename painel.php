@@ -676,18 +676,6 @@ if ($cliente) {
                                         <?php echo $liberado ? $lista['conteudo_html'] : ''; ?>
                                     </div>
 
-                                    <?php if (!$liberado): ?>
-                                        <div class="bloqueio-overlay">
-                                            <div class="style-bloqueio">
-                                                <img src="assets-agencia-led/icones-svg/trancar.svg" alt="trancar">
-                                                <strong>Lista bloqueada!</strong>
-                                            </div>
-                                            <div class="style-bloqueio-btn">
-                                                <p>Libere agora mesmo realizando o pagamento via Pix.</p>
-                                                <button class="btn btn-comprar-lista">Liberar Lista</button>
-                                            </div>                                      
-                                        </div>
-                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
