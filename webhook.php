@@ -114,7 +114,6 @@ try {
                     $stmt->execute([$classificacao, $email]);
                     app_log("Classificação atualizada: $email → $classificacao");
                 }
-
             } else {
                 $senhaVisivel = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
                 $senhaHash = password_hash($senhaVisivel, PASSWORD_DEFAULT);
@@ -129,23 +128,20 @@ try {
             }
 
             if ($classificacao === 'prata') {
-                // Associa cliente com a lista
                 $stmt = $conn->prepare("SELECT id, nome FROM listas WHERE product_id = ?");
                 $stmt->execute([$productId]);
                 $lista = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 if ($lista) {
                     $listaId = $lista['id'];
-                    $nomeLista = $lista['nome_lista'];
-
+                    $nomeLista = $lista['nome'];
 
                     $stmt = $conn->prepare("SELECT id FROM clientes_listas WHERE cliente_id = ? AND lista_id = ?");
                     $stmt->execute([$cliente_id, $listaId]);
                     $exists = $stmt->fetch();
 
                     if (!$exists) {
-
-                        $stmt = $conn->prepare("INSERT INTO clientes_listas (cliente_id, cliente, lista_id, nome_lista, status) VALUES (?, ?, ?, ?, 'ativo')");
+                        $stmt = $conn->prepare("INSERT INTO clientes_listas (cliente_id, cliente, lista_id, nome, status) VALUES (?, ?, ?, ?, 'ativo')");
                         $stmt->execute([$cliente_id, $name, $listaId, $nomeLista]);
                         app_log("Lista $listaId associada ao cliente $cliente_id");
                     } else {
@@ -171,7 +167,6 @@ try {
             $stmt->execute([$statusAlias, $orderId]);
 
             if (in_array($statusAlias, ['cancelled', 'refused'])) {
-                // Bloqueia o cliente
                 $stmt = $conn->prepare("UPDATE clientes SET status = 'suspenso', atualizado_em = NOW() WHERE email = ?");
                 $stmt->execute([$email]);
                 app_log("Cliente $email suspenso por status: $statusAlias");
@@ -180,7 +175,6 @@ try {
             http_response_code(200);
             echo json_encode(['status' => 'success']);
         }
-
     } else {
         app_log("Evento ignorado: $event");
         http_response_code(200);
