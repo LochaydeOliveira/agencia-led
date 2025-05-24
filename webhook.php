@@ -170,7 +170,7 @@ try {
             $stmt = $conn->prepare("UPDATE orders SET status = ? WHERE yampi_order_id = ?");
             $stmt->execute([$statusAlias, $orderId]);
 
-            if (in_array($statusAlias, ['canceled', 'refunded'])) {
+            if (in_array($statusAlias, ['cancelled', 'refused'])) {
                 // Bloqueia o cliente
                 $stmt = $conn->prepare("UPDATE clientes SET status = 'suspenso', atualizado_em = NOW() WHERE email = ?");
                 $stmt->execute([$email]);
