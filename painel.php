@@ -444,14 +444,16 @@ if ($cliente) {
             width: 100%;
             padding: 0.75rem 0;
             text-transform: uppercase;
-            border: 1px solid #000000;
             transition: background-color 0.3s ease, transform 0.3s ease;
+            font-weight: 600;
+            text-decoration: underline;
         }    
         
         .btn-comprar-lista:hover {
             background: #198754;
             color: #fff;
             border: none;
+            text-decoration: none;
         }  
 
 
