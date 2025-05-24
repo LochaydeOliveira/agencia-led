@@ -514,7 +514,7 @@ if ($cliente) {
             .card-title {
                 padding: 10px 8px;
                 margin-bottom: var(--bs-card-title-spacer-y);
-                background:  #2461a1;
+                background: linear-gradient(135deg, #2461a1 0%, #ae70dd 100%);
                 color: #fff;
                 font-size: 16px!important;
                 border-radius: 7px 7px 0 0;
@@ -553,10 +553,6 @@ if ($cliente) {
             .blur {
                 filter: blur(1.6px);
                 transition: filter 0.3s ease;
-            }
-
-            .card-lista {
-                background: linear-gradient(135deg, #2461a1 0%, #ae70dd 100%);
             }
 
 
@@ -677,7 +673,7 @@ if ($cliente) {
                                               
                             <div class="card h-100 rounded-2 border-0">
                                 <h5 class="card-title <?php echo $liberado ? '' : 'blur'; ?>"><?php echo htmlspecialchars($lista['nome']); ?></h5>
-                                <div class="card-lista <?php echo $liberado ? '' : 'bloqueado'; ?>">
+                                <div class="card-body <?php echo $liberado ? '' : 'bloqueado'; ?>">
                                     <div class="conteudo-lista">
                                         <?php echo $liberado ? $lista['conteudo_html'] : ''; ?>
                                     </div>
