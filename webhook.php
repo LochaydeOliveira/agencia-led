@@ -110,12 +110,51 @@ try {
             $stmt = $conn->prepare("UPDATE orders SET status = ? WHERE yampi_order_id = ?");
             $stmt->execute([$statusAlias, $orderId]);
 
-            // Verifica se o usuário já existe na área de membros
+            // ➡️ Determina classificação com base no product_id
+            $classificacao = 'prata'; // padrão
+
+            if ($productId == 40741683) {
+                $classificacao = 'ouro';
+            } elseif ($productId == 40741672) {
+                $classificacao = 'diamante';
+            }
+
+            // ➡️ Verifica se o cliente já existe na tabela 'clientes'
+            $stmt = $conn->prepare("SELECT id, classificacao FROM clientes WHERE email = ?");
+            $stmt->execute([$email]);
+            $existingClient = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($existingClient) {
+                // ➡️ Atualiza apenas se a nova classificação for superior
+                $currentClass = $existingClient['classificacao'];
+
+                $hierarquia = ['prata' => 1, 'ouro' => 2, 'diamante' => 3];
+
+                if ($hierarquia[$classificacao] > $hierarquia[$currentClass]) {
+                    $stmt = $conn->prepare("UPDATE clientes SET classificacao = ?, atualizado_em = NOW() WHERE email = ?");
+                    $stmt->execute([$classificacao, $email]);
+                    app_log("Classificação do cliente atualizada: $email → $classificacao");
+                } else {
+                    app_log("Cliente $email já possui classificação igual ou superior: $currentClass");
+                }
+
+            } else {
+                // ➡️ Se não existe, insere o cliente já com a classificação
+                $stmt = $conn->prepare("INSERT INTO clientes (nome, email, whatsapp, senha, classificacao, criado_em) VALUES (?, ?, ?, ?, ?, NOW())");
+                // Gera uma senha aleatória hash para a tabela (se não estiver usando, pode ajustar)
+                $senhaVisivel = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
+                $senhaHash = password_hash($senhaVisivel, PASSWORD_DEFAULT);
+
+                $stmt->execute([$name, $email, $whatsapp, $senhaHash, $classificacao]);
+
+                app_log("Novo cliente inserido: $email como $classificacao");
+            }
+
+            // ➡️ Continua com a lógica atual para criar usuário na área de membros
             $stmt = $conn->prepare("SELECT id FROM usuarios WHERE email = ?");
             $stmt->execute([$email]);
             $existingUser = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            // Se ainda não existir, cria novo usuário com senha aleatória
             if (!$existingUser) {
                 $senhaVisivel = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
                 $senhaHash = password_hash($senhaVisivel, PASSWORD_DEFAULT);
@@ -125,36 +164,35 @@ try {
 
                 app_log("Usuário criado: $email");
 
-                // Envia dados de acesso ao cliente
+                // ➡️ Envia dados de acesso ao cliente
                 $mailer = new Mailer();
                 $mailer->sendMemberAccess($email, $name, $senhaVisivel);
             } else {
                 app_log("Usuário já existe: $email");
             }
 
-            // Verifica se já existe um token para esse pedido
+            // ➡️ Verifica se já existe um token para esse pedido
             $stmt = $conn->prepare("SELECT id FROM download_tokens WHERE order_id = ?");
             $stmt->execute([$existingOrder['id']]);
             $existingToken = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if (!$existingToken) {
-                // Gera token único e data de expiração
                 $token = bin2hex(random_bytes(16));
                 $expiresAt = date('Y-m-d H:i:s', strtotime('+24 hours'));
 
-                // Insere token na tabela de download
                 $stmt = $conn->prepare("INSERT INTO download_tokens (order_id, token, expires_at, product_id) VALUES (?, ?, ?, ?)");
                 $stmt->execute([$existingOrder['id'], $token, $expiresAt, $productId]);
 
                 app_log("Token de download gerado: $token");
 
-                // Envia link de download para o cliente
+                // ➡️ Envia link de download
                 $mailer = new Mailer();
                 $mailer->sendDownloadLink($email, $name, $orderNumber, $token);
             } else {
                 app_log("Token já existe para este pedido.");
             }
         }
+
 
         // Tudo ocorreu bem
         http_response_code(200);
