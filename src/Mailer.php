@@ -135,7 +135,7 @@ class Mailer {
                 <div style='text-align: center; margin: 30px;'>
                     <a href='https://agencialed.com/login.php'
                        style='max-width: 40%;margin: 0 auto;background: #28a745;color: white;padding: 15px 30px;text-decoration: none;border-radius: 8px;font-size: 16px;font-weight: bold;display: inline-block;width: 100%;'>
-                       Acessar Área de Clientes
+                       Ver Área de Clientes
                     </a>
                 </div>
                 <hr>
