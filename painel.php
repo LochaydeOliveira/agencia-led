@@ -1,39 +1,45 @@
 <?php
-    session_start();
-    require 'conexao.php';
+session_start();
+require 'conexao.php';
 
-    if (!isset($_SESSION['usuario'])) {
-        header("Location: login.php");
-        exit;
-    }
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login.php");
+    exit;
+}
 
-    $email = $_SESSION['usuario'];
-    $nome = htmlspecialchars($_SESSION['nome']);
+$email = $_SESSION['usuario'];
+$nome = htmlspecialchars($_SESSION['nome']);
 
-    // Buscar cliente e classificação
-    $stmt = $pdo->prepare("SELECT id, classificacao FROM clientes WHERE email = ? AND status = 'ativo'");
-    $stmt->execute([$email]);
-    $cliente = $stmt->fetch();
+// Buscar cliente e classificação
+$stmt = $pdo->prepare("SELECT id, classificacao, status FROM clientes WHERE email = ?");
+$stmt->execute([$email]);
+$cliente = $stmt->fetch();
 
-    $listas_com_acesso = [];
-    $todas_listas = [];
+$acesso_liberado = false;
+$listas_com_acesso = [];
+$todas_listas = [];
 
-    if ($cliente) {
-        $cliente_id = $cliente['id'];
-        $classificacao = $cliente['classificacao'];
+if ($cliente) {
+    $cliente_id = $cliente['id'];
+    $classificacao = $cliente['classificacao'];
+    $status_cliente = $cliente['status'];
 
-        // Buscar todas as listas do sistema, agora incluindo link_de_compra
+    if ($status_cliente === 'ativo') {
+        $acesso_liberado = true;
+
+        // Buscar todas as listas
         $stmt = $pdo->query("SELECT id, nome, descricao, conteudo_html, link_de_compra FROM listas");
         $todas_listas = $stmt->fetchAll();
 
-        // Se cliente for PRATA, busca as listas liberadas
         if ($classificacao === 'prata') {
             $stmt = $pdo->prepare("SELECT lista_id FROM clientes_listas WHERE cliente_id = ? AND status = 'ativo'");
             $stmt->execute([$cliente_id]);
             $listas_com_acesso = $stmt->fetchAll(PDO::FETCH_COLUMN);
         }
     }
+}
 ?>
+
 
 
 <!DOCTYPE html>
@@ -666,27 +672,29 @@
         <div class="col-md-9">
 
 
+
         <div class="tt-list">
-            <?php if ($cliente && $cliente['status'] === 'ativo'): ?>
+            <?php if ($acesso_liberado): ?>
                 <h1 class="mb-4">Lista de Fornecedores Nacionais</h1>
                 <p class="mb-5">Confira abaixo a lista organizada de fornecedores nacionais por categoria, com links diretos.</p>
             <?php else: ?>
-                <h1 style="color: red" class="mb-4">Seu Acesso Foi Suspenso!</h1> 
+                <h1 style="color: red" class="mb-4">Seu Acesso Foi Suspenso!</h1>
                 <p class="mb-5">Entre em contato com o suporte pelo email: suporte@agencialed.com.</p>
             <?php endif; ?>
         </div>
 
 
+
+        <?php if ($acesso_liberado): ?>
             <div class="row" id="fornecedores">
                 <div class="row">
                     <?php foreach ($todas_listas as $lista): ?>
                         <?php 
-                        // Lógica de liberação
                         $liberado = ($classificacao === 'ouro') ? true : in_array($lista['id'], $listas_com_acesso);
                         ?>
-                        <div class="col-md-6 col-lg-4 mb-4 fornecedor fade-in" 
-                             data-category="<?php echo htmlspecialchars($lista['nome']); ?>" 
-                             data-lista-id="<?php echo $lista['id']; ?>">
+                        <div class="col-md-6 col-lg-4 mb-4 fornecedor fade-in"
+                            data-category="<?php echo htmlspecialchars($lista['nome']); ?>"
+                            data-lista-id="<?php echo $lista['id']; ?>">
 
                             <div class="card h-100 rounded-2 border-0">
                                 <h5 class="card-title <?php echo $liberado ? '' : 'blur'; ?>">
@@ -701,28 +709,30 @@
                                     <?php if (!$liberado): ?>
                                         <div class="bloqueio-overlay">
                                             <div class="style-bloqueio">
-                                            <svg fill="#7878788f" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="40" height="40">
-                                                <path d="M19,8.424V7A7,7,0,0,0,5,7V8.424A5,5,0,0,0,2,13v6a5.006,5.006,0,0,0,5,5H17a5.006,5.006,0,0,0,5-5V13A5,5,0,0,0,19,8.424ZM7,7A5,5,0,0,1,17,7V8H7ZM20,19a3,3,0,0,1-3,3H7a3,3,0,0,1-3-3V13a3,3,0,0,1,3-3H17a3,3,0,0,1,3,3Z"/><path d="M12,14a1,1,0,0,0-1,1v2a1,1,0,0,0,2,0V15A1,1,0,0,0,12,14Z"/>
-                                            </svg>
+                                                <svg fill="#7878788f" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+                                                    <path d="M19,8.424V7A7,7,0,0,0,5,7V8.424A5,5,0,0,0,2,13v6a5.006,5.006,0,0,0,5,5H17a5.006,5.006,0,0,0,5-5V13A5,5,0,0,0,19,8.424ZM7,7A5,5,0,0,1,17,7V8H7ZM20,19a3,3,0,0,1-3,3H7a3,3,0,0,1-3-3V13a3,3,0,0,1,3-3H17a3,3,0,0,1,3,3Z"/>
+                                                    <path d="M12,14a1,1,0,0,0-1,1v2a1,1,0,0,0,2,0V15A1,1,0,0,0,12,14Z"/>
+                                                </svg>
                                                 <strong>Lista bloqueada!</strong>
                                             </div>
                                             <div class="style-bloqueio-btn">
                                                 <p>Libere agora mesmo realizando o pagamento via Pix.</p>
-                                                <a href="<?php echo htmlspecialchars($lista['link_de_compra']); ?>" 
-                                                   target="_blank" 
-                                                   class="btn btn-comprar-lista">
+                                                <a href="<?php echo htmlspecialchars($lista['link_de_compra']); ?>"
+                                                target="_blank"
+                                                class="btn btn-comprar-lista">
                                                     Liberar Lista
                                                 </a>
-                                            </div>                                      
+                                            </div>
                                         </div>
-                                    <?php endif; ?>      
-
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
             </div>
+        <?php endif; ?>
+
         </div>
     </div>
 </main>
