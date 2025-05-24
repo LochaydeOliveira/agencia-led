@@ -566,6 +566,12 @@ if ($cliente) {
                 filter: blur(1.6px);
                 transition: filter 0.3s ease;
             }
+            .svg-bloqueio {
+                width: 60px;   /* ou qualquer tamanho */
+                height: 60px;
+                display: block; /* ou inline-block */
+            }
+
 
     </style>
 
