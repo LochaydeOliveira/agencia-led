@@ -664,10 +664,18 @@
 <main class="container py-5 main-content">        
     <div class="main-fornecedores">
         <div class="col-md-9">
-            <div class="tt-list">
+
+
+        <div class="tt-list">
+            <?php if ($cliente && $cliente['status'] === 'ativo'): ?>
                 <h1 class="mb-4">Lista de Fornecedores Nacionais</h1>
                 <p class="mb-5">Confira abaixo a lista organizada de fornecedores nacionais por categoria, com links diretos.</p>
-            </div>
+            <?php else: ?>
+                <h1 style="color: red" class="mb-4">Seu Acesso Foi Suspenso!</h1> 
+                <p class="mb-5">Entre em contato com o suporte pelo email: suporte@agencialed.com.</p>
+            <?php endif; ?>
+        </div>
+
 
             <div class="row" id="fornecedores">
                 <div class="row">
