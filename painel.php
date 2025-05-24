@@ -679,7 +679,7 @@ if ($cliente) {
                 <p class="mb-5">Confira abaixo a lista organizada de fornecedores nacionais por categoria, com links diretos.</p>
             <?php else: ?>
                 <h1 style="color: red" class="mb-4">Seu Acesso Foi Suspenso!</h1>
-                <p class="mb-5">Entre em contato com o suporte pelo email: suporte@agencialed.com.</p>
+                <p class="mb-5">Entre em contato com o suporte pelo e-mail: suporte@agencialed.com.</p>
             <?php endif; ?>
         </div>
 
