@@ -43,7 +43,7 @@ try {
     $db = Database::getInstance();
     $conn = $db->getConnection();
 
-    if (in_array($event, ['order.created', 'order.paid', 'order.status.updated'])) {
+    if (in_array($event, ['order.created', 'order.paid', 'order.status.updated', 'order.updated'])) {
 
         $order = $data['resource'] ?? null;
         if (!$order) {
@@ -141,8 +141,8 @@ try {
                     $exists = $stmt->fetch();
 
                     if (!$exists) {
-                        $stmt = $conn->prepare("INSERT INTO clientes_listas (cliente_id, cliente, lista_id, nome, status) VALUES (?, ?, ?, ?, 'ativo')");
-                        $stmt->execute([$cliente_id, $name, $listaId, $nomeLista]);
+                        $stmt = $conn->prepare("INSERT INTO clientes_listas (cliente_id, cliente, lista_id, nome_lista, status) VALUES (?, ?, ?, ?, 'ativo')");
+                        $stmt->execute([$cliente_id, $name, $listaId, $nomeLista]);                        
                         app_log("Lista $listaId associada ao cliente $cliente_id");
                     } else {
                         app_log("Cliente $cliente_id já possui a lista $listaId");
@@ -156,7 +156,7 @@ try {
             echo json_encode(['status' => 'success']);
         }
 
-        if ($event === 'order.status.updated') {
+        if (in_array($event, ['order.status.updated', 'order.updated'])) {
             if (!$existingOrder) {
                 app_log("Erro: Pedido não encontrado para atualização");
                 http_response_code(404);
@@ -169,8 +169,14 @@ try {
             if (in_array($statusAlias, ['cancelled', 'refused'])) {
                 $stmt = $conn->prepare("UPDATE clientes SET status = 'suspenso', atualizado_em = NOW() WHERE email = ?");
                 $stmt->execute([$email]);
-                app_log("Cliente $email suspenso por status: $statusAlias");
+            
+                if ($stmt->rowCount() > 0) {
+                    app_log("Cliente $email suspenso com sucesso por status: $statusAlias");
+                } else {
+                    app_log("Atenção: Cliente $email não encontrado para suspensão.");
+                }
             }
+            
 
             http_response_code(200);
             echo json_encode(['status' => 'success']);
