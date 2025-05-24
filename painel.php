@@ -673,14 +673,7 @@ if ($cliente) {
                     <?php foreach ($todas_listas as $lista): ?>
                         <?php $liberado = in_array($lista['id'], $listas_com_acesso); ?>
                         <div class="col-md-6 col-lg-4 mb-4 fornecedor fade-in" data-category="<?php echo htmlspecialchars($lista['nome']); ?>" data-lista-id="<?php echo $lista['id']; ?>">
-                                                                                      
-                            <div class="card h-100 rounded-2 border-0">
-                                <h5 class="card-title <?php echo $liberado ? '' : 'blur'; ?>"><?php echo htmlspecialchars($lista['nome']); ?></h5>
-                                <div class="card-body <?php echo $liberado ? '' : 'bloqueado'; ?>">
-                                    <div class="conteudo-lista <?php echo $liberado ? '' : 'opct'; ?>">
-                                        <?php echo $liberado ? $lista['conteudo_html'] : ''; ?>
-                                    </div>
-
+                                            
                                     <?php if (!$liberado): ?>
                                         <div class="bloqueio-overlay">
                                             <div class="style-bloqueio">
@@ -692,7 +685,16 @@ if ($cliente) {
                                                 <button class="btn btn-comprar-lista">Liberar Lista</button>
                                             </div>                                      
                                         </div>
-                                    <?php endif; ?>      
+                                    <?php endif; ?>                                            
+                           
+                        
+                            <div class="card h-100 rounded-2 border-0">
+                                <h5 class="card-title <?php echo $liberado ? '' : 'blur'; ?>"><?php echo htmlspecialchars($lista['nome']); ?></h5>
+                                <div class="card-body">
+                                    <div class="conteudo-lista <?php echo $liberado ? '' : 'opct'; ?>">
+                                        <?php echo $liberado ? $lista['conteudo_html'] : ''; ?>
+                                    </div>
+    
 
                                 </div>
                             </div>
