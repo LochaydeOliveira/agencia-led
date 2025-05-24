@@ -98,100 +98,77 @@ try {
         }
         
 
-        // 🔹 EVENTO order.paid: pagamento confirmado
-        if ($event === 'order.paid') {
-            if (!$existingOrder) {
-                app_log("Erro: Pedido não encontrado");
-                http_response_code(404);
-                die('Pedido não encontrado');
-            }
+// 🔹 EVENTO order.paid: pagamento confirmado
+if ($event === 'order.paid') {
+    if (!$existingOrder) {
+        app_log("Erro: Pedido não encontrado");
+        http_response_code(404);
+        die('Pedido não encontrado');
+    }
 
-            // Atualiza status do pedido no banco
-            $stmt = $conn->prepare("UPDATE orders SET status = ? WHERE yampi_order_id = ?");
-            $stmt->execute([$statusAlias, $orderId]);
+    // Atualiza status do pedido
+    $stmt = $conn->prepare("UPDATE orders SET status = ? WHERE yampi_order_id = ?");
+    $stmt->execute([$statusAlias, $orderId]);
 
-            // ➡️ Determina classificação com base no product_id
-            $classificacao = 'prata'; // padrão
+    // ➡️ Determina classificação
+    $classificacao = 'prata';
+    if ($productId == 40741683) {
+        $classificacao = 'ouro';
+    } elseif ($productId == 40741672) {
+        $classificacao = 'diamante';
+    }
 
-            if ($productId == 40741683) {
-                $classificacao = 'ouro';
-            } elseif ($productId == 40741672) {
-                $classificacao = 'diamante';
-            }
+    // ➡️ Gera senha única
+    $senhaVisivel = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
+    $senhaHash = password_hash($senhaVisivel, PASSWORD_DEFAULT);
 
-            // ➡️ Verifica se o cliente já existe na tabela 'clientes'
-            $stmt = $conn->prepare("SELECT id, classificacao FROM clientes WHERE email = ?");
-            $stmt->execute([$email]);
-            $existingClient = $stmt->fetch(PDO::FETCH_ASSOC);
+    // ➡️ Verifica cliente
+    $stmt = $conn->prepare("SELECT id, classificacao FROM clientes WHERE email = ?");
+    $stmt->execute([$email]);
+    $existingClient = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($existingClient) {
-                // ➡️ Atualiza apenas se a nova classificação for superior
-                $currentClass = $existingClient['classificacao'];
+    if ($existingClient) {
+        $currentClass = $existingClient['classificacao'];
+        $hierarquia = ['prata' => 1, 'ouro' => 2, 'diamante' => 3];
 
-                $hierarquia = ['prata' => 1, 'ouro' => 2, 'diamante' => 3];
-
-                if ($hierarquia[$classificacao] > $hierarquia[$currentClass]) {
-                    $stmt = $conn->prepare("UPDATE clientes SET classificacao = ?, atualizado_em = NOW() WHERE email = ?");
-                    $stmt->execute([$classificacao, $email]);
-                    app_log("Classificação do cliente atualizada: $email → $classificacao");
-                } else {
-                    app_log("Cliente $email já possui classificação igual ou superior: $currentClass");
-                }
-
-            } else {
-                // ➡️ Se não existe, insere o cliente já com a classificação
-                $stmt = $conn->prepare("INSERT INTO clientes (nome, email, whatsapp, senha, classificacao, criado_em) VALUES (?, ?, ?, ?, ?, NOW())");
-                // Gera uma senha aleatória hash para a tabela (se não estiver usando, pode ajustar)
-                $senhaVisivel = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
-                $senhaHash = password_hash($senhaVisivel, PASSWORD_DEFAULT);
-
-                $stmt->execute([$name, $email, $whatsapp, $senhaHash, $classificacao]);
-
-                app_log("Novo cliente inserido: $email como $classificacao");
-            }
-
-            // ➡️ Continua com a lógica atual para criar usuário na área de membros
-            $stmt = $conn->prepare("SELECT id FROM usuarios WHERE email = ?");
-            $stmt->execute([$email]);
-            $existingUser = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if (!$existingUser) {
-                $senhaVisivel = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
-                $senhaHash = password_hash($senhaVisivel, PASSWORD_DEFAULT);
-
-                $stmt = $conn->prepare("INSERT INTO usuarios (nome, email, whatsapp, senha) VALUES (?, ?, ?, ?)");
-                $stmt->execute([$name, $email, $whatsapp, $senhaHash]);
-
-                app_log("Usuário criado: $email");
-
-                // ➡️ Envia dados de acesso ao cliente
-                $mailer = new Mailer();
-                $mailer->sendMemberAccess($email, $name, $senhaVisivel);
-            } else {
-                app_log("Usuário já existe: $email");
-            }
-
-            // ➡️ Verifica se já existe um token para esse pedido
-            $stmt = $conn->prepare("SELECT id FROM download_tokens WHERE order_id = ?");
-            $stmt->execute([$existingOrder['id']]);
-            $existingToken = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if (!$existingToken) {
-                $token = bin2hex(random_bytes(16));
-                $expiresAt = date('Y-m-d H:i:s', strtotime('+24 hours'));
-
-                $stmt = $conn->prepare("INSERT INTO download_tokens (order_id, token, expires_at, product_id) VALUES (?, ?, ?, ?)");
-                $stmt->execute([$existingOrder['id'], $token, $expiresAt, $productId]);
-
-                app_log("Token de download gerado: $token");
-
-                // ➡️ Envia link de download
-                $mailer = new Mailer();
-                $mailer->sendDownloadLink($email, $name, $orderNumber, $token);
-            } else {
-                app_log("Token já existe para este pedido.");
-            }
+        if ($hierarquia[$classificacao] > $hierarquia[$currentClass]) {
+            $stmt = $conn->prepare("UPDATE clientes SET classificacao = ?, atualizado_em = NOW() WHERE email = ?");
+            $stmt->execute([$classificacao, $email]);
+            app_log("Classificação atualizada: $email → $classificacao");
+        } else {
+            app_log("Cliente $email já possui classificação igual ou superior: $currentClass");
         }
+    } else {
+        // ➡️ Cria cliente
+        $stmt = $conn->prepare("INSERT INTO clientes (nome, email, whatsapp, senha, classificacao, criado_em) VALUES (?, ?, ?, ?, ?, NOW())");
+        $stmt->execute([$name, $email, $whatsapp, $senhaHash, $classificacao]);
+        app_log("Novo cliente: $email como $classificacao");
+    }
+
+    // ➡️ Verifica usuário
+    $stmt = $conn->prepare("SELECT id FROM usuarios WHERE email = ?");
+    $stmt->execute([$email]);
+    $existingUser = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $mailer = new Mailer();
+
+    if (!$existingUser) {
+        $stmt = $conn->prepare("INSERT INTO usuarios (nome, email, whatsapp, senha) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$name, $email, $whatsapp, $senhaHash]);
+        app_log("Usuário criado: $email");
+
+        $mailer->sendMemberAccess($email, $name, $senhaVisivel);
+    } else {
+        app_log("Usuário já existe: $email");
+
+        // Pode enviar nova senha ou apenas aviso
+        $mailer->sendMemberAccess($email, $name, '***');
+    }
+
+    http_response_code(200);
+    echo json_encode(['status' => 'success']);
+}
+
 
 
         // Tudo ocorreu bem
