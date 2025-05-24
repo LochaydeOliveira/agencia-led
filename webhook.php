@@ -99,7 +99,7 @@ try {
         
 
 // 🔹 EVENTO order.paid: pagamento confirmado
-if ($event === 'order.paid') {
+/*if ($event === 'order.paid') {
     if (!$existingOrder) {
         app_log("Erro: Pedido não encontrado");
         http_response_code(404);
@@ -168,6 +168,68 @@ if ($event === 'order.paid') {
     http_response_code(200);
     echo json_encode(['status' => 'success']);
 }
+*/
+
+
+// 🔹 EVENTO order.paid: pagamento confirmado
+if ($event === 'order.paid') {
+    if (!$existingOrder) {
+        app_log("Erro: Pedido não encontrado");
+        http_response_code(404);
+        die('Pedido não encontrado');
+    }
+
+    // Atualiza status do pedido
+    $stmt = $conn->prepare("UPDATE orders SET status = ? WHERE yampi_order_id = ?");
+    $stmt->execute([$statusAlias, $orderId]);
+
+    // ➡️ Determina classificação
+    $classificacao = 'prata';
+    if ($productId == 40741683) {
+        $classificacao = 'ouro';
+    } elseif ($productId == 40741672) {
+        $classificacao = 'diamante';
+    }
+
+    // ➡️ Verifica cliente
+    $stmt = $conn->prepare("SELECT id, classificacao FROM clientes WHERE email = ?");
+    $stmt->execute([$email]);
+    $existingClient = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $mailer = new Mailer();
+
+    if ($existingClient) {
+        $currentClass = $existingClient['classificacao'];
+        $hierarquia = ['prata' => 1, 'ouro' => 2, 'diamante' => 3];
+
+        if ($hierarquia[$classificacao] > $hierarquia[$currentClass]) {
+            $stmt = $conn->prepare("UPDATE clientes SET classificacao = ?, atualizado_em = NOW() WHERE email = ?");
+            $stmt->execute([$classificacao, $email]);
+            app_log("Classificação atualizada: $email → $classificacao");
+        } else {
+            app_log("Cliente $email já possui classificação igual ou superior: $currentClass");
+        }
+
+        // Envia aviso de acesso liberado (sem nova senha)
+        $mailer->sendMemberAccess($email, $name, '***');
+
+    } else {
+        // ➡️ Cria cliente
+        $senhaVisivel = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
+        $senhaHash = password_hash($senhaVisivel, PASSWORD_DEFAULT);
+
+        $stmt = $conn->prepare("INSERT INTO clientes (nome, email, whatsapp, senha, classificacao, criado_em) VALUES (?, ?, ?, ?, ?, NOW())");
+        $stmt->execute([$name, $email, $whatsapp, $senhaHash, $classificacao]);
+        app_log("Novo cliente: $email como $classificacao");
+
+        // Envia e-mail com senha
+        $mailer->sendMemberAccess($email, $name, $senhaVisivel);
+    }
+
+    http_response_code(200);
+    echo json_encode(['status' => 'success']);
+}
+
 
 
 
