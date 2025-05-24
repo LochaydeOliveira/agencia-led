@@ -559,6 +559,12 @@ if ($cliente) {
                 opacity: 0.5;
             }
 
+            .bloqueio-overlay {
+                position: absolute;
+                z-index: 9;
+                bottom: 0;
+            }
+
 
     </style>
 
