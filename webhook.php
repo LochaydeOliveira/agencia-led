@@ -138,13 +138,14 @@ try {
                     $listaId = $lista['id'];
                     $nomeLista = $lista['nome'];
 
+
                     $stmt = $conn->prepare("SELECT id FROM clientes_listas WHERE cliente_id = ? AND lista_id = ?");
                     $stmt->execute([$cliente_id, $listaId]);
                     $exists = $stmt->fetch();
 
                     if (!$exists) {
-                        $stmt = $conn->prepare("INSERT INTO clientes_listas (cliente_id, lista_id, status, nome) VALUES (?, ?, 'ativo', ?)");
-                        $stmt->execute([$cliente_id, $listaId, $nomeLista]);
+                        $stmt = $conn->prepare("INSERT INTO clientes_listas (cliente_id, cliente, lista_id, status, nome) VALUES (?, ?, ?, 'ativo', ?)");
+                        $stmt->execute([$clienteId, $nome, $listaId, $nomeLista]);
                         app_log("Lista $listaId associada ao cliente $cliente_id");
                     } else {
                         app_log("Cliente $cliente_id já possui a lista $listaId");
