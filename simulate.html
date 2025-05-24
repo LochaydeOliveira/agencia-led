@@ -18,16 +18,24 @@
 
     <form action="simulate.php" method="post" class="d-grid gap-2">
         <input type="hidden" name="event" value="order.created">
-        <label for="product_id">Escolha a classificação:</label>
-        <select name="product_id" class="form-select mb-3">
+        
+        <label>Nome do Cliente:</label>
+        <input type="text" name="name" class="form-control" placeholder="Ex: João Silva" required>
+
+        <label>Email:</label>
+        <input type="email" name="email" class="form-control" placeholder="Ex: joao@email.com" required>
+
+        <label>Classificação:</label>
+        <select name="product_id" class="form-select mb-3" required>
             <option value="40621209">Prata - Lista Individual</option>
             <option value="40741683">Ouro - Todas as Listas</option>
             <option value="40741672">Diamante - Premium</option>
         </select>
+
         <button type="submit" class="btn btn-simular">Simular Pedido Criado</button>
     </form>
 
-    <form action="simulate.php" method="post" class="d-grid gap-2">
+    <form action="simulate.php" method="post" class="d-grid gap-2 mt-3">
         <input type="hidden" name="event" value="order.paid">
         <button type="submit" class="btn btn-simular">Simular Pedido Pago</button>
     </form>
