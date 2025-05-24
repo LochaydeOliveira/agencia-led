@@ -1,36 +1,40 @@
 <?php
-session_start();
-require 'conexao.php';
+    session_start();
+    require 'conexao.php';
 
-if (!isset($_SESSION['usuario'])) {
-    header("Location: login.php");
-    exit;
-}
+    if (!isset($_SESSION['usuario'])) {
+        header("Location: login.php");
+        exit;
+    }
 
-$email = $_SESSION['usuario'];
-$nome = htmlspecialchars($_SESSION['nome']);
+    $email = $_SESSION['usuario'];
+    $nome = htmlspecialchars($_SESSION['nome']);
 
-// Buscar cliente
-$stmt = $pdo->prepare("SELECT id FROM clientes WHERE email = ? AND status = 'ativo'");
-$stmt->execute([$email]);
-$cliente = $stmt->fetch();
+    // Buscar cliente e classificação
+    $stmt = $pdo->prepare("SELECT id, classificacao FROM clientes WHERE email = ? AND status = 'ativo'");
+    $stmt->execute([$email]);
+    $cliente = $stmt->fetch();
 
-$listas_com_acesso = [];
-$todas_listas = [];
+    $listas_com_acesso = [];
+    $todas_listas = [];
 
-if ($cliente) {
-    $cliente_id = $cliente['id'];
+    if ($cliente) {
+        $cliente_id = $cliente['id'];
+        $classificacao = $cliente['classificacao'];
 
-    // Buscar IDs das listas liberadas para esse cliente
-    $stmt = $pdo->prepare("SELECT lista_id FROM clientes_listas WHERE cliente_id = ? AND status = 'ativo'");
-    $stmt->execute([$cliente_id]);
-    $listas_com_acesso = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        // Buscar todas as listas do sistema, agora incluindo link_de_compra
+        $stmt = $pdo->query("SELECT id, nome, descricao, conteudo_html, link_de_compra FROM listas");
+        $todas_listas = $stmt->fetchAll();
 
-    // Buscar todas as listas do sistema
-    $stmt = $pdo->query("SELECT id, nome, descricao, conteudo_html FROM listas");
-    $todas_listas = $stmt->fetchAll();
-}
+        // Se cliente for PRATA, busca as listas liberadas
+        if ($classificacao === 'prata') {
+            $stmt = $pdo->prepare("SELECT lista_id FROM clientes_listas WHERE cliente_id = ? AND status = 'ativo'");
+            $stmt->execute([$cliente_id]);
+            $listas_com_acesso = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        }
+    }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -659,7 +663,6 @@ if ($cliente) {
 
 <main class="container py-5 main-content">        
     <div class="main-fornecedores">
-
         <div class="col-md-9">
             <div class="tt-list">
                 <h1 class="mb-4">Lista de Fornecedores Nacionais</h1>
@@ -669,12 +672,19 @@ if ($cliente) {
             <div class="row" id="fornecedores">
                 <div class="row">
                     <?php foreach ($todas_listas as $lista): ?>
-                        <?php $liberado = in_array($lista['id'], $listas_com_acesso); ?>
-                        <div class="col-md-6 col-lg-4 mb-4 fornecedor fade-in" data-category="<?php echo htmlspecialchars($lista['nome']); ?>" data-lista-id="<?php echo $lista['id']; ?>">
-                                                                                      
-                                              
+                        <?php 
+                        // Lógica de liberação
+                        $liberado = ($classificacao === 'ouro') ? true : in_array($lista['id'], $listas_com_acesso);
+                        ?>
+                        <div class="col-md-6 col-lg-4 mb-4 fornecedor fade-in" 
+                             data-category="<?php echo htmlspecialchars($lista['nome']); ?>" 
+                             data-lista-id="<?php echo $lista['id']; ?>">
+
                             <div class="card h-100 rounded-2 border-0">
-                                <h5 class="card-title <?php echo $liberado ? '' : 'blur'; ?>"><?php echo htmlspecialchars($lista['nome']); ?></h5>
+                                <h5 class="card-title <?php echo $liberado ? '' : 'blur'; ?>">
+                                    <?php echo htmlspecialchars($lista['nome']); ?>
+                                </h5>
+
                                 <div class="card-body <?php echo $liberado ? '' : 'bloqueado'; ?>">
                                     <div class="conteudo-lista">
                                         <?php echo $liberado ? $lista['conteudo_html'] : ''; ?>
@@ -688,7 +698,11 @@ if ($cliente) {
                                             </div>
                                             <div class="style-bloqueio-btn">
                                                 <p>Libere agora mesmo realizando o pagamento via Pix.</p>
-                                                <button class="btn btn-comprar-lista">Liberar Lista</button>
+                                                <a href="<?php echo htmlspecialchars($lista['link_de_compra']); ?>" 
+                                                   target="_blank" 
+                                                   class="btn btn-comprar-lista">
+                                                    Liberar Lista
+                                                </a>
                                             </div>                                      
                                         </div>
                                     <?php endif; ?>      
@@ -702,6 +716,7 @@ if ($cliente) {
         </div>
     </div>
 </main>
+
 
 
 <button id="backToTop" class="btn btn-primary">↑ Topo</button>
