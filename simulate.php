@@ -20,7 +20,7 @@ $db = Database::getInstance();
 $conn = $db->getConnection();
 
 if ($event === 'order.created') {
-    $productId = $_POST['product_id'] ?? '40621209';
+    $productId = $_POST['product_id'] ?? '40741683';
     $orderId = rand(100000000, 999999999);
     $orderNumber = rand(100000000, 999999999);
     $statusAlias = 'waiting_payment';
