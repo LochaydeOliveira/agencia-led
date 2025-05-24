@@ -547,7 +547,7 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                color: #6e6e6e;
+                color: #7878788f;
             }
 
             .style-bloqueio-btn {
