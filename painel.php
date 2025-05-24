@@ -551,11 +551,8 @@ if ($cliente) {
             }
 
             .blur {
-                filter: blur(4px);
+                filter: blur(1.6px);
                 transition: filter 0.3s ease;
-            }
-            .opct {
-                opacity: 0.2!impoprtant;
             }
 
 
@@ -677,7 +674,7 @@ if ($cliente) {
                             <div class="card h-100 rounded-2 border-0">
                                 <h5 class="card-title <?php echo $liberado ? '' : 'blur'; ?>"><?php echo htmlspecialchars($lista['nome']); ?></h5>
                                 <div class="card-body <?php echo $liberado ? '' : 'bloqueado'; ?>">
-                                    <div class="conteudo-lista <?php echo $liberado ? '' : 'opct'; ?>">
+                                    <div class="conteudo-lista">
                                         <?php echo $liberado ? $lista['conteudo_html'] : ''; ?>
                                     </div>
 
