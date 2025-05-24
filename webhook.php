@@ -144,8 +144,9 @@ try {
                     $exists = $stmt->fetch();
 
                     if (!$exists) {
-                        $stmt = $conn->prepare("INSERT INTO clientes_listas (cliente_id, cliente, lista_id, status, nome) VALUES (?, ?, ?, 'ativo', ?)");
-                        $stmt->execute([$clienteId, $nome, $listaId, $nomeLista]);
+
+                        $stmt = $conn->prepare("INSERT INTO clientes_listas (cliente_id, lista_id, status, nome) VALUES (?, ?, 'ativo', ?)");
+                        $stmt->execute([$cliente_id, $listaId, $nomeLista]);
                         app_log("Lista $listaId associada ao cliente $cliente_id");
                     } else {
                         app_log("Cliente $cliente_id já possui a lista $listaId");
