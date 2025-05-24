@@ -23,35 +23,36 @@ try {
     // Limpa os tokens de download
 
     $stmt = $conn->prepare("DELETE FROM download_tokens");
-
     $stmt->execute();
-
     $tokensDeleted = $stmt->rowCount();
 
     
 
     // Limpa os logs
-
     $stmt = $conn->prepare("DELETE FROM usuarios");
-
     $stmt->execute();
-
     $logsDeleted = $stmt->rowCount();
 
-    
 
     // Limpa os pedidos
-
     $stmt = $conn->prepare("DELETE FROM orders");
-
     $stmt->execute();
-
     $ordersDeleted = $stmt->rowCount();
 
-    
+
+    // Limpa os clientes
+    $stmt = $conn->prepare("DELETE FROM clientes");
+    $stmt->execute();
+    $clientesDeleted = $stmt->rowCount();
+
+
+    // Limpa os clientes_listas
+    $stmt = $conn->prepare("DELETE FROM clientes_listas");
+    $stmt->execute();
+    $clientesListasDeleted = $stmt->rowCount(); 
+ 
 
     // Confirma a transação
-
     $conn->commit();
 
     
