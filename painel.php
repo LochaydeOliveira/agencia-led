@@ -164,6 +164,7 @@ if ($cliente) {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                margin: 7rem 0 0;
             }
 
             .main-fornecedores {
@@ -199,6 +200,7 @@ if ($cliente) {
             }
             .nav-mobile {
                 display: block;
+                margin: 1rem 0 0;
             }
 
             .nav-mobile ul {
