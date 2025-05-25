@@ -580,13 +580,22 @@ if ($cliente) {
             }
 
             .svg-bloqueio {
-                width: 60px;   /* ou qualquer tamanho */
+                width: 60px;
                 height: 60px;
-                display: block; /* ou inline-block */
+                display: block;
             }
 
             .bloqueado {
-                background: #f5f5f5;
+                background: #62626266;
+                position: absolute;
+                height: auto;
+                top: 0;
+                bottom: 0;
+            }
+
+            .card-disabled {
+                position: relative;
+                overflow: hidden;
             }
 
 
