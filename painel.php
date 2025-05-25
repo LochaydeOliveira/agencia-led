@@ -576,7 +576,9 @@ if ($cliente) {
 
             .blur {
                 filter: blur(1.6px);
+                filter: blur(1.2px);
                 transition: filter 0.3s ease;
+                height: 300px;
             }
 
             .svg-bloqueio {
@@ -586,9 +588,8 @@ if ($cliente) {
             }
 
             .bloqueado {
-                background: #62626266;
+                background: #ffffffad;
                 position: absolute;
-                height: auto;
                 top: 0;
                 bottom: 0;
             }
