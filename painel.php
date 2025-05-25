@@ -56,7 +56,7 @@ if ($cliente) {
     
 <head>
     <meta charset="UTF-8">
-    <title>Área do Cliente</title>
+    <title>Acesso as Listas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -583,6 +583,10 @@ if ($cliente) {
                 width: 60px;   /* ou qualquer tamanho */
                 height: 60px;
                 display: block; /* ou inline-block */
+            }
+
+            .bloqueado {
+                background: #f5f5f5;
             }
 
 
