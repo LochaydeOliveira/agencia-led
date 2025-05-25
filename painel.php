@@ -56,10 +56,13 @@ if ($cliente) {
     
 <head>
     <meta charset="UTF-8">
-    <title>Área de Membros</title>
+    <title>Área do Cliente</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <link rel="icon" href="assets-agencia-led/img/icone-favorito-agencia-led.png" type="image/png">
+    <link rel="apple-touch-icon" href="assets-agencia-led/img/icone-favorito-agencia-led.png">
 
     <style>
 
