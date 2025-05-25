@@ -122,7 +122,7 @@ if ($cliente) {
                 border: 0;
                 padding: 8px;
                 color: #0000008c;
-                width: 15%;
+                width: 90%;
                 cursor: pointer;
             }
 
@@ -270,7 +270,7 @@ if ($cliente) {
                 border: 0;
                 padding: 8px;
                 color: #0000008c;
-                width: 15%;
+                width: 25%;
                 cursor: pointer;
             }
 
@@ -385,7 +385,7 @@ if ($cliente) {
                 border: 0;
                 padding: 8px;
                 color: #0000008c;
-                width: 15%;
+                width: 25%%;
                 cursor: pointer;
             }
 
