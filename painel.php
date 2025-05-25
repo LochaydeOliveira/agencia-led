@@ -156,7 +156,7 @@ if ($cliente) {
             .main-content p {
                 margin: 0;
                 font-size: 13px;
-                color: #7878788f;
+                color: #000;
                 text-align: center;
                 line-height: 14px;
             }
@@ -469,6 +469,7 @@ if ($cliente) {
             transition: background-color 0.3s ease, transform 0.3s ease;
             font-weight: 600;
             text-decoration: underline;
+            border: 1px solid;
         }    
         
         .btn-comprar-lista:hover {
@@ -565,7 +566,7 @@ if ($cliente) {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                color: #7878788f;
+                color: #000;
             }
 
             .style-bloqueio-btn {
@@ -596,6 +597,10 @@ if ($cliente) {
             .card-disabled {
                 position: relative;
                 overflow: hidden;
+            }
+
+            .bloqueio-overlay {
+                margin: 4rem 0 0;
             }
 
 
@@ -727,7 +732,7 @@ if ($cliente) {
                                         <?php if (!$liberado): ?>
                                             <div class="bloqueio-overlay">
                                                 <div class="style-bloqueio">
-                                                    <svg class="svg-bloqueio" fill="#7878788f" xmlns="http://www.w3.org/2000/svg"
+                                                    <svg class="svg-bloqueio" fill="#000" xmlns="http://www.w3.org/2000/svg"
                                                         viewBox="0 0 24 24">
                                                         <path d="M19,8.424V7A7,7,0,0,0,5,7V8.424A5,5,0,0,0,2,13v6a5.006,5.006,0,0,0,5,5H17a5.006,5.006,0,0,0,5-5V13A5,5,0,0,0,19,8.424ZM7,7A5,5,0,0,1,17,7V8H7ZM20,19a3,3,0,0,1-3,3H7a3,3,0,0,1-3-3V13a3,3,0,0,1,3-3H17a3,3,0,0,1,3,3Z"/>
                                                         <path d="M12,14a1,1,0,0,0-1,1v2a1,1,0,0,0,2,0V15A1,1,0,0,0,12,14Z"/>
