@@ -10,6 +10,15 @@ if (!isset($_SESSION['usuario'])) {
 $email = $_SESSION['usuario'];
 $nome = htmlspecialchars($_SESSION['nome']);
 
+// Função para gerar slug
+function slugify($text) {
+    $text = iconv('UTF-8', 'ASCII//TRANSLIT', $text); // Remove acentos
+    $text = preg_replace('/[^a-zA-Z0-9\s]/', '', $text); // Remove especiais
+    $text = strtolower(trim($text));
+    $text = preg_replace('/\s+/', '-', $text);
+    return $text;
+}
+
 // Buscar cliente e classificação
 $stmt = $pdo->prepare("SELECT id, classificacao, status FROM clientes WHERE email = ?");
 $stmt->execute([$email]);
@@ -692,53 +701,66 @@ if ($cliente) {
 
 
         <?php if ($acesso_liberado): ?>
-            <div class="row" id="fornecedores">
-                <div class="row">
-                    <?php foreach ($todas_listas as $lista): ?>
-                        <?php 
-                        $liberado = ($classificacao === 'ouro') ? true : in_array($lista['id'], $listas_com_acesso);
-                        ?>
-                        <div class="col-md-6 col-lg-4 mb-4 fornecedor fade-in"
-                            data-category="<?php echo htmlspecialchars($lista['nome']); ?>"
-                            data-lista-id="<?php echo $lista['id']; ?>">
+                <div class="mb-3">
+                    <label for="categoryFilter" class="form-label">Filtrar por categoria:</label>
+                    <select id="categoryFilter" class="form-select">
+                        <option value="all">Todas as Categorias</option>
+                        <?php foreach ($todas_listas as $lista): ?>
+                            <option value="<?php echo slugify($lista['nome']); ?>">
+                                <?php echo htmlspecialchars($lista['nome']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
 
-                            <div class="card h-100 rounded-2 border-0">
-                                <h5 class="card-title <?php echo $liberado ? '' : 'blur'; ?>">
-                                    <?php echo htmlspecialchars($lista['nome']); ?>
-                                </h5>
+                <div class="row" id="fornecedores">
+                    <div class="row">
+                        <?php foreach ($todas_listas as $lista): ?>
+                            <?php 
+                            $liberado = ($classificacao === 'ouro') ? true : in_array($lista['id'], $listas_com_acesso);
+                            $slug = slugify($lista['nome']);
+                            ?>
+                            <div class="col-md-6 col-lg-4 mb-4 fornecedor fade-in"
+                                data-category="<?php echo $slug; ?>"
+                                data-lista-id="<?php echo $lista['id']; ?>">
 
-                                <div class="card-body <?php echo $liberado ? '' : 'bloqueado'; ?>">
-                                    <div class="conteudo-lista">
-                                        <?php echo $liberado ? $lista['conteudo_html'] : ''; ?>
-                                    </div>
+                                <div class="card h-100 rounded-2 border-0">
+                                    <h5 class="card-title <?php echo $liberado ? '' : 'blur'; ?>">
+                                        <?php echo htmlspecialchars($lista['nome']); ?>
+                                    </h5>
 
-                                    <?php if (!$liberado): ?>
-                                        <div class="bloqueio-overlay">
-                                            <div class="style-bloqueio">
-                                            <svg class="svg-bloqueio" fill="#7878788f" xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 24 24">
-                                                <path d="M19,8.424V7A7,7,0,0,0,5,7V8.424A5,5,0,0,0,2,13v6a5.006,5.006,0,0,0,5,5H17a5.006,5.006,0,0,0,5-5V13A5,5,0,0,0,19,8.424ZM7,7A5,5,0,0,1,17,7V8H7ZM20,19a3,3,0,0,1-3,3H7a3,3,0,0,1-3-3V13a3,3,0,0,1,3-3H17a3,3,0,0,1,3,3Z"/>
-                                                <path d="M12,14a1,1,0,0,0-1,1v2a1,1,0,0,0,2,0V15A1,1,0,0,0,12,14Z"/>
-                                            </svg>
-                                                <strong>Lista bloqueada!</strong>
-                                            </div>
-                                            <div class="style-bloqueio-btn">
-                                                <p>Libere agora mesmo realizando o pagamento via Pix.</p>
-                                                <a href="<?php echo htmlspecialchars($lista['link_de_compra']); ?>"
-                                                    target="_blank"
-                                                    class="btn btn-comprar-lista">
-                                                        Liberar Lista
-                                                </a>
-                                            </div>
+                                    <div class="card-body <?php echo $liberado ? '' : 'bloqueado'; ?>">
+                                        <div class="conteudo-lista">
+                                            <?php echo $liberado ? $lista['conteudo_html'] : ''; ?>
                                         </div>
-                                    <?php endif; ?>
+
+                                        <?php if (!$liberado): ?>
+                                            <div class="bloqueio-overlay">
+                                                <div class="style-bloqueio">
+                                                    <svg class="svg-bloqueio" fill="#7878788f" xmlns="http://www.w3.org/2000/svg"
+                                                        viewBox="0 0 24 24">
+                                                        <path d="M19,8.424V7A7,7,0,0,0,5,7V8.424A5,5,0,0,0,2,13v6a5.006,5.006,0,0,0,5,5H17a5.006,5.006,0,0,0,5-5V13A5,5,0,0,0,19,8.424ZM7,7A5,5,0,0,1,17,7V8H7ZM20,19a3,3,0,0,1-3,3H7a3,3,0,0,1-3-3V13a3,3,0,0,1,3-3H17a3,3,0,0,1,3,3Z"/>
+                                                        <path d="M12,14a1,1,0,0,0-1,1v2a1,1,0,0,0,2,0V15A1,1,0,0,0,12,14Z"/>
+                                                    </svg>
+                                                    <strong>Lista bloqueada!</strong>
+                                                </div>
+                                                <div class="style-bloqueio-btn">
+                                                    <p>Libere agora mesmo realizando o pagamento via Pix.</p>
+                                                    <a href="<?php echo htmlspecialchars($lista['link_de_compra']); ?>"
+                                                        target="_blank"
+                                                        class="btn btn-comprar-lista">
+                                                        Liberar Lista
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
-            </div>
-        <?php endif; ?>
+            <?php endif; ?>
 
         </div>
     </div>
@@ -856,6 +878,14 @@ if ($cliente) {
 
 </script>
 
+<script>
+    document.getElementById('categoryFilter').addEventListener('change', function() {
+        const value = this.value;
+        document.querySelectorAll('.fornecedor').forEach(card => {
+            card.style.display = (value === 'all' || card.dataset.category === value) ? 'block' : 'none';
+        });
+    });
+</script>
 
 </body>
 </html>
