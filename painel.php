@@ -601,32 +601,6 @@ if ($cliente) {
       </div>
     </div>
 
-    <div class="nav-desktop collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto nav-prsn">
-        <li class="nav-item">
-          <div class="dropdown">
-            <button class="btn style-categoris-btn dropdown-toggle" type="button" id="dropdownCategorias" data-bs-toggle="dropdown" aria-expanded="false">
-                Filtrar por Categoria
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownCategorias">
-              <li><a class="dropdown-item" href="#" data-value="all">Todas as Categorias</a></li>
-              <li><a class="dropdown-item" href="#" data-value="decoração">Decoração</a></li>
-              <li><a class="dropdown-item" href="#" data-value="bebê">Bebê, Enxoval, Decoração e Pet</a></li>
-              <li><a class="dropdown-item" href="#" data-value="brinquedos">Brinquedos</a></li>
-              <li><a class="dropdown-item" href="#" data-value="joias">Joias, Folheados e Acessórios</a></li>
-              <li><a class="dropdown-item" href="#" data-value="calçados">Calçados e Vestuário</a></li>
-              <li><a class="dropdown-item" href="#" data-value="relógios">Relógios</a></li>
-              <li><a class="dropdown-item" href="#" data-value="perfumes">Perfumes</a></li>
-              <li><a class="dropdown-item" href="#" data-value="ferramentas">Ferramentas e Autopeças</a></li>
-              <li><a class="dropdown-item" href="#" data-value="eletrônicos">Eletrônicos, Segurança, Informática</a></li>
-              <li><a class="dropdown-item" href="#" data-value="diversas">Diversas Categorias</a></li>
-              <li><a class="dropdown-item" href="#" data-value="plataformas">Plataformas de Drop Nacional</a></li>
-            </ul>
-          </div>
-        </li>
-      </ul>
-    </div>
-
     <button id="menuHamburgerIcon" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
