@@ -385,7 +385,7 @@ if ($cliente) {
                 border: 0;
                 padding: 8px;
                 color: #0000008c;
-                width: 25%%;
+                width: 35%;
                 cursor: pointer;
             }
 
