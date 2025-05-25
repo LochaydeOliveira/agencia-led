@@ -537,7 +537,7 @@ if ($cliente) {
 
             .card-title {
                 padding: 10px 8px;
-                margin-bottom: var(--bs-card-title-spacer-y);
+                margin-bottom: 0;
                 background: linear-gradient(135deg, #2461a1 0%, #ae70dd 100%);
                 color: #fff;
                 font-size: 16px!important;
@@ -575,7 +575,6 @@ if ($cliente) {
             }
 
             .blur {
-                filter: blur(1.6px);
                 filter: blur(1.2px);
                 transition: filter 0.3s ease;
                 height: 300px;
