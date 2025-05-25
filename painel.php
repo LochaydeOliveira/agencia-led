@@ -394,15 +394,7 @@ if ($cliente) {
 
 
             header {
-                padding: 20px 20px 5px;
-                text-align: left;
-                background: #fff;
-                color: #285d9f;
-                width: 100%;
-                position: fixed;
-                top: 0;
-                z-index: 9;
-                box-shadow: 0px 7px 20px -10px #bbbbbb94;
+                padding: 20px 20px 5px;             
             }
 
             .main-content {
@@ -602,6 +594,18 @@ if ($cliente) {
             .bloqueio-overlay {
                 margin: 4rem 0 0;
             }
+
+            header {
+                text-align: left;
+                background: #fff;
+                color: #285d9f;
+                width: 100%;
+                position: fixed;
+                top: 0;
+                z-index: 9;
+                box-shadow: 0px 7px 20px -10px #bbbbbb94;
+            }
+
 
 
     </style>
