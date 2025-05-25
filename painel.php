@@ -714,7 +714,7 @@ if ($cliente) {
                                 data-category="<?php echo $slug; ?>"
                                 data-lista-id="<?php echo $lista['id']; ?>">
 
-                                <div class="card h-100 rounded-2 border-0">
+                                <div class="card h-100 rounded-2 border-0 card-disabled">
                                     <h5 class="card-title <?php echo $liberado ? '' : 'blur'; ?>">
                                         <?php echo htmlspecialchars($lista['nome']); ?>
                                     </h5>
