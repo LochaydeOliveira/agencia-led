@@ -34,17 +34,22 @@
 
 <body class="p-4">
 
-<?php include 'partials/sidebar.php'; ?>
 <?php include 'partials/header.php'; ?>
 
-  <div class="container">
-    <h2 class="mb-4">Visualizando HTML da Lista: <?= htmlspecialchars($lista['nome']) ?></h2>
-    <div class="preview-box">
-      <?= $lista['conteudo_html'] ?>
-    </div>
-    <a href="listas.php" class="btn btn-secondary mt-4">Voltar para Listas</a>
-  </div>
+<div class="d-flex">
+  <?php include 'partials/sidebar.php'; ?>
 
+  <main class="container py-5 main-content">
+    <div class="container">
+      <h2 class="mb-4">Visualizando HTML da Lista: <?= htmlspecialchars($lista['nome']) ?></h2>
+      <div class="preview-box">
+        <?= $lista['conteudo_html'] ?>
+      </div>
+        <a href="listas.php" class="btn btn-secondary mt-4">Voltar para Listas</a>
+    </div>
+  </main>
+
+</div>
 </body>
 
 

@@ -24,20 +24,26 @@ $logContent = file_exists($logPath) ? array_reverse(file($logPath)) : [];
 </head>
 
 
-<body class="p-4">
+<body>
 
-<?php include 'partials/sidebar.php'; ?>
 <?php include 'partials/header.php'; ?>
 
-  <div class="container">
-    <h2 class="mb-4">Log de Atividades do Webhook</h2>
-    <?php if (!empty($logContent)): ?>
-    <pre><?php echo implode('', $logContent); ?></pre>
-    <?php else: ?>
-    <p class="text-muted">Nenhum log encontrado.</p>
-    <?php endif; ?>
-    <a href="dashboard.php" class="btn btn-secondary mt-4">Voltar ao Dashboard</a>
-  </div>
+
+<div class="d-flex">
+  <?php include 'partials/sidebar.php'; ?>
+
+  <main class="container py-5 main-content">
+      <div class="container">
+        <h2 class="mb-4">Log de Atividades do Webhook</h2>
+        <?php if (!empty($logContent)): ?>
+        <pre><?php echo implode('', $logContent); ?></pre>
+        <?php else: ?>
+        <p class="text-muted">Nenhum log encontrado.</p>
+        <?php endif; ?>
+        <a href="dashboard.php" class="btn btn-secondary mt-4">Voltar ao Dashboard</a>
+      </div>
+  </main>
+</div>
 </body>
 
 

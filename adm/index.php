@@ -33,50 +33,54 @@
 </head>
 
 <body>
+
+<?php include 'partials/header.php'; ?>
+
   <div class="d-flex"> 
-
     <?php include 'partials/sidebar.php'; ?>
-    <?php include 'partials/header.php'; ?>
+    
+    <main class="container py-5">
+        <div class="flex-grow-1 p-4">
+        <h2 class="mb-4">Dashboard Administrativo</h2>
 
-    <div class="flex-grow-1 p-4">
-      <h2 class="mb-4">Dashboard Administrativo</h2>
+        <div class="row mb-4">
+            <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+                <h5>Total de Clientes</h5>
+                <p class="fs-3 fw-bold text-primary"><?php echo $totalClientes; ?></p>
+            </div>
+            </div>
+            <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+                <h5>Total de Listas</h5>
+                <p class="fs-3 fw-bold text-success"><?php echo $totalListas; ?></p>
+            </div>
+            </div>
+            <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+                <h5>Total de Pedidos</h5>
+                <p class="fs-3 fw-bold text-danger"><?php echo $totalPedidos; ?></p>
+            </div>
+            </div>
+        </div>
 
-      <div class="row mb-4">
-        <div class="col-md-4">
-          <div class="card shadow-sm p-3">
-            <h5>Total de Clientes</h5>
-            <p class="fs-3 fw-bold text-primary"><?php echo $totalClientes; ?></p>
-          </div>
+        <div class="row">
+            <div class="col-md-6">
+            <div class="card shadow-sm p-3 mb-4">
+                <h6>Classificação dos Clientes</h6>
+                <canvas id="graficoClassificacao"></canvas>
+            </div>
+            </div>
+            <div class="col-md-6">
+            <div class="card shadow-sm p-3 mb-4">
+                <h6>Pedidos por Dia</h6>
+                <canvas id="graficoPedidos"></canvas>
+            </div>
+            </div>
         </div>
-        <div class="col-md-4">
-          <div class="card shadow-sm p-3">
-            <h5>Total de Listas</h5>
-            <p class="fs-3 fw-bold text-success"><?php echo $totalListas; ?></p>
-          </div>
+        
         </div>
-        <div class="col-md-4">
-          <div class="card shadow-sm p-3">
-            <h5>Total de Pedidos</h5>
-            <p class="fs-3 fw-bold text-danger"><?php echo $totalPedidos; ?></p>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-6">
-          <div class="card shadow-sm p-3 mb-4">
-            <h6>Classificação dos Clientes</h6>
-            <canvas id="graficoClassificacao"></canvas>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card shadow-sm p-3 mb-4">
-            <h6>Pedidos por Dia</h6>
-            <canvas id="graficoPedidos"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
+    </main>
   </div>
 </body>
 

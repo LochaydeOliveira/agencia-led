@@ -4,14 +4,27 @@ body {
     background-color: #f8f9fa;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
+
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 56px;
+    background: #fff;
+    z-index: 1030;
+    border-bottom: 1px solid #dee2e6;
+    padding: 0 1rem;
+  }
+  
   
   aside {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    background-color: #fff;
+    padding-top: 56px;
+    width: 250px;
+    background: #f8f9fa;
     border-right: 1px solid #dee2e6;
   }
+  
   
   .nav-link {
     color: #333;
