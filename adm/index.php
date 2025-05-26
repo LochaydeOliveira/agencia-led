@@ -36,82 +36,80 @@
 
 <?php include 'partials/header.php'; ?>
 
-  <div class="d-flex"> 
-    <?php include 'partials/sidebar.php'; ?>    
-    <main class="container py-5">
-        <div class="flex-grow-1 p-4">
-        <h2 class="mb-4">Dashboard Administrativo</h2>
+<div class="d-flex">
+  <?php include 'partials/sidebar.php'; ?>
 
-        <div class="row mb-4">
-            <div class="col-md-4">
-            <div class="card shadow-sm p-3">
-                <h5>Total de Clientes</h5>
-                <p class="fs-3 fw-bold text-primary"><?php echo $totalClientes; ?></p>
-            </div>
-            </div>
-            <div class="col-md-4">
-            <div class="card shadow-sm p-3">
-                <h5>Total de Listas</h5>
-                <p class="fs-3 fw-bold text-success"><?php echo $totalListas; ?></p>
-            </div>
-            </div>
-            <div class="col-md-4">
-            <div class="card shadow-sm p-3">
-                <h5>Total de Pedidos</h5>
-                <p class="fs-3 fw-bold text-danger"><?php echo $totalPedidos; ?></p>
-            </div>
-            </div>
-        </div>
+  <main class="flex-grow-1 p-4" style="margin-top: 56px;">
+    <h2 class="mb-4">Dashboard Administrativo</h2>
 
-        <div class="row">
-            <div class="col-md-6">
-            <div class="card shadow-sm p-3 mb-4">
-                <h6>Classificação dos Clientes</h6>
-                <canvas id="graficoClassificacao"></canvas>
-            </div>
-            </div>
-            <div class="col-md-6">
-            <div class="card shadow-sm p-3 mb-4">
-                <h6>Pedidos por Dia</h6>
-                <canvas id="graficoPedidos"></canvas>
-            </div>
-            </div>
+    <div class="row mb-4">
+      <div class="col-md-4">
+        <div class="card shadow-sm p-3">
+          <h5>Total de Clientes</h5>
+          <p class="fs-3 fw-bold text-primary"><?php echo $totalClientes; ?></p>
         </div>
-        
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm p-3">
+          <h5>Total de Listas</h5>
+          <p class="fs-3 fw-bold text-success"><?php echo $totalListas; ?></p>
         </div>
-    </main>
-  </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm p-3">
+          <h5>Total de Pedidos</h5>
+          <p class="fs-3 fw-bold text-danger"><?php echo $totalPedidos; ?></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card shadow-sm p-3 mb-4">
+          <h6>Classificação dos Clientes</h6>
+          <canvas id="graficoClassificacao"></canvas>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card shadow-sm p-3 mb-4">
+          <h6>Pedidos por Dia</h6>
+          <canvas id="graficoPedidos"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
 
 <?php include 'partials/footer.php'; ?>
 
-</body>
-
 <script>
-    const ctxClassificacao = document.getElementById('graficoClassificacao');
-    new Chart(ctxClassificacao, {
+  const ctxClassificacao = document.getElementById('graficoClassificacao');
+  new Chart(ctxClassificacao, {
     type: 'doughnut',
     data: {
-        labels: <?php echo json_encode(array_keys($classificacaoData)); ?>,
-        datasets: [{
+      labels: <?php echo json_encode(array_keys($classificacaoData)); ?>,
+      datasets: [{
         label: 'Classificação',
         data: <?php echo json_encode(array_values($classificacaoData)); ?>,
         backgroundColor: ['#007bff', '#ffc107', '#28a745']
-        }]
+      }]
     }
-    });
+  });
 
-    const ctxPedidos = document.getElementById('graficoPedidos');
-    new Chart(ctxPedidos, {
+  const ctxPedidos = document.getElementById('graficoPedidos');
+  new Chart(ctxPedidos, {
     type: 'bar',
     data: {
-        labels: <?php echo json_encode(array_column($pedidosData, 'dia')); ?>,
-        datasets: [{
+      labels: <?php echo json_encode(array_column($pedidosData, 'dia')); ?>,
+      datasets: [{
         label: 'Pedidos',
         data: <?php echo json_encode(array_column($pedidosData, 'total')); ?>,
         backgroundColor: '#6610f2'
-        }]
+      }]
     }
-    });
+  });
 </script>
+
+</body>
 
 </html>
