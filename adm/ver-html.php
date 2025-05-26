@@ -27,6 +27,8 @@
   <meta charset="UTF-8">
   <title>Visualizar HTML - <?= htmlspecialchars($lista['nome']) ?></title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets-admin/admin.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 
