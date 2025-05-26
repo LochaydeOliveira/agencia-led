@@ -33,8 +33,11 @@
 </head>
 
 <body>
-  <div class="d-flex">
+  <div class="d-flex"> 
+    
     <?php include 'adm/partials/sidebar.php'; ?>
+    <?php include 'adm/partials/header.php'; ?>
+
     <div class="flex-grow-1 p-4">
       <h2 class="mb-4">Dashboard Administrativo</h2>
 
