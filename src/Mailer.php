@@ -91,8 +91,8 @@ class Mailer {
                 <h2 style='color: #e74c3c;'>Olá {$name},</h2>
                 <p>Recebemos seu pedido #{$orderNumber} com sucesso!</p>
                 <p><strong>Para garantir seu acesso à lista de fornecedores, realize o pagamento agora mesmo.</strong></p>
-                <div style='background-color: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center;'>
-                    <strong>Valor a Pagar: R$ " . number_format($value, 2, ',', '.') . "</strong>
+                <div style='background-color: #e1ffe2;padding: 20px 12px;border-radius:8px;text-align: center;font-size: 20px;color: #137817;border: 0.15rem solid #137817;border-style: dashed;'>
+                    Valor a Pagar:<strong> R$ " . number_format($value, 2, ',', '.') . "</strong>
                 </div>
                 <div style='background-color: #fff3cd; padding: 15px; border-radius: 8px; margin-top: 20px;'>
                     <p><strong>⏰ ATENÇÃO:</strong> O pagamento via PIX expira em poucos minutos.</p>
