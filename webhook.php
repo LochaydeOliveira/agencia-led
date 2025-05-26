@@ -12,6 +12,21 @@ function app_log($message) {
     file_put_contents(LOG_FILE, $logMessage, FILE_APPEND);
 }
 
+// ✅ Função para traduzir status da Yampi para Português
+function traduzirStatus($statusAlias) {
+    $map = [
+        'paid' => 'Pago',
+        'cancelled' => 'Cancelado',
+        'refused' => 'Recusado',
+        'waiting_payment' => 'Aguardando Pagamento',
+        'under_analysis' => 'Em Análise',
+        'pending_refund' => 'Reembolso Pendente',
+        'partially_refunded' => 'Parcialmente Reembolsado',
+        'refunded' => 'Reembolsado'
+    ];
+    return $map[$statusAlias] ?? ucfirst($statusAlias);
+}
+
 $payload = file_get_contents('php://input');
 $signature = $_SERVER['HTTP_X_YAMPI_SIGNATURE'] ?? '';
 
@@ -59,6 +74,7 @@ try {
         $email = $customer['email'];
         $whatsapp = $customer['phone']['full_number'] ?? '';
         $statusAlias = $order['status']['data']['alias'];
+        $statusPt = traduzirStatus($statusAlias); // ✅ traduz para PT
         $productId = $order['items']['data'][0]['product_id'] ?? null;
 
         $stmt = $conn->prepare("SELECT id FROM orders WHERE yampi_order_id = ?");
@@ -68,11 +84,11 @@ try {
         if ($event === 'order.created') {
             if (!$existingOrder) {
                 $stmt = $conn->prepare("INSERT INTO orders (yampi_order_id, order_number, customer_name, customer_email, status, created_at, product_id) VALUES (?, ?, ?, ?, ?, NOW(), ?)");
-                $stmt->execute([$orderId, $orderNumber, $name, $email, $statusAlias, $productId]);
+                $stmt->execute([$orderId, $orderNumber, $name, $email, $statusPt, $productId]);
                 app_log("Novo pedido inserido: $orderNumber ($email)");
             } else {
                 $stmt = $conn->prepare("UPDATE orders SET status = ? WHERE yampi_order_id = ?");
-                $stmt->execute([$statusAlias, $orderId]);
+                $stmt->execute([$statusPt, $orderId]);
                 app_log("Pedido existente atualizado: $orderNumber");
             }
 
@@ -89,7 +105,7 @@ try {
             }
 
             $stmt = $conn->prepare("UPDATE orders SET status = ? WHERE yampi_order_id = ?");
-            $stmt->execute([$statusAlias, $orderId]);
+            $stmt->execute([$statusPt, $orderId]);
 
             $classificacao = 'prata';
             if ($productId == 40741683) {
@@ -164,7 +180,7 @@ try {
             }
 
             $stmt = $conn->prepare("UPDATE orders SET status = ? WHERE yampi_order_id = ?");
-            $stmt->execute([$statusAlias, $orderId]);
+            $stmt->execute([$statusPt, $orderId]);
 
             if (in_array($statusAlias, ['cancelled', 'refused'])) {
                 $stmt = $conn->prepare("UPDATE clientes SET status = 'suspenso', atualizado_em = NOW() WHERE email = ?");
@@ -176,7 +192,6 @@ try {
                     app_log("Atenção: Cliente $email não encontrado para suspensão.");
                 }
             }
-            
 
             http_response_code(200);
             echo json_encode(['status' => 'success']);
