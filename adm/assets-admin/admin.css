@@ -26,12 +26,11 @@ body {
   }
 
   .logo-adm {
-    width: 100%;
-    max-width: 100px;
+    max-width: 160px;
   }
 
   .logo-adm img {
-    width: 70%;
+    width: 100%;
   }
   
   
