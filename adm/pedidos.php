@@ -1,9 +1,9 @@
 <?php
-// session_start();
-// if (!isset($_SESSION['admin'])) {
-//     header("Location: login.php");
-//     exit;
-// }
+    session_start();
+    if (!isset($_SESSION['usuario']) || ($_SESSION['nivel'] !== 'admin' && $_SESSION['nivel'] !== 'operador')) {
+        header("Location: login_usuarios.php");
+        exit;
+    }
 
 require '../conexao.php';
 
