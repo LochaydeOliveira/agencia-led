@@ -84,6 +84,7 @@ $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
   </main>
 </div>
 
+<?php include 'partials/footer.php'; ?>
 
 
 </body>

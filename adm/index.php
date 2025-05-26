@@ -35,6 +35,7 @@
 <body>
 
 <?php include 'partials/header.php'; ?>
+
   <div class="d-flex"> 
     <?php include 'partials/sidebar.php'; ?>    
     <main class="container py-5">
@@ -80,6 +81,9 @@
         </div>
     </main>
   </div>
+
+<?php include 'partials/footer.php'; ?>
+
 </body>
 
 <script>

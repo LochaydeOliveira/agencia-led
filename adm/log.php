@@ -28,7 +28,6 @@ $logContent = file_exists($logPath) ? array_reverse(file($logPath)) : [];
 
 <?php include 'partials/header.php'; ?>
 
-
 <div class="d-flex">
   <?php include 'partials/sidebar.php'; ?>
 
@@ -44,6 +43,9 @@ $logContent = file_exists($logPath) ? array_reverse(file($logPath)) : [];
       </div>
   </main>
 </div>
+
+<?php include 'partials/footer.php'; ?>
+
 </body>
 
 

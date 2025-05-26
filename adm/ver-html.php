@@ -50,6 +50,10 @@
   </main>
 
 </div>
+
+<?php include 'partials/footer.php'; ?>
+
+
 </body>
 
 

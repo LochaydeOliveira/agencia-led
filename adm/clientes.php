@@ -57,6 +57,8 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </main>        
     </div>
+    
+<?php include 'partials/footer.php'; ?>
 
 </body>
 </html>

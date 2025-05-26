@@ -25,7 +25,8 @@ $totalPedidos = $pdo->query("SELECT COUNT(*) FROM orders")->fetchColumn();
 </head>
 
 <body>
-  <?php include 'partials/header.php'; ?>
+  
+<?php include 'partials/header.php'; ?>
 
 <div class="d-flex">
     <?php include 'partials/sidebar.php'; ?>
@@ -61,6 +62,9 @@ $totalPedidos = $pdo->query("SELECT COUNT(*) FROM orders")->fetchColumn();
     </main>
 
 </div>
+
+<?php include 'partials/footer.php'; ?>
+
 
 </body>
 </html>
