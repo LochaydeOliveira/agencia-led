@@ -20,8 +20,6 @@
     $pedidosData = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $pedidosData = array_reverse($pedidosData);
 
-    require 'version.php';
-
 ?>
 
 <!DOCTYPE html>
