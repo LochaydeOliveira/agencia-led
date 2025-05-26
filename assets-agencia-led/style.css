@@ -112,7 +112,8 @@ tbody, td, tfoot, th, thead, tr {
 }
 
 .bg-footer-agld {
-  background: #503296;
+  background: #ffffff;
+  border-top: 1px solid #c3c3c36e;
 }
 
 .btn-section-primary { 
