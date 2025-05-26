@@ -35,10 +35,8 @@
 <body>
 
 <?php include 'partials/header.php'; ?>
-
   <div class="d-flex"> 
-    <?php include 'partials/sidebar.php'; ?>
-    
+    <?php include 'partials/sidebar.php'; ?>    
     <main class="container py-5">
         <div class="flex-grow-1 p-4">
         <h2 class="mb-4">Dashboard Administrativo</h2>
