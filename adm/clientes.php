@@ -1,15 +1,11 @@
 <?php
-    session_start();
-    if (!isset($_SESSION['usuario']) || ($_SESSION['nivel'] !== 'admin' && $_SESSION['nivel'] !== 'operador')) {
-        header("Location: login_usuarios.php");
-        exit;
-    }
 
+  require 'protect.php';
+  require '../conexao.php';
 
-require '../conexao.php';
+  $stmt = $pdo->query("SELECT id, nome, email, whatsapp, status, classificacao, criado_em FROM clientes ORDER BY criado_em DESC");
+  $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$stmt = $pdo->query("SELECT id, nome, email, whatsapp, status, classificacao, criado_em FROM clientes ORDER BY criado_em DESC");
-$clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

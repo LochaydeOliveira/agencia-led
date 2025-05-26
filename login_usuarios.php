@@ -16,8 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["nivel"] = $usuario["nivel"]; // admin ou operador
         $_SESSION["id_usuario"] = $usuario["id"];
 
-        header("Location: painel.php");
-        exit;
+        header("Location: adm/index.php");
+        exit;        
     } else {
         $erro = "Nome ou senha incorretos, ou usuário inativo.";
     }

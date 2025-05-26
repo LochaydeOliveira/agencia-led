@@ -1,12 +1,7 @@
 <?php
-    // session_start();
-    session_start();
-    if (!isset($_SESSION['usuario']) || ($_SESSION['nivel'] !== 'admin' && $_SESSION['nivel'] !== 'operador')) {
-        header("Location: login_usuarios.php");
-        exit;
-    }
 
-    require '../conexao.php';
+require 'protect.php';
+require '../conexao.php';
 
     $stmt = $pdo->query("SELECT id, nome, preco, link_de_compra FROM listas ORDER BY id DESC");
     $listas = $stmt->fetchAll(PDO::FETCH_ASSOC);

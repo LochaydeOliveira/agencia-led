@@ -1,12 +1,7 @@
 <?php
 
-    session_start();
-    if (!isset($_SESSION['usuario']) || ($_SESSION['nivel'] !== 'admin' && $_SESSION['nivel'] !== 'operador')) {
-        header("Location: login_usuarios.php");
-        exit;
-    }
-
-    require '../conexao.php';
+require 'protect.php';
+require '../conexao.php';
 
     $totalClientes = $pdo->query("SELECT COUNT(*) FROM clientes")->fetchColumn();
     $totalListas = $pdo->query("SELECT COUNT(*) FROM listas")->fetchColumn();

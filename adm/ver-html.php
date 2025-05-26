@@ -1,22 +1,18 @@
 <?php
-    session_start();
-    if (!isset($_SESSION['usuario']) || ($_SESSION['nivel'] !== 'admin' && $_SESSION['nivel'] !== 'operador')) {
-        header("Location: login_usuarios.php");
+
+    require 'protect.php';
+    require '../conexao.php';
+
+    $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+
+    $stmt = $pdo->prepare("SELECT nome, conteudo_html FROM listas WHERE id = ?");
+    $stmt->execute([$id]);
+    $lista = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$lista) {
+        echo "<p>Lista não encontrada.</p>";
         exit;
-    }
-
-        require '../conexao.php';
-
-        $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
-
-        $stmt = $pdo->prepare("SELECT nome, conteudo_html FROM listas WHERE id = ?");
-        $stmt->execute([$id]);
-        $lista = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (!$lista) {
-            echo "<p>Lista não encontrada.</p>";
-            exit;
-    }
+  }
 ?>
 
 
