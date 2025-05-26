@@ -1,52 +1,52 @@
 <?php
-session_start();
-require 'conexao.php';
+    session_start();
+    require 'conexao.php';
 
-if (!isset($_SESSION['usuario'])) {
-    header("Location: login.php");
-    exit;
-}
+    if (!isset($_SESSION['usuario'])) {
+        header("Location: login.php");
+        exit;
+    }
 
-$email = $_SESSION['usuario'];
-$nome = htmlspecialchars($_SESSION['nome']);
+    $email = $_SESSION['usuario'];
+    $nome = htmlspecialchars($_SESSION['nome']);
 
-// Função para gerar slug
-function slugify($text) {
-    $text = iconv('UTF-8', 'ASCII//TRANSLIT', $text); // Remove acentos
-    $text = preg_replace('/[^a-zA-Z0-9\s]/', '', $text); // Remove especiais
-    $text = strtolower(trim($text));
-    $text = preg_replace('/\s+/', '-', $text);
-    return $text;
-}
+    // Função para gerar slug
+    function slugify($text) {
+        $text = iconv('UTF-8', 'ASCII//TRANSLIT', $text); // Remove acentos
+        $text = preg_replace('/[^a-zA-Z0-9\s]/', '', $text); // Remove especiais
+        $text = strtolower(trim($text));
+        $text = preg_replace('/\s+/', '-', $text);
+        return $text;
+    }
 
-// Buscar cliente e classificação
-$stmt = $pdo->prepare("SELECT id, classificacao, status FROM clientes WHERE email = ?");
-$stmt->execute([$email]);
-$cliente = $stmt->fetch();
+    // Buscar cliente e classificação
+    $stmt = $pdo->prepare("SELECT id, classificacao, status FROM clientes WHERE email = ?");
+    $stmt->execute([$email]);
+    $cliente = $stmt->fetch();
 
-$acesso_liberado = false;
-$listas_com_acesso = [];
-$todas_listas = [];
+    $acesso_liberado = false;
+    $listas_com_acesso = [];
+    $todas_listas = [];
 
-if ($cliente) {
-    $cliente_id = $cliente['id'];
-    $classificacao = $cliente['classificacao'];
-    $status_cliente = $cliente['status'];
+    if ($cliente) {
+        $cliente_id = $cliente['id'];
+        $classificacao = $cliente['classificacao'];
+        $status_cliente = $cliente['status'];
 
-    if ($status_cliente === 'ativo') {
-        $acesso_liberado = true;
+        if ($status_cliente === 'ativo') {
+            $acesso_liberado = true;
 
-        // Buscar todas as listas
-        $stmt = $pdo->query("SELECT id, nome, descricao, conteudo_html, link_de_compra FROM listas");
-        $todas_listas = $stmt->fetchAll();
+            // Buscar todas as listas
+            $stmt = $pdo->query("SELECT id, nome, descricao, conteudo_html, link_de_compra FROM listas");
+            $todas_listas = $stmt->fetchAll();
 
-        if ($classificacao === 'prata') {
-            $stmt = $pdo->prepare("SELECT lista_id FROM clientes_listas WHERE cliente_id = ? AND status = 'ativo'");
-            $stmt->execute([$cliente_id]);
-            $listas_com_acesso = $stmt->fetchAll(PDO::FETCH_COLUMN);
+            if ($classificacao === 'prata') {
+                $stmt = $pdo->prepare("SELECT lista_id FROM clientes_listas WHERE cliente_id = ? AND status = 'ativo'");
+                $stmt->execute([$cliente_id]);
+                $listas_com_acesso = $stmt->fetchAll(PDO::FETCH_COLUMN);
+            }
         }
     }
-}
 ?>
 
 
