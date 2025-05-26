@@ -39,7 +39,7 @@
 <div class="d-flex">
   <?php include 'partials/sidebar.php'; ?>
 
-  <main class="container py-5 main-content">
+  <main class="container py-5 main-adm-content">
     <div class="container">
       <h2 class="mb-4">Visualizando HTML da Lista: <?= htmlspecialchars($lista['nome']) ?></h2>
       <div class="preview-box">

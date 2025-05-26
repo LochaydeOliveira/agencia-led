@@ -31,7 +31,7 @@ $logContent = file_exists($logPath) ? array_reverse(file($logPath)) : [];
 <div class="d-flex">
   <?php include 'partials/sidebar.php'; ?>
 
-  <main class="container py-5 main-content">
+  <main class="container py-5 main-adm-content">
       <div class="container">
         <h2 class="mb-4">Log de Atividades do Webhook</h2>
         <?php if (!empty($logContent)): ?>

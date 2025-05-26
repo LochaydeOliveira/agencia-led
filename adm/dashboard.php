@@ -25,43 +25,43 @@ $totalPedidos = $pdo->query("SELECT COUNT(*) FROM orders")->fetchColumn();
 </head>
 
 <body>
-  
+
 <?php include 'partials/header.php'; ?>
 
-<div class="d-flex">
-    <?php include 'partials/sidebar.php'; ?>
+  <div class="d-flex">
+      <?php include 'partials/sidebar.php'; ?>
 
-    <main class="container py-5 main-content">
-      <div class="row text-center">
-        <div class="col-md-4">
-          <div class="card bg-light p-4 mb-4">
-            <h5>Total de Clientes</h5>
-            <p class="fs-3 text-primary fw-bold"><?php echo $totalClientes; ?></p>
+      <main class="container py-5 main-adm-content">
+        <div class="row text-center">
+          <div class="col-md-4">
+            <div class="card bg-light p-4 mb-4">
+              <h5>Total de Clientes</h5>
+              <p class="fs-3 text-primary fw-bold"><?php echo $totalClientes; ?></p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-light p-4 mb-4">
+              <h5>Total de Listas</h5>
+              <p class="fs-3 text-success fw-bold"><?php echo $totalListas; ?></p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-light p-4 mb-4">
+              <h5>Total de Pedidos</h5>
+              <p class="fs-3 text-danger fw-bold"><?php echo $totalPedidos; ?></p>
+            </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="card bg-light p-4 mb-4">
-            <h5>Total de Listas</h5>
-            <p class="fs-3 text-success fw-bold"><?php echo $totalListas; ?></p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card bg-light p-4 mb-4">
-            <h5>Total de Pedidos</h5>
-            <p class="fs-3 text-danger fw-bold"><?php echo $totalPedidos; ?></p>
-          </div>
-        </div>
-      </div>
 
-      <div class="text-center mt-4">
-        <a href="clientes.php" class="btn btn-outline-primary mx-2">Gerenciar Clientes</a>
-        <a href="listas.php" class="btn btn-outline-success mx-2">Gerenciar Listas</a>
-        <a href="pedidos.php" class="btn btn-outline-dark mx-2">Visualizar Pedidos</a>
-        <a href="log.php" class="btn btn-outline-warning mx-2">Ver Log do Webhook</a>
-      </div>
-    </main>
+        <div class="text-center mt-4">
+          <a href="clientes.php" class="btn btn-outline-primary mx-2">Gerenciar Clientes</a>
+          <a href="listas.php" class="btn btn-outline-success mx-2">Gerenciar Listas</a>
+          <a href="pedidos.php" class="btn btn-outline-dark mx-2">Visualizar Pedidos</a>
+          <a href="log.php" class="btn btn-outline-warning mx-2">Ver Log do Webhook</a>
+        </div>
+      </main>
 
-</div>
+  </div>
 
 <?php include 'partials/footer.php'; ?>
 

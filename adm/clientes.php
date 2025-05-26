@@ -25,7 +25,7 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="d-flex">
   <?php include 'partials/sidebar.php'; ?>
 
-  <main class="flex-grow-1 p-4" style="margin-top: 56px;">
+  <main class="flex-grow-1 p-4 main-adm-content" style="margin-top: 56px;">
     <h2 class="mb-4">Clientes Cadastrados</h2>
     <div class="table-responsive">
       <table class="table table-bordered table-hover">
