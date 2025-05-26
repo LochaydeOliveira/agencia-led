@@ -573,6 +573,7 @@ $totalPedidos = $pdo->query("SELECT COUNT(*) FROM orders")->fetchColumn();
 
 </head>
 <body>
+  
 <header>
   <nav class="navbar navbar-expand-lg shadow-bg container">
     <div id="iconUser" class="content-user">
@@ -615,5 +616,7 @@ $totalPedidos = $pdo->query("SELECT COUNT(*) FROM orders")->fetchColumn();
     <a href="log.php" class="btn btn-outline-warning mx-2">Ver Log do Webhook</a>
   </div>
 </main>
+
+
 </body>
 </html>
