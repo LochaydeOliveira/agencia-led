@@ -1,25 +1,33 @@
 <?php
-    // session_start();
-    // if (!isset($_SESSION['admin'])) {
-    //     header("Location: login.php");
-    //     exit;
-    // }
+        // session_start();
+        // if (!isset($_SESSION['admin'])) {
+        //     header("Location: login.php");
+        //     exit;
+        // }
 
-    require '../conexao.php';
+        require '../conexao.php';
 
-    $stmt = $pdo->query("SELECT id, nome, preco, link_de_compra FROM listas ORDER BY id DESC");
-    $listas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+
+        $stmt = $pdo->prepare("SELECT nome, conteudo_html FROM listas WHERE id = ?");
+        $stmt->execute([$id]);
+        $lista = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$lista) {
+            echo "<p>Lista não encontrada.</p>";
+            exit;
+    }
 ?>
 
 
 <!DOCTYPE html>
 <html lang="pt-br">
 
-
 <head>
   <meta charset="UTF-8">
-  <title>Listas - Painel Admin</title>
+  <title>Visualizar HTML - <?= htmlspecialchars($lista['nome']) ?></title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
 
 <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -566,60 +574,27 @@
                 box-shadow: 0px 7px 20px -10px #bbbbbb94;
             }
 
+    .preview-box {
+      padding: 1rem;
+      border: 1px solid #ccc;
+      background: #f9f9f9;
+      border-radius: 6px;
+    }
 
 </style>
 
 </head>
 
-<body> 
 
-<header>
-  <nav class="navbar navbar-expand-lg shadow-bg container">
-    <div id="iconUser" class="content-user">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30">
-        <path d="m12,0C5.383,0,0,5.383,0,12s5.383,12,12,12,12-5.383,12-12S18.617,0,12,0Zm-4,21.164v-.164c0-2.206,1.794-4,4-4s4,1.794,4,4v.164c-1.226.537-2.578.836-4,.836s-2.774-.299-4-.836Zm9.925-1.113c-.456-2.859-2.939-5.051-5.925-5.051s-5.468,2.192-5.925,5.051c-2.47-1.823-4.075-4.753-4.075-8.051C2,6.486,6.486,2,12,2s10,4.486,10,10c0,3.298-1.605,6.228-4.075,8.051Zm-5.925-15.051c-2.206,0-4,1.794-4,4s1.794,4,4,4,4-1.794,4-4-1.794-4-4-4Zm0,6c-1.103,0-2-.897-2-2s.897-2,2-2,2,.897,2,2-.897,2-2,2Z"/>
-      </svg>
-      <div>
-        <p class="mb-0">Olá, <strong>Admin</strong>!</p>
-      </div>
+<body class="p-4">
+  <div class="container">
+    <h2 class="mb-4">Visualizando HTML da Lista: <?= htmlspecialchars($lista['nome']) ?></h2>
+    <div class="preview-box">
+      <?= $lista['conteudo_html'] ?>
     </div>
-  </nav>
-</header>
-
-<main class="container py-5 main-content">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>Listas Cadastradas</h2>
-    <a href="nova-lista.php" class="btn btn-success">Nova Lista</a>
+    <a href="listas.php" class="btn btn-secondary mt-4">Voltar para Listas</a>
   </div>
-  <div class="table-responsive">
-    <table class="table table-bordered table-hover">
-      <thead class="table-light">
-        <tr>
-          <th>Nome</th>
-          <th>Preço</th>
-          <th>Link de Compra</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php foreach ($listas as $lista): ?>
-          <tr>
-            <td><?= htmlspecialchars($lista['nome']) ?></td>
-            <td>R$ <?= number_format($lista['preco'], 2, ',', '.') ?></td>
-            <td><a href="<?= htmlspecialchars($lista['link_de_compra']) ?>" target="_blank">Ver Link</a></td>
-            <td>
-              <a href="editar-lista.php?id=<?= $lista['id'] ?>" class="btn btn-sm btn-primary">Editar</a>
-              <a href="excluir-lista.php?id=<?= $lista['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta lista?')">Excluir</a>
-              <a href="ver-html.php?id=<?= $lista['id'] ?>" class="btn btn-sm btn-secondary">Ver HTML</a>
-            </td>
-          </tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
-  </div>
-</main>
-
-
 </body>
-</html>
 
+
+</html>
