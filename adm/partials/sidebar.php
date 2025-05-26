@@ -7,6 +7,6 @@
     <a href="pedidos.php" class="nav-link mb-2">Pedidos</a>
     <a href="log.php" class="nav-link mb-2">Log</a>
     <hr>
-    <a href="../logout.php" class="nav-link text-danger">Sair</a>
+    <a href="partials/logout.php" class="nav-link text-danger">Sair</a>
   </nav>
 </aside>
