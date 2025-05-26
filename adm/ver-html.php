@@ -32,8 +32,8 @@
 
 <body class="p-4">
 
-<?php include 'adm/partials/sidebar.php'; ?>
-<?php include 'adm/partials/header.php'; ?>
+<?php include 'partials/sidebar.php'; ?>
+<?php include 'partials/header.php'; ?>
 
   <div class="container">
     <h2 class="mb-4">Visualizando HTML da Lista: <?= htmlspecialchars($lista['nome']) ?></h2>
