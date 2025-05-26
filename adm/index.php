@@ -36,7 +36,7 @@ require '../conexao.php';
 <div class="d-flex"> 
     <?php include 'partials/sidebar.php'; ?>    
 
-    <main class="flex-grow-1 p-4" style="margin-top: 56px;">
+    <main class="flex-grow-1 p-4 main-adm-content">
       <h2 class="mb-4">Dashboard Administrativo</h2>
 
       <div class="row mb-4">
