@@ -1,5 +1,5 @@
 <header class="d-flex justify-content-between align-items-center p-3 border-bottom bg-white">
-  <h5 class="mb-0">Administração - <?php echo $tituloPagina ?? 'Painel'; ?></h5>
+  <img src="assets-admin/logo-agencia-led-slim.png" alt="Logo" class="logo">
 
   <div class="d-flex align-items-center gap-3">
     <span class="text-muted small">Olá, Admin</span>
