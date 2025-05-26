@@ -1,10 +1,10 @@
 <?php
-session_start();
-// Login simples para admin - pode ser substituído por verificação de sessão depois
-if (!isset($_SESSION['admin'])) {
-    header("Location: login.php");
-    exit;
-}
+// session_start();
+// // Login simples para admin - pode ser substituído por verificação de sessão depois
+// if (!isset($_SESSION['admin'])) {
+//     header("Location: login.php");
+//     exit;
+// }
 
 require '../conexao.php';
 
@@ -12,6 +12,8 @@ $totalClientes = $pdo->query("SELECT COUNT(*) FROM clientes")->fetchColumn();
 $totalListas = $pdo->query("SELECT COUNT(*) FROM listas")->fetchColumn();
 $totalPedidos = $pdo->query("SELECT COUNT(*) FROM orders")->fetchColumn();
 ?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
