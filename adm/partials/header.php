@@ -5,7 +5,9 @@
   </div>
 
   <div class="d-flex align-items-center gap-3">
-    <span class="text-muted small">Olá, Admin</span>
+    <span class="text-muted small">
+      Olá, <?php echo htmlspecialchars($_SESSION['usuario']); ?>
+    </span>
   </div>
 
 </header>
