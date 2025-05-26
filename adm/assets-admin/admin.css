@@ -24,6 +24,15 @@ body {
     background: #f8f9fa;
     border-right: 1px solid #dee2e6;
   }
+
+  .logo-adm {
+    width: 100%;
+    max-width: 100px;
+  }
+
+  .logo-adm img {
+    width: 70%;
+  }
   
   
   .nav-link {
