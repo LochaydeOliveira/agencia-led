@@ -46,7 +46,7 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
               <td><?= htmlspecialchars($cliente['email']) ?></td>
               <td><?= htmlspecialchars($cliente['whatsapp']) ?></td>
               <td><span class="badge bg-<?= $cliente['status'] === 'ativo' ? 'success' : ($cliente['status'] === 'inativo' ? 'secondary' : 'danger') ?>"><?php echo $cliente['status']; ?></span></td>
-              <td><span class="badge bg-<?= $cliente['classificacao'] === 'Prata' ? 'dark-subtle' : ($cliente['classificacao'] === 'Ouro' ? 'warning' : 'primary') ?> text-dark"><?php echo ucfirst($cliente['classificacao']); ?></span></td>
+              <td><span class="badge bg-<?= $cliente['classificacao'] === 'prata' ? 'dark-subtle' : ($cliente['classificacao'] === 'ouro' ? 'warning' : 'primary') ?> text-dark"><?php echo ucfirst($cliente['classificacao']); ?></span></td>
               <td><?= date('d/m/Y H:i', strtotime($cliente['criado_em'])) ?></td>
             </tr>
           <?php endforeach; ?>
