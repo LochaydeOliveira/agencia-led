@@ -100,4 +100,9 @@
     border: none;
     font-size: 13.5px;
     font-family: "Work Sans", sans-serif!important;
+    font-weight: 600;
+  }
+
+  .btn-psn:hover {
+    background: #0d9142;
   }
