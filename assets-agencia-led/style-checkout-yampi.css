@@ -19,7 +19,7 @@
 }
 
 
-    .ctx-title {
+.ctx-title {
         color: var(--title-color);
         text-transform: var(--titles-uppercase);
         font-size: 22px!important;
@@ -41,7 +41,7 @@
     }
 
 .content {
-    background: #f6eeff !important;
+    background: #f1f3f7 !important;
 }
 
 .holder-cols-checkout .cart-resume .detail.total .value {
@@ -80,8 +80,8 @@
     }
     
     .holder-cols-checkout .box-checkout.active .box-title .holder-number {
-        background: #513396;
-        border-color: #513396!important;
+        background: #707070;
+        border-color: #000000 !important;
         color: #fff;
     }
     
@@ -92,10 +92,11 @@
     }
     
     .holder-cols-checkout .box-checkout.active {
-        background: #ddd1e9;
+        background: #ffffff;
         cursor: default;
         border: none;
-        border-radius: 20px;
+        border-radius: 10px!important;
+        box-shadow: 0 4px 12px rgba(0,0,0,.05);
     }
 
     .holder-cols-checkout .container-addresses .box-address .inner-box {
@@ -103,16 +104,16 @@
     }
 
     footer svg {
-        fill: #ffffff!important;
+        fill: #6f6d75!important;
     }
 
     .black-80 {
-        color: #513396!important;
+        color: #6f6d75!important;
     }
 
     footer {
-        background-color: #513396!important;
-        color: #fff!important;
+        background-color: #ffffff!important;
+        color: #6f6d75!important;
     }
 
     footer .container {
@@ -121,12 +122,12 @@
 
     .holder-cols-checkout .cart-resume .detail.total .value {
         font-weight: 800!important;
-        color: #fa3296!important;
+        color: #7b9b0e !important;
     }
 
     .holder-cols-checkout .container-shipment .option {
         border: none!important;
-        color: #fa3296 !important;
+        color: #7b9b0e !important;
         font-weight: 700!important;
     }
 
@@ -137,21 +138,17 @@
     }
 
     .holder-cols-checkout .box-checkout {
-        border-radius: 20px!important;
+        border-radius: 10px!important;
     }
 
     .holder-cols-checkout .box-checkout:not(.active):not(.disabled):not(.box-resume):not(.box-payment) {
-        background: #ddd1e9!important;
+        background: #ffffff!important;
     }
     
     .holder-cols-checkout .box-checkout:not(.active):not(.disabled):not(.box-resume):not(.box-payment) .title {
-        color: #513396 !important;
+        color: #7b9b0e !important;
     }
-
-    .icon-mercadopago {
-        background-image: url(https://http2.mlstatic.com/frontend-assets/ui-navigation/5.14.4/mercadopago/logo__large.png);
-    }
-    
+   
     /* Rodapé */
     
     span.f11.black-50::after {
@@ -264,4 +261,8 @@
     padding-left: 25px!important;
 }
 
+}
+
+.holder-cols-checkout .box-checkout.box-resume {
+    box-shadow: none!important;
 }

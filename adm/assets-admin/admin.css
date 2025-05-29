@@ -35,6 +35,18 @@
   border: none!important;
 }
 
+.main-adm-content h5 {
+  color: #7b8190;
+  font-size: 15px;
+  font-family: "Work Sans", sans-serif!important;
+}
+
+.main-adm-content h6 {
+  color: #7b8190;
+  font-size: 15px;
+  font-family: "Work Sans", sans-serif!important;
+}
+
   header {
     position: fixed;
     top: 0;
