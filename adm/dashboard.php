@@ -26,7 +26,7 @@ $totalPedidos = $pdo->query("SELECT COUNT(*) FROM orders")->fetchColumn();
   <div class="d-flex">
       <?php include 'partials/sidebar.php'; ?>
 
-      <main class="container py-5 main-adm-content">
+      <main class="flex-grow-1 p-4 main-adm-content">
         <div class="row text-center">
           <div class="col-md-4">
             <div class="card bg-light p-4 mb-4">

@@ -27,7 +27,7 @@ require '../conexao.php';
 <div class="d-flex">
   <?php include 'partials/sidebar.php'; ?>
 
-    <main class="container py-5 main-adm-content">
+    <main class="flex-grow-1 p-4 main-adm-content"> 
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Listas Cadastradas</h2>
         <a href="nova-lista.php" class="btn btn-success">Nova Lista</a>

@@ -37,7 +37,8 @@ $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <div class="d-flex">
   <?php include 'partials/sidebar.php'; ?>
-  <main class="container py-5 main-adm-content">
+
+  <main class="flex-grow-1 p-4 main-adm-content"> 
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h2>Pedidos</h2>
       <form method="get" class="d-flex gap-2">
