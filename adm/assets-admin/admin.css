@@ -93,3 +93,11 @@
     margin-top: 60px;
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   }
+
+  .btn-psn {
+    border-radius: 18px;
+    background: #27c969;
+    border: none;
+    font-size: 13.5px;
+    font-family: "Work Sans", sans-serif!important;
+  }

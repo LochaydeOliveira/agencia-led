@@ -30,7 +30,7 @@ require '../conexao.php';
     <main class="flex-grow-1 p-4 main-adm-content"> 
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Listas Cadastradas</h2>
-        <a href="nova-lista.php" class="btn btn-success">Nova Lista</a>
+        <a href="nova-lista.php" class="btn btn-success btn-psn">Nova Lista</a>
       </div>
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
