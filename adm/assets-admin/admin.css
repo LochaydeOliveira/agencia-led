@@ -14,6 +14,15 @@
     font-size: 13.5px;
 }
 
+.main-adm-content tr {
+  border-style: none!important;
+  border-width: 0!important;
+}
+
+.main-adm-content th {
+  color: #7b8190!important;
+}
+
   header {
     position: fixed;
     top: 0;
