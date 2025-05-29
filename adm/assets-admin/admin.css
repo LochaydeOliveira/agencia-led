@@ -10,7 +10,9 @@
 
   .main-adm-content {
     background: #f1f3f7;
+    margin-top: 60px;
   }
+
 
   .main-adm-content td {
     color: #7b8190!important;
@@ -97,11 +99,6 @@
     margin: 1rem 0;
   }
   
-  .main-adm-content {
-    margin-top: 60px;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  }
-
   .btn-psn {
     border-radius: 18px;
     background: #27c969;
