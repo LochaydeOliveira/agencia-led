@@ -620,6 +620,11 @@
                 color: #4364af!important;
                 text-align: left;
                 font-weight: 300;
+                margin: 0 0 1.5rem;
+            }
+
+            .conteudo-lista ul li a {
+                margin: 0 0 0 1rem;
             }
 
     </style>
