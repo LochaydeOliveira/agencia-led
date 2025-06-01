@@ -608,7 +608,19 @@
                 box-shadow: 0px 7px 20px -10px #bbbbbb94;
             }
 
+            .conteudo-lista ul {
+                list-style: none;
+                padding: 0;
+            }
 
+            .conteudo-lista ul li {
+                transition: background-color 0.3s ease, transform 0.3s ease;
+                font-size: 15px;
+                border-radius: 0!important;
+                color: #4364af!important;
+                text-align: left;
+                font-weight: 300;
+            }
 
     </style>
 
@@ -745,7 +757,7 @@
 
 
 
-<button id="backToTop" class="btn btn-primary">↑ Topo</button>
+<button id="backToTop" class="btn btn-primary">↑</button>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
