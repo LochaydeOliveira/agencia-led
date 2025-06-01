@@ -624,7 +624,7 @@
             }
 
             .conteudo-lista ul li a {
-                margin: 0 0 0 1rem;
+                margin: 0 0 0 3px;
             }
 
     </style>
