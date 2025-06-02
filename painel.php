@@ -627,6 +627,9 @@
                 margin: 0 0 0 3px;
             }
 
+            .card {
+                max-height: max-content!important;
+            }
     </style>
 
 </head>
@@ -691,8 +694,7 @@
                 <p class="mb-5">Entre em contato com o suporte pelo e-mail: suporte@agencialed.com.</p>
             <?php endif; ?>
         </div>
-
-
+        
 
         <?php if ($acesso_liberado): ?>
                 <div class="mb-3">
