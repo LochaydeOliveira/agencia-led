@@ -520,8 +520,9 @@
                 transition: background-color 0.3s ease, transform 0.3s ease;
                 font-size: 15px;
                 border-radius: 0!important;
-                color: #4364af!important;
+                color:rgb(0, 0, 0)!important;
                 text-align: left;
+                opacity: 0.7;
             }
             .btn-link-custom:hover {
                 border-radius: 0;
