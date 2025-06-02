@@ -632,7 +632,7 @@
             }
 
             .card-body {
-                background: #cdc1ff!important;
+                background:rgb(255, 255, 255)!important;
                 border-radius: 0px!important;
             }
     </style>
