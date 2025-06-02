@@ -585,7 +585,7 @@
             }
 
             .bloqueado {
-                background: #ffffffad;
+                background: #ffffffad!important;
                 position: absolute;
                 top: 0;
                 bottom: 0;
@@ -636,7 +636,7 @@
             }
 
             .card-body {
-                background:rgb(255, 255, 255)!important;
+                background:rgb(255, 255, 255);
                 border-radius: 0px!important;
             }
     </style>
