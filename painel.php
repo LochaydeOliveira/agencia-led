@@ -527,7 +527,7 @@
             .btn-link-custom:hover {
                 border-radius: 0;
                 color: #32035c;
-                background-color: #5b278d1f;
+                background-color: #ffce33;
                 width: 100%;
                 text-align: left;
 
