@@ -503,6 +503,7 @@
 
             .card {
                 transition: transform 0.3s ease, box-shadow 0.3s ease;
+                border-radius: 0!important;
             }
             .card:hover {
                 box-shadow: 0 10px 30px rgb(0 0 0 / .1);
@@ -531,12 +532,12 @@
             }
 
             .card-title {
-                padding: 10px 8px;
+                padding: 10px 25px;
                 margin-bottom: 0;
-                background: linear-gradient(135deg, #2461a1 0%, #ae70dd 100%);
-                color: #fff;
+                color: #000000;
                 font-size: 16px!important;
-                border-radius: 7px 7px 0 0;
+                font-weight: 700;
+                border-bottom: 1px solid #a1afd763;
             }
 
             #backToTop {
