@@ -150,7 +150,7 @@
                 margin: 0 !important;
                 font-size: 30px;
                 font-weight: 700;
-                color: #2862a3;
+                color:rgb(0, 0, 0);
             }
 
             .main-content p {
@@ -288,7 +288,7 @@
                 margin: 0 !important;
                 font-size: 30px;
                 font-weight: 700;
-                color: #2862a3;
+                color:rgb(0, 0, 0);
             }
 
             .main-content p {
@@ -408,13 +408,13 @@
                 margin: 0 !important;
                 font-size: 30px;
                 font-weight: 700;
-                color: #2862a3;
+                color:rgb(0, 0, 0);
             }
 
             .main-content p {
                 margin: 0;
                 font-size: 13px;
-                color: #7878788f;
+                color:rgb(120, 120, 120);
                 text-align: center;
                 line-height: 14px;
             }
