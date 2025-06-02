@@ -414,9 +414,10 @@
             .main-content p {
                 margin: 0;
                 font-size: 13px;
-                color:rgb(120, 120, 120);
+                color:rgb(0, 0, 0);
                 text-align: center;
                 line-height: 14px;
+                opacity: 0.6;
             }
             .tt-list {
                 display: flex;
