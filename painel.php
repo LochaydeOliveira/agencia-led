@@ -483,7 +483,7 @@
             }
 
             body {
-                background: #f8f9fa;
+                background: #f1f2f3;
                 min-height: 100vh;
                 display: flex;
                 align-items: center;
@@ -633,6 +633,7 @@
 
             .card-body {
                 background: #cdc1ff!important;
+                border-radius: 0px!important;
             }
     </style>
 
