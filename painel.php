@@ -630,6 +630,10 @@
             .card {
                 max-height: max-content!important;
             }
+
+            .card-body {
+                background: #cdc1ff!important;
+            }
     </style>
 
 </head>
