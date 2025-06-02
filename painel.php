@@ -730,7 +730,7 @@
                                         <?php echo htmlspecialchars($lista['nome']); ?>
                                     </h5>
 
-                                    <div class="card-body <?php echo $liberado ? '' : 'bloqueado'; ?>">
+                                    <div class="border-0 card-body <?php echo $liberado ? '' : 'bloqueado'; ?>">
                                         <div class="conteudo-lista">
                                             <?php echo $liberado ? $lista['conteudo_html'] : ''; ?>
                                         </div>
