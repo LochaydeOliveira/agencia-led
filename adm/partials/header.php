@@ -4,7 +4,7 @@ if (!isset($_SESSION['usuario'])) {
     exit;
 }
 ?>
-<header class="d-flex justify-content-between align-items-center p-3 border-bottom bg-white">
+<header class="d-flex justify-content-between align-items-center p-3 border-bottom">
 
   <div class="d-flex logo-adm">
     <img src="assets-admin/logo-agencia-led-slim.png" alt="Logo" class="logo">
