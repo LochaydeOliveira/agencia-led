@@ -1,5 +1,11 @@
 /* admin.css */
 
+.text-muted {
+  color: rgb(255 255 255) !important;
+  font-weight: 800;
+  font-size: 15px;
+}
+
   body {
     background-color: #f8f9fa;
     color: #7b8190!important;
@@ -68,7 +74,7 @@
   }
 
   .logo-adm {
-    max-width: 160px;
+    max-width: 100px;
   }
 
   .logo-adm img {
