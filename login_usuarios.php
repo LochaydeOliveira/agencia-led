@@ -1,25 +1,54 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require 'conexao.php';
 session_start();
+
+// Se já estiver logado, redireciona para o painel
+if (isset($_SESSION['usuario']) && isset($_SESSION['nivel'])) {
+    header("Location: adm/index.php");
+    exit;
+}
+
 $erro = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nome = $_POST["nome"];
-    $senha = $_POST["senha"];
+    try {
+        // Validação dos campos
+        if (empty($_POST["nome"]) || empty($_POST["senha"])) {
+            throw new Exception("Por favor, preencha todos os campos.");
+        }
 
-    $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE nome = ?");
-    $stmt->execute([$nome]);
-    $usuario = $stmt->fetch();
+        $nome = filter_input(INPUT_POST, "nome", FILTER_SANITIZE_STRING);
+        $senha = $_POST["senha"];
 
-    if ($usuario && $usuario['status'] === 'ativo' && password_verify($senha, $usuario["senha"])) {
-        $_SESSION["usuario"] = $usuario["nome"];
-        $_SESSION["nivel"] = $usuario["nivel"]; // admin ou operador
-        $_SESSION["id_usuario"] = $usuario["id"];
+        // Verifica se o usuário existe e está ativo
+        $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE nome = ? AND status = 'ativo'");
+        $stmt->execute([$nome]);
+        $usuario = $stmt->fetch();
 
-        header("Location: adm/index.php");
-        exit;        
-    } else {
-        $erro = "Nome ou senha incorretos, ou usuário inativo.";
+        if ($usuario && password_verify($senha, $usuario["senha"])) {
+            // Regenera o ID da sessão para prevenir session fixation
+            session_regenerate_id(true);
+            
+            // Configura as variáveis de sessão
+            $_SESSION["usuario"] = $usuario["nome"];
+            $_SESSION["nivel"] = $usuario["nivel"];
+            $_SESSION["id_usuario"] = $usuario["id"];
+            $_SESSION["ultimo_acesso"] = time();
+
+            // Registra o login no log
+            error_log("Login bem-sucedido para o usuário: " . $usuario["nome"]);
+
+            header("Location: adm/index.php");
+            exit;
+        } else {
+            throw new Exception("Nome ou senha incorretos, ou usuário inativo.");
+        }
+    } catch (Exception $e) {
+        $erro = $e->getMessage();
+        error_log("Erro no login: " . $e->getMessage());
     }
 }
 ?>

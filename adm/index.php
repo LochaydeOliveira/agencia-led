@@ -1,8 +1,12 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 require 'protect.php';
 require '../conexao.php';
 
+try {
+    // Total de registros
     $totalClientes = $pdo->query("SELECT COUNT(*) FROM clientes")->fetchColumn();
     $totalListas = $pdo->query("SELECT COUNT(*) FROM listas")->fetchColumn();
     $totalPedidos = $pdo->query("SELECT COUNT(*) FROM orders")->fetchColumn();
@@ -15,6 +19,11 @@ require '../conexao.php';
     $stmt = $pdo->query("SELECT DATE(created_at) as dia, COUNT(*) as total FROM orders GROUP BY dia ORDER BY dia DESC LIMIT 7");
     $pedidosData = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $pedidosData = array_reverse($pedidosData);
+
+} catch (PDOException $e) {
+    error_log("Erro no dashboard: " . $e->getMessage());
+    $erro = "Ocorreu um erro ao carregar os dados do dashboard.";
+}
 
 ?>
 
