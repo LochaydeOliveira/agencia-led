@@ -5,8 +5,8 @@ require '../conexao.php';
 
 // Processar atualização de status
 if (isset($_POST['update_status']) && isset($_POST['order_number'])) {
-    $order_number = filter_input(INPUT_POST, 'order_number', FILTER_SANITIZE_STRING);
-    $status = filter_input(INPUT_POST, 'status', FILTER_SANITIZE_STRING);
+    $order_number = htmlspecialchars($_POST['order_number'], ENT_QUOTES, 'UTF-8');
+    $status = htmlspecialchars($_POST['status'], ENT_QUOTES, 'UTF-8');
     
     $stmt = $pdo->prepare("UPDATE orders SET status = ? WHERE order_number = ?");
     $stmt->execute([$status, $order_number]);
@@ -21,13 +21,13 @@ $data_inicio = isset($_GET['data_inicio']) ? $_GET['data_inicio'] : '';
 $data_fim = isset($_GET['data_fim']) ? $_GET['data_fim'] : '';
 
 // Construir query base
-$query = "SELECT order_number, customer_name, customer_email, product_id, status, created_at FROM orders WHERE 1=1";
+$query = "SELECT id, yampi_order_id, order_number, customer_name, customer_email, product_id, status, created_at, updated_at FROM orders WHERE 1=1";
 $params = [];
 
 if ($search) {
-    $query .= " AND (order_number LIKE ? OR customer_name LIKE ? OR customer_email LIKE ? OR product_id LIKE ?)";
+    $query .= " AND (order_number LIKE ? OR customer_name LIKE ? OR customer_email LIKE ? OR product_id LIKE ? OR yampi_order_id LIKE ?)";
     $search_param = "%$search%";
-    $params = array_merge($params, [$search_param, $search_param, $search_param, $search_param]);
+    $params = array_merge($params, [$search_param, $search_param, $search_param, $search_param, $search_param]);
 }
 
 if ($statusFiltro) {
@@ -53,7 +53,7 @@ $per_page = 10;
 $offset = ($page - 1) * $per_page;
 
 // Total de registros
-$count_query = str_replace("o.id, o.order_number, c.nome as cliente_nome, c.email as cliente_email, o.product_id, o.status, o.created_at", "COUNT(*)", $query);
+$count_query = str_replace("id, yampi_order_id, order_number, customer_name, customer_email, product_id, status, created_at, updated_at", "COUNT(*)", $query);
 $stmt = $pdo->prepare($count_query);
 $stmt->execute($params);
 $total_records = $stmt->fetchColumn();
@@ -96,7 +96,7 @@ $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <div class="card-body">
         <form method="GET" class="row g-3">
           <div class="col-md-3">
-            <input type="text" class="form-control" name="search" placeholder="Buscar..." value="<?= htmlspecialchars($search) ?>">
+            <input type="text" class="form-control" name="search" placeholder="Buscar por número, cliente, email ou produto..." value="<?= htmlspecialchars($search) ?>">
           </div>
           <div class="col-md-2">
             <select name="status" class="form-select">
@@ -124,18 +124,21 @@ $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <table class="table table-bordered table-hover">
         <thead class="table-light">
           <tr>
+            <th>ID Yampi</th>
             <th>Nº do Pedido</th>
             <th>Cliente</th>
             <th>Email</th>
             <th>Produto</th>
             <th>Status</th>
-            <th>Data</th>
+            <th>Criado em</th>
+            <th>Atualizado em</th>
             <th>Ações</th>
           </tr>
         </thead>
         <tbody>
           <?php foreach ($pedidos as $pedido): ?>
             <tr>
+              <td><?= htmlspecialchars($pedido['yampi_order_id']) ?></td>
               <td><?= htmlspecialchars($pedido['order_number']) ?></td>
               <td><?= htmlspecialchars($pedido['customer_name']) ?></td>
               <td><?= htmlspecialchars($pedido['customer_email']) ?></td>
@@ -151,6 +154,7 @@ $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </span>
               </td>
               <td><?= date('d/m/Y H:i', strtotime($pedido['created_at'])) ?></td>
+              <td><?= date('d/m/Y H:i', strtotime($pedido['updated_at'])) ?></td>
               <td>
                 <button class="btn btn-sm btn-primary" onclick="editStatus('<?= $pedido['order_number'] ?>', '<?= $pedido['status'] ?>')">
                   Alterar Status
