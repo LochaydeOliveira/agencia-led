@@ -281,11 +281,20 @@
           </div>
           <div class="mb-3">
             <label class="form-label">Classificação</label>
-            <select class="form-select" name="classificacao" required>
+            <select class="form-select" name="classificacao" id="classificacao" required onchange="toggleListasField()">
               <option value="prata">Prata</option>
               <option value="ouro">Ouro</option>
               <option value="diamante">Diamante</option>
             </select>
+          </div>
+          <div class="mb-3" id="listasField" style="display: none;">
+            <label class="form-label">Listas Disponíveis</label>
+            <select class="form-select" name="listas[]" multiple>
+              <?php foreach ($listas as $lista): ?>
+                <option value="<?= $lista['id'] ?>"><?= htmlspecialchars($lista['nome']) ?></option>
+              <?php endforeach; ?>
+            </select>
+            <small class="form-text text-muted">Segure CTRL para selecionar múltiplas listas</small>
           </div>
         </div>
         <div class="modal-footer">
@@ -336,6 +345,12 @@ function deleteCliente(id) {
       form.submit();
     }
   });
+}
+
+function toggleListasField() {
+  const classificacao = document.getElementById('classificacao').value;
+  const listasField = document.getElementById('listasField');
+  listasField.style.display = (classificacao === 'ouro' || classificacao === 'diamante') ? 'block' : 'none';
 }
 
 // Mostrar mensagens de sucesso/erro

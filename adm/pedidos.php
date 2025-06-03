@@ -53,15 +53,14 @@ $per_page = 10;
 $offset = ($page - 1) * $per_page;
 
 // Total de registros
-$stmt = $pdo->prepare(str_replace("order_number, customer_name, customer_email, product_id, status, created_at", "COUNT(*)", $query));
+$count_query = str_replace("o.id, o.order_number, c.nome as cliente_nome, c.email as cliente_email, o.product_id, o.status, o.created_at", "COUNT(*)", $query);
+$stmt = $pdo->prepare($count_query);
 $stmt->execute($params);
 $total_records = $stmt->fetchColumn();
 $total_pages = ceil($total_records / $per_page);
 
 // Buscar registros paginados
-$query .= " LIMIT ? OFFSET ?";
-$params[] = $per_page;
-$params[] = $offset;
+$query .= " LIMIT " . (int)$per_page . " OFFSET " . (int)$offset;
 
 $stmt = $pdo->prepare($query);
 $stmt->execute($params);
