@@ -19,8 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$nome, $email, $whatsapp, $senha, $status, $classificacao]);
         $cliente_id = $pdo->lastInsertId();
 
-        // Se o cliente for ouro ou diamante, inserir as listas selecionadas
-        if (($classificacao === 'ouro' || $classificacao === 'diamante') && !empty($listas)) {
+        // Se o cliente for prata, inserir as listas selecionadas
+        if ($classificacao === 'prata' && !empty($listas)) {
             $stmt = $pdo->prepare("INSERT INTO clientes_listas (cliente_id, lista_id) VALUES (?, ?)");
             foreach ($listas as $lista_id) {
                 $stmt->execute([$cliente_id, $lista_id]);

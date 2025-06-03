@@ -350,7 +350,7 @@ function deleteCliente(id) {
 function toggleListasField() {
   const classificacao = document.getElementById('classificacao').value;
   const listasField = document.getElementById('listasField');
-  listasField.style.display = (classificacao === 'ouro' || classificacao === 'diamante') ? 'block' : 'none';
+  listasField.style.display = (classificacao === 'prata') ? 'block' : 'none';
 }
 
 // Mostrar mensagens de sucesso/erro
