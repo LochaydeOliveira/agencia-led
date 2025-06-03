@@ -15,12 +15,14 @@ if (isset($_POST['delete']) && isset($_POST['id'])) {
 // Processar edição
 if (isset($_POST['edit']) && isset($_POST['id'])) {
     $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
+    $product_id = filter_input(INPUT_POST, 'product_id', FILTER_SANITIZE_STRING);
     $nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING);
+    $descricao = filter_input(INPUT_POST, 'descricao', FILTER_SANITIZE_STRING);
     $preco = filter_input(INPUT_POST, 'preco', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
     $link_de_compra = filter_input(INPUT_POST, 'link_de_compra', FILTER_SANITIZE_URL);
 
-    $stmt = $pdo->prepare("UPDATE listas SET nome = ?, preco = ?, link_de_compra = ? WHERE id = ?");
-    $stmt->execute([$nome, $preco, $link_de_compra, $id]);
+    $stmt = $pdo->prepare("UPDATE listas SET product_id = ?, nome = ?, descricao = ?, preco = ?, link_de_compra = ? WHERE id = ?");
+    $stmt->execute([$product_id, $nome, $descricao, $preco, $link_de_compra, $id]);
     header('Location: listas.php?msg=updated');
     exit;
 }
@@ -29,13 +31,13 @@ if (isset($_POST['edit']) && isset($_POST['id'])) {
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
 // Construir query base
-$query = "SELECT id, nome, preco, link_de_compra FROM listas WHERE 1=1";
+$query = "SELECT id, product_id, nome, descricao, preco, link_de_compra FROM listas WHERE 1=1";
 $params = [];
 
 if ($search) {
-    $query .= " AND (nome LIKE ? OR link_de_compra LIKE ?)";
+    $query .= " AND (nome LIKE ? OR product_id LIKE ? OR link_de_compra LIKE ?)";
     $search_param = "%$search%";
-    $params = array_merge($params, [$search_param, $search_param]);
+    $params = array_merge($params, [$search_param, $search_param, $search_param]);
 }
 
 $query .= " ORDER BY id DESC";
@@ -46,7 +48,7 @@ $per_page = 10;
 $offset = ($page - 1) * $per_page;
 
 // Total de registros
-$stmt = $pdo->prepare(str_replace("id, nome, preco, link_de_compra", "COUNT(*)", $query));
+$stmt = $pdo->prepare(str_replace("id, product_id, nome, descricao, preco, link_de_compra", "COUNT(*)", $query));
 $stmt->execute($params);
 $total_records = $stmt->fetchColumn();
 $total_pages = ceil($total_records / $per_page);
@@ -95,7 +97,7 @@ $listas = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="card-body">
           <form method="GET" class="row g-3">
             <div class="col-md-10">
-              <input type="text" class="form-control" name="search" placeholder="Buscar por nome ou link..." value="<?= htmlspecialchars($search) ?>">
+              <input type="text" class="form-control" name="search" placeholder="Buscar por nome, ID do produto ou link..." value="<?= htmlspecialchars($search) ?>">
             </div>
             <div class="col-md-2">
               <button type="submit" class="btn btn-primary w-100">Buscar</button>
@@ -108,7 +110,9 @@ $listas = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <table class="table table-bordered table-hover">
           <thead class="table-light">
             <tr>
+              <th>ID Produto</th>
               <th>Nome</th>
+              <th>Descrição</th>
               <th>Preço</th>
               <th>Link de Compra</th>
               <th>Ações</th>
@@ -117,7 +121,9 @@ $listas = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <tbody>
             <?php foreach ($listas as $lista): ?>
               <tr>
+                <td><?= htmlspecialchars($lista['product_id']) ?></td>
                 <td><?= htmlspecialchars($lista['nome']) ?></td>
+                <td><?= htmlspecialchars($lista['descricao']) ?></td>
                 <td>R$ <?= number_format($lista['preco'], 2, ',', '.') ?></td>
                 <td>
                   <a href="<?= htmlspecialchars($lista['link_de_compra']) ?>" target="_blank" class="btn btn-sm btn-link">
@@ -171,8 +177,16 @@ $listas = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="modal-body">
           <input type="hidden" name="id" id="edit_id">
           <div class="mb-3">
+            <label class="form-label">ID do Produto</label>
+            <input type="text" class="form-control" name="product_id" id="edit_product_id" required>
+          </div>
+          <div class="mb-3">
             <label class="form-label">Nome</label>
             <input type="text" class="form-control" name="nome" id="edit_nome" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Descrição</label>
+            <textarea class="form-control" name="descricao" id="edit_descricao" rows="3"></textarea>
           </div>
           <div class="mb-3">
             <label class="form-label">Preço</label>
@@ -203,8 +217,16 @@ $listas = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <form method="POST" action="add_lista.php">
         <div class="modal-body">
           <div class="mb-3">
+            <label class="form-label">ID do Produto</label>
+            <input type="text" class="form-control" name="product_id" required>
+          </div>
+          <div class="mb-3">
             <label class="form-label">Nome</label>
             <input type="text" class="form-control" name="nome" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Descrição</label>
+            <textarea class="form-control" name="descricao" rows="3"></textarea>
           </div>
           <div class="mb-3">
             <label class="form-label">Preço</label>
@@ -232,7 +254,9 @@ $listas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <script>
 function editLista(lista) {
   document.getElementById('edit_id').value = lista.id;
+  document.getElementById('edit_product_id').value = lista.product_id;
   document.getElementById('edit_nome').value = lista.nome;
+  document.getElementById('edit_descricao').value = lista.descricao;
   document.getElementById('edit_preco').value = lista.preco;
   document.getElementById('edit_link_de_compra').value = lista.link_de_compra;
   

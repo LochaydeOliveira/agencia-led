@@ -111,15 +111,15 @@
               <option value="">Todos os Status</option>
               <option value="ativo" <?= $status_filter === 'ativo' ? 'selected' : '' ?>>Ativo</option>
               <option value="inativo" <?= $status_filter === 'inativo' ? 'selected' : '' ?>>Inativo</option>
-              <option value="bloqueado" <?= $status_filter === 'bloqueado' ? 'selected' : '' ?>>Bloqueado</option>
+              <option value="suspenso" <?= $status_filter === 'suspenso' ? 'selected' : '' ?>>Suspenso</option>
             </select>
           </div>
           <div class="col-md-3">
             <select class="form-select" name="classificacao">
               <option value="">Todas as Classificações</option>
-              <option value="bronze" <?= $classificacao_filter === 'bronze' ? 'selected' : '' ?>>Bronze</option>
               <option value="prata" <?= $classificacao_filter === 'prata' ? 'selected' : '' ?>>Prata</option>
               <option value="ouro" <?= $classificacao_filter === 'ouro' ? 'selected' : '' ?>>Ouro</option>
+              <option value="diamante" <?= $classificacao_filter === 'diamante' ? 'selected' : '' ?>>Diamante</option>
             </select>
           </div>
           <div class="col-md-2">
@@ -149,8 +149,22 @@
               <td><?= htmlspecialchars($cliente['nome']) ?></td>
               <td><?= htmlspecialchars($cliente['email']) ?></td>
               <td><?= htmlspecialchars($cliente['whatsapp']) ?></td>
-              <td><span class="badge bg-<?= $cliente['status'] === 'ativo' ? 'success' : ($cliente['status'] === 'inativo' ? 'secondary' : 'danger') ?>"><?php echo $cliente['status']; ?></span></td>
-              <td><span class="badge bg-<?= $cliente['classificacao'] === 'prata' ? 'dark-subtle' : ($cliente['classificacao'] === 'ouro' ? 'warning' : 'primary') ?> text-dark"><?php echo ucfirst($cliente['classificacao']); ?></span></td>
+              <td>
+                <span class="badge bg-<?= 
+                  $cliente['status'] === 'ativo' ? 'success' : 
+                  ($cliente['status'] === 'inativo' ? 'secondary' : 'warning') 
+                ?>">
+                  <?= ucfirst($cliente['status']) ?>
+                </span>
+              </td>
+              <td>
+                <span class="badge bg-<?= 
+                  $cliente['classificacao'] === 'prata' ? 'secondary' : 
+                  ($cliente['classificacao'] === 'ouro' ? 'warning' : 'info') 
+                ?> text-dark">
+                  <?= ucfirst($cliente['classificacao']) ?>
+                </span>
+              </td>
               <td><?= date('d/m/Y H:i', strtotime($cliente['criado_em'])) ?></td>
               <td>
                 <button class="btn btn-sm btn-primary" onclick="editCliente(<?= htmlspecialchars(json_encode($cliente)) ?>)">
@@ -211,15 +225,15 @@
             <select class="form-select" name="status" id="edit_status" required>
               <option value="ativo">Ativo</option>
               <option value="inativo">Inativo</option>
-              <option value="bloqueado">Bloqueado</option>
+              <option value="suspenso">Suspenso</option>
             </select>
           </div>
           <div class="mb-3">
             <label class="form-label">Classificação</label>
             <select class="form-select" name="classificacao" id="edit_classificacao" required>
-              <option value="bronze">Bronze</option>
               <option value="prata">Prata</option>
               <option value="ouro">Ouro</option>
+              <option value="diamante">Diamante</option>
             </select>
           </div>
         </div>
@@ -255,19 +269,23 @@
             <input type="text" class="form-control" name="whatsapp" required>
           </div>
           <div class="mb-3">
+            <label class="form-label">Senha</label>
+            <input type="password" class="form-control" name="senha" required>
+          </div>
+          <div class="mb-3">
             <label class="form-label">Status</label>
             <select class="form-select" name="status" required>
               <option value="ativo">Ativo</option>
               <option value="inativo">Inativo</option>
-              <option value="bloqueado">Bloqueado</option>
+              <option value="suspenso">Suspenso</option>
             </select>
           </div>
           <div class="mb-3">
             <label class="form-label">Classificação</label>
             <select class="form-select" name="classificacao" required>
-              <option value="bronze">Bronze</option>
               <option value="prata">Prata</option>
               <option value="ouro">Ouro</option>
+              <option value="diamante">Diamante</option>
             </select>
           </div>
         </div>
