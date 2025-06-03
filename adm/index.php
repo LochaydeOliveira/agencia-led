@@ -38,6 +38,7 @@ $clientesPorClassificacao = $pdo->query("
     <title>Admin - Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="assets-admin/admin.css">
 </head>
 <body>
     <?php include 'partials/header.php'; ?>
