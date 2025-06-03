@@ -15,7 +15,6 @@ if (!isset($_SESSION['usuario'])) {
       Olá, <?php echo htmlspecialchars($_SESSION['usuario']); ?>
       (<?php echo htmlspecialchars($_SESSION['nivel']); ?>)
     </span>
-    <a href="../logout.php" class="btn btn-outline-danger btn-sm">Sair</a>
   </div>
 
 </header>
