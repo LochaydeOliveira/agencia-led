@@ -6,18 +6,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome = $_POST["nome"];
     $senha = $_POST["senha"];
 
-    $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE nome = ?");
-    $stmt->execute([$nome]);
-    $usuario = $stmt->fetch();
+    try {
+        // Busca o usuário pelo nome
+        $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE nome = ? AND status = 'ativo'");
+        $stmt->execute([$nome]);
+        $usuario = $stmt->fetch();
 
-    if ($usuario && password_verify($senha, $usuario["senha"])) {
-        $_SESSION["usuario"] = $usuario["nome"];
-        $_SESSION["nivel"] = $usuario["nivel"];
-        $_SESSION["id_usuario"] = $usuario["id"];
-        header("Location: adm/index.php");
-        exit;
-    } else {
-        $erro = "Nome ou senha incorretos.";
+        if ($usuario && password_verify($senha, $usuario["senha"])) {
+            // Login bem sucedido
+            $_SESSION["usuario"] = $usuario["nome"];
+            $_SESSION["nivel"] = $usuario["nivel"];
+            $_SESSION["id_usuario"] = $usuario["id"];
+            $_SESSION["email"] = $usuario["email"];
+            
+            header("Location: adm/index.php");
+            exit;
+        } else {
+            if (!$usuario) {
+                $erro = "Usuário não encontrado ou inativo.";
+            } else {
+                $erro = "Senha incorreta.";
+            }
+        }
+    } catch (PDOException $e) {
+        $erro = "Erro ao tentar fazer login. Por favor, tente novamente.";
+        error_log("Erro no login: " . $e->getMessage());
     }
 }
 ?>
