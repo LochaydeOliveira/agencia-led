@@ -149,9 +149,9 @@
               <td><?= htmlspecialchars($cliente['email']) ?></td>
               <td><?= htmlspecialchars($cliente['whatsapp']) ?></td>
               <td>
-                <span class="badge bg-<?= 
-                  $cliente['status'] === 'ativo' ? 'success' : 
-                  ($cliente['status'] === 'inativo' ? 'secondary' : 'warning') 
+                <span class="badge <?= 
+                  $cliente['status'] === 'ativo' ? 'tag-ativo' : 
+                  ($cliente['status'] === 'inativo' ? 'tag-suspenso' : 'tag-suspenso') 
                 ?>">
                   <?= ucfirst($cliente['status']) ?>
                 </span>

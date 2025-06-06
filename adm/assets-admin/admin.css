@@ -140,3 +140,19 @@
     background: #ffc107;
     border-radius: 2px!important;
 }
+
+.tag-ativo {
+  background: #198754;
+  border-radius: 2px!important;
+}
+
+.tag-inativo {
+  background: #ffd06a!important;
+  border-radius: 2px;
+  color: #000!important;
+}
+
+.tag-suspenso {
+  background: #dc3545!important;
+  border-radius: 2px;
+}
