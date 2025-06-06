@@ -736,8 +736,14 @@
             opacity: 0.8;
         }
 
-        .logo-rodape {
+        .logo-footer {
             margin-left: -30px;
+        }
+
+        .container-logo-footer {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
         }
 
     </style>
@@ -888,8 +894,8 @@
 <footer class="footer mt-auto py-4 bg-dark text-white">
     <div>
         <div class="row">
-            <div class="col-md-4">
-                <img class="logo-rodape" src="assets-agencia-led/img/logo-led.png" alt="Logo Pang Rodapé" width="100" height="50"><br>
+            <div class="col-md-4 container-logo-footer">
+                <img class="logo-footer" src="assets-agencia-led/img/logo-led.png" alt="Logo Pang Rodapé" width="100" height="50"><br>
                 <p class="mb-0">© <?php echo date('Y'); ?> Agência LED. Todos os direitos reservados.</p>
             </div>
             <div class="col-md-4 mb-3 mb-md-0">
