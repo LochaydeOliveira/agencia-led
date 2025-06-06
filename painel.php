@@ -657,6 +657,8 @@
       </svg>
     </button>
 
+    <img src="assets-agencia-led/img/logo-led.png" alt="logo agencia led">
+
 
     <div class="collapse navbar-collapse nav-mobile" id="navbarNav">
         <a id="logoutMobile" href="logout.php" class="btn-logout-mobile align-items-center gap-1">
