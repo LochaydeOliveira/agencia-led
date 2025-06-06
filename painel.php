@@ -645,6 +645,7 @@
 
             .navbar-expand-lg {
                 justify-content: space-between!important;
+                padding: 10px 15px;
             }
 
             .area-adm-style {
@@ -663,7 +664,7 @@
 <body>
 
 <header>
-  <nav class="navbar navbar-expand-lg shadow-bg container">
+  <nav class="navbar navbar-expand-lg shadow-bg">
 
     <button id="menuHamburgerIcon" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
@@ -671,7 +672,14 @@
       </svg>
     </button>
 
-    <img class="img-logo" src="assets-agencia-led/img/logo-led.png" alt="logo agencia led">
+    <div id="iconUser" class="content-user">
+        <div>
+            <p class="mb-0">Olá, <strong><?php echo $nome; ?></strong>!</p>
+        </div>
+        <svg fill="#ffffff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30">
+            <path d="m12,0C5.383,0,0,5.383,0,12s5.383,12,12,12,12-5.383,12-12S18.617,0,12,0Zm-4,21.164v-.164c0-2.206,1.794-4,4-4s4,1.794,4,4v.164c-1.226.537-2.578.836-4,.836s-2.774-.299-4-.836Zm9.925-1.113c-.456-2.859-2.939-5.051-5.925-5.051s-5.468,2.192-5.925,5.051c-2.47-1.823-4.075-4.753-4.075-8.051C2,6.486,6.486,2,12,2s10,4.486,10,10c0,3.298-1.605,6.228-4.075,8.051Zm-5.925-15.051c-2.206,0-4,1.794-4,4s1.794,4,4,4,4-1.794,4-4-1.794-4-4-4Zm0,6c-1.103,0-2-.897-2-2s.897-2,2-2,2,.897,2,2-.897,2-2,2Z"/>
+        </svg>
+    </div>
 
 
     <div class="collapse navbar-collapse nav-mobile" id="navbarNav">
@@ -684,18 +692,9 @@
     </div>
 
     <div class="area-adm-style">
-        <div id="iconUser" class="content-user">
-            <div>
-                <p class="mb-0">Olá, <strong><?php echo $nome; ?></strong>!</p>
-            </div>
-            <svg fill="#ffffff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30">
-                <path d="m12,0C5.383,0,0,5.383,0,12s5.383,12,12,12,12-5.383,12-12S18.617,0,12,0Zm-4,21.164v-.164c0-2.206,1.794-4,4-4s4,1.794,4,4v.164c-1.226.537-2.578.836-4,.836s-2.774-.299-4-.836Zm9.925-1.113c-.456-2.859-2.939-5.051-5.925-5.051s-5.468,2.192-5.925,5.051c-2.47-1.823-4.075-4.753-4.075-8.051C2,6.486,6.486,2,12,2s10,4.486,10,10c0,3.298-1.605,6.228-4.075,8.051Zm-5.925-15.051c-2.206,0-4,1.794-4,4s1.794,4,4,4,4-1.794,4-4-1.794-4-4-4Zm0,6c-1.103,0-2-.897-2-2s.897-2,2-2,2,.897,2,2-.897,2-2,2Z"/>
-            </svg>
-        </div>
-
-        <a style="color: #ff0000" href="logout.php" class="btn-logout-desktop align-items-center gap-1">
-        Sair
-            <svg fill="#ff0000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15">
+        <a style="color: #fffff" href="logout.php" class="btn-logout-desktop align-items-center gap-1">
+            Sair
+            <svg fill="#ffffff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15">
                 <g>
                 <path d="M2,21V3A1,1,0,0,1,3,2H8V0H3A3,3,0,0,0,0,3V21a3,3,0,0,0,3,3H8V22H3A1,1,0,0,1,2,21Z"/>
                 <path d="M23.123,9.879,18.537,5.293,17.123,6.707l4.264,4.264L5,11l0,2,16.443-.029-4.322,4.322,1.414,1.414,4.586-4.586A3,3,0,0,0,23.123,9.879Z"/>
