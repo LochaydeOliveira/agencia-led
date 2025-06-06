@@ -6,10 +6,26 @@
   // Processar exclusão
   if (isset($_POST['delete']) && isset($_POST['id'])) {
       $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
-      $stmt = $pdo->prepare("DELETE FROM clientes WHERE id = ?");
-      $stmt->execute([$id]);
-      header('Location: clientes.php?msg=deleted');
-      exit;
+      
+      try {
+          $pdo->beginTransaction();
+          
+          // Primeiro, excluir registros relacionados na tabela clientes_listas
+          $stmt = $pdo->prepare("DELETE FROM clientes_listas WHERE cliente_id = ?");
+          $stmt->execute([$id]);
+          
+          // Depois, excluir o cliente
+          $stmt = $pdo->prepare("DELETE FROM clientes WHERE id = ?");
+          $stmt->execute([$id]);
+          
+          $pdo->commit();
+          header('Location: clientes.php?msg=deleted');
+          exit;
+      } catch (PDOException $e) {
+          $pdo->rollBack();
+          header('Location: clientes.php?error=1');
+          exit;
+      }
   }
 
   // Processar edição
@@ -72,26 +88,6 @@
   $stmt = $pdo->prepare($query);
   $stmt->execute($params);
   $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-  if (isset($_GET['excluir'])) {
-    $id = filter_input(INPUT_GET, 'excluir', FILTER_SANITIZE_NUMBER_INT);
-    
-    try {
-        // Primeiro, excluir registros relacionados na tabela clientes_listas
-        $stmt = $pdo->prepare("DELETE FROM clientes_listas WHERE cliente_id = ?");
-        $stmt->execute([$id]);
-        
-        // Depois, excluir o cliente
-        $stmt = $pdo->prepare("DELETE FROM clientes WHERE id = ?");
-        $stmt->execute([$id]);
-        
-        header("Location: clientes.php?msg=excluido");
-        exit;
-    } catch (PDOException $e) {
-        header("Location: clientes.php?msg=erro");
-        exit;
-    }
-  }
 
 ?>
 <!DOCTYPE html>
