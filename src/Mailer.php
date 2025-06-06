@@ -1,8 +1,8 @@
 <?php
 // Carrega os arquivos principais do PHPMailer
-require_once __DIR__ . '/../vendor/PHPMailer/Exception.php'; // Classe de exceções
-require_once __DIR__ . '/../vendor/PHPMailer/SMTP.php';      // Classe para envio via SMTP
-require_once __DIR__ . '/../vendor/PHPMailer/PHPMailer.php'; // Classe principal
+require_once __DIR__ . '/../email/PHPMailer/Exception.php'; // Classe de exceções
+require_once __DIR__ . '/../email/PHPMailer/SMTP.php';      // Classe para envio via SMTP
+require_once __DIR__ . '/../email/PHPMailer/PHPMailer.php'; // Classe principal
 require_once __DIR__ . '/functions.php';                     // Funções utilitárias
 require_once __DIR__ . '/../config/email.php';               // Configurações do email
 
@@ -20,23 +20,30 @@ class Mailer {
 
         $this->mailer = new PHPMailer(true); // Instancia o PHPMailer com tratamento de erros
 
-        // Configurações básicas de envio via SMTP
-        $this->mailer->isSMTP();                      // Define o uso de SMTP
-        $this->mailer->Host = SMTP_HOST;              // Servidor SMTP (ex: smtp.zoho.com)
-        $this->mailer->SMTPAuth = true;               // Habilita autenticação
-        $this->mailer->Username = SMTP_USER;          // Usuário (e-mail remetente)
-        $this->mailer->Password = SMTP_PASS;          // Senha do e-mail
-        $this->mailer->SMTPSecure = SMTP_SECURE;      // Tipo de segurança (TLS ou SSL)
-        $this->mailer->Port = SMTP_PORT;              // Porta (587 ou 465)
-        $this->mailer->CharSet = 'UTF-8';             // Codificação dos caracteres
+        try {
+            // Configurações básicas de envio via SMTP
+            $this->mailer->isSMTP();                      // Define o uso de SMTP
+            $this->mailer->Host = SMTP_HOST;              // Servidor SMTP
+            $this->mailer->SMTPAuth = true;               // Habilita autenticação
+            $this->mailer->Username = SMTP_USER;          // Usuário (e-mail remetente)
+            $this->mailer->Password = SMTP_PASS;          // Senha do e-mail
+            $this->mailer->SMTPSecure = SMTP_SECURE;      // Tipo de segurança (TLS ou SSL)
+            $this->mailer->Port = SMTP_PORT;              // Porta
+            $this->mailer->CharSet = 'UTF-8';             // Codificação dos caracteres
 
-        // Informações padrão do remetente
-        $this->mailer->setFrom(SMTP_USER, 'Agência LED');
-        $this->mailer->isHTML(true); // Os e-mails serão enviados em HTML
+            // Informações padrão do remetente
+            $this->mailer->setFrom(SMTP_USER, 'Agência LED');
+            $this->mailer->isHTML(true); // Os e-mails serão enviados em HTML
 
-        // Ativa o modo debug (importante para testes)
-        $this->mailer->SMTPDebug = 2;
-        $this->mailer->Debugoutput = 'error_log'; // Registra o debug no log do PHP
+            // Ativa o modo debug (apenas erros)
+            $this->mailer->SMTPDebug = 0;
+            $this->mailer->Debugoutput = function($str, $level) {
+                app_log("PHPMailer Debug: $str", 'debug');
+            };
+        } catch (Exception $e) {
+            app_log("Erro na configuração do PHPMailer: " . $e->getMessage(), 'error');
+            throw $e;
+        }
     }
 
     // Envia o link de download após pagamento confirmado
@@ -155,31 +162,32 @@ class Mailer {
     }
 
     public function sendPasswordReset($email, $nome, $link) {
-        $this->mailer->addAddress($email, $nome);
-        $this->mailer->Subject = 'Recuperação de Senha - Área de Clientes';
-        
-        $html = "
-        <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>
-            <h2 style='color: #333;'>Olá {$nome},</h2>
-            <p>Recebemos uma solicitação para redefinir sua senha na Área de Clientes.</p>
-            <p>Para redefinir sua senha, clique no botão abaixo:</p>
-            <div style='text-align: center; margin: 30px 0;'>
-                <a href='{$link}' style='background-color: #0d6efd; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; display: inline-block;'>Redefinir Senha</a>
-            </div>
-            <p>Se você não solicitou a redefinição de senha, por favor ignore este email.</p>
-            <p>Este link é válido por 1 hora.</p>
-            <hr style='border: 1px solid #eee; margin: 20px 0;'>
-            <p style='color: #666; font-size: 12px;'>Este é um email automático, por favor não responda.</p>
-        </div>";
-        
-        $this->mailer->Body = $html;
-        $this->mailer->AltBody = "Olá {$nome},\n\nRecebemos uma solicitação para redefinir sua senha na Área de Clientes.\n\nPara redefinir sua senha, acesse o link: {$link}\n\nSe você não solicitou a redefinição de senha, por favor ignore este email.\n\nEste link é válido por 1 hora.";
-        
         try {
+            $this->mailer->clearAddresses(); // Limpa endereços anteriores
+            $this->mailer->addAddress($email, $nome);
+            $this->mailer->Subject = 'Recuperação de Senha - Área de Clientes';
+            
+            $html = "
+            <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>
+                <h2 style='color: #333;'>Olá {$nome},</h2>
+                <p>Recebemos uma solicitação para redefinir sua senha na Área de Clientes.</p>
+                <p>Para redefinir sua senha, clique no botão abaixo:</p>
+                <div style='text-align: center; margin: 30px 0;'>
+                    <a href='{$link}' style='background-color: #0d6efd; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; display: inline-block;'>Redefinir Senha</a>
+                </div>
+                <p>Se você não solicitou a redefinição de senha, por favor ignore este email.</p>
+                <p>Este link é válido por 1 hora.</p>
+                <hr style='border: 1px solid #eee; margin: 20px 0;'>
+                <p style='color: #666; font-size: 12px;'>Este é um email automático, por favor não responda.</p>
+            </div>";
+            
+            $this->mailer->Body = $html;
+            $this->mailer->AltBody = "Olá {$nome},\n\nRecebemos uma solicitação para redefinir sua senha na Área de Clientes.\n\nPara redefinir sua senha, acesse o link: {$link}\n\nSe você não solicitou a redefinição de senha, por favor ignore este email.\n\nEste link é válido por 1 hora.";
+            
             return $this->mailer->send();
         } catch (Exception $e) {
-            error_log("Erro ao enviar email de recuperação de senha: " . $e->getMessage());
-            return false;
+            app_log("Erro ao enviar email de recuperação de senha para {$email}: " . $e->getMessage(), 'error');
+            throw $e; // Propaga o erro para ser tratado no nível superior
         }
     }
 }

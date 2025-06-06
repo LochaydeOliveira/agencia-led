@@ -26,12 +26,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mailer = new Mailer();
         $link = "https://agencialed.com/redefinir_senha.php?token=" . $token;
         
-        if ($mailer->sendPasswordReset($email, $cliente['nome'], $link)) {
-            $mensagem = "Enviamos um email com instruções para redefinir sua senha.";
-            $tipo_mensagem = "success";
-        } else {
-            $mensagem = "Erro ao enviar email. Por favor, tente novamente.";
+        try {
+            if ($mailer->sendPasswordReset($email, $cliente['nome'], $link)) {
+                $mensagem = "Enviamos um email com instruções para redefinir sua senha.";
+                $tipo_mensagem = "success";
+            } else {
+                $mensagem = "Erro ao enviar email. Por favor, tente novamente.";
+                $tipo_mensagem = "danger";
+            }
+        } catch (Exception $e) {
+            $mensagem = "Erro ao enviar email: " . $e->getMessage();
             $tipo_mensagem = "danger";
+            app_log("Erro ao enviar email de recuperação: " . $e->getMessage(), 'error');
         }
     } else {
         $mensagem = "Email não encontrado ou conta inativa.";
