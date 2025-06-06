@@ -1059,6 +1059,13 @@ footer {
   }
 }
 
+.svg-listas {
+  fill: #000000;
+}
 
+
+.svg-listas:hover {
+  fill: #ffce33;
+}
 
 
