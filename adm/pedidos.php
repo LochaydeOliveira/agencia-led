@@ -144,8 +144,8 @@ $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
               <td><?= htmlspecialchars($pedido['customer_email']) ?></td>
               <td><?= htmlspecialchars($pedido['product_id']) ?></td>
               <td>
-                <span class="badge bg-<?= 
-                  $pedido['status'] === 'paid' ? 'success' : 
+                <span class="badge <?= 
+                  $pedido['status'] === 'paid' ? 'tag-pago' : 
                   ($pedido['status'] === 'pending' ? 'warning' : 
                   ($pedido['status'] === 'cancelled' ? 'danger' : 
                   ($pedido['status'] === 'refused' ? 'secondary' : 'primary'))) 

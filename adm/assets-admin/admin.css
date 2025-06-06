@@ -156,3 +156,25 @@
   background: #dc3545!important;
   border-radius: 2px;
 }
+
+.tag-pago {
+  border-radius: 2px;
+  background-color: #15a361!important;
+}
+
+.tag-pendente {
+  background: #ffd06a!important;
+  border-radius: 2px;
+  color: #000!important;
+}
+
+.tag-cancelado { 
+  background: #dc3545!important;
+  border-radius: 2px;
+}
+
+.tag-refe {
+  background: #a7a7a7!important;
+  border-radius: 2px;
+  color: #000!important;
+}
