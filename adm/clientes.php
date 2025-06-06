@@ -157,10 +157,10 @@
                 </span>
               </td>
               <td>
-                <span class="badge bg-<?= 
-                  $cliente['classificacao'] === 'prata' ? 'secondary' : 
-                  ($cliente['classificacao'] === 'ouro' ? 'warning' : 'info') 
-                ?> text-dark">
+                <span class="badge <?= 
+                  $cliente['classificacao'] === 'prata' ? 'tag-prata' : 
+                  ($cliente['classificacao'] === 'ouro' ? 'tag-ouro' : 'info') 
+                ?>">
                   <?= ucfirst($cliente['classificacao']) ?>
                 </span>
               </td>

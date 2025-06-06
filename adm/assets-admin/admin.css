@@ -129,3 +129,14 @@
   .btn-psn:hover {
     background: #0d9142;
   }
+
+  .tag-prata {
+    border-radius: 2px!important;
+    color: #fff!important;
+    background: #b1bdc5!important;  
+  }
+
+  .tag-ouro {
+    background: #ffc107;
+    border-radius: 2px!important;
+}
