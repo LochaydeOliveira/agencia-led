@@ -441,7 +441,7 @@
             }
             .btn-logout-desktop {
                 display: inline-flex!important;
-                color: #000;
+                color: #ffffff;
                 text-decoration: none;
                 font-size: 15px;
             }
