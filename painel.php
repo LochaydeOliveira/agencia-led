@@ -242,7 +242,7 @@
             }
 
             .content-user {
-                color: #000000;
+                color:rgb(255, 255, 255);
                 font-size: 15px;
                 display: flex;
                 flex-direction: row;
@@ -354,7 +354,7 @@
             }
 
             .content-user {
-                color: #000000;
+                color:rgb(255, 255, 255);
                 font-size: 15px;
                 display: flex;
                 flex-direction: row;
@@ -603,13 +603,14 @@
 
             header {
                 text-align: left;
-                background: #fff;
-                color: #285d9f;
+                background: #000000;
+                color: #ffffff;
                 width: 100%;
                 position: fixed;
                 top: 0;
                 z-index: 9;
                 box-shadow: 0px 7px 20px -10px #bbbbbb94;
+                padding: 5px!important;
             }
 
             .conteudo-lista ul {
