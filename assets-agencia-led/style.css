@@ -1059,13 +1059,20 @@ footer {
   }
 }
 
-.svg-listas {
+.instagram {
   fill: #000000;
 }
 
 
-.svg-listas:hover {
+.instagram:hover {
   fill: #ffce33;
 }
 
 
+.globo {
+  fill: #000000;
+}
+
+.globo:hover {
+  fill: #ffce33;
+}
