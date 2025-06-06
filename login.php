@@ -8,15 +8,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $senha = $_POST["senha"];
 
     // Consulta na tabela clientes
-    $stmt = $pdo->prepare("SELECT * FROM clientes WHERE email = ?");
+    $stmt = $pdo->prepare("SELECT * FROM clientes WHERE email = ? AND status = 'ativo'");
     $stmt->execute([$email]);
     $cliente = $stmt->fetch();
 
     if ($cliente && password_verify($senha, $cliente["senha"])) {
         $_SESSION["usuario"] = $email;
         $_SESSION["nome"] = $cliente["nome"];
-        $_SESSION["nivel_acesso"] = $cliente["nivel_acesso"]; // cliente, admin, suporte
-        $_SESSION["status"] = $cliente["status"]; // ativo, inativo, suspenso
+        $_SESSION["cliente_id"] = $cliente["id"];
+        $_SESSION["status"] = $cliente["status"];
+        $_SESSION["classificacao"] = $cliente["classificacao"];
 
         // Redireciona para o painel
         header("Location: painel.php");
