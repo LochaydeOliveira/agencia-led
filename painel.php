@@ -651,24 +651,12 @@
 <header>
   <nav class="navbar navbar-expand-lg shadow-bg container">
 
-    <div id="iconUser" class="content-user">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30">
-        <path d="m12,0C5.383,0,0,5.383,0,12s5.383,12,12,12,12-5.383,12-12S18.617,0,12,0Zm-4,21.164v-.164c0-2.206,1.794-4,4-4s4,1.794,4,4v.164c-1.226.537-2.578.836-4,.836s-2.774-.299-4-.836Zm9.925-1.113c-.456-2.859-2.939-5.051-5.925-5.051s-5.468,2.192-5.925,5.051c-2.47-1.823-4.075-4.753-4.075-8.051C2,6.486,6.486,2,12,2s10,4.486,10,10c0,3.298-1.605,6.228-4.075,8.051Zm-5.925-15.051c-2.206,0-4,1.794-4,4s1.794,4,4,4,4-1.794,4-4-1.794-4-4-4Zm0,6c-1.103,0-2-.897-2-2s.897-2,2-2,2,.897,2,2-.897,2-2,2Z"/>
-      </svg>
-      <div>
-        <p class="mb-0">Olá, <strong><?php echo $nome; ?></strong>!</p>
-      </div>
-    </div>
-
     <button id="menuHamburgerIcon" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
       </svg>
     </button>
 
-    <div class="content-busca">
-      <input type="text" class="form-control" id="searchInput" placeholder="Buscar fornecedor...">
-    </div>
 
     <div class="collapse navbar-collapse nav-mobile" id="navbarNav">
         <a id="logoutMobile" href="logout.php" class="btn-logout-mobile align-items-center gap-1">
@@ -677,6 +665,15 @@
             </svg>
             Sair
         </a>
+    </div>
+
+    <div id="iconUser" class="content-user">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30">
+        <path d="m12,0C5.383,0,0,5.383,0,12s5.383,12,12,12,12-5.383,12-12S18.617,0,12,0Zm-4,21.164v-.164c0-2.206,1.794-4,4-4s4,1.794,4,4v.164c-1.226.537-2.578.836-4,.836s-2.774-.299-4-.836Zm9.925-1.113c-.456-2.859-2.939-5.051-5.925-5.051s-5.468,2.192-5.925,5.051c-2.47-1.823-4.075-4.753-4.075-8.051C2,6.486,6.486,2,12,2s10,4.486,10,10c0,3.298-1.605,6.228-4.075,8.051Zm-5.925-15.051c-2.206,0-4,1.794-4,4s1.794,4,4,4,4-1.794,4-4-1.794-4-4-4Zm0,6c-1.103,0-2-.897-2-2s.897-2,2-2,2,.897,2,2-.897,2-2,2Z"/>
+      </svg>
+      <div>
+        <p class="mb-0">Olá, <strong><?php echo $nome; ?></strong>!</p>
+      </div>
     </div>
 
     <a href="logout.php" class="btn-logout-desktop align-items-center gap-1">
