@@ -4,6 +4,7 @@ require_once __DIR__ . '/../vendor/PHPMailer/Exception.php'; // Classe de exceç
 require_once __DIR__ . '/../vendor/PHPMailer/SMTP.php';      // Classe para envio via SMTP
 require_once __DIR__ . '/../vendor/PHPMailer/PHPMailer.php'; // Classe principal
 require_once __DIR__ . '/functions.php';                     // Funções utilitárias
+require_once __DIR__ . '/../config/email.php';               // Configurações do email
 
 // Usa os namespaces corretos
 use PHPMailer\PHPMailer\PHPMailer;
