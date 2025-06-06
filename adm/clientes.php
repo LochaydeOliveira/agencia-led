@@ -73,6 +73,26 @@
   $stmt->execute($params);
   $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+  if (isset($_GET['excluir'])) {
+    $id = filter_input(INPUT_GET, 'excluir', FILTER_SANITIZE_NUMBER_INT);
+    
+    try {
+        // Primeiro, excluir registros relacionados na tabela clientes_listas
+        $stmt = $pdo->prepare("DELETE FROM clientes_listas WHERE cliente_id = ?");
+        $stmt->execute([$id]);
+        
+        // Depois, excluir o cliente
+        $stmt = $pdo->prepare("DELETE FROM clientes WHERE id = ?");
+        $stmt->execute([$id]);
+        
+        header("Location: clientes.php?msg=excluido");
+        exit;
+    } catch (PDOException $e) {
+        header("Location: clientes.php?msg=erro");
+        exit;
+    }
+  }
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
