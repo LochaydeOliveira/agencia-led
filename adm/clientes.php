@@ -15,11 +15,11 @@
   // Processar edição
   if (isset($_POST['edit']) && isset($_POST['id'])) {
       $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
-      $nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING);
+      $nome = htmlspecialchars($_POST['nome'], ENT_QUOTES, 'UTF-8');
       $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-      $whatsapp = filter_input(INPUT_POST, 'whatsapp', FILTER_SANITIZE_STRING);
-      $status = filter_input(INPUT_POST, 'status', FILTER_SANITIZE_STRING);
-      $classificacao = filter_input(INPUT_POST, 'classificacao', FILTER_SANITIZE_STRING);
+      $whatsapp = htmlspecialchars($_POST['whatsapp'], ENT_QUOTES, 'UTF-8');
+      $status = htmlspecialchars($_POST['status'], ENT_QUOTES, 'UTF-8');
+      $classificacao = htmlspecialchars($_POST['classificacao'], ENT_QUOTES, 'UTF-8');
 
       $stmt = $pdo->prepare("UPDATE clientes SET nome = ?, email = ?, whatsapp = ?, status = ?, classificacao = ? WHERE id = ?");
       $stmt->execute([$nome, $email, $whatsapp, $status, $classificacao, $id]);
