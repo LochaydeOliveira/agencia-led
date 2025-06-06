@@ -711,6 +711,7 @@
             width: 100%;
             padding: 0 5rem;
             font-size: 13px;
+            font-family: 'Inter', sans-serif!important;
         }
 
         .footer h5 {
@@ -733,6 +734,10 @@
         .footer p {
             font-size: 0.9rem;
             opacity: 0.8;
+        }
+
+        .logo-rodape {
+            margin-left: -30px;
         }
 
     </style>
@@ -884,8 +889,7 @@
     <div>
         <div class="row">
             <div class="col-md-4">
-                <h5 class="mb-3">Sobre</h5>
-                <img src="assets-agencia-led/img/logo-led.png" alt="Logo Pang Rodapé" width="100" height="65"><br>
+                <img class="logo-rodape" src="assets-agencia-led/img/logo-led.png" alt="Logo Pang Rodapé" width="100" height="50"><br>
                 <p class="mb-0">© <?php echo date('Y'); ?> Agência LED. Todos os direitos reservados.</p>
             </div>
             <div class="col-md-4 mb-3 mb-md-0">
