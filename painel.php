@@ -60,6 +60,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <link rel="icon" href="assets-agencia-led/img/icone-favorito-agencia-led.png" type="image/png">
     <link rel="apple-touch-icon" href="assets-agencia-led/img/icone-favorito-agencia-led.png">
@@ -704,6 +705,33 @@
                 width: 100px;
             }           
 
+        .footer {
+            background-color: #000000 !important;
+            margin-top: 4rem !important;
+        }
+
+        .footer h5 {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .footer a {
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #ffce33 !important;
+        }
+
+        .footer .bi {
+            font-size: 1.1rem;
+        }
+
+        .footer p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
     </style>
 
 </head>
@@ -849,7 +877,39 @@
     </div>
 </main>
 
-
+<footer class="footer mt-auto py-4 bg-dark text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-3 mb-md-0">
+                <h5 class="mb-3">Links Úteis</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="politica-privacidade.php" class="text-white text-decoration-none">Política de Privacidade</a></li>
+                    <li class="mb-2"><a href="termos-uso.php" class="text-white text-decoration-none">Termos de Uso</a></li>
+                    <li><a href="politica-cookies.php" class="text-white text-decoration-none">Política de Cookies</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 mb-3 mb-md-0">
+                <h5 class="mb-3">Contato</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <a href="https://wa.me/558599671024" target="_blank" class="text-white text-decoration-none">
+                            <i class="bi bi-whatsapp me-2"></i>WhatsApp: (85) 99671-024
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mailto:suporte@agencialed.com" class="text-white text-decoration-none">
+                            <i class="bi bi-envelope me-2"></i>suporte@agencialed.com
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5 class="mb-3">Sobre</h5>
+                <p class="mb-0">© <?php echo date('Y'); ?> Agência LED. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </div>
+</footer>
 
 <button id="backToTop" class="btn btn-primary">↑</button>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
