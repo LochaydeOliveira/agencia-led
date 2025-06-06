@@ -72,6 +72,53 @@
             font-family: 'Inter', sans-serif;
         }
 
+        .accordion-button:not(.collapsed) {
+            background-color: #f8f9fa;
+            color: #000;
+        }
+
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: rgba(0,0,0,.125);
+        }
+
+        .accordion-button::after {
+            background-size: 1rem;
+        }
+
+        .accordion-button:not(.collapsed)::after {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+        }
+
+        .conteudo-lista {
+            padding: 1rem;
+        }
+
+        .conteudo-lista ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .conteudo-lista ul li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .conteudo-lista ul li:last-child {
+            border-bottom: none;
+        }
+
+        .conteudo-lista ul li a {
+            color: #000;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .conteudo-lista ul li a:hover {
+            color: #0d6efd;
+        }
+
         /* Para celulares (largura entre 481px e 768px) */
         @media (max-width: 480px) {
             
@@ -748,16 +795,31 @@
                                 data-lista-id="<?php echo $lista['id']; ?>">
 
                                 <div class="card h-100 rounded-2 border-0 card-disabled">
-                                    <h5 class="card-title <?php echo $liberado ? '' : 'blur'; ?>">
-                                        <?php echo htmlspecialchars($lista['nome']); ?>
-                                    </h5>
+                                    <div class="card-header bg-white border-0">
+                                        <h5 class="card-title mb-0 <?php echo $liberado ? '' : 'blur'; ?>">
+                                            <?php echo htmlspecialchars($lista['nome']); ?>
+                                        </h5>
+                                    </div>
 
                                     <div class="card-body <?php echo $liberado ? '' : 'bloqueado'; ?>">
-                                        <div class="conteudo-lista">
-                                            <?php echo $liberado ? $lista['conteudo_html'] : ''; ?>
-                                        </div>
-
-                                        <?php if (!$liberado): ?>
+                                        <?php if ($liberado): ?>
+                                            <div class="accordion" id="accordion<?php echo $lista['id']; ?>">
+                                                <div class="accordion-item border-0">
+                                                    <h2 class="accordion-header">
+                                                        <button class="accordion-button collapsed bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $lista['id']; ?>">
+                                                            Ver Fornecedores
+                                                        </button>
+                                                    </h2>
+                                                    <div id="collapse<?php echo $lista['id']; ?>" class="accordion-collapse collapse" data-bs-parent="#accordion<?php echo $lista['id']; ?>">
+                                                        <div class="accordion-body p-0">
+                                                            <div class="conteudo-lista">
+                                                                <?php echo $lista['conteudo_html']; ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php else: ?>
                                             <div class="bloqueio-overlay">
                                                 <div class="style-bloqueio">
                                                     <svg class="svg-bloqueio" fill="#000" xmlns="http://www.w3.org/2000/svg"
@@ -767,7 +829,6 @@
                                                     </svg>
                                                 </div>
                                                 <div class="style-bloqueio-btn">
-
                                                     <a href="<?php echo htmlspecialchars($lista['link_de_compra']); ?>"
                                                         target="_blank"
                                                         class="btn btn-comprar-lista">
