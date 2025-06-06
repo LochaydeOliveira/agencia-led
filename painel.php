@@ -652,6 +652,10 @@
                 gap: 25px;
             }
 
+            .img-logo {
+                width: 100px;
+            }           
+
     </style>
 
 </head>
@@ -667,7 +671,7 @@
       </svg>
     </button>
 
-    <img src="assets-agencia-led/img/logo-led.png" alt="logo agencia led">
+    <img class="img-logo" src="assets-agencia-led/img/logo-led.png" alt="logo agencia led">
 
 
     <div class="collapse navbar-collapse nav-mobile" id="navbarNav">
