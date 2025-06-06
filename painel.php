@@ -693,7 +693,7 @@
             </svg>
         </div>
 
-        <a href="logout.php" class="btn-logout-desktop align-items-center gap-1">
+        <a style="#ff0000" href="logout.php" class="btn-logout-desktop align-items-center gap-1">
         Sair
             <svg fill="#ff0000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15">
                 <g>
