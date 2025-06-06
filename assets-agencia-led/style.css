@@ -1059,20 +1059,12 @@ footer {
   }
 }
 
-.instagram {
+.instagram svg {
   fill: #000000;
 }
 
 
-.instagram:hover {
+.instagram svg:hover {
   fill: #ffce33;
 }
 
-
-.globo {
-  fill: #000000;
-}
-
-.globo:hover {
-  fill: #ffce33;
-}
