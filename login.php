@@ -72,8 +72,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="mb-3">
             <input type="password" name="senha" class="form-control" placeholder="Senha" required>
         </div>
-        <div class="d-grid">
+        <div class="d-grid gap-2">
             <button type="submit" class="btn btn-custom">Entrar</button>
+        </div>
+        <div class="text-center mt-3">
+            <a href="recuperar_senha.php" class="text-decoration-none">Esqueci minha senha</a>
         </div>
     </form>
 </div>

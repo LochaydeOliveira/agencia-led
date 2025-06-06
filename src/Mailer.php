@@ -151,4 +151,33 @@ class Mailer {
             return false;
         }
     }
+
+    public function sendPasswordReset($email, $nome, $link) {
+        $this->mailer->addAddress($email, $nome);
+        $this->mailer->Subject = 'Recuperação de Senha - Área de Clientes';
+        
+        $html = "
+        <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>
+            <h2 style='color: #333;'>Olá {$nome},</h2>
+            <p>Recebemos uma solicitação para redefinir sua senha na Área de Clientes.</p>
+            <p>Para redefinir sua senha, clique no botão abaixo:</p>
+            <div style='text-align: center; margin: 30px 0;'>
+                <a href='{$link}' style='background-color: #0d6efd; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; display: inline-block;'>Redefinir Senha</a>
+            </div>
+            <p>Se você não solicitou a redefinição de senha, por favor ignore este email.</p>
+            <p>Este link é válido por 1 hora.</p>
+            <hr style='border: 1px solid #eee; margin: 20px 0;'>
+            <p style='color: #666; font-size: 12px;'>Este é um email automático, por favor não responda.</p>
+        </div>";
+        
+        $this->mailer->Body = $html;
+        $this->mailer->AltBody = "Olá {$nome},\n\nRecebemos uma solicitação para redefinir sua senha na Área de Clientes.\n\nPara redefinir sua senha, acesse o link: {$link}\n\nSe você não solicitou a redefinição de senha, por favor ignore este email.\n\nEste link é válido por 1 hora.";
+        
+        try {
+            return $this->mailer->send();
+        } catch (Exception $e) {
+            error_log("Erro ao enviar email de recuperação de senha: " . $e->getMessage());
+            return false;
+        }
+    }
 }
