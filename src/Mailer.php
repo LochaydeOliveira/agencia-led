@@ -1,10 +1,13 @@
 <?php
+// Define o caminho base do projeto
+define('BASE_PATH', dirname(__DIR__));
+
 // Carrega os arquivos principais do PHPMailer
-require_once __DIR__ . '/../email/PHPMailer/Exception.php'; // Classe de exceções
-require_once __DIR__ . '/../email/PHPMailer/SMTP.php';      // Classe para envio via SMTP
-require_once __DIR__ . '/../email/PHPMailer/PHPMailer.php'; // Classe principal
+require_once BASE_PATH . '/email/PHPMailer/Exception.php'; // Classe de exceções
+require_once BASE_PATH . '/email/PHPMailer/SMTP.php';      // Classe para envio via SMTP
+require_once BASE_PATH . '/email/PHPMailer/PHPMailer.php'; // Classe principal
 require_once __DIR__ . '/functions.php';                     // Funções utilitárias
-require_once __DIR__ . '/../config/email.php';               // Configurações do email
+require_once BASE_PATH . '/config/email.php';               // Configurações do email
 
 // Usa os namespaces corretos
 use PHPMailer\PHPMailer\PHPMailer;
