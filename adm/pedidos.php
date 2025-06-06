@@ -146,9 +146,9 @@ $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
               <td>
                 <span class="badge <?= 
                   $pedido['status'] === 'paid' ? 'tag-pago' : 
-                  ($pedido['status'] === 'pending' ? 'warning' : 
-                  ($pedido['status'] === 'cancelled' ? 'danger' : 
-                  ($pedido['status'] === 'refused' ? 'secondary' : 'primary'))) 
+                  ($pedido['status'] === 'pending' ? 'tag-pendente' : 
+                  ($pedido['status'] === 'cancelled' ? 'tag-cancelado' : 
+                  ($pedido['status'] === 'refused' ? 'tag-refe' : 'tag-pendente'))) 
                 ?>">
                   <?= ucfirst($pedido['status']) ?>
                 </span>
