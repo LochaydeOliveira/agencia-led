@@ -708,6 +708,9 @@
         .footer {
             background-color: #000000 !important;
             margin-top: 4rem !important;
+            width: 100%;
+            padding: 0 5rem;
+            font-size: 13px;
         }
 
         .footer h5 {
@@ -878,8 +881,13 @@
 </main>
 
 <footer class="footer mt-auto py-4 bg-dark text-white">
-    <div class="container">
+    <div>
         <div class="row">
+            <div class="col-md-4">
+                <h5 class="mb-3">Sobre</h5>
+                <img src="assets-agencia-led/img/logo-led.png" alt="Logo Pang Rodapé" width="100" height="65"><br>
+                <p class="mb-0">© <?php echo date('Y'); ?> Agência LED. Todos os direitos reservados.</p>
+            </div>
             <div class="col-md-4 mb-3 mb-md-0">
                 <h5 class="mb-3">Links Úteis</h5>
                 <ul class="list-unstyled">
@@ -902,10 +910,6 @@
                         </a>
                     </li>
                 </ul>
-            </div>
-            <div class="col-md-4">
-                <h5 class="mb-3">Sobre</h5>
-                <p class="mb-0">© <?php echo date('Y'); ?> Agência LED. Todos os direitos reservados.</p>
             </div>
         </div>
     </div>
