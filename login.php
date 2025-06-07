@@ -126,8 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <div class="form-container animate__animated animate__fadeIn">
     <div class="logo-container">
-        <!-- Substitua pela tag img do seu logo se tiver um -->
-        <span style="font-size: 2rem; font-weight: 900; color: #000;">YAMPI</span> <!-- Texto placeholder se não tiver logo -->
+        <img src="assets-agencia-led/img/logo-led-preta.png" alt="logo oficial led - formulários">
     </div>
     <h2 class="form-title">Identifique-se</h2>
     <p class="form-subtitle">Digite seu e-mail e senha</p>
@@ -150,9 +149,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button type="submit" class="btn btn-custom">Entrar</button>
         </div>
     </form>
-    <div class="create-account-text">
-        Primeira vez na Yampi? <a href="cadastro.php" class="create-account-link">Criar conta</a>
-    </div>
 </div>
 </body>
 </html>
