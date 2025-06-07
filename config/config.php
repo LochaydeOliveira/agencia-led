@@ -1,6 +1,7 @@
 <?php
 
-
+// Carrega as configurações de email
+require_once __DIR__ . '/email.php';
 
 // Configurações do Banco de Dados
 
@@ -11,20 +12,6 @@ define('DB_USER', 'paymen58');
 define('DB_PASS', 'u4q7+B6ly)obP_gxN9sNe');
 
 define('DB_NAME', 'paymen58_sistema_integrado_led');
-
-
-
-// Configurações do Email (ZOHO)
-
-define('SMTP_HOST', 'smtp.zoho.com');
-
-define('SMTP_PORT', 587);
-
-define('SMTP_USER', 'contato@agencialed.com');
-
-define('SMTP_PASS', 'Lochayde@154719');
-
-define('SMTP_SECURE', 'tls');
 
 
 

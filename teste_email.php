@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require_once __DIR__ . '/config/config.php';
-require_once __DIR__ . '/src/functions.php';  // Carrega as funções utilitárias
+require_once __DIR__ . '/src/functions.php';  // Carrega as funções utilitárias primeiro
 require_once __DIR__ . '/src/Mailer.php';
 
 // Função para log
