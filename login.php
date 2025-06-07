@@ -39,6 +39,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets-agencia-led/img/icone-favorito-led.png" type="image/png">
+    <link rel="apple-touch-icon" href="assets-agencia-led/img/icone-favorito-led.png">
+    
     <style>
         body {
             background: #f0f2f5; /* Fundo cinza claro similar ao da Yampi */

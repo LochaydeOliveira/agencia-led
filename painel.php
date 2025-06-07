@@ -62,8 +62,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <link rel="icon" href="assets-agencia-led/img/icone-favorito-agencia-led.png" type="image/png">
-    <link rel="apple-touch-icon" href="assets-agencia-led/img/icone-favorito-agencia-led.png">
+    <link rel="icon" href="assets-agencia-led/img/icone-favorito-led.png" type="image/png">
+    <link rel="apple-touch-icon" href="assets-agencia-led/img/icone-favorito-led.png">
 
     <style>
 
