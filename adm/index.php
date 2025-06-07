@@ -39,6 +39,8 @@ $clientesPorClassificacao = $pdo->query("
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="assets-admin/admin.css">
+    <link rel="icon" href="assets-agencia-led/img/icone-favorito-led.png" type="image/png">
+    <link rel="apple-touch-icon" href="assets-agencia-led/img/icone-favorito-led.png">
 </head>
 <body>
     <?php include 'partials/header.php'; ?>

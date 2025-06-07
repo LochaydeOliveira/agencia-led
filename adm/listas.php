@@ -74,6 +74,8 @@ $listas = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <link href="assets-admin/admin.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+  <link rel="icon" href="assets-agencia-led/img/icone-favorito-led.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets-agencia-led/img/icone-favorito-led.png">
 </head>
 
 <body>
