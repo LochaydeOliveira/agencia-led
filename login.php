@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-bottom: 1.5rem;
         }
         .logo-container img {
-            max-width: 150px; /* Ajuste o tamanho do logo se usar imagem */
+            max-width: 85px; /* Ajuste o tamanho do logo se usar imagem */
             height: auto;
         }
         .form-title {
@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <div class="form-container animate__animated animate__fadeIn">
     <div class="logo-container">
-        <img src="assets-agencia-led/img/logo-led-preta.png" alt="logo oficial led - formulários">
+        <img width="100" height="60" src="assets-agencia-led/img/logo-led-preta.png" alt="logo oficial led - formulários">
     </div>
     <h2 class="form-title">Identifique-se</h2>
     <p class="form-subtitle">Digite seu e-mail e senha</p>
