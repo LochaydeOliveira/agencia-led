@@ -2,14 +2,6 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Define o arquivo de log antes de qualquer coisa
-define('LOG_FILE', __DIR__ . '/logs/app.log');
-
-// Cria o diretório de logs se não existir
-if (!file_exists(dirname(LOG_FILE))) {
-    mkdir(dirname(LOG_FILE), 0777, true);
-}
-
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/src/Mailer.php';
 
@@ -32,7 +24,7 @@ try {
     // Teste 1: Email de confirmação
     app_log("Testando envio de email de confirmação");
     $result = $mailer->sendOrderConfirmation(
-        'maletamacho@gmail.com', // Substitua pelo seu email
+        'maletamacho@gmail.com',
         'Nome Teste',
         'TESTE-123',
         99.90
@@ -42,7 +34,7 @@ try {
     // Teste 2: Email de acesso
     app_log("Testando envio de email de acesso");
     $result = $mailer->sendMemberAccess(
-        'maletamacho@gmail.com', // Substitua pelo seu email
+        'maletamacho@gmail.com',
         'Nome Teste',
         'senha123'
     );

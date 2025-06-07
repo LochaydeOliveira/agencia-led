@@ -2,6 +2,10 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+require_once __DIR__ . '/config/config.php';
+require_once __DIR__ . '/src/Database.php';
+require_once __DIR__ . '/src/Mailer.php';
+
 // Log inicial para debug
 $debug_log = "[" . date('Y-m-d H:i:s') . "] Webhook iniciado\n";
 $debug_log .= "REQUEST_METHOD: " . $_SERVER['REQUEST_METHOD'] . "\n";
@@ -18,10 +22,6 @@ try {
 } catch (Exception $e) {
     error_log("Erro ao escrever no log: " . $e->getMessage());
 }
-
-require_once __DIR__ . '/config/config.php';
-require_once __DIR__ . '/src/Database.php';
-require_once __DIR__ . '/src/Mailer.php';
 
 function app_log($message) {
     try {

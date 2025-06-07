@@ -3,7 +3,9 @@
 define('BASE_PATH', dirname(__DIR__));
 
 // Carrega os arquivos principais do PHPMailer
-require_once __DIR__ . '/../vendor/autoload.php'; // Carrega o autoload do Composer
+require_once __DIR__ . '/../email/PHPMailer/PHPMailer.php';
+require_once __DIR__ . '/../email/PHPMailer/SMTP.php';
+require_once __DIR__ . '/../email/PHPMailer/Exception.php';
 require_once __DIR__ . '/functions.php';          // Funções utilitárias
 require_once __DIR__ . '/../config/email.php';    // Configurações do email
 
