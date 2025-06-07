@@ -85,14 +85,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Sombra no foco */
         }
         .btn-custom {
-            background-color: #000; /* Fundo preto */
+            background-color: #000;
             border: none;
             color: white;
-            padding: 0.75rem 1.5rem; /* Padding ajustado */
-            font-size: 1.1rem; /* Tamanho da fonte */
-            font-weight: 600; /* Peso da fonte */
-            border-radius: 4px; /* Bordas arredondadas */
-            transition: background-color 0.2s ease-in-out; /* Transição suave */
+            padding: 9px;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 4px;
+            transition: background-color 0.2s ease-in-out;
         }
         .btn-custom:hover {
             background-color: #333; /* Cor no hover */
@@ -100,10 +100,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         .link-forgot-password {
             display: block;
-            margin-top: 0.5rem; /* Espaço acima do link */
-            font-size: 0.9rem; /* Tamanho da fonte */
-            color: #007bff; /* Cor do link */
-            text-decoration: none; /* Sem sublinhado */
+            margin-top: 0.5rem;
+            font-size: 0.86rem;
+            color: #737373;
+            text-decoration: underline;
         }
         .link-forgot-password:hover {
             text-decoration: underline; /* Sublinhado no hover */
