@@ -581,13 +581,16 @@
 
             }
 
+            .card-header {
+                background: #e2ddcf!important;
+            }
+
             .card-title {
                 padding: 10px 25px;
                 margin-bottom: 0;
                 color: #000000;
                 font-size: 16px!important;
                 font-weight: 700;
-                border-bottom: 1px solid #a1afd763;
             }
 
             #backToTop {
