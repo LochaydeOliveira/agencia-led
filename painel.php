@@ -732,7 +732,7 @@
         }
 
         .footer a:hover {
-            color: #ffce33 !important;
+            color: #e2ddcf!important;
         }
 
         .footer .bi {
@@ -753,6 +753,13 @@
             flex-direction: column;
             justify-content: flex-end;
         }
+
+        @media (min-width: 768px) {
+            .col-md-9 {
+                width: 100%!important;
+            }
+        }
+
 
     </style>
 
