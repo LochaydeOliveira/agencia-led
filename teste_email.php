@@ -2,14 +2,26 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Define o arquivo de log antes de qualquer coisa
+define('LOG_FILE', __DIR__ . '/logs/app.log');
+
+// Cria o diretório de logs se não existir
+if (!file_exists(dirname(LOG_FILE))) {
+    mkdir(dirname(LOG_FILE), 0777, true);
+}
+
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/src/Mailer.php';
 
 // Função para log
 function app_log($message) {
-    $date = date('Y-m-d H:i:s');
-    $logMessage = "[$date] $message" . PHP_EOL;
-    file_put_contents(LOG_FILE, $logMessage, FILE_APPEND);
+    try {
+        $date = date('Y-m-d H:i:s');
+        $logMessage = "[$date] $message" . PHP_EOL;
+        file_put_contents(LOG_FILE, $logMessage, FILE_APPEND);
+    } catch (Exception $e) {
+        error_log("Erro ao escrever no log: " . $e->getMessage());
+    }
 }
 
 try {
@@ -20,7 +32,7 @@ try {
     // Teste 1: Email de confirmação
     app_log("Testando envio de email de confirmação");
     $result = $mailer->sendOrderConfirmation(
-        'seu-email@exemplo.com', // Substitua pelo seu email
+        'maletamacho@gmail.com', // Substitua pelo seu email
         'Nome Teste',
         'TESTE-123',
         99.90
@@ -30,7 +42,7 @@ try {
     // Teste 2: Email de acesso
     app_log("Testando envio de email de acesso");
     $result = $mailer->sendMemberAccess(
-        'seu-email@exemplo.com', // Substitua pelo seu email
+        'maletamacho@gmail.com', // Substitua pelo seu email
         'Nome Teste',
         'senha123'
     );
