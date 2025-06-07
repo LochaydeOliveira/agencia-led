@@ -116,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <h2 class="form-title">Login</h2>
     <p class="form-subtitle">Acesso Administrativo</p>
-    <?php if (isset($erro)): ?>
+    <?php if (!empty($erro)): ?>
         <div class="alert alert-danger"><?php echo $erro; ?></div>
     <?php endif; ?>
     <form method="post">
