@@ -3,6 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require_once __DIR__ . '/config/config.php';
+require_once __DIR__ . '/src/functions.php';  // Carrega as funções utilitárias
 require_once __DIR__ . '/src/Database.php';
 require_once __DIR__ . '/src/Mailer.php';
 
@@ -21,16 +22,6 @@ try {
     file_put_contents(LOG_FILE, $debug_log, FILE_APPEND);
 } catch (Exception $e) {
     error_log("Erro ao escrever no log: " . $e->getMessage());
-}
-
-function app_log($message) {
-    try {
-        $date = date('Y-m-d H:i:s');
-        $logMessage = "[$date] $message" . PHP_EOL;
-        file_put_contents(LOG_FILE, $logMessage, FILE_APPEND);
-    } catch (Exception $e) {
-        error_log("Erro ao escrever no log: " . $e->getMessage());
-    }
 }
 
 // Log inicial para debug
