@@ -106,7 +106,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             text-decoration: underline;
         }
         .link-forgot-password:hover {
-            text-decoration: underline; /* Sublinhado no hover */
+            text-decoration: underline;
+            color: #000;
         }
         .create-account-text {
             margin-top: 1.5rem; /* Espaço acima do texto */
