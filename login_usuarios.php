@@ -114,7 +114,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      <div class="logo-container">
         <img width="100" height="60" src="assets-agencia-led/img/logo-led-preta.png" alt="logo oficial led - formulários">
     </div>
-    <h2 class="form-title">Login</h2>
     <p class="form-subtitle">Acesso Administrativo</p>
     <?php if (!empty($erro)): ?>
         <div class="alert alert-danger"><?php echo $erro; ?></div>
