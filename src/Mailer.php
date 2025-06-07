@@ -19,9 +19,9 @@ class Mailer {
     public function __construct() {
         app_log("Iniciando configuração do PHPMailer"); // Grava log
 
-        $this->mailer = new PHPMailer(true); // Instancia o PHPMailer com tratamento de erros
-
         try {
+            $this->mailer = new PHPMailer(true); // Instancia o PHPMailer com tratamento de erros
+
             // Configurações básicas de envio via SMTP
             $this->mailer->isSMTP();                      // Define o uso de SMTP
             $this->mailer->Host = SMTP_HOST;              // Servidor SMTP
@@ -42,9 +42,16 @@ class Mailer {
                 app_log("PHPMailer Debug [$level]: $str");
             };
 
+            // Testa a conexão SMTP
+            if (!$this->mailer->smtpConnect()) {
+                throw new Exception("Falha ao conectar ao servidor SMTP");
+            }
+
             app_log("Configurações SMTP: Host=" . SMTP_HOST . ", Port=" . SMTP_PORT . ", User=" . SMTP_USER);
+            app_log("Conexão SMTP testada com sucesso");
         } catch (Exception $e) {
             app_log("Erro na configuração do PHPMailer: " . $e->getMessage());
+            app_log("Stack trace: " . $e->getTraceAsString());
             throw $e;
         }
     }

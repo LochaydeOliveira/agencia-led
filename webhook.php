@@ -2,15 +2,41 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Log inicial para debug
+$debug_log = "[" . date('Y-m-d H:i:s') . "] Webhook iniciado\n";
+$debug_log .= "REQUEST_METHOD: " . $_SERVER['REQUEST_METHOD'] . "\n";
+$debug_log .= "CONTENT_TYPE: " . ($_SERVER['CONTENT_TYPE'] ?? 'não definido') . "\n";
+$debug_log .= "REMOTE_ADDR: " . ($_SERVER['REMOTE_ADDR'] ?? 'não definido') . "\n";
+$debug_log .= "HTTP_USER_AGENT: " . ($_SERVER['HTTP_USER_AGENT'] ?? 'não definido') . "\n";
+
+// Tenta escrever no log
+try {
+    if (!file_exists(dirname(LOG_FILE))) {
+        mkdir(dirname(LOG_FILE), 0777, true);
+    }
+    file_put_contents(LOG_FILE, $debug_log, FILE_APPEND);
+} catch (Exception $e) {
+    error_log("Erro ao escrever no log: " . $e->getMessage());
+}
+
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/src/Database.php';
 require_once __DIR__ . '/src/Mailer.php';
 
 function app_log($message) {
-    $date = date('Y-m-d H:i:s');
-    $logMessage = "[$date] $message" . PHP_EOL;
-    file_put_contents(LOG_FILE, $logMessage, FILE_APPEND);
+    try {
+        $date = date('Y-m-d H:i:s');
+        $logMessage = "[$date] $message" . PHP_EOL;
+        file_put_contents(LOG_FILE, $logMessage, FILE_APPEND);
+    } catch (Exception $e) {
+        error_log("Erro ao escrever no log: " . $e->getMessage());
+    }
 }
+
+// Log inicial para debug
+app_log("Webhook iniciado - " . date('Y-m-d H:i:s'));
+app_log("REQUEST_METHOD: " . $_SERVER['REQUEST_METHOD']);
+app_log("CONTENT_TYPE: " . ($_SERVER['CONTENT_TYPE'] ?? 'não definido'));
 
 // ✅ Função para traduzir status da Yampi para Português
 function traduzirStatus($statusAlias) {
