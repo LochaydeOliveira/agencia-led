@@ -99,13 +99,21 @@ try {
 
         if ($event === 'order.paid') {
             if (!$existingOrder) {
-                app_log("Erro: Pedido não encontrado");
+                app_log("Erro: Pedido não encontrado para o ID: $orderId");
                 http_response_code(404);
                 die('Pedido não encontrado');
             }
 
-            $stmt = $conn->prepare("UPDATE orders SET status = ? WHERE yampi_order_id = ?");
+            // Verifica se o status atual é realmente "Pago"
+            if ($statusAlias !== 'paid') {
+                app_log("Atenção: Status do pedido $orderNumber não é 'paid' (status atual: $statusAlias)");
+                http_response_code(400);
+                die('Status inválido');
+            }
+
+            $stmt = $conn->prepare("UPDATE orders SET status = ?, updated_at = NOW() WHERE yampi_order_id = ?");
             $stmt->execute([$statusPt, $orderId]);
+            app_log("Status do pedido $orderNumber atualizado para: $statusPt");
 
             $classificacao = 'prata';
             if ($productId == 40741683) {
@@ -113,6 +121,7 @@ try {
             } elseif ($productId == 40741672) {
                 $classificacao = 'diamante';
             }
+            app_log("Classificação definida para o produto $productId: $classificacao");
 
             $stmt = $conn->prepare("SELECT id, classificacao FROM clientes WHERE email = ?");
             $stmt->execute([$email]);
@@ -128,19 +137,27 @@ try {
                 if ($hierarquia[$classificacao] > $hierarquia[$currentClass]) {
                     $stmt = $conn->prepare("UPDATE clientes SET classificacao = ?, atualizado_em = NOW() WHERE email = ?");
                     $stmt->execute([$classificacao, $email]);
-                    app_log("Classificação atualizada: $email → $classificacao");
+                    app_log("Classificação atualizada para $email: $currentClass → $classificacao");
+                } else {
+                    app_log("Classificação mantida para $email: $currentClass (não inferior a $classificacao)");
                 }
             } else {
                 $senhaVisivel = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
                 $senhaHash = password_hash($senhaVisivel, PASSWORD_DEFAULT);
 
-                $stmt = $conn->prepare("INSERT INTO clientes (nome, email, whatsapp, senha, classificacao, criado_em) VALUES (?, ?, ?, ?, ?, NOW())");
+                $stmt = $conn->prepare("INSERT INTO clientes (nome, email, whatsapp, senha, classificacao, status, criado_em) VALUES (?, ?, ?, ?, ?, 'ativo', NOW())");
                 $stmt->execute([$name, $email, $whatsapp, $senhaHash, $classificacao]);
 
                 $cliente_id = $conn->lastInsertId();
-                app_log("Novo cliente: $email como $classificacao");
+                app_log("Novo cliente criado: ID=$cliente_id, Email=$email, Classificação=$classificacao");
 
-                $mailer->sendMemberAccess($email, $name, $senhaVisivel);
+                try {
+                    $mailer->sendMemberAccess($email, $name, $senhaVisivel);
+                    app_log("Email de acesso enviado com sucesso para $email");
+                } catch (Exception $e) {
+                    app_log("Erro ao enviar email de acesso para $email: " . $e->getMessage());
+                    // Não interrompe o fluxo, apenas registra o erro
+                }
             }
 
             if ($classificacao === 'prata') {

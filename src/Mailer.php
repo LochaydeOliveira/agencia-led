@@ -3,11 +3,9 @@
 define('BASE_PATH', dirname(__DIR__));
 
 // Carrega os arquivos principais do PHPMailer
-require_once __DIR__ . '/../vendor/PHPMailer/Exception.php'; // Classe de exceções
-require_once __DIR__ . '/../vendor/PHPMailer/SMTP.php';      // Classe para envio via SMTP
-require_once __DIR__ . '/../vendor/PHPMailer/PHPMailer.php'; // Classe principal
-require_once __DIR__ . '/functions.php';                     // Funções utilitárias
-require_once __DIR__ . '/../config/email.php';               // Configurações do email
+require_once __DIR__ . '/../vendor/autoload.php'; // Carrega o autoload do Composer
+require_once __DIR__ . '/functions.php';          // Funções utilitárias
+require_once __DIR__ . '/../config/email.php';    // Configurações do email
 
 // Usa os namespaces corretos
 use PHPMailer\PHPMailer\PHPMailer;
@@ -54,10 +52,30 @@ class Mailer {
     // Método para enviar email com tratamento de erro e fechamento da conexão
     private function sendEmail() {
         try {
+            // Validações antes do envio
+            if (empty($this->mailer->getToAddresses())) {
+                throw new Exception("Nenhum destinatário definido");
+            }
+
+            if (empty($this->mailer->Subject)) {
+                throw new Exception("Assunto do email não definido");
+            }
+
+            if (empty($this->mailer->Body)) {
+                throw new Exception("Corpo do email não definido");
+            }
+
+            app_log("Tentando enviar email para: " . implode(", ", array_column($this->mailer->getToAddresses(), 0)));
+            app_log("Assunto: " . $this->mailer->Subject);
+
             $result = $this->mailer->send();
+            app_log("Email enviado com sucesso");
+            
             $this->mailer->smtpClose(); // Fecha a conexão SMTP explicitamente
             return $result;
         } catch (Exception $e) {
+            app_log("Erro ao enviar email: " . $e->getMessage());
+            app_log("Stack trace: " . $e->getTraceAsString());
             $this->mailer->smtpClose(); // Fecha a conexão SMTP mesmo em caso de erro
             throw $e;
         }
@@ -115,6 +133,9 @@ class Mailer {
     // Envia um aviso de pedido aguardando pagamento
     public function sendOrderConfirmation($to, $name, $orderNumber, $value) {
         try {
+            app_log("Iniciando envio de email de confirmação para $to");
+            app_log("Detalhes do email: Nome=$name, Pedido=$orderNumber, Valor=$value");
+
             $this->mailer->clearAddresses();
             $this->mailer->addAddress($to, $name);
             $this->mailer->Subject = '🚨 PAGAMENTO PENDENTE - Pedido #' . $orderNumber;
@@ -142,9 +163,13 @@ class Mailer {
             $this->mailer->Body = $html;
             $this->mailer->AltBody = "Olá {$name}, seu pedido foi registrado. Valor: R$ " . number_format($value, 2, ',', '.') . ". Pague via PIX para garantir o acesso.";
 
-            return $this->sendEmail();
+            app_log("Tentando enviar email de confirmação para $to");
+            $result = $this->sendEmail();
+            app_log("Email de confirmação enviado com sucesso para $to");
+            return $result;
         } catch (Exception $e) {
             app_log("Erro ao enviar confirmação para $to: " . $e->getMessage());
+            app_log("Stack trace: " . $e->getTraceAsString());
             return false;
         }
     }
@@ -152,6 +177,9 @@ class Mailer {
     // Envia os dados de login para a área de membros após pagamento confirmado
     public function sendMemberAccess($email, $name, $senha) {
         try {
+            app_log("Iniciando envio de email de acesso para $email");
+            app_log("Detalhes do email: Nome=$name, Senha=$senha");
+
             $this->mailer->clearAddresses();
             $this->mailer->addAddress($email, $name);
             $this->mailer->Subject = '🔐 ACESSO LIBERADO! - Área dos Clientes | Agência LED';
@@ -178,10 +206,14 @@ class Mailer {
             $this->mailer->Body = $html;
             $this->mailer->AltBody = "Olá {$name},\n\nSeu acesso à área dos clientes foi liberado.\nEmail: {$email}\nSenha: {$senha}\nAcesse: https://agencialed.com/login.php";
 
-            return $this->sendEmail();
+            app_log("Tentando enviar email de acesso para $email");
+            $result = $this->sendEmail();
+            app_log("Email de acesso enviado com sucesso para $email");
+            return $result;
         } catch (Exception $e) {
             app_log("Erro ao enviar dados de acesso para $email: " . $e->getMessage());
-            return false;
+            app_log("Stack trace: " . $e->getTraceAsString());
+            throw $e; // Propaga o erro para ser tratado no nível superior
         }
     }
 
