@@ -575,10 +575,10 @@
             .btn-link-custom:hover {
                 border-radius: 0;
                 color: #32035c;
-                background-color: #ffce33;
+                background-color: #e2ddcf;
                 width: 100%;
                 text-align: left;
-
+                font-weight: 700;
             }
 
             .card-header {
