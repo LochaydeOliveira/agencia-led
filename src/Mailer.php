@@ -39,12 +39,26 @@ class Mailer {
             $this->mailer->isHTML(true); // Os e-mails serão enviados em HTML
 
             // Ativa o modo debug (apenas erros)
-            $this->mailer->SMTPDebug = 0;
+            $this->mailer->SMTPDebug = 2; // Aumenta o nível de debug
             $this->mailer->Debugoutput = function($str, $level) {
-                app_log("PHPMailer Debug: $str", 'debug');
+                app_log("PHPMailer Debug [$level]: $str");
             };
+
+            app_log("Configurações SMTP: Host=" . SMTP_HOST . ", Port=" . SMTP_PORT . ", User=" . SMTP_USER);
         } catch (Exception $e) {
-            app_log("Erro na configuração do PHPMailer: " . $e->getMessage(), 'error');
+            app_log("Erro na configuração do PHPMailer: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    // Método para enviar email com tratamento de erro e fechamento da conexão
+    private function sendEmail() {
+        try {
+            $result = $this->mailer->send();
+            $this->mailer->smtpClose(); // Fecha a conexão SMTP explicitamente
+            return $result;
+        } catch (Exception $e) {
+            $this->mailer->smtpClose(); // Fecha a conexão SMTP mesmo em caso de erro
             throw $e;
         }
     }
@@ -52,6 +66,9 @@ class Mailer {
     // Envia o link de download após pagamento confirmado
     public function sendDownloadLink($email, $name, $orderNumber, $token) {
         try {
+            app_log("Iniciando envio de email de download para $email");
+            app_log("Detalhes do email: Nome=$name, Pedido=$orderNumber, Token=$token");
+
             $this->mailer->clearAddresses(); // Remove destinatários anteriores
             $this->mailer->addAddress($email, $name); // Define o novo destinatário
             $this->mailer->Subject = '✅ PAGAMENTO CONFIRMADO - Sua Lista Está Pronta!'; // Título do e-mail
@@ -84,10 +101,14 @@ class Mailer {
             $this->mailer->Body = $html; // Define corpo HTML
             $this->mailer->AltBody = "Olá {$name},\n\nAcesse sua lista: https://agencialed.com/download_page.php?token={$token}\nEste link expira em 24 horas."; // Texto alternativo (caso HTML não carregue)
 
-            return $this->mailer->send(); // Tenta enviar
+            app_log("Tentando enviar email de download para $email");
+            $result = $this->sendEmail();
+            app_log("Email de download enviado com sucesso para $email");
+            return $result;
         } catch (Exception $e) {
             app_log("Erro ao enviar email de download para $email: " . $e->getMessage());
-            return false; // Em caso de erro
+            app_log("Stack trace: " . $e->getTraceAsString());
+            return false;
         }
     }
 
@@ -121,7 +142,7 @@ class Mailer {
             $this->mailer->Body = $html;
             $this->mailer->AltBody = "Olá {$name}, seu pedido foi registrado. Valor: R$ " . number_format($value, 2, ',', '.') . ". Pague via PIX para garantir o acesso.";
 
-            return $this->mailer->send();
+            return $this->sendEmail();
         } catch (Exception $e) {
             app_log("Erro ao enviar confirmação para $to: " . $e->getMessage());
             return false;
@@ -157,7 +178,7 @@ class Mailer {
             $this->mailer->Body = $html;
             $this->mailer->AltBody = "Olá {$name},\n\nSeu acesso à área dos clientes foi liberado.\nEmail: {$email}\nSenha: {$senha}\nAcesse: https://agencialed.com/login.php";
 
-            return $this->mailer->send();
+            return $this->sendEmail();
         } catch (Exception $e) {
             app_log("Erro ao enviar dados de acesso para $email: " . $e->getMessage());
             return false;
@@ -187,7 +208,7 @@ class Mailer {
             $this->mailer->Body = $html;
             $this->mailer->AltBody = "Olá {$nome},\n\nRecebemos uma solicitação para redefinir sua senha na Área de Clientes.\n\nPara redefinir sua senha, acesse o link: {$link}\n\nSe você não solicitou a redefinição de senha, por favor ignore este email.\n\nEste link é válido por 1 hora.";
             
-            return $this->mailer->send();
+            return $this->sendEmail();
         } catch (Exception $e) {
             app_log("Erro ao enviar email de recuperação de senha para {$email}: " . $e->getMessage(), 'error');
             throw $e; // Propaga o erro para ser tratado no nível superior
