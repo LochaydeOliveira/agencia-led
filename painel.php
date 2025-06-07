@@ -581,6 +581,11 @@
                 font-weight: 700;
             }
 
+            .instagram:hover {
+                background: #e2ddcf!important;
+                border-radius: 3px!important;
+            }           
+
             .card-header {
                 background: #e2ddcf!important;
             }
