@@ -1,5 +1,5 @@
 <?php
-require 'conexao.php';
+require '../conexao.php';
 session_start();
 $erro = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
