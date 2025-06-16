@@ -1,8 +1,8 @@
 Options -Indexes
-DirectoryIndex index.php
+DirectoryIndex index.html index.php
 
-# Permitir acesso a todos os arquivos PHP
-<FilesMatch "\.php$">
+# Permitir acesso a todos os arquivos PHP e HTML
+<FilesMatch "\.(php|html)$">
     Order Allow,Deny
     Allow from all
 </FilesMatch>
