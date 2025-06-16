@@ -32,6 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($usuario) {
             error_log("Usuário encontrado. ID: " . $usuario['id'] . ", Nível: " . $usuario['nivel']);
+            error_log("Hash da senha no banco: " . $usuario['senha']);
+            error_log("Senha fornecida: " . $senha);
             
             if (password_verify($senha, $usuario["senha"])) {
                 error_log("Senha verificada com sucesso");
@@ -67,6 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Login - Administração</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -145,6 +148,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border: none;
             cursor: pointer;
             color: #666;
+            padding: 0;
+            font-size: 1.2rem;
         }
         .password-toggle:hover {
             color: #333;
@@ -181,7 +186,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"></script>
 <script>
 function togglePassword() {
     const senhaInput = document.getElementById('senha');
