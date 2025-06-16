@@ -18,7 +18,7 @@ require 'conexao.php';
 $erro = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nome = $_POST["nome"];
+    $nome = trim($_POST["nome"]);
     $senha = $_POST["senha"];
 
     try {
@@ -73,7 +73,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <link rel="icon" href="assets-agencia-led/img/icone-favorito-led.png" type="image/png">
     <link rel="apple-touch-icon" href="assets-agencia-led/img/icone-favorito-led.png">
-    
     
     <style>
         body {
@@ -134,6 +133,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-color: #333; /* Cor no hover */
             color: white;
         }
+        .password-container {
+            position: relative;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+        }
+        .password-toggle:hover {
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -145,19 +160,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php if (!empty($erro)): ?>
         <div class="alert alert-danger"><?php echo $erro; ?></div>
     <?php endif; ?>
-    <form method="post">
+    <form method="post" autocomplete="off">
         <div class="mb-3">
              <label for="nome" class="form-label" style="text-align: left; display: block;">Nome</label>
-            <input type="text" id="nome" name="nome" class="form-control" placeholder="" required>
+            <input type="text" id="nome" name="nome" class="form-control" placeholder="" required autocomplete="off">
         </div>
         <div class="mb-3">
              <label for="senha" class="form-label" style="text-align: left; display: block;">Senha</label>
-            <input type="password" id="senha" name="senha" class="form-control" placeholder="" required>
+            <div class="password-container">
+                <input type="password" id="senha" name="senha" class="form-control" placeholder="" required>
+                <button type="button" class="password-toggle" onclick="togglePassword()">
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
         </div>
         <div class="d-grid mt-4">
             <button type="submit" class="btn btn-custom">Entrar</button>
         </div>
     </form>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"></script>
+<script>
+function togglePassword() {
+    const senhaInput = document.getElementById('senha');
+    const toggleButton = document.querySelector('.password-toggle i');
+    
+    if (senhaInput.type === 'password') {
+        senhaInput.type = 'text';
+        toggleButton.classList.remove('bi-eye');
+        toggleButton.classList.add('bi-eye-slash');
+    } else {
+        senhaInput.type = 'password';
+        toggleButton.classList.remove('bi-eye-slash');
+        toggleButton.classList.add('bi-eye');
+    }
+}
+</script>
 </body>
 </html>
