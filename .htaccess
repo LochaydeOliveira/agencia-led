@@ -1,15 +1,25 @@
 Options -Indexes
 DirectoryIndex index.php
 
-<Files ~ "^.*\.([Pp][Hh][Pp])">
-    Order allow,deny
-    Deny from all
-</Files>
-
-<Files ~ "^(index|login|conexao)\.php$">
-    Order allow,deny
+# Permitir acesso a todos os arquivos PHP
+<FilesMatch "\.php$">
+    Order Allow,Deny
     Allow from all
-</Files>
+</FilesMatch>
 
+# Configurações de PHP
 php_flag display_errors on
-php_value error_reporting E_ALL 
+php_value error_reporting E_ALL
+
+# Configurações de segurança básicas
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# Proteger arquivos sensíveis
+<FilesMatch "^(\.htaccess|\.htpasswd|\.git|\.env|composer\.json|composer\.lock)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch> 
