@@ -1,0 +1,268 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+.clearfix::before,
+.ctx-title,
+.holder-cols-checkout .box-checkout .box-title .desc,
+.holder-cols-checkout .discount-info .discount-info-description p,
+.holder-cols-checkout .cart-resume .detail.total .value,
+.container-testimonials .box-testimonial,
+.holder-cols-checkout .cart-resume .detail,
+.holder-cols-checkout .box-checkout.disabled .desc,
+.holder-cols-checkout .box-checkout.box-resume .cart_total,
+.holder-cols-checkout .container-shipment .option,
+.holder-cols-checkout .container-addresses .box-address .inner-box {
+  font-family: 'Inter', sans-serif!important;
+}
+
+
+.ctx-title {
+        color: var(--title-color);
+        text-transform: var(--titles-uppercase);
+        font-size: 22px!important;
+    }
+    .holder-cols-checkout .box-checkout .box-title .desc {
+        font-size: 14px!important;
+    }
+    .holder-cols-checkout .discount-info .discount-info-description p {
+        font-size: 13px!important;
+    }
+    .f12 {
+        font-size: 14px!important;
+    }
+    .container-testimonials .box-testimonial {
+        font-size: 15px!important;
+    }
+    body.custom-checkout header .item-security, body.turboofertas header .item-security, body.yep header .item-security {
+        display: none!important;
+    }
+
+.content {
+    background: #f1f3f7 !important;
+}
+
+.holder-cols-checkout .cart-resume .detail.total .value {
+    font-size: 1.5rem!important;
+    font-weight: 600;
+    letter-spacing: 0.06rem;
+    font-style: normal;
+}
+    .btn-text.btn-purple {
+        color: #ffffff;
+         background: #969696
+    }
+    
+    .holder-cols-checkout .box-checkout.disabled .desc {
+        color:#000000!important;
+    }
+    
+    .holder-countdown {
+        padding: 9px 0 !important;
+    }
+    
+    .holder-cols-checkout .cart-resume .detail.total {
+        color: #000;
+        padding-top: 12px;
+        padding-bottom: 6px;
+    }
+    
+    
+    .form-horizontal .holder-input.valid:after {
+        position: absolute;
+        top: 14px;
+        right: 15px;
+        font-family: FontAwesome;
+        color: #7b9b0e;
+        content: "\f00c";
+    }
+    
+    .holder-cols-checkout .box-checkout.active .box-title .holder-number {
+        background: #707070;
+        border-color: #000000 !important;
+        color: #fff;
+    }
+    
+    
+    a {
+        text-decoration: none;
+        color: #24b82b;
+    }
+    
+    .holder-cols-checkout .box-checkout.active {
+        background: #ffffff;
+        cursor: default;
+        border: none;
+        border-radius: 10px!important;
+        box-shadow: 0 4px 12px rgba(0,0,0,.05);
+    }
+
+    .holder-cols-checkout .container-addresses .box-address .inner-box {
+        padding: 10px!important;
+    }
+
+    footer svg {
+        fill: #6f6d75!important;
+    }
+
+    .black-80 {
+        color: #6f6d75!important;
+    }
+
+    footer {
+        background-color: #ffffff!important;
+        color: #6f6d75!important;
+    }
+
+    footer .container {
+    border-top: none!important; 
+    }
+
+    .holder-cols-checkout .cart-resume .detail.total .value {
+        font-weight: 800!important;
+        color: #7b9b0e !important;
+    }
+
+    .holder-cols-checkout .container-shipment .option {
+        border: none!important;
+        color: #7b9b0e !important;
+        font-weight: 700!important;
+    }
+
+    .holder-cols-checkout .payments .payment {
+        border: none!important;
+        border-radius: 10px!important;
+        background: #fff!important;
+    }
+
+    .holder-cols-checkout .box-checkout {
+        border-radius: 10px!important;
+    }
+
+    .holder-cols-checkout .box-checkout:not(.active):not(.disabled):not(.box-resume):not(.box-payment) {
+        background: #ffffff!important;
+    }
+    
+    .holder-cols-checkout .box-checkout:not(.active):not(.disabled):not(.box-resume):not(.box-payment) .title {
+        color: #7b9b0e !important;
+    }
+   
+    /* Rodapé */
+    
+    span.f11.black-50::after {
+        content: ' Atendimento via WhatsApp: (61) 99421-6467 \A Segunda à Sábado das 08:00 às 18:00  \A\A Caucaia - CE, CEP 61600-970 \A CNPJ:44.753.619/0001-42 \A ©️ Todos os direitos reservados.';
+        display: block;
+        margin-top: 15px;
+        white-space: pre-wrap;
+        line-height: 1.8;
+    }
+
+.holder-cols-checkout .container-shipment .option {
+    background: #fff;
+    border: 1px solid #d0d0d0!important;
+    border-radius: 5px!important;
+    box-sizing: border-box!important;
+    cursor: pointer!important;
+    display: flex!important;
+    line-height: 15px!important;
+    margin: 0 0 10px!important;
+    padding: 10px!important;
+    position: relative!important;
+    flex-wrap: wrap!important;
+}
+.holder-cols-checkout .container-addresses .box-address .inner-box {
+    border: 1px solid #d0d0d0;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #333;
+    cursor: pointer;
+    display: block;
+    font-size: 11px;
+    line-height: 14px;
+    margin: 0 0 10px;
+    padding: 5px;
+}  
+
+@media (max-width: 575.98px) {
+    .inner-box.holder-icheck {
+        background-image: none!important;
+        background-size: 330px!important;
+        content: ""!important;
+        background-repeat: no-repeat!important;
+        background-position-x: 9px!important;
+        background-position-y: 90%!important;
+    }
+}
+@media (min-width:1200px){
+
+}
+@media (min-width:768px) and (max-width:991.98px){
+
+}  
+@media (min-width:576px) and (max-width:767.98px){
+    .inner-box.holder-icheck {
+        background-image: none!important;
+        background-size: 355px!important;
+        content: ""!important;
+        background-repeat: no-repeat!important;
+        background-position-x: 9px!important;
+        background-position-y: 90%!important;
+    }
+}
+.holder-countdown .countdown-text {
+  font-size: 20px!important;
+}
+
+.btn-primary {
+    font-weight: 700!important;
+    letter-spacing: 3px;;
+}
+
+.holder-countdown .countdown-text {
+    font-size: 15px!important;
+}
+
+.holder-cols-checkout .container-shipment .option .inner-label .text {
+    width: 78%!important;
+}
+
+.yellow {
+    color: #ffbc05!important;
+}
+
+.btn-primary {
+    font-weight: 600!important;
+    letter-spacing: 0!important;
+    font-family: 'Inter', sans-serif!important;
+}
+
+.green {
+    color: #7b9b0e !important;
+}
+
+.holder-cols-checkout .box-checkout:not(.active):not(.disabled):not(.box-resume):not(.box-payment) .holder-number {
+    background-color: #7b9b0e!important;
+}
+
+@media (max-width: 520px) {
+.col-checkout:not(.col-3) .box-checkout.active {
+    margin: 0 auto;
+    width: 100%;
+}
+
+.holder-cols-checkout .container-shipment .option {
+    color: #fa3296!important;
+    font-weight: 600!important;
+}
+
+.holder-cols-checkout .container-shipment .option .inner-label {
+    padding-left: 25px!important;
+}
+
+}
+
+.holder-cols-checkout .box-checkout.box-resume {
+    box-shadow: none!important;
+}

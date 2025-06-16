@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 require 'conexao.php';
 
@@ -9,30 +12,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $senha = $_POST["senha"];
 
     try {
+        // Log da tentativa de login
+        error_log("Tentativa de login para usuário: " . $nome);
+
         // Busca o usuário pelo nome
         $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE nome = ? AND status = 'ativo'");
         $stmt->execute([$nome]);
         $usuario = $stmt->fetch();
 
-        if ($usuario && password_verify($senha, $usuario["senha"])) {
-            // Login bem sucedido
-            $_SESSION["usuario"] = $usuario["nome"];
-            $_SESSION["nivel"] = $usuario["nivel"];
-            $_SESSION["id_usuario"] = $usuario["id"];
-            $_SESSION["email"] = $usuario["email"];
+        if ($usuario) {
+            error_log("Usuário encontrado. ID: " . $usuario['id'] . ", Nível: " . $usuario['nivel']);
             
-            header("Location: adm/index.php");
-            exit;
-        } else {
-            if (!$usuario) {
-                $erro = "Usuário não encontrado ou inativo.";
+            if (password_verify($senha, $usuario["senha"])) {
+                error_log("Senha verificada com sucesso");
+                
+                // Login bem sucedido
+                $_SESSION["usuario"] = $usuario["nome"];
+                $_SESSION["nivel"] = $usuario["nivel"];
+                $_SESSION["id_usuario"] = $usuario["id"];
+                $_SESSION["email"] = $usuario["email"];
+                
+                error_log("Sessão criada com sucesso. Redirecionando para adm/index.php");
+                header("Location: adm/index.php");
+                exit;
             } else {
+                error_log("Senha incorreta para o usuário: " . $nome);
                 $erro = "Senha incorreta.";
             }
+        } else {
+            error_log("Usuário não encontrado ou inativo: " . $nome);
+            $erro = "Usuário não encontrado ou inativo.";
         }
     } catch (PDOException $e) {
-        $erro = "Erro ao tentar fazer login. Por favor, tente novamente.";
         error_log("Erro no login: " . $e->getMessage());
+        $erro = "Erro ao tentar fazer login. Por favor, tente novamente.";
     }
 }
 ?>

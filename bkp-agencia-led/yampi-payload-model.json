@@ -1,0 +1,785 @@
+(
+    [event] => order.created
+    [time] => 2025-05-20 22:42:50
+    [merchant] => Array
+        (
+            [id] => 339833
+            [alias] => tutoriais-store
+        )
+
+    [resource] => Array
+        (
+            [id] => 136750338
+            [merchant_id] => 339833
+            [customer_id] => 223916652
+            [status_id] => 3
+            [desire_status_id] => Array
+                (
+                    [0] => 8
+                    [1] => 4
+                    [2] => 9
+                )
+
+            [desire_status] => Array
+                (
+                    [0] => cancelled
+                    [1] => paid
+                    [2] => refused
+                )
+
+            [promocode_id] => 
+            [marketplace_id] => 
+            [marketplace_account_id] => 
+            [authorized] => 
+            [sync_by_erp] => 
+            [has_recomm] => 
+            [has_upsell] => 
+            [has_freebie] => 
+            [has_order_bump] => 
+            [order_bump_types] => Array
+                (
+                )
+
+            [has_payment] => 1
+            [is_upsell] => 
+            [delivered] => 
+            [number] => 339833563730891
+            [marketplace_partner_id] => 
+            [marketplace_sale_number] => 
+            [value_total] => 19.9
+            [buyer_value_total] => 19.9
+            [value_products] => 19.9
+            [value_shipment] => 0
+            [value_tax] => 0
+            [buyer_value_tax] => 0
+            [value_discount] => 0
+            [value_wallet_discount] => 0
+            [shipment_cost] => 0
+            [shipment_service] => 
+            [shipment_service_id] => 
+            [shipment_icon_url] => 
+            [shipment_quote_id] => 
+            [track_code] => 
+            [track_url] => 
+            [b2w_label_url] => 
+            [days_delivery] => 0
+            [date_delivery] => Array
+                (
+                    [date] => 2025-06-04 00:00:00.000000
+                    [timezone_type] => 3
+                    [timezone] => America/Sao_Paulo
+                )
+
+            [cart_token] => a96814aa-35ad-11f0-82ee-0a3c084a7e47-682cd2eb9919e
+            [utm_source] => 
+            [utm_campaign] => 
+            [utm_content] => 
+            [utm_term] => 
+            [utm_medium] => 
+            [total_comments] => 0
+            [payments] => Array
+                (
+                    [0] => Array
+                        (
+                            [alias] => pix
+                            [name] => Pix
+                            [icon_url] => https://icons.yampi.me/svg/pix.svg
+                        )
+
+                )
+
+            [ip] => 179.48.2.51
+            [device] => desktop
+            [reorder_url] => https://seguro.agencialed.com/cart/items?customerToken=c43aea90-f8ac-11ef-8223-4de287ef8aea&product_option_id[0]=271094579&quantity[0]=1&has_recomm[0]=0&redirectTo=checkout&skipToCheckout=1&store_token=2563cd1e0fc2de7eb663d92b5c7ee026d2218406
+            [content_statement_url] => https://api.dooki.com.br/html/orders/content-statement/a96814aa-35ad-11f0-82ee-0a3c084a7e47-682cd2eb9919e?id=def50200f41704115957cf98bacac22500451b35ac6722d65e8ca13f6cd061306a24413f4eef50eb31f6cc45f01f0a3c90f681f84c6600e7649093aab12f82a8e5a6e2c4ebbcf5632ee38b6c81c7d8d0ca98e27272531fdcb211841878
+            [billet_whatsapp_link] => https://api.whatsapp.com/send?phone=5585921447153&text=
+            [billet_whatsapp_app_link] => whatsapp://send?phone=5585921447153&text=
+            [public_url] => https://api.dooki.com.br/v2/public/orders/a96814aa-35ad-11f0-82ee-0a3c084a7e47-682cd2eb9919e
+            [created_at] => Array
+                (
+                    [date] => 2025-05-20 22:42:30.000000
+                    [timezone_type] => 3
+                    [timezone] => America/Sao_Paulo
+                )
+
+            [updated_at] => Array
+                (
+                    [date] => 2025-05-20 22:42:30.000000
+                    [timezone_type] => 3
+                    [timezone] => America/Sao_Paulo
+                )
+
+            [status] => Array
+                (
+                    [data] => Array
+                        (
+                            [id] => 3
+                            [alias] => waiting_payment
+                            [name] => Aguardando pagamento
+                            [description] => Aguardando confirmação de pagamento
+                        )
+
+                )
+
+            [marketplace] => Array
+                (
+                    [data] => Array
+                        (
+                        )
+
+                )
+
+            [customer] => Array
+                (
+                    [data] => Array
+                        (
+                            [id] => 223916652
+                            [merchant_id] => 339833
+                            [marketplace_id] => 
+                            [cluster_id] => 
+                            [active] => 1
+                            [type] => f
+                            [name] => Jakson Luis
+                            [razao_social] => 
+                            [first_name] => Jakson
+                            [last_name] => Luis
+                            [generic_name] => Jakson Luis
+                            [email] => lochaydeguerreiro2@gmail.com
+                            [cnpj] => 
+                            [state_registration] => 
+                            [cpf] => 09084498364
+                            [birthday] => 
+                            [phone] => Array
+                                (
+                                    [full_number] => 85921447153
+                                    [area_code] => 85
+                                    [number] => 921447153
+                                    [formated_number] => (85) 92144-7153
+                                    [whatsapp_link] => https://api.whatsapp.com/send?phone=5585921447153
+                                )
+
+                            [social_driver] => 
+                            [social_id] => 
+                            [newsletter] => 
+                            [whatsapp] => 
+                            [utm_source] => 
+                            [utm_campaign] => 
+                            [ip] => 179.48.2.51
+                            [notes] => 
+                            [token] => c43aea90-f8ac-11ef-8223-4de287ef8aea
+                            [login_url] => https://seguro.agencialed.com/auth/login/force?token=c43aea90-f8ac-11ef-8223-4de287ef8aea
+                            [anonymized] => 
+                            [created_at] => Array
+                                (
+                                    [date] => 2025-03-04 00:57:18.000000
+                                    [timezone_type] => 3
+                                    [timezone] => America/Sao_Paulo
+                                )
+
+                            [updated_at] => Array
+                                (
+                                    [date] => 2025-05-20 22:42:20.000000
+                                    [timezone_type] => 3
+                                    [timezone] => America/Sao_Paulo
+                                )
+
+                        )
+
+                )
+
+            [items] => Array
+                (
+                    [data] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [id] => 172781147
+                                    [product_id] => 40621209
+                                    [sku_id] => 271094579
+                                    [bundle_id] => 
+                                    [bundle_name] => 
+                                    [freebie_id] => 
+                                    [price_cost] => 0
+                                    [price] => 19.9
+                                    [item_sku] => 278MPE2U7
+                                    [quantity] => 1
+                                    [shipment_cost] => 0
+                                    [gift] => 
+                                    [gift_value] => 0
+                                    [has_recomm] => 0
+                                    [customizations] => Array
+                                        (
+                                        )
+
+                                    [is_digital] => 1
+                                    [sku] => Array
+                                        (
+                                            [data] => Array
+                                                (
+                                                    [id] => 271094579
+                                                    [product_id] => 40621209
+                                                    [seller_id] => 
+                                                    [sku] => 278MPE2U7
+                                                    [token] => NEOYZECNBO
+                                                    [erp_id] => 
+                                                    [blocked_sale] => 
+                                                    [barcode] => 
+                                                    [title] => Lista Secreta de Forcedores Nacionais - Decoração
+                                                    [availability] => 0
+                                                    [availability_soldout] => -1
+                                                    [days_availability_formated] => Imediata
+                                                    [price_cost] => 0
+                                                    [price_sale] => 19.9
+                                                    [price_discount] => 0
+                                                    [width] => 1
+                                                    [height] => 1
+                                                    [length] => 1
+                                                    [weight] => 1
+                                                    [quantity_managed] => 
+                                                    [variations] => Array
+                                                        (
+                                                        )
+
+                                                    [combinations] => 271094579
+                                                    [order] => 0
+                                                    [total_in_stock] => 0
+                                                    [total_orders] => 
+                                                    [allow_sell_without_customization] => 
+                                                    [image_reference_sku_id] => 
+                                                    [purchase_url] => https://seguro.agencialed.com/r/NEOYZECNBO
+                                                    [created_at] => Array
+                                                        (
+                                                            [date] => 2025-05-16 18:45:17.000000
+                                                            [timezone_type] => 3
+                                                            [timezone] => America/Sao_Paulo
+                                                        )
+
+                                                    [updated_at] => Array
+                                                        (
+                                                            [date] => 2025-05-16 18:45:17.000000
+                                                            [timezone_type] => 3
+                                                            [timezone] => America/Sao_Paulo
+                                                        )
+
+                                                    [customizations] => Array
+                                                        (
+                                                            [data] => Array
+                                                                (
+                                                                )
+
+                                                        )
+
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+            [marketplace_account] => Array
+                (
+                    [data] => Array
+                        (
+                        )
+
+                )
+
+            [statuses] => Array
+                (
+                    [data] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [id] => 3
+                                    [alias] => waiting_payment
+                                    [name] => Aguardando pagamento
+                                    [description] => Aguardando confirmação de pagamento
+                                    [details] => 
+                                    [created_at] => Array
+                                        (
+                                            [date] => 2025-05-20 22:42:30.000000
+                                            [timezone_type] => 3
+                                            [timezone] => America/Sao_Paulo
+                                        )
+
+                                    [updated_at] => Array
+                                        (
+                                            [date] => 2025-05-20 22:42:30.000000
+                                            [timezone_type] => 3
+                                            [timezone] => America/Sao_Paulo
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+            [shipping_address] => Array
+                (
+                    [data] => Array
+                        (
+                        )
+
+                )
+
+            [pickup_address] => Array
+                (
+                    [data] => Array
+                        (
+                        )
+
+                )
+
+            [promocode] => Array
+                (
+                    [data] => Array
+                        (
+                        )
+
+                )
+
+            [transactions] => Array
+                (
+                    [data] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [id] => 159703311
+                                    [customer_id] => 223916652
+                                    [payment_id] => 43
+                                    [affiliation_id] => 739537
+                                    [marketplace_id] => 
+                                    [marketplace_account_id] => 
+                                    [authorized] => 1
+                                    [captured] => 
+                                    [cancelled] => 
+                                    [gateway_transaction_id] => QRCO_A0150E39-08B4-449D-8D8C-8751C576E488
+                                    [gateway_order_id] => ORDE_CCC5ACC7-88BE-4290-AB21-9151EC237006
+                                    [gateway_authorization_code] => 
+                                    [gateway_billet_id] => 
+                                    [amount] => 19.9
+                                    [buyer_amount] => 0
+                                    [installments] => 1
+                                    [installment_value] => 19.9
+                                    [buyer_installment_value] => 0
+                                    [installment_formated] => 1x de R$ 19,90
+                                    [buyer_installment_formated] => 1x de R$ 0,00
+                                    [bank_name] => 
+                                    [bank_alias] => 
+                                    [status] => waiting_payment
+                                    [error_message] => 
+                                    [error_code] => 
+                                    [truncated_card] => 
+                                    [holder_name] => 
+                                    [holder_document] => 
+                                    [billet_url] => 
+                                    [billet_barcode] => 
+                                    [billet_date] => 
+                                    [billet_our_number] => 
+                                    [billet_document_number] => 
+                                    [billet_whatsapp_link] => https://api.whatsapp.com/send?phone=5585921447153&text=
+                                    [antifraud_sale_id] => 
+                                    [antifraud_status] => 
+                                    [antifraud_score] => 
+                                    [sent_to_antifraud] => 
+                                    [total_logs] => 0
+                                    [capture_date] => 
+                                    [authorized_at] => Array
+                                        (
+                                            [date] => 2025-05-20 22:42:30.000000
+                                            [timezone_type] => 3
+                                            [timezone] => America/Sao_Paulo
+                                        )
+
+                                    [captured_at] => 
+                                    [cancelled_at] => 
+                                    [can_be_captured] => 1
+                                    [can_be_cancelled] => 1
+                                    [created_at] => Array
+                                        (
+                                            [date] => 2025-05-20 22:42:30.000000
+                                            [timezone_type] => 3
+                                            [timezone] => America/Sao_Paulo
+                                        )
+
+                                    [updated_at] => Array
+                                        (
+                                            [date] => 2025-05-20 22:42:30.000000
+                                            [timezone_type] => 3
+                                            [timezone] => America/Sao_Paulo
+                                        )
+
+                                    [payment] => Array
+                                        (
+                                            [data] => Array
+                                                (
+                                                    [id] => 43
+                                                    [alias] => pix
+                                                    [name] => Pix
+                                                    [has_config] => 
+                                                    [active_config] => 
+                                                    [is_credit_card] => 
+                                                    [is_deposit] => 
+                                                    [is_billet] => 
+                                                    [is_pix] => 1
+                                                    [is_pix_in_installments] => 
+                                                    [is_wallet] => 
+                                                    [icon_url] => https://icons.yampi.me/svg/card-pix.svg
+                                                )
+
+                                        )
+
+                                    [metadata] => Array
+                                        (
+                                            [data] => Array
+                                                (
+                                                    [pix_expiration_date] => 2025-05-20 23:12:29
+                                                    [pix_qr_code] => 00020101021226830014br.gov.bcb.pix2561api.pagseguro.com/pix/v2/A0150E39-08B4-449D-8D8C-8751C576E48827600016BR.COM.PAGSEGURO0136A0150E39-08B4-449D-8D8C-8751C576E488520489995303986540519.905802BR5922Francisco Lochayde Nun6007Caucaia62070503***630441DC
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+            [search] => Array
+                (
+                    [data] => Array
+                        (
+                            [payment_id] => 43
+                            [antifraud_status] => 
+                            [affiliation_id] => 739537
+                            [products_ids] => Array
+                                (
+                                    [0] => 40621209
+                                )
+
+                            [gateway_transaction_id] => QRCO_A0150E39-08B4-449D-8D8C-8751C576E488
+                            [created_at] => 2025-05-20
+                            [updated_at] => 2025-05-20
+                            [captured_at] => 
+                            [cancelled_at] => 
+                            [date_delivery] => 2025-06-04
+                            [inventory_ids] => Array
+                                (
+                                )
+
+                            [payment_method] => pix
+                            [payment_retry] => 
+                            [has_upsell] => 
+                            [has_order_bump] => 
+                            [has_freebie] => 
+                            [upsell_ids] => Array
+                                (
+                                )
+
+                            [order_bump_ids] => Array
+                                (
+                                )
+
+                            [freebie_ids] => Array
+                                (
+                                )
+
+                        )
+
+                )
+
+            [services] => Array
+                (
+                    [data] => Array
+                        (
+                        )
+
+                )
+
+            [spreadsheet] => Array
+                (
+                    [data] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [product] => Lista Secreta de Forcedores Nacionais - Decoração
+                                    [sku] => 278MPE2U7
+                                    [quantity] => 1
+                                    [total_cost] => 0
+                                    [total_item] => 19.9
+                                    [customization] => 
+                                    [payment_date] => 
+                                    [cancelled_date] => 
+                                    [customer] => Jakson Luis
+                                    [customer_email] => lochaydeguerreiro2@gmail.com
+                                    [customer_phone] => 85921447153
+                                    [customer_document] => 09084498364
+                                    [status] => Aguardando pagamento
+                                    [payment] => Pix
+                                    [credit_card] => 
+                                    [delivered] => 0
+                                    [shipping_address] => 
+                                    [shipping_street] => 
+                                    [shipping_number] => 
+                                    [shipping_neighborhood] => 
+                                    [shipping_complement] => 
+                                    [shipping_city] => 
+                                    [shipping_state] => 
+                                    [shipping_zip_code] => 
+                                    [gateway_transaction_id] => QRCO_A0150E39-08B4-449D-8D8C-8751C576E488
+                                    [billet_barcode] => 
+                                )
+
+                        )
+
+                )
+
+            [metadata] => Array
+                (
+                    [data] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [key] => cart_id
+                                    [value] => 533571098
+                                )
+
+                            [1] => Array
+                                (
+                                    [key] => source_platform
+                                    [value] => purchase_link
+                                )
+
+                        )
+
+                )
+
+            [pix] => Array
+                (
+                    [data] => Array
+                        (
+                            [pix_qr_code] => 00020101021226830014br.gov.bcb.pix2561api.pagseguro.com/pix/v2/A0150E39-08B4-449D-8D8C-8751C576E48827600016BR.COM.PAGSEGURO0136A0150E39-08B4-449D-8D8C-8751C576E488520489995303986540519.905802BR5922Francisco Lochayde Nun6007Caucaia62070503***630441DC
+                            [pix_expiration_date] => 2025-05-20 23:12:29
+                        )
+
+                )
+
+            [whatsapp] => Array
+                (
+                    [data] => Array
+                        (
+                            [abandoned_cart] => 
+                            [order_shipped] => 
+                            [billet] => 
+                            [pix] => Array
+                                (
+                                    [message] => Oi Jakson. O seu pedido foi reservado com sucesso.%0a%0a*1 - Lista Secreta de Forcedores Nacionais - Decoração*%0a%0aPara garantir os seus produtos, você precisa pagar o PIX o mais rápido possível, tá? Para pagar, copie e cole o texto abaixo no Aplicativo onde você configurou suas chaves PIX: %0a%0a00020101021226830014br.gov.bcb.pix2561api.pagseguro.com/pix/v2/A0150E39-08B4-449D-8D8C-8751C576E48827600016BR.COM.PAGSEGURO0136A0150E39-08B4-449D-8D8C-8751C576E488520489995303986540519.905802BR5922Francisco Lochayde Nun6007Caucaia62070503***630441DC
+                                    [link] => https://api.whatsapp.com/send?phone=5585921447153&text=Oi Jakson. O seu pedido foi reservado com sucesso.%0a%0a*1 - Lista Secreta de Forcedores Nacionais - Decoração*%0a%0aPara garantir os seus produtos, você precisa pagar o PIX o mais rápido possível, tá? Para pagar, copie e cole o texto abaixo no Aplicativo onde você configurou suas chaves PIX: %0a%0a00020101021226830014br.gov.bcb.pix2561api.pagseguro.com/pix/v2/A0150E39-08B4-449D-8D8C-8751C576E48827600016BR.COM.PAGSEGURO0136A0150E39-08B4-449D-8D8C-8751C576E488520489995303986540519.905802BR5922Francisco Lochayde Nun6007Caucaia62070503***630441DC
+                                )
+
+                            [payment_link] => 
+                        )
+
+                )
+
+            [whatsapp_app] => Array
+                (
+                    [data] => Array
+                        (
+                            [abandoned_cart] => 
+                            [order_shipped] => 
+                            [billet] => 
+                            [pix] => Array
+                                (
+                                    [message] => Oi Jakson. O seu pedido foi reservado com sucesso.%0a%0a*1 - Lista Secreta de Forcedores Nacionais - Decoração*%0a%0aPara garantir os seus produtos, você precisa pagar o PIX o mais rápido possível, tá? Para pagar, copie e cole o texto abaixo no Aplicativo onde você configurou suas chaves PIX: %0a%0a00020101021226830014br.gov.bcb.pix2561api.pagseguro.com/pix/v2/A0150E39-08B4-449D-8D8C-8751C576E48827600016BR.COM.PAGSEGURO0136A0150E39-08B4-449D-8D8C-8751C576E488520489995303986540519.905802BR5922Francisco Lochayde Nun6007Caucaia62070503***630441DC
+                                    [link] => whatsapp://send?phone=5585921447153&text=Oi Jakson. O seu pedido foi reservado com sucesso.%0a%0a*1 - Lista Secreta de Forcedores Nacionais - Decoração*%0a%0aPara garantir os seus produtos, você precisa pagar o PIX o mais rápido possível, tá? Para pagar, copie e cole o texto abaixo no Aplicativo onde você configurou suas chaves PIX: %0a%0a00020101021226830014br.gov.bcb.pix2561api.pagseguro.com/pix/v2/A0150E39-08B4-449D-8D8C-8751C576E48827600016BR.COM.PAGSEGURO0136A0150E39-08B4-449D-8D8C-8751C576E488520489995303986540519.905802BR5922Francisco Lochayde Nun6007Caucaia62070503***630441DC
+                                )
+
+                            [payment_link] => 
+                        )
+
+                )
+
+        )
+
+)
+
+[2025-05-20 22:42:51] Processando evento: order.created para pedido #339833563730891
+[2025-05-20 22:42:51] Novo pedido #339833563730891 criado
+[2025-05-20 22:42:51] Iniciando configuração do PHPMailer
+[2025-05-20 22:42:51] Configurações SMTP: Host=smtp.zoho.com, Port=587, User=contato@agencialed.com
+[2025-05-20 22:42:51] Iniciando envio de email de confirmação para lochaydeguerreiro2@gmail.com
+[2025-05-20 22:42:51] Detalhes do email: Nome=Jakson Luis, Pedido=339833563730891, Valor=19.9
+[2025-05-20 22:42:51] Tentando enviar email de confirmação para lochaydeguerreiro2@gmail.com
+[2025-05-20 22:42:51] Configurações finais do PHPMailer: Array
+(
+    [Host] => smtp.zoho.com
+    [Port] => 587
+    [SMTPAuth] => 1
+    [SMTPSecure] => tls
+    [Username] => contato@agencialed.com
+    [From] => contato@agencialed.com
+    [FromName] => Agência LED
+)
+
+[2025-05-20 22:42:53] Email de confirmação enviado com sucesso para lochaydeguerreiro2@gmail.com
+[2025-05-20 22:42:53] Email de confirmação enviado com sucesso para lochaydeguerreiro2@gmail.com
+[2025-05-20 22:55:25] Headers recebidos: Array
+(
+    [Accept] => */*
+    [Content-Type] => application/json
+    [X-Yampi-Signature] => 1c7606df0b4400edc1d608ca1d1132f679130b9086897b0e1d62e9a7f1a5c2ab
+    [Content-Length] => 527
+    [Host] => agencialed.com
+    [X-HTTPS] => 1
+)
+
+[2025-05-20 22:55:25] Webhook recebido - Signature: 1c7606df0b4400edc1d608ca1d1132f679130b9086897b0e1d62e9a7f1a5c2ab
+[2025-05-20 22:55:25] Payload bruto: {"event":"order.created","time":"2025-05-20 22:55:25","merchant":{"id":339833,"alias":"tutoriais-store"},"resource":{"id":669934684,"merchant_id":339833,"customer_id":229164211,"status_id":3,"number":811903250,"value_total":19.89999999999999857891452847979962825775146484375,"customer":{"data":{"id":229164211,"name":"Lochayde Teste","email":"lochaydeguerreiro@hotmail.com"}},"items":{"data":[{"product_id":"40621209","title":"Lista Secreta de Forcedores Nacionais - Decora\u00e7\u00e3o"}]},"status":{"data":{"alias":"paid"}}}}
+[2025-05-20 22:55:25] Payload decodificado: Array
+(
+    [event] => order.created
+    [time] => 2025-05-20 22:55:25
+    [merchant] => Array
+        (
+            [id] => 339833
+            [alias] => tutoriais-store
+        )
+
+    [resource] => Array
+        (
+            [id] => 669934684
+            [merchant_id] => 339833
+            [customer_id] => 229164211
+            [status_id] => 3
+            [number] => 811903250
+            [value_total] => 19.9
+            [customer] => Array
+                (
+                    [data] => Array
+                        (
+                            [id] => 229164211
+                            [name] => Lochayde Teste
+                            [email] => lochaydeguerreiro@hotmail.com
+                        )
+
+                )
+
+            [items] => Array
+                (
+                    [data] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [product_id] => 40621209
+                                    [title] => Lista Secreta de Forcedores Nacionais - Decoração
+                                )
+
+                        )
+
+                )
+
+            [status] => Array
+                (
+                    [data] => Array
+                        (
+                            [alias] => paid
+                        )
+
+                )
+
+        )
+
+)
+
+[2025-05-20 22:55:25] Processando evento: order.created para pedido #811903250
+[2025-05-20 22:55:25] Novo pedido #811903250 criado
+[2025-05-20 22:55:25] Iniciando configuração do PHPMailer
+[2025-05-20 22:55:25] Configurações SMTP: Host=smtp.zoho.com, Port=587, User=contato@agencialed.com
+[2025-05-20 22:55:25] Iniciando envio de email de confirmação para lochaydeguerreiro@hotmail.com
+[2025-05-20 22:55:25] Detalhes do email: Nome=Lochayde Teste, Pedido=811903250, Valor=19.9
+[2025-05-20 22:55:25] Tentando enviar email de confirmação para lochaydeguerreiro@hotmail.com
+[2025-05-20 22:55:25] Configurações finais do PHPMailer: Array
+(
+    [Host] => smtp.zoho.com
+    [Port] => 587
+    [SMTPAuth] => 1
+    [SMTPSecure] => tls
+    [Username] => contato@agencialed.com
+    [From] => contato@agencialed.com
+    [FromName] => Agência LED
+)
+
+[2025-05-20 22:55:27] Email de confirmação enviado com sucesso para lochaydeguerreiro@hotmail.com
+[2025-05-20 22:55:27] Email de confirmação enviado com sucesso para lochaydeguerreiro@hotmail.com
+[2025-05-20 22:56:17] Headers recebidos: Array
+(
+    [Accept] => */*
+    [Content-Type] => application/json
+    [X-Yampi-Signature] => 9d2ecde53e0636b1520b71c30d11566f0157c02cc1134cba3ada47fe68e20b51
+    [Content-Length] => 528
+    [Host] => agencialed.com
+    [X-HTTPS] => 1
+)
+
+[2025-05-20 22:56:17] Webhook recebido - Signature: 9d2ecde53e0636b1520b71c30d11566f0157c02cc1134cba3ada47fe68e20b51
+[2025-05-20 22:56:17] Payload bruto: {"event":"order.paid","time":"2025-05-20 22:56:17","merchant":{"id":339833,"alias":"tutoriais-store"},"resource":{"id":"669934684","merchant_id":339833,"customer_id":229164211,"status_id":3,"number":"811903250","value_total":19.89999999999999857891452847979962825775146484375,"customer":{"data":{"id":229164211,"name":"Lochayde Teste","email":"lochaydeguerreiro@hotmail.com"}},"items":{"data":[{"product_id":"40621209","title":"Lista Secreta de Forcedores Nacionais - Decora\u00e7\u00e3o"}]},"status":{"data":{"alias":"paid"}}}}
+[2025-05-20 22:56:17] Payload decodificado: Array
+(
+    [event] => order.paid
+    [time] => 2025-05-20 22:56:17
+    [merchant] => Array
+        (
+            [id] => 339833
+            [alias] => tutoriais-store
+        )
+
+    [resource] => Array
+        (
+            [id] => 669934684
+            [merchant_id] => 339833
+            [customer_id] => 229164211
+            [status_id] => 3
+            [number] => 811903250
+            [value_total] => 19.9
+            [customer] => Array
+                (
+                    [data] => Array
+                        (
+                            [id] => 229164211
+                            [name] => Lochayde Teste
+                            [email] => lochaydeguerreiro@hotmail.com
+                        )
+
+                )
+
+            [items] => Array
+                (
+                    [data] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [product_id] => 40621209
+                                    [title] => Lista Secreta de Forcedores Nacionais - Decoração
+                                )
+
+                        )
+
+                )
+
+            [status] => Array
+                (
+                    [data] => Array
+                        (
+                            [alias] => paid
+                        )
+
+                )
+
+        )
+
+)

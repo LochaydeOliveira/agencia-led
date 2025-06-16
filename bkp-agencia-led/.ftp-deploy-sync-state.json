@@ -1,0 +1,2003 @@
+{
+    "description": "DO NOT DELETE THIS FILE. This file is used to keep track of which files have been synced in the most recent deployment. If you delete this file a resync will need to be done (which can take a while) - read more: https://github.com/SamKirkland/FTP-Deploy-Action",
+    "version": "1.0.0",
+    "generatedTime": 1749268415100,
+    "data": [
+        {
+            "type": "file",
+            "name": ".ftp-deploy-sync-state.json",
+            "size": 20530,
+            "hash": "84bc7e281b5a9a56ed7529565e9bb1ead523dae096e10b0312c4effee8f3dd17"
+        },
+        {
+            "type": "file",
+            "name": ".ftpquota",
+            "size": 4,
+            "hash": "4516f6eaaa675488778d6ca333df14bc68c27fb7d7b8015073220d4571aa9c51"
+        },
+        {
+            "type": "folder",
+            "name": "adm"
+        },
+        {
+            "type": "file",
+            "name": "agencia-led-backup.html",
+            "size": 13642,
+            "hash": "050fe592bf51cef3bcce5fc707225ab4c4ad65772f1246be76db803fedea6c9b"
+        },
+        {
+            "type": "file",
+            "name": "agencia-led.html",
+            "size": 13642,
+            "hash": "050fe592bf51cef3bcce5fc707225ab4c4ad65772f1246be76db803fedea6c9b"
+        },
+        {
+            "type": "folder",
+            "name": "area_de_membros"
+        },
+        {
+            "type": "file",
+            "name": "area_de_membros_estilizada.zip",
+            "size": 6817,
+            "hash": "c0ed667512ccfa526ec96c046a7f9ec77f100928a732b14ea2141993fe4d4831"
+        },
+        {
+            "type": "folder",
+            "name": "assets-agencia-led"
+        },
+        {
+            "type": "folder",
+            "name": "assets-listas-lp"
+        },
+        {
+            "type": "file",
+            "name": "cadastrar_cliente_teste.php",
+            "size": 606,
+            "hash": "d150483f125091498579c40cdf22f4b2f43e981e9c6b6e1ca4e655a1f3588d34"
+        },
+        {
+            "type": "file",
+            "name": "cadastro.php",
+            "size": 6216,
+            "hash": "6119d2df8540b9445b009c7fed63af56e4efa39cb399c478806a2f8ec59d8d47"
+        },
+        {
+            "type": "file",
+            "name": "cards-lista.html",
+            "size": 628,
+            "hash": "d90bec6e381b9a87f2cc99fe7753381025332d76ff09711e4aa6dd41e5636ab2"
+        },
+        {
+            "type": "file",
+            "name": "checkout-transpatente.html",
+            "size": 4145,
+            "hash": "c8b35faf0cfcf76c89fe6dc9b96b6e0a86a35d81886ece399a71816bf7c6965a"
+        },
+        {
+            "type": "file",
+            "name": "cleanup.php",
+            "size": 1506,
+            "hash": "2d90984dd1db93a76ac640b6603c6a133cbdc9720302b45888b26555caf8d759"
+        },
+        {
+            "type": "file",
+            "name": "composer.json",
+            "size": 65,
+            "hash": "05fd5d61f5b21ac93ab5b0cc7f16220b52705e6481cbbc9a9e02681cff4a3a20"
+        },
+        {
+            "type": "file",
+            "name": "conexao.php",
+            "size": 396,
+            "hash": "6bfff4270b88a85d434ecdbb2636ff3763f5980a9123085b8ad28570203f2f94"
+        },
+        {
+            "type": "folder",
+            "name": "config"
+        },
+        {
+            "type": "file",
+            "name": "criar_tabela_recuperacao.php",
+            "size": 332,
+            "hash": "c2630428cd3ee919b03297e95ccc68cf96b2a38b89db0e3fc82c12f6b103efdc"
+        },
+        {
+            "type": "file",
+            "name": "download.php",
+            "size": 3406,
+            "hash": "2ea46137ae26899a06d1adfa26492762852cb22a01a339d9328dc2e68b5f5624"
+        },
+        {
+            "type": "file",
+            "name": "download_page.php",
+            "size": 7662,
+            "hash": "21bfc5836a2c1a036cf737af9b8d712e0261b1b2cbd6383047a4d64406a19cb6"
+        },
+        {
+            "type": "file",
+            "name": "download_page_edits.html",
+            "size": 0,
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+            "type": "folder",
+            "name": "ebooks"
+        },
+        {
+            "type": "folder",
+            "name": "email"
+        },
+        {
+            "type": "folder",
+            "name": "files"
+        },
+        {
+            "type": "file",
+            "name": "footer.html",
+            "size": 785,
+            "hash": "9c663968ea2041b78205ebf3183dc95365686c0390edcbf2631de8829cbe72f1"
+        },
+        {
+            "type": "file",
+            "name": "form.html",
+            "size": 3429,
+            "hash": "f72b77039ce70d51c4c6a03a2b2ac3cb3ccd9f3796077e530e57228d3f6dfe25"
+        },
+        {
+            "type": "file",
+            "name": "fornecedores-secretos.html",
+            "size": 187149,
+            "hash": "be40200a2a023b58d90ce05438ec594e23df0542137a092914a3594c009c6352"
+        },
+        {
+            "type": "file",
+            "name": "gerar_hash.php",
+            "size": 119,
+            "hash": "43099809fcb5e8e3e4ed55fe34c01c2ba853fc2c0c7f6682dcc764e565159472"
+        },
+        {
+            "type": "file",
+            "name": "header.html",
+            "size": 1005,
+            "hash": "a3dd3a0ba2753e127f3c280cba64d4952f4b470855d0dde45fdaa3f624c9d47f"
+        },
+        {
+            "type": "file",
+            "name": "index.html",
+            "size": 13954,
+            "hash": "89f9163f28327ef3f2d872cd423556d7a99cb6516810b477f60715064631d175"
+        },
+        {
+            "type": "file",
+            "name": "install_phpmailer.php",
+            "size": 1395,
+            "hash": "1427b38fac5d85086e20bd0753b9888fd2ad7479df840364baa78f0e68f00149"
+        },
+        {
+            "type": "file",
+            "name": "liberar-vision.js",
+            "size": 287291,
+            "hash": "8942f9031d2110a68bf32c9072a5f8042b4b8c6d155e5d5795d9e88fdb197ef7"
+        },
+        {
+            "type": "file",
+            "name": "lista-fornecedores-nacionais.html",
+            "size": 15774,
+            "hash": "244623167317af3d4abaf85a7f05ebe6d83649c4bd7a89e0bb2bf260e5e812e3"
+        },
+        {
+            "type": "file",
+            "name": "login.php",
+            "size": 6057,
+            "hash": "9dbf991ba1468613b5395f9e0942ce1cb130f4709bf021b49c6dd83625c690f3"
+        },
+        {
+            "type": "file",
+            "name": "login_usuarios.php",
+            "size": 5307,
+            "hash": "5c8fba6d273a056dddf83e7da727b74aa5e6d439e82f712c9edb73aaee3ada82"
+        },
+        {
+            "type": "file",
+            "name": "logout.php",
+            "size": 463,
+            "hash": "c48bc2edaf83d196a2079320267afb33f5dcaa4b3da7f179e2c9d8622c40cde6"
+        },
+        {
+            "type": "file",
+            "name": "logout_usuarios.php",
+            "size": 108,
+            "hash": "2d81ecf9b5d0f03f1be3a014751895a16959f371056f77cdd9e913dfea8ed31e"
+        },
+        {
+            "type": "folder",
+            "name": "logs"
+        },
+        {
+            "type": "file",
+            "name": "loja-na-yampi.html",
+            "size": 6757,
+            "hash": "3ba0ff0fd5775d247e915147dd03004292fdd5328cb2db4835ce09787ec57f7b"
+        },
+        {
+            "type": "file",
+            "name": "modelo-payload-yampi.html",
+            "size": 206022,
+            "hash": "0eae66aa6b685cd856ba73b7fec9c4fc98edee1d6be5795b19bdf75705790820"
+        },
+        {
+            "type": "file",
+            "name": "painel.php",
+            "size": 35705,
+            "hash": "c505af49d2416ddb2faec478865126e110008f83192f14ab9a44f408a694f1b6"
+        },
+        {
+            "type": "file",
+            "name": "recuperar_senha.php",
+            "size": 6462,
+            "hash": "9c87fa95df96efdd63158568b891c1796333c1b8f3625f53d5e1c4da5be44faa"
+        },
+        {
+            "type": "file",
+            "name": "redefinir_senha.php",
+            "size": 6974,
+            "hash": "be33bd244ffb7d3718c4ce3726aa26cfbdb4187a813caf637830e2d49b46e07f"
+        },
+        {
+            "type": "file",
+            "name": "simulate.html",
+            "size": 2147,
+            "hash": "edda58384ca8f9c7fb67aedfaab9583d61698f04bad6948e31d883a85870b034"
+        },
+        {
+            "type": "file",
+            "name": "simulate.php",
+            "size": 3558,
+            "hash": "91c31d61784c37cd3690edfbb8998d3c9f3981aafcac637561118fb039c378e3"
+        },
+        {
+            "type": "folder",
+            "name": "sql"
+        },
+        {
+            "type": "folder",
+            "name": "src"
+        },
+        {
+            "type": "file",
+            "name": "teste_email.php",
+            "size": 1506,
+            "hash": "365f4f159355355fcb57a24fd9046bde7d30944a012afa17a0a49c71bd82b86e"
+        },
+        {
+            "type": "file",
+            "name": "upload_pdf.php",
+            "size": 4768,
+            "hash": "ed8de1e59c5a65ac0225e956f5eae13a8336ca576335e282ea96ee556b819724"
+        },
+        {
+            "type": "folder",
+            "name": "vendor"
+        },
+        {
+            "type": "file",
+            "name": "webhook-bkp.php",
+            "size": 8276,
+            "hash": "582c6fc9a1ab5c0c56627d64d3a08985cd7059c5ab0a06602ff8f0d013b80ee7"
+        },
+        {
+            "type": "file",
+            "name": "webhook.php",
+            "size": 10275,
+            "hash": "f0bb9cb087332be3f3f297d806b2fbe4701421d47896611af386b6c94222ec30"
+        },
+        {
+            "type": "file",
+            "name": "yampi-payload-model.json",
+            "size": 35403,
+            "hash": "5c87b4036857f4d620a1c06d30b16bc07645f07c8166b11aa6688915f7d53d54"
+        },
+        {
+            "type": "file",
+            "name": "adm/add_lista.php",
+            "size": 1097,
+            "hash": "2b75410ead7b2f49d4b7319906cfc49a52229c6b0f538e7b2ce7446ee64f493c"
+        },
+        {
+            "type": "file",
+            "name": "adm/add_cliente.php",
+            "size": 1763,
+            "hash": "26f8940cce900246c7b10c3b197a60eb2790a31eb20244b239b0ddd39f0c839e"
+        },
+        {
+            "type": "folder",
+            "name": "adm/assets-admin"
+        },
+        {
+            "type": "file",
+            "name": "adm/clientes.php",
+            "size": 15358,
+            "hash": "268e8bf4d152e4d9003c60037bc0175a78f04085bec2b4e86d8398c3e455e10c"
+        },
+        {
+            "type": "file",
+            "name": "adm/dashboard.php",
+            "size": 2268,
+            "hash": "b64c3362a38928767376a0da2e3e7ca099e800ff1564f3586ba4ddcbb9a606eb"
+        },
+        {
+            "type": "file",
+            "name": "adm/index.php",
+            "size": 5841,
+            "hash": "7d9eca4e32c1b8429d4bd2ed93d8542b77c7a4d1565a32892eee42c523d2c19a"
+        },
+        {
+            "type": "file",
+            "name": "adm/listas.php",
+            "size": 11459,
+            "hash": "2f7b2e7a3c5e4e81812c50945ffa19de7514494f6237a059235810fcbe81a8de"
+        },
+        {
+            "type": "file",
+            "name": "adm/log.php",
+            "size": 1325,
+            "hash": "c9ee3566b5a036665409c5980f6929989b1d7ac452d1480ccd6bd46d384df29a"
+        },
+        {
+            "type": "folder",
+            "name": "adm/partials"
+        },
+        {
+            "type": "file",
+            "name": "adm/pedidos.php",
+            "size": 9236,
+            "hash": "e32822e1d081053431dc6fab067d27281da42a9780f200f811d151999f125024"
+        },
+        {
+            "type": "file",
+            "name": "adm/protect.php",
+            "size": 1020,
+            "hash": "b0670a0751e24ede38e21dc13a5ed73a38f59f6447d371ed9c3e44d09fd11794"
+        },
+        {
+            "type": "file",
+            "name": "adm/ver-html.php",
+            "size": 1473,
+            "hash": "11c56b18ffaff04fff404c8cf57f32c289189a438dd1ad5cfaea70986e5ca11c"
+        },
+        {
+            "type": "file",
+            "name": "area_de_membros/cadastro.php",
+            "size": 2054,
+            "hash": "e0e4bf9dad5cc1486555e471a5c25366ac5b41a630cac93a0afd156e75f2c0f6"
+        },
+        {
+            "type": "file",
+            "name": "area_de_membros/conexao.php",
+            "size": 340,
+            "hash": "1a6461e9becf376db92274678e127c8ad340d997040680e6ab3497e90dbc08e5"
+        },
+        {
+            "type": "file",
+            "name": "area_de_membros/logout.php",
+            "size": 81,
+            "hash": "d09469a4ed5a401b9d2bc9bf2b46f7b4290f7cc747b1956cfd5fae6e6064a19b"
+        },
+        {
+            "type": "file",
+            "name": "area_de_membros/login.php",
+            "size": 2158,
+            "hash": "b98e7a95830487019be5bc89e2fb6e6642c314f812d04d6bcb8c7ed4fcd8bb19"
+        },
+        {
+            "type": "file",
+            "name": "area_de_membros/membro.php",
+            "size": 1678,
+            "hash": "84cafd8058e9be38bc57324af8a41a336c9fb1c237423366ff360e9fd9f36902"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/conteudo-cards.json",
+            "size": 1379,
+            "hash": "7109f3e290442b857e299274ba7a5a575ce27722471217e3815296107d55a4b5"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/conteudo-cards.js",
+            "size": 2835,
+            "hash": "af4c52e2739c10d476ec310e27e74cd0e418e5a7c31191fd5ec6d74d19178717"
+        },
+        {
+            "type": "folder",
+            "name": "assets-agencia-led/icones-svg"
+        },
+        {
+            "type": "folder",
+            "name": "assets-agencia-led/img"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/script.js",
+            "size": 0,
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/style-checkout-yampi.css",
+            "size": 6444,
+            "hash": "28ac22138f22d6696c34a3bd6a29e301e835798c986bd1ae4482b9da42baa4e5"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/style-sobre-checkout.css",
+            "size": 600,
+            "hash": "62439dbc0cb45ad589c0580f4329420094ed2cd3a3572e3ddfaffc7d06928c0c"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/style-usinatools.css",
+            "size": 6892,
+            "hash": "f945d97730e4e8e41fde77bfbc64213602e185cc6af44c3f462bd83865133680"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/style.css",
+            "size": 16383,
+            "hash": "2f402ca2c34d64b7ae43b310a3a48de43308577cb931a668f89d6f2a844f96c3"
+        },
+        {
+            "type": "folder",
+            "name": "assets-listas-lp/fonts"
+        },
+        {
+            "type": "folder",
+            "name": "assets-listas-lp/css"
+        },
+        {
+            "type": "folder",
+            "name": "assets-listas-lp/images"
+        },
+        {
+            "type": "folder",
+            "name": "assets-listas-lp/js"
+        },
+        {
+            "type": "file",
+            "name": "config/email.php",
+            "size": 396,
+            "hash": "73ad65bfef0b67174012d5beb76670efcbae567815c82469955da55c6fb88fda"
+        },
+        {
+            "type": "file",
+            "name": "config/config.php",
+            "size": 1033,
+            "hash": "3dedc573418a3abb7945deee1d14a09fa4fc33bc3bf82a8aca7e038a8a625ec3"
+        },
+        {
+            "type": "file",
+            "name": "ebooks/capa-lista-decoração-slim.jpg",
+            "size": 93504,
+            "hash": "226a04eed7d05fc7deeffb85487aa1e78f6e01362ddde6e69aab5af31909493f"
+        },
+        {
+            "type": "file",
+            "name": "ebooks/capa-lista-decoração.jpg",
+            "size": 112337,
+            "hash": "56228b84727c507102277c590df82c7fbd021b0e833ab2d17209c228813f9c4d"
+        },
+        {
+            "type": "file",
+            "name": "ebooks/download.php",
+            "size": 1832,
+            "hash": "3d63be57737af0ac8a33762b33ebaf9dff4116c648edc1518d150f57bc3c2fb5"
+        },
+        {
+            "type": "file",
+            "name": "ebooks/fornecedores-decoracao.html",
+            "size": 4656,
+            "hash": "4ba59ba8d262d0cec7cef4af5fd62febeea052a3513e4324b9aa19cce0883bc2"
+        },
+        {
+            "type": "file",
+            "name": "ebooks/fornecedores-nacionais-decoracao.pdf",
+            "size": 147488,
+            "hash": "39a74068e2b38cf0b7e492234c9a66b05c64bc211917c277d6050020972e8d62"
+        },
+        {
+            "type": "file",
+            "name": "ebooks/simulate.html",
+            "size": 2482,
+            "hash": "00d4c895062f10485c28bcea04c0e83a7740d7e21fd9e08bd10b56c494cac7bb"
+        },
+        {
+            "type": "file",
+            "name": "ebooks/simulate.php",
+            "size": 2406,
+            "hash": "9d7bbdcfb531b38fdd0c40b6f99054acb67bca6babd22d99fb1f96dcac3e5a54"
+        },
+        {
+            "type": "file",
+            "name": "ebooks/webhook.php",
+            "size": 5785,
+            "hash": "d52d40dd21edb8b56f7edee6dc85621951ca4656f5d5d19bb8e12fe3664a99f3"
+        },
+        {
+            "type": "folder",
+            "name": "email/PHPMailer"
+        },
+        {
+            "type": "file",
+            "name": "files/Lista_Secreta_Fornecedores.pdf",
+            "size": 147488,
+            "hash": "39a74068e2b38cf0b7e492234c9a66b05c64bc211917c277d6050020972e8d62"
+        },
+        {
+            "type": "file",
+            "name": "logs/app.log",
+            "size": 187144,
+            "hash": "9e9d7c67fce6062bb7564f24e84496c8dc9fc3ea234b2fffe55a9f4f98e65fbf"
+        },
+        {
+            "type": "file",
+            "name": "sql/recuperacao_senha.sql",
+            "size": 460,
+            "hash": "57916e6ce2fa853c47b845d4ac26547ab6b36dfeb649a1f2b37dae42e4df45ef"
+        },
+        {
+            "type": "file",
+            "name": "src/Database.php",
+            "size": 811,
+            "hash": "521ee9f0464f4b002d262b02aca8d2042f4697d88d1930aede742743a7501403"
+        },
+        {
+            "type": "file",
+            "name": "src/Mailer.php",
+            "size": 13984,
+            "hash": "6cf794bbd021f882c906c11fcbc9c9dab903137a2fe4686ea3a546ceae5599a3"
+        },
+        {
+            "type": "file",
+            "name": "src/functions.php",
+            "size": 832,
+            "hash": "f85a7f784ebb8bf5476752f5048185e69c05ba582d0779d5f3af4de6cb101c48"
+        },
+        {
+            "type": "folder",
+            "name": "vendor/PHPMailer"
+        },
+        {
+            "type": "file",
+            "name": "adm/assets-admin/admin.css",
+            "size": 2864,
+            "hash": "8dc4524c86d93f71e070bab7aa74695ff0e3798a514016feb35aec5df57fa34a"
+        },
+        {
+            "type": "file",
+            "name": "adm/assets-admin/logo-agencia-led-slim.png",
+            "size": 3556,
+            "hash": "ab330522a7cebe87e8835c1c63c816dac5bc982837a2f20dbe12a3c56f2054d6"
+        },
+        {
+            "type": "file",
+            "name": "adm/partials/footer.php",
+            "size": 258,
+            "hash": "4a1af2bd8b7e2d3ddafd500d66f773fe427d8787d4c0e703c463e0220e960e63"
+        },
+        {
+            "type": "file",
+            "name": "adm/partials/header.php",
+            "size": 493,
+            "hash": "7c51040d1d6dc216c45ac63a254a0d33d68846ae476bf492ab208351328b7c46"
+        },
+        {
+            "type": "file",
+            "name": "adm/partials/logout.php",
+            "size": 109,
+            "hash": "59d4089939343f1d12e2e60aa5271e7f4583285f95ff43e4d8110ec375f70c40"
+        },
+        {
+            "type": "file",
+            "name": "adm/partials/sidebar.php",
+            "size": 2702,
+            "hash": "dfae2312e4d32dd336c5b1a3aea58f080df89fcf505f4a43f7579815f2ff2980"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/icones-svg/carrinho-de-compras.svg",
+            "size": 530,
+            "hash": "f20cfae342d90b95dc9a2aa1e6fb8559bf43d4c4d403ab098848fc16aecafa40"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/icones-svg/check.svg",
+            "size": 941,
+            "hash": "87ef0ba65da5e04896dcdadb4938dec80b1cc2c5982adc64beb68dd9eb5d3885"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/icones-svg/cartao-de-credito.svg",
+            "size": 532,
+            "hash": "b01be359398f10ee7473c5bc8e13c7b72631039fa6da7bec7eac17827ce810fc"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/icones-svg/globo.svg",
+            "size": 980,
+            "hash": "03d96ed6c582c184e78b59ed548febe3e59a39567a380624cb819078d3a046e6"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/icones-svg/icons8-foto-vazado.svg",
+            "size": 2239,
+            "hash": "2057875d7fef39e20ea9ff6c0fa4a0c9d43f7223548b3218f03be8ee4a6daf5f"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/icones-svg/icons8-foto.svg",
+            "size": 1202,
+            "hash": "93cd3c8722e75acf8d0e13ca8d00df0537855b59f7417409e33850a51ae4b47e"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/icones-svg/instagram.svg",
+            "size": 1669,
+            "hash": "9f7e848979538254bb47fb5d8714a9ad6abc6456200fde8ebf246c38a091e9c4"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/icones-svg/trancar.svg",
+            "size": 390,
+            "hash": "c728f253f414be2ccafaa2aaeefde6010940eee64e494333679d737ab8ab2f69"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/360_F_109416499_I6mO3BJwrNcFBhTB6GHCPdJtqmF1n4Tv.jpg",
+            "size": 15606,
+            "hash": "2afb1fb353ab3ecd6cee6f3930e3ff18a956bd84e971bd9c5a83125fde7c988b"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/360_F_789073469_Ejr5bcT3DIVO0hTfaHwLLNB6GVEl6uaq.jpg",
+            "size": 14344,
+            "hash": "4199c0b851745796b3b8dce54f9aa2f5953dcc169b692ea5ca1c9dafccf85f7a"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/Imagem Para Venda de Pacote.jpg",
+            "size": 115058,
+            "hash": "77c2fda683b1338557ec9aad193ac16daefe45381060ce6ce670cf2090d784b2"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/envelope.png",
+            "size": 9876,
+            "hash": "cab944ea10dbff9771b72c195c9efb3ea2659b098af5c987e09ad4011e0233bf"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/faixa-de-notebook-realista-mockup-da-tela-do-laptop-cor-cinza-escura-computador-vetor-em-fundo-branco-isolado-eps-199972297.webp",
+            "size": 2942,
+            "hash": "22b3d438984af3ecdb654d8fdd758ee13f11027364a0c8c221cbbc0b7c1999fd"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/icone-favorito-agencia-led.png",
+            "size": 12880,
+            "hash": "87a6cd7e0e3adef39535340d889d9fe8f908002afe6e9af7ec62f431a151b1be"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/icone-favorito-led.png",
+            "size": 5732,
+            "hash": "91a23df54024758090753a3e65c1b72ccb23ca558e5fbc017a9e52372897a438"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/img-loja-01.png",
+            "size": 175389,
+            "hash": "1f9137e9d40e8a35281049d217053c38372841a0befa9539c3cab6f2db368b23"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/img_1.jpg",
+            "size": 137186,
+            "hash": "4b02fc1c440bd0e58771d7eff0c4efb7619181355764d91902f2131428066619"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/login-alt.png",
+            "size": 12271,
+            "hash": "be0d3c115cf95f5a1525fa575b085e3376213531bd5a000ef3ca2ea8e1799b07"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/logo-agencia-led-branca.png",
+            "size": 8263,
+            "hash": "2e3d7fe2bab74f4756d10cf3c67f5caee2041bab3766746ef5cfbb1f23d312d4"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/logo-agencia-led-icone-foguete-wtp.jpg",
+            "size": 48707,
+            "hash": "399955b7f0cd12ca4c5badc84c00c9f1b8aed052af8af937619647779b85ebcc"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/logo-agencia-led-icone-foguete.png",
+            "size": 21121,
+            "hash": "bfcd3301b43682c9850767405dbad9944536ea6106f1ca071402abaa6b8d418c"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/logo-agencia-led-slim.png",
+            "size": 8801,
+            "hash": "01f0031042e42cd07cff3454b8218ccd9f8279bec61947d1f53c942532919396"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/logo-agencia-led.png",
+            "size": 13321,
+            "hash": "7b035c01c56174e85d1c7863d0c32a6ffe1322a88e7a9827026e7795a39dcf22"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/logo-led-branca.png",
+            "size": 2683,
+            "hash": "6917ea844cce8235ac843ffd5b1dbe8230484f67593a09bcad77cc53c0a12283"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/logo-led-preta.png",
+            "size": 2440,
+            "hash": "88c86e908a0f6b2279876fefbc5f639c4a33a5954196a604313c78f4643e88e1"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/logo-led.png",
+            "size": 3556,
+            "hash": "ab330522a7cebe87e8835c1c63c816dac5bc982837a2f20dbe12a3c56f2054d6"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/modelo-01.jpg",
+            "size": 103401,
+            "hash": "89466b1d02d38030b4910e19756e83f5deff008b3c58ea7a87c9a70bdb9b9ebf"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/modelo-02.jpg",
+            "size": 144250,
+            "hash": "3bba37e78d46f3bbbb41b8a3e1633205e760c1375491c5778de4c730db440722"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/modelo-03.jpg",
+            "size": 122020,
+            "hash": "1cb26d18aca2bd40c1a13a5e07231b07a646b52b60216e82bb5413407d915670"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/mokup-loja-virtual-slim.png",
+            "size": 376363,
+            "hash": "838d2ec37dce00721de6b50d796d8feeb725d703488e3a66b0868511fc0b399b"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/mokup-loja-virtual-vasado.png",
+            "size": 115497,
+            "hash": "17b90602f18e62298bdb0b4dc445a256cea10b15397ef3faf99164048a89a5e8"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/mokup-loja-virtual.png",
+            "size": 381866,
+            "hash": "dd5ce06499d1e9d6def9d0aba8656c5e1a0cfbdafbfac856428e27375d135f3f"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/mokup-notebook-yampi.png",
+            "size": 32385,
+            "hash": "9975af13a6d1ffe5cb5c4d71160d36d12c5353856fb845810c5bf951f6c9b5cd"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/perfil lochayde oliveira.jpg",
+            "size": 198134,
+            "hash": "8454e2f9e618b6f3997db47cfd0c2c1a5aa002c7e2d3f8bea2bc211761605c9e"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/scrool-img-simula.jpg",
+            "size": 137186,
+            "hash": "4b02fc1c440bd0e58771d7eff0c4efb7619181355764d91902f2131428066619"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/seta-para-cima-direita-do-quadrado.png",
+            "size": 9715,
+            "hash": "f77413e7464b83835e3e1375e3c0f0302d4a3ea186f729d93f3cd9003880f785"
+        },
+        {
+            "type": "file",
+            "name": "assets-agencia-led/img/whatsapp.png",
+            "size": 18414,
+            "hash": "99e20899775b258b2d781dac8c99f755f87fd4924b414d195339e9188956bc66"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/fontawesome-webfont.eot",
+            "size": 165742,
+            "hash": "7bfcab6db99d5cfbf1705ca0536ddc78585432cc5fa41bbd7ad0f009033b2979"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/fontawesome-webfont.ttf",
+            "size": 165548,
+            "hash": "aa58f33f239a0fb02f5c7a6c45c043d7a9ac9a093335806694ecd6d4edc0d6a8"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/fontawesome-webfont.woff",
+            "size": 98024,
+            "hash": "ba0c59deb5450f5cb41b3f93609ee2d0d995415877ddfa223e8a8a7533474f07"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/fontawesome-webfont.woff2",
+            "size": 77160,
+            "hash": "2adefcbc041e7d18fcf2d417879dc5a09997aa64d675b7a3c4b6ce33da13f3fe"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/fontawesome-webfont_1.eot",
+            "size": 165742,
+            "hash": "7bfcab6db99d5cfbf1705ca0536ddc78585432cc5fa41bbd7ad0f009033b2979"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/inter-ucc53fwrk3iltcvneqg7ca725jhhknnqk6l0uumjng.woff2",
+            "size": 27432,
+            "hash": "8d3c325316c84e52d046d74b2045cac90c4d0455f5ad8c1a6621b48a1f3e6b17"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/inter-ucc53fwrk3iltcvneqg7ca725jhhknnqk6l1uumjng.woff2",
+            "size": 12124,
+            "hash": "19e31be0eca6000fb682f86da9e14680792c74ad3722bca4206464069851db80"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/inter-ucc53fwrk3iltcvneqg7ca725jhhknnqk6l2uumjng.woff2",
+            "size": 10596,
+            "hash": "1991ed5832eb07f7523f22a843ca9a8aa83c51c8e87062ce77794855d2f5dee8"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/inter-ucc53fwrk3iltcvneqg7ca725jhhknnqk6l3uumjng.woff2",
+            "size": 80836,
+            "hash": "7c6138c6716f0b4bdd3e431637fabbb177e7173f73e903c50bb2f2dfc42a32d8"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/inter-ucc53fwrk3iltcvneqg7ca725jhhknnqk6l5uum.woff2",
+            "size": 51924,
+            "hash": "ecbf4bcc5f73605021f6892fcee473cd0f43f47b82ba048d5b426cecfab475e2"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/inter-ucc53fwrk3iltcvneqg7ca725jhhknnqk6l6uumjng.woff2",
+            "size": 20480,
+            "hash": "70903e80b70b9d6bbe2c2ecc587316b13f4f3ddf47e02ec19fe4ff4203718074"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/inter-ucc53fwrk3iltcvneqg7ca725jhhknnqk6l9uumjng.woff2",
+            "size": 19976,
+            "hash": "f8b0c981effb83656bb2af96edc3434bd19a39b895adfb42437fa6e3e1d1340d"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/inter-ucc73fwrk3iltehus_nvmrmxcp50sjia0zl7suc.woff2",
+            "size": 18740,
+            "hash": "62cc01daef72c3ea76a258445368d2f4ab8d05a91f91c53fd12f7c42e3325942"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/inter-ucc73fwrk3iltehus_nvmrmxcp50sjia1pl7suc.woff2",
+            "size": 19072,
+            "hash": "e6025d5b92700a6958e774cc8d88927591131bfbbf4bb2d9e39279df2b3a2dac"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/inter-ucc73fwrk3iltehus_nvmrmxcp50sjia1zl7.woff2",
+            "size": 48444,
+            "hash": "f052ee44c3728dfd23aba8a4567150bc314d23903026fbb6ad089422c2df56af"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/inter-ucc73fwrk3iltehus_nvmrmxcp50sjia25l7suc.woff2",
+            "size": 74328,
+            "hash": "48f540fb71166bf65a0fe187a71fad500c43143d3e2e42038f527e38c786e90f"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/inter-ucc73fwrk3iltehus_nvmrmxcp50sjia2jl7suc.woff2",
+            "size": 25888,
+            "hash": "c2963dc765a0e80acf26996e9eecae2445f33783d53c615dc014a8be72aac170"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/inter-ucc73fwrk3iltehus_nvmrmxcp50sjia2pl7suc.woff2",
+            "size": 10252,
+            "hash": "5c66f9e07e90c6d4ac4922cc68d60de26c17b1858e677fb5e603fce3952b3ff2"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/inter-ucc73fwrk3iltehus_nvmrmxcp50sjia2zl7suc.woff2",
+            "size": 11200,
+            "hash": "6a417cfe405a9c889e2fd63a67289b85a688681c0fa64f1215e74ac1471a36fe"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/mavenpro-7au9p_aqnywwaxw2wk3gw2qiafg.woff2",
+            "size": 19412,
+            "hash": "0bc9353e16629b95940cec5a35818ad748c468e119fe08371953e54f14d1684a"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/mavenpro-7au9p_aqnywwaxw2wk3gwmqiafg.woff2",
+            "size": 7544,
+            "hash": "b08fe1b76d7fd54f8a45f7ae8bcf12f87917b969b27febe1c8aa4f4e1b50409e"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/mavenpro-7au9p_aqnywwaxw2wk3gzwqi.woff2",
+            "size": 20140,
+            "hash": "968b1a6ec61d2e6d238adbbb8ecca304cda2e251bbef7f9085df187c993195a3"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/montserrat-jtuqjig1_i6t8kchkm459wxrxc7mw9c.woff2",
+            "size": 26912,
+            "hash": "468ffe8053d3c85cdd5da8bd8286eb0c9644b9a80742ce1d76558eccb4a09a1e"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/montserrat-jtuqjig1_i6t8kchkm459wxrxi7mw9c.woff2",
+            "size": 13868,
+            "hash": "e7cc08e857ebbc4c5a5fd27ac96c0a29c4deb59fe429a839ec035eb2b203fc75"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/montserrat-jtuqjig1_i6t8kchkm459wxrxy7mw9c.woff2",
+            "size": 75044,
+            "hash": "8a75a31c95f80ea55b37408857a5dbfedfc00b2ffafd883b2e7ba722b3d42520"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/montserrat-jtuqjig1_i6t8kchkm459wxrys7m.woff2",
+            "size": 39608,
+            "hash": "96a874a36a161a53381e9c5b16dcc188a04da68d463130aaf505c0f08de38782"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/montserrat-jtuqjig1_i6t8kchkm459wxrzs7mw9c.woff2",
+            "size": 24620,
+            "hash": "3ae053b94003c33e86fcbc79f8ba2ad3108fdfdf5aa554cf4db25dd4ec731bd2"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/montserrat-jtusjig1_i6t8kchkm459w1hyzbi.woff2",
+            "size": 23836,
+            "hash": "9a6dde39d72bcc6477eaf676d55fda00c5312bd7050d9e4f36e6dc7ca9b9e763"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/montserrat-jtusjig1_i6t8kchkm459wdhyzbi.woff2",
+            "size": 70768,
+            "hash": "516507425d7f314a4731db8a6848b8d584326bad9cc47dbffa4052faf90de11b"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/montserrat-jtusjig1_i6t8kchkm459wlhyw.woff2",
+            "size": 37828,
+            "hash": "fdc9964050bfa24c27a3c76c6791b3674292a5f352cbc83d7a4dc49595bc3fb1"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/montserrat-jtusjig1_i6t8kchkm459wrhyzbi.woff2",
+            "size": 26476,
+            "hash": "dcbe843efc8bfb86a32dcc06a8dcc3beb597c3a9bcec740e2fe66ca459c94243"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/montserrat-jtusjig1_i6t8kchkm459wzhyzbi.woff2",
+            "size": 13020,
+            "hash": "1d9320d0a0261ae7d49bd23062b5077f47cdb1a67bae4daa0c7dc34db89ea46f"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxiayp8kv8jhgfvrjjlme0tcmpi.woff2",
+            "size": 8404,
+            "hash": "d80200523e723113f1802f7eb3258d5b922e6546d637d502f0fd2ea470201df5"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxiayp8kv8jhgfvrjjlme0tmmpkzsq.woff2",
+            "size": 5720,
+            "hash": "541e2d0cd4e67f7adec2779c88a4dfaecd86d65ec55b98fd0b3ab9a9d221ec75"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxibyp8kv8jhgfvrlbt5z1jlfc-k.woff2",
+            "size": 5380,
+            "hash": "0270140e6150b816366ba81ba043edb066089bea037a34516105d281722e772f"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxibyp8kv8jhgfvrlbt5z1xlfq.woff2",
+            "size": 7632,
+            "hash": "17ea10196a490a8d3b8da162c7d4af9c301c5229f70af90dad6fa33eb951d83f"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxibyp8kv8jhgfvrlcz7z1jlfc-k.woff2",
+            "size": 5432,
+            "hash": "ccfd87f69ef00d811da3d06488cec4e79ec99d289cfbcbe4be42031cecae775a"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxibyp8kv8jhgfvrlcz7z1xlfq.woff2",
+            "size": 7816,
+            "hash": "9338e65fc077355c7a87ae0d64cc101e23b9bf8ad78ae65f0f319c857311b526"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxibyp8kv8jhgfvrldd4z1jlfc-k.woff2",
+            "size": 5492,
+            "hash": "a72eccfa6cfa9c26b4004e98dbf8592ea0fb3704b2fc749e8bd60a996e2e5a7c"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxibyp8kv8jhgfvrldd4z1xlfq.woff2",
+            "size": 7824,
+            "hash": "60bf0aba6526436f3930c58c12047687fbb6bff4dd180cce4613458ed3439ea2"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxibyp8kv8jhgfvrldz8z1jlfc-k.woff2",
+            "size": 5524,
+            "hash": "33ff412e573782b800c68bb81a6be6f987ad40c36b681aeeaf188e723a9fc46c"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxibyp8kv8jhgfvrldz8z1xlfq.woff2",
+            "size": 7840,
+            "hash": "78bc3aa78faec288bbb3bf26c9a0fa4eb67b1e69da94a17233c5cab60525efdb"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxibyp8kv8jhgfvrlej6z1jlfc-k.woff2",
+            "size": 5524,
+            "hash": "bb1f2d582e7fba586ab70c91ef062d3becaf78b887654953863521b73665d171"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxibyp8kv8jhgfvrlej6z1xlfq.woff2",
+            "size": 8000,
+            "hash": "f4e80d9dfd374d02989b87a27b5ed4cb78fbb177c27f1478e9a8b0afb7513149"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxibyp8kv8jhgfvrlfj_z1jlfc-k.woff2",
+            "size": 5508,
+            "hash": "385e10dd29173c677ef4c50e8348f823878a71a63af5b3f629431c5f2a9c7bac"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxibyp8kv8jhgfvrlfj_z1xlfq.woff2",
+            "size": 7932,
+            "hash": "6f0c572590421075878908e0b380c5a6d404f72aa7d6d125385943be658f8399"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxibyp8kv8jhgfvrlgt9z1jlfc-k.woff2",
+            "size": 5484,
+            "hash": "af5fda16a19169e029a132374616728e1bf326d90bef5a552395c5053e21cd0f"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxibyp8kv8jhgfvrlgt9z1xlfq.woff2",
+            "size": 7748,
+            "hash": "cd36de204aca2d5fa263a731f7c20009b5e3d754ba1f1e03c33e93a48f3e7446"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxidyp8kv8jhgfvrjjlm111vf9eo.woff2",
+            "size": 8680,
+            "hash": "494d66c1f510af5609c852b228a4ad3e0f12ccf93126b5f437f8e4ac14def828"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxidyp8kv8jhgfvrjjlm111vgdeoceg.woff2",
+            "size": 5932,
+            "hash": "fabc455f55219e7fd5c5f69adfc5b073868fa45b09dfcb24bfdf1060575f9df1"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxidyp8kv8jhgfvrjjlm21lvf9eo.woff2",
+            "size": 8712,
+            "hash": "f0ae296f5c19db047491f1311d621ff18960b34cfa9cb07b69932a02ec298366"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxidyp8kv8jhgfvrjjlm21lvgdeoceg.woff2",
+            "size": 5956,
+            "hash": "f1f727141c2243e9c7792df5ed2dd6c441705bfbcf742257347f93683d8d61a3"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxidyp8kv8jhgfvrjjlm81xvf9eo.woff2",
+            "size": 8488,
+            "hash": "ed79248088783dd5be147808b6f904dc55122f18e80cc0780da3d3e6152ea1b1"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxidyp8kv8jhgfvrjjlm81xvgdeoceg.woff2",
+            "size": 5812,
+            "hash": "596b940732c1bd30d2e58ea2ecc62035f6a3de5693d7801085483e1698206c21"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxidyp8kv8jhgfvrjjlmg1hvf9eo.woff2",
+            "size": 8504,
+            "hash": "1ddb074f9963be8f6275c42dbd54d18625da8f91c85803121094ec81649f488b"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxidyp8kv8jhgfvrjjlmg1hvgdeoceg.woff2",
+            "size": 5856,
+            "hash": "248a4c140325101536a69bff763665e7356390cbf0ce326b35bad968e42b5743"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxidyp8kv8jhgfvrjjlmr19vf9eo.woff2",
+            "size": 8724,
+            "hash": "3ad6c8bd3624555dd79177efe91f0aca20e7f28597fa6b49762c27f337500d8d"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxidyp8kv8jhgfvrjjlmr19vgdeoceg.woff2",
+            "size": 6012,
+            "hash": "10a9b6414cbebd6948c3a3a96838480b1ee019e0468033245ea1ddf1143bcda8"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxidyp8kv8jhgfvrjjlmv1pvf9eo.woff2",
+            "size": 8720,
+            "hash": "28d28631a83de4ed8567b99ae8f9d895c0cc8a083cb42ae9c2c152367d3acd29"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxidyp8kv8jhgfvrjjlmv1pvgdeoceg.woff2",
+            "size": 5980,
+            "hash": "5dfaf84dcae2a3083bc95295a87d8ec16b406bbf52abe5b894dbdf360a91f645"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxidyp8kv8jhgfvrjjlmy15vf9eo.woff2",
+            "size": 8596,
+            "hash": "4b0864712c6e7ca75f8c003f7bc1a9270af33d6becd4119463771593274c48d2"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxidyp8kv8jhgfvrjjlmy15vgdeoceg.woff2",
+            "size": 5860,
+            "hash": "4c05ae2d20c308c3b949b4578256e5438d0af62a7d32ac6dfcc63a230246adb0"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxieyp8kv8jhgfvrjjfecg.woff2",
+            "size": 7884,
+            "hash": "7d93459d86585bfcdbb7e0376056226adb25821ee54b96236fe2123e9560929f"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxieyp8kv8jhgfvrjjnecmne.woff2",
+            "size": 5644,
+            "hash": "0b1fcab42c18b69bcfe9ce4799fcbff5af1621c53ffcfdc4723c6f5ec4ee3ffb"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxigyp8kv8jhgfvrjjluchta.woff2",
+            "size": 8668,
+            "hash": "50d0c1742d80ac71f4cde20e8c04d41a24806af342831f479938b527fbff0972"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxigyp8kv8jhgfvrjjlufntakpy.woff2",
+            "size": 5964,
+            "hash": "1e91b430ebe5aa347934e70dcd76ca3c594e34d41d14ba3e2f1a7e1dcbc0cfc6"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxigyp8kv8jhgfvrlptuchta.woff2",
+            "size": 7484,
+            "hash": "a9220f99b916978e5d7934b73be5ab91444871ba52a89032e4dd90e42b0a96e1"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/poppins-pxigyp8kv8jhgfvrlptufntakpy.woff2",
+            "size": 5364,
+            "hash": "b49bddf0704c9a43e05aec3017a719e1f5739a45add8b88b1c9d726e90ea6900"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/roboto-kfo5cnqeu92fr1mu53zec9_vu3r1gihoszmkahkawzu.woff2",
+            "size": 22288,
+            "hash": "900190befc0dfe4ae99fefcbe7f72425c48a61ebe3ff00bbe93b0287e0007c97"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/roboto-kfo5cnqeu92fr1mu53zec9_vu3r1gihoszmkankawzu.woff2",
+            "size": 24576,
+            "hash": "a5ee960e6273ecaa1787150604d18a2be3fad74cf76936f916ed8b235a4106bb"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/roboto-kfo5cnqeu92fr1mu53zec9_vu3r1gihoszmkbnka.woff2",
+            "size": 44192,
+            "hash": "9ec9eb9108f1752c30ba316606858d685a112a609d8bef1fb3d5d32c8e0b6507"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/roboto-kfo5cnqeu92fr1mu53zec9_vu3r1gihoszmkbxkawzu.woff2",
+            "size": 18800,
+            "hash": "baac6db7ec159297d2fe9d313222d826e76b09fd72be43530b632059d482c02d"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/roboto-kfo5cnqeu92fr1mu53zec9_vu3r1gihoszmkc3kawzu.woff2",
+            "size": 39456,
+            "hash": "fbeb2620ecd7451cd9f27a70e7ec39e1597cb33fd36be9424bf97a18c0e2e786"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/roboto-kfo5cnqeu92fr1mu53zec9_vu3r1gihoszmkchkawzu.woff2",
+            "size": 28536,
+            "hash": "b9acf16c2906a6b95c31bf7cd8b417bfc32f83216a50d70c0cd41e57a1922f4a"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/roboto-kfo5cnqeu92fr1mu53zec9_vu3r1gihoszmkcnkawzu.woff2",
+            "size": 4468,
+            "hash": "68ab4e107fc1d8d32d358b0e8c8182921e7934e4fc672f3805dfa9a16946a9fb"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/roboto-kfo5cnqeu92fr1mu53zec9_vu3r1gihoszmkcxkawzu.woff2",
+            "size": 13888,
+            "hash": "a0435a376ff703ac8ceedd566f18e3b025d91f35349b21968a09d65080fac0b6"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/roboto-kfo5cnqeu92fr1mu53zec9_vu3r1gihoszmkenkawzu.woff2",
+            "size": 44336,
+            "hash": "8754810078212d20cc4d3e96f6c4fd2d2252e06263617681ebd1cfae813b68b2"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/roboto-kfo7cnqeu92fr1me7ksn66agldtyluama3-ubgee.woff2",
+            "size": 17628,
+            "hash": "31c5962274d8bd31cbf72f45aaa615f33f230088491b4ee5d9f544fef10c418e"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/roboto-kfo7cnqeu92fr1me7ksn66agldtyluama3cubgee.woff2",
+            "size": 4340,
+            "hash": "d94ccab74005ea632c5680d33d34586634ded595035990fa2cfef2f1e1cccb55"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/roboto-kfo7cnqeu92fr1me7ksn66agldtyluama3gubgee.woff2",
+            "size": 35568,
+            "hash": "3a8eee8312b77ac2ef2dc2e01fdddf8ede8a4f72bf1a08d40745d8b432386fdf"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/roboto-kfo7cnqeu92fr1me7ksn66agldtyluama3iubgee.woff2",
+            "size": 22796,
+            "hash": "c06ca3fcbc5f7c37ebb7c86a69502009911ecd8183811bae02f9b1fbb0541ddb"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/roboto-kfo7cnqeu92fr1me7ksn66agldtyluama3kubgee.woff2",
+            "size": 26428,
+            "hash": "884933fb5789b478d2da68a4cb0bd5cc138d995f1fea9a957ba29cb3c00f1bf7"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/roboto-kfo7cnqeu92fr1me7ksn66agldtyluama3oubgee.woff2",
+            "size": 13004,
+            "hash": "38ca68052df6bb72126ff9cedd7d78d2afe62079e9149ddedf650ae8f4c744cf"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/roboto-kfo7cnqeu92fr1me7ksn66agldtyluama3yuba.woff2",
+            "size": 40128,
+            "hash": "20b535fa80c8189e3b87d1803038389960203a886d502bc2ef1857affc2f38d2"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/roboto-kfo7cnqeu92fr1me7ksn66agldtyluamawcubgee.woff2",
+            "size": 40572,
+            "hash": "d758e85352971dffe51a5992405eb8f9b316b1bed82495445c328699ee400830"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/roboto-kfo7cnqeu92fr1me7ksn66agldtyluamaxkubgee.woff2",
+            "size": 20408,
+            "hash": "e921785496ed2d98c2257c88a6f838afa6acbee05cb8467048501bfe2a301461"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/worksans-qgyqz_wnahgadqq43rh_ezdkv_1w4a.woff2",
+            "size": 11524,
+            "hash": "cf1173c4c44ecbd9225b4d3d1f93f0d630024379f7d77912253fa501dc47cd6d"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/worksans-qgyqz_wnahgadqq43rh_ezdlv_1w4a.woff2",
+            "size": 31368,
+            "hash": "fc6ec95edbd4d9b4ccb934fd456801dca92f6c8b9e68bb337576de74d55b6f99"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/worksans-qgyqz_wnahgadqq43rh_ezdrv_0.woff2",
+            "size": 48356,
+            "hash": "0422742e6c82cf3b25d46c77cb8fb17af8080cd8b155f848cc66226c64976978"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/worksans-qgysz_wnahgadqq43rh_c6dpp_k.woff2",
+            "size": 11596,
+            "hash": "a88e51e1f675e64d4a06a1713d3a3262c5679011dafe006a7ec3dae21138032f"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/worksans-qgysz_wnahgadqq43rh_cqdpp_k.woff2",
+            "size": 34668,
+            "hash": "01be3b09ff08b902fbf43a706aca14b09af89436ce97bd20e82d2ba7d1a6a64b"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/fonts/worksans-qgysz_wnahgadqq43rh_fkdp.woff2",
+            "size": 50668,
+            "hash": "6912f7388531e949bd5406b5668cd6b55fea4cc7e2d123dbaed489054dd98438"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/bounceIn.min.css",
+            "size": 367,
+            "hash": "02ae6101096a037cafe3c0bb64a0cb7faf1d617bf6afe35b3405f02f03096b42"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/e-animation-grow.min.css",
+            "size": 198,
+            "hash": "dad3795cefb3d9f5dc2cb4a6e621043322cc94cd90170f28f25b8a0c3eda7633"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/e-animation-pulse.min.css",
+            "size": 318,
+            "hash": "b304de7cdb731ce27ebf9eebbcd9024537dfbf596cbfef35ee2ad5ce5116715c"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/enhancements.min.css",
+            "size": 281,
+            "hash": "cb49b283ee5d97f48e2815b609d93ed0fe1e705c15e78a267f00b1515a040cb4"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/font-awesome.min.css",
+            "size": 30961,
+            "hash": "5071c1904dd00008a6afc71ffbda872a613c3b35b725b5b6bb5e59a7e7925e57"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/frontend.min.css",
+            "size": 53358,
+            "hash": "5271312dc4effacd655d0b5ef75554749698885a487bf4612b64cd9e9505b54b"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/inter.css",
+            "size": 41769,
+            "hash": "faaa43986b41fb5a98c0022da6c6bda67818d72a3c8558a47cab31e8ed8f4e1b"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/mavenpro.css",
+            "size": 7074,
+            "hash": "ab5770f82b226d5def09e7e040f15923505136686df266efa273f6bf20910b08"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/montserrat.css",
+            "size": 32022,
+            "hash": "3c50312fc3116905e2b1584cf68a3e31afe2ff52cfd9075fedf1310f7e8ddb42"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/patterns.min.css",
+            "size": 1745,
+            "hash": "03f93a060464862233220c2df2884a306744014566a3d5505fdf0551b819cc6a"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/poppins.css",
+            "size": 14424,
+            "hash": "b804a063ca5255f44584f8147c6212450bb331d244a3287ec90c2d6b809481fa"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/post-2573.css",
+            "size": 67531,
+            "hash": "217ed9aa2218a5cfd83c89648cc06136bf204d8e639d6202fa23e1d9e6e232be"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/post-8.css",
+            "size": 1336,
+            "hash": "24acba9bedd11a2351a75c8f6e2f9ebe75f44b67c2c4644e0c9a7dbbed951e80"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/roboto.css",
+            "size": 97038,
+            "hash": "3c3aec018d50608dbd7a8c2a69f6ff4d6cd99d1d7cebad8626638a94d6769512"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/shapes.min.css",
+            "size": 645,
+            "hash": "c5feb6bfb7973d126626671a6555cc3f88fb4d569138e4b05174e85fb0d3f8f2"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/theme.css",
+            "size": 161871,
+            "hash": "c72f32077cf717067c7dfae7563661a142522f2065c96f9af8bab6f1458251fc"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/style.css",
+            "size": 13275,
+            "hash": "5faee1b67d596755d417482271cf0f637ea19c72a71f3c83b4c64507b23df6c3"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/widget-divider.min.css",
+            "size": 4298,
+            "hash": "16265835d6d57005af5660766fbe96a04d2635b70ea66886618a85f3acdd19fd"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/widget-heading.min.css",
+            "size": 600,
+            "hash": "7b34f1c226a162148905e9269385e05387570331bcdd4d65d4a7df5c731ecb5d"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/widget-image.min.css",
+            "size": 254,
+            "hash": "704815e96e1b8e84733520b7f46bbcfd1a065e0b1890dbfc3429a620f034bae9"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/widget-toggle.min.css",
+            "size": 1578,
+            "hash": "9da67761c613e7b8c973e823c9a35f5c0815f4003b956af36eed44d03ab71502"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/worksans.css",
+            "size": 21303,
+            "hash": "851bcde6167790c7d3d2d824614196e2b63cd0530ae81d38023dd9ccadf7032f"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/css/zoomIn.min.css",
+            "size": 106,
+            "hash": "af6953d433e9b119661eac422ce9c9e09a195a0a68ad42ad392e960df31201cc"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/CAMISA-DE-FUTEBOL-1-150x150.webp",
+            "size": 8692,
+            "hash": "d344464e8579cb47be9a199a81e25765339a220f0e380bbb9a87a140e053d795"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/CAMISA-DE-FUTEBOL-1-300x300.webp",
+            "size": 21406,
+            "hash": "4073394d9cb611364182b949574ad45adf8745efa75b1672cf951fff2e746d57"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/CAMISA-DE-FUTEBOL-1-768x768.webp",
+            "size": 70700,
+            "hash": "01842a00c7e5085cdc8fdad1a56eb6beb11b40a7db1402a03b9dac3bb8a5b6a4"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/CAMISA-DE-FUTEBOL-1.webp",
+            "size": 71554,
+            "hash": "6409344f9988aafecf34a5146126b3ce029f0f4ce3b166b1a8741e5d44c93e4c"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/ELETRONICOS-768x768-1-150x150.webp",
+            "size": 9446,
+            "hash": "49f9e00953f632c32e106ccf1962e968ae4f1d6c4b2cbf83b5cc7352001133ad"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/ELETRONICOS-768x768-1-300x300.webp",
+            "size": 25968,
+            "hash": "71c20cecbcb9717da4402761ed16bd851d404050e48b0627f21b0e7df9206a52"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/ELETRONICOS-768x768-1.webp",
+            "size": 108786,
+            "hash": "00bef0dd2b9deefd2e7564b772d406dd32362ae0b6dc6edb54dc90adf093a15b"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/MAQUIAGEM-768x768-1-150x150.webp",
+            "size": 8450,
+            "hash": "af1927ff208fe10332771c1b41a9f00d76a24b6f2357ce68f52959c45329f72f"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/MAQUIAGEM-768x768-1-300x300.webp",
+            "size": 19758,
+            "hash": "64fc837deee453ed82312d1fd8429fe50da68b8cf1b0ba8357661cd5d618780d"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/MAQUIAGEM-768x768-1.webp",
+            "size": 57290,
+            "hash": "be3b296a8e1eb255005606a1a87873f2338332b826560a63258df756bbdfd4f1"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/MODA-PRAIA-768x768-1-150x150.webp",
+            "size": 9370,
+            "hash": "dc4dacb9a1748ef9c5d975ad9de3ba4aee37409e9704879d6e397c2b17ec7967"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/MODA-PRAIA-768x768-1-300x300.webp",
+            "size": 23626,
+            "hash": "be9f3094406e7deb4986fba749429fb4bdbc4109ac23741d3019bc69df4b123e"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/MODA-PRAIA-768x768-1.webp",
+            "size": 74420,
+            "hash": "e435971c3c42551e9e18e5645912af52b9f2fae49dc30391e99ac67fc1c35234"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/NOVIDADES-1-150x150.png",
+            "size": 11498,
+            "hash": "bf0da14baa0270f1867c20514a126b5464094aab64ed54dde40409d1bf14a3e1"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/NOVIDADES-1-300x300.png",
+            "size": 29315,
+            "hash": "aa6aec72bce7da50c25b5f0f5e7eb789525cdadbac41c2b0e99c8b57c41ce144"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/NOVIDADES-1.png",
+            "size": 299900,
+            "hash": "b7598c90f624b51e1f0aa6d49df92259657821f6ded9aeae2e70f1c2e30ada96"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/NOVIDADES-150x150.png",
+            "size": 9115,
+            "hash": "f4bcaf88c03e8aee9849064ee1435059070da9cf603187b6b4ab3943a367301b"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/NOVIDADES-3-150x150.png",
+            "size": 12001,
+            "hash": "b31ee301b2e95bc7bd4c0e7043b082f1687e056dbaecb2d83fb6b80c55a676de"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/NOVIDADES-3-300x300.png",
+            "size": 34400,
+            "hash": "676df2f7ecadadf93a3876cf404b1e21f4175cf0a42e029b91a717fcb8132893"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/NOVIDADES-3.png",
+            "size": 273994,
+            "hash": "76d5c847cd58f724632878aaba1bbf91f229e8976091973bf849eb2e4188262d"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/NOVIDADES-300x300.png",
+            "size": 24011,
+            "hash": "0524cd47f70ffd533a3fa998d5272804f066398beb295c8639b77cb8b8eaaf08"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/NOVIDADES-4-150x150.png",
+            "size": 10522,
+            "hash": "f9ad116c4ae6f1b494997b11a12e5e0c958b8dddda2dec1d20c8b030c6699f1b"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/NOVIDADES-4-300x300.png",
+            "size": 29089,
+            "hash": "4ec8641d3a4a4fff2aee84bf25b57c2c7cfcba0c81369d4678d664ef5de90913"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/NOVIDADES-4.png",
+            "size": 255431,
+            "hash": "3bee8c4bf782799d640bad54d558e9ec321b7854eb09b007822b285cb754d9ab"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/NOVIDADES-6-150x150.png",
+            "size": 10792,
+            "hash": "68f75aaf49dda9805960780410c16e8482d74233f83568b19b4eb035ce4735fe"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/NOVIDADES-6-300x300.png",
+            "size": 31943,
+            "hash": "e1827043ea7b75877f668157ff1e100c2c1d03bef9ab5419fbe63be66c8056b7"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/NOVIDADES-6.png",
+            "size": 269098,
+            "hash": "6c9c19f1685ce8edd6ab074a135f40fa7571734c5713bbec85cb67ef7487aeef"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/NOVIDADES.png",
+            "size": 199166,
+            "hash": "034a605dd7c80ca17b78e7fd7ffe5d528bee8c4bf698100d159021cfa80685ee"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/RELOGIOS-768x768-1-150x150.webp",
+            "size": 9276,
+            "hash": "1d3bf99f4f2bc71b60f1710e43f23414a72cbedfb608dcf4e4fc601a100e2c65"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/RELOGIOS-768x768-1-300x300.webp",
+            "size": 24578,
+            "hash": "f7c6fd4729f277462ef768dc5548fb57b921b5ce3e54405b803d9ffcc8691158"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/RELOGIOS-768x768-1.webp",
+            "size": 78480,
+            "hash": "9fb037ebe67dbdf1528ef009460e087d23424f5d88a4b9eef773ce3db93109e3"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/bkg-tik05-1-1.jpg",
+            "size": 57473,
+            "hash": "df54b9e71a7b455acb7adef9e8653f47bf4f87a8ed4121dcd1ab927b3ac3d238"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/bkglista01-1-1-1.jpg",
+            "size": 401088,
+            "hash": "4e58339376afc92668b146c665ff9cb764b3471a1c01dd8d16a210aaa0ade8cf"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/bkglista01-1-1.jpg",
+            "size": 401088,
+            "hash": "4e58339376afc92668b146c665ff9cb764b3471a1c01dd8d16a210aaa0ade8cf"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/calcados-e-vestuario-1-150x150.png",
+            "size": 12431,
+            "hash": "a0923612568e503eafa812b7d75b328e4f14a1c4289ad618fcab17b6d48cf577"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/calcados-e-vestuario-1-300x300.png",
+            "size": 35408,
+            "hash": "457cfcfeb5c493f1b0a14b2ebec400c2bd1d307caf90a5988ce6fa9e7da0baca"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/calcados-e-vestuario-1.png",
+            "size": 67788,
+            "hash": "051c58fdb88c582dc4df5d0f316752de8ef77dee0a68394456d2152390ee83b0"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/cropped-icone-favorito-agencia-led-180x180.png",
+            "size": 2380,
+            "hash": "cf0a51e843e216d2e7186ebcc0a37debb7b0f46f4654b41ef33a3571c3bee649"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/cropped-icone-favorito-agencia-led-192x192.png",
+            "size": 2637,
+            "hash": "4756c7186b658cfbd996b9924b6db577547f4563fa5609bea912ca97fecbc913"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/cropped-icone-favorito-agencia-led-32x32.png",
+            "size": 1167,
+            "hash": "f1f8cb378027add6a92bb8751250b07ad5f7c17900e140a0e398f28690e42fc9"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/fontawesome-webfont.svg",
+            "size": 444379,
+            "hash": "ad6157926c1622ba4e1d03d478f1541368524bfc46f51e42fe0d945f7ef323e4"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/fornecedor-pets-150x150.png",
+            "size": 13070,
+            "hash": "874952846374c218677f7c4cc97f1c02f34eac852f780f49fceff4354095d1fb"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/fornecedor-pets-300x300.png",
+            "size": 38247,
+            "hash": "c0f9a9e4b1f43d96d1b4fc0b5503b657743f15f37e23aaa044ce5429b208f081"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/fornecedor-pets.png",
+            "size": 372805,
+            "hash": "1f23a8668d75b3a65676c7be45de8354cff9f73a63445c409cd20e9c8d9c3cc9"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/logo-led.png",
+            "size": 3556,
+            "hash": "ab330522a7cebe87e8835c1c63c816dac5bc982837a2f20dbe12a3c56f2054d6"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/novo01-768x768-1-150x150.webp",
+            "size": 9166,
+            "hash": "e4d064b2597a4ada58c3da35bbda11ff769ddeb93bd939430a907f71ae1a26be"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/novo01-768x768-1-300x300.webp",
+            "size": 25302,
+            "hash": "15bc53c03cb971d6a3040cc429f6a9cf0cb868b288578c23eaa6673ac73c3f43"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/novo01-768x768-1.webp",
+            "size": 110096,
+            "hash": "71bc3c44167277513f2acd593bf0a813f0790422779b2878d275c0074c37d899"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/novo03-768x768-1-150x150.webp",
+            "size": 9770,
+            "hash": "0bfbda2226d7fd039e5a99d0f97e1eb8a86b1043c7198c695fc0de48738f5196"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/novo03-768x768-1-300x300.webp",
+            "size": 25692,
+            "hash": "b6b2e595d59582821fd2a297e17c6f12537db9a37e3de9fea277768d9bd208b9"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/novo03-768x768-1.webp",
+            "size": 88644,
+            "hash": "c5463ed0f90249f246337d150b0ffaa469208f708a5b89c354e598b8f7a28081"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/novo04-768x768-1-150x150.webp",
+            "size": 8792,
+            "hash": "bdddab53c822177028ef43896eadcd3f0c9c5174524b19b4af3c76c7a8fb6b46"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/novo04-768x768-1-300x300.webp",
+            "size": 21096,
+            "hash": "ecbffd30026ee060782f94e0570af17424017d62ca101b6f4f65f3da8309d4b4"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/novo04-768x768-1.webp",
+            "size": 65142,
+            "hash": "563ccb413874fe1f50ebc80f1fbc4f159329e4229cefef71fa823fbab55c83e7"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/selo-1-768x768-1-150x150.png",
+            "size": 10889,
+            "hash": "7baff61b71e9cfd3b7f3ba2e66977f55b763c17a19e02706ec987f1e1ed319a4"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/selo-1-768x768-1-300x300.png",
+            "size": 27625,
+            "hash": "027d16b26bc665c8f43afd78a12e9510d9d20411d9369dd12a6ef8f5f58c017e"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/images/selo-1-768x768-1.png",
+            "size": 106148,
+            "hash": "a1aff30d4cc3201e317a4f3e910d06f3d789ad24b8453d7a2602d02a5025100a"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/js/SocialShare.min.js",
+            "size": 15440,
+            "hash": "102b1f6e5438a01b240657edee3d95111d8631a79d1301c7db713e0fa91b7013"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/js/core.min.js",
+            "size": 21464,
+            "hash": "699210a5ed06e497b4730ec83bb65ac4c2269ae4a0ee8af3f24aae7ee5b66b76"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/js/elements-handlers.min.js",
+            "size": 44623,
+            "hash": "2e3350ee931dc7d14419e68ef515ecb2443ce5eab67dffdac29452a840da0e74"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/js/fbevents.js",
+            "size": 283217,
+            "hash": "1b603f932c453fe93062c77c30bc47f107a4efc01caf81b94b317f610b47d43f"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/js/frontend-modules.min.js",
+            "size": 48393,
+            "hash": "454e41f5c4f3b318bcf8a71a296121220e4912eff7fa43c0896de0f6936b72de"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/js/frontend.min.js",
+            "size": 32876,
+            "hash": "ca1f7ccb6ebf20e7d08cadca4fc3444686f39303e9f08a555e37b5a603e85d13"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/js/frontend.min_1.js",
+            "size": 24209,
+            "hash": "36a03e4a8237aa544b1c7d63ad9b33503583807d1dc53f8f45a94d3953574964"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/js/googlesitekit-consent-mode-8917f4bdb6ac659920cf.js",
+            "size": 74743,
+            "hash": "82fbcdbe0b2bdc9a7619c5a99684e09abeb12a11c7dcc5e6e3ed2227ee4461b0"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/js/hello-academy-scripts.js",
+            "size": 10183,
+            "hash": "a564079981667f4b594bcd8aadb1490a561efa15e49d77d4876e77ae09cc8901"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/js/hooks.min.js",
+            "size": 4776,
+            "hash": "9a1e0d38b691f1d22a92cff65ec0439b428170ac39a4493c7ecb06d5585f56a3"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/js/i18n.min.js",
+            "size": 9141,
+            "hash": "f313d12ea6124bd28fc4a6b7163d253bb83d5aeab5edce594880c5c3df475cbc"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/js/jquery-migrate.min.js",
+            "size": 13577,
+            "hash": "5274f11e6fb32ae0cf2dfb9f8043272865c397a7c4223b4cfa7d50ea52fbde89"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/js/jquery.min.js",
+            "size": 87553,
+            "hash": "cb6f2d32c49d1c2b25e9ffc9aaafa3f83075346c01bcd4ae6eb187392a4292cf"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/js/player-static.js",
+            "size": 506,
+            "hash": "b75edb1970d8496cecc8b67b9e78a8d9f39147c9f031c2a32e5589ba718ed2a1"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/js/webpack-pro.runtime.min.js",
+            "size": 6262,
+            "hash": "0bfd92d2143d36e88a8729c366f47f832f6da7f04695d06bbfdc72d9b80cf7a6"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/js/webpack.runtime.min.js",
+            "size": 5700,
+            "hash": "fdbac8131b3ff1d5b523a0d8f1373ee03f0d4fac66b8928645adb243841b7bac"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/js/wp-consent-api.min.js",
+            "size": 1794,
+            "hash": "edb6c7358824cfc0cb6ebb6cc13224599ef3a4cb5ee44cc06367517c7b101e87"
+        },
+        {
+            "type": "file",
+            "name": "assets-listas-lp/js/wp-emoji-release.min.js",
+            "size": 19264,
+            "hash": "50cc1a0490008ec62ca8b581fa9cdcfb2eda2d36a08ccbeb1f004da599e9cc61"
+        },
+        {
+            "type": "file",
+            "name": "email/PHPMailer/Exception.php",
+            "size": 1256,
+            "hash": "22ab858ae438d98f58f41f38ad2191d1b0d59570aebea0463a7948cfae1021b7"
+        },
+        {
+            "type": "file",
+            "name": "email/PHPMailer/PHPMailer.php",
+            "size": 187770,
+            "hash": "835a15b6067083d7c92ea245c9ffab3ef23a8ac16bfe14a61e953741a661b9e2"
+        },
+        {
+            "type": "file",
+            "name": "email/PHPMailer/SMTP.php",
+            "size": 50097,
+            "hash": "9bc105018f6ef2576c2c4a246a46fc41ada546111fc8fb1ffce86421af35e78c"
+        },
+        {
+            "type": "file",
+            "name": "vendor/PHPMailer/Exception.php",
+            "size": 1256,
+            "hash": "22ab858ae438d98f58f41f38ad2191d1b0d59570aebea0463a7948cfae1021b7"
+        },
+        {
+            "type": "file",
+            "name": "vendor/PHPMailer/PHPMailer.php",
+            "size": 187770,
+            "hash": "835a15b6067083d7c92ea245c9ffab3ef23a8ac16bfe14a61e953741a661b9e2"
+        },
+        {
+            "type": "file",
+            "name": "vendor/PHPMailer/SMTP.php",
+            "size": 50097,
+            "hash": "9bc105018f6ef2576c2c4a246a46fc41ada546111fc8fb1ffce86421af35e78c"
+        }
+    ]
+}
