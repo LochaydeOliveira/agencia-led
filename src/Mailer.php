@@ -256,4 +256,13 @@ class Mailer {
             throw $e; // Propaga o erro para ser tratado no nível superior
         }
     }
+
+    public function sendCustomEmail($to, $subject, $body, $altBody = '') {
+        $this->mailer->clearAddresses();
+        $this->mailer->addAddress($to);
+        $this->mailer->Subject = $subject;
+        $this->mailer->Body = $body;
+        $this->mailer->AltBody = $altBody ?: strip_tags(str_replace('<br>', "\n", $body));
+        return $this->sendEmail();
+    }
 }
