@@ -88,6 +88,10 @@
             font-size: 0.875rem;
             color: #dc3545;
         }
+        .campo-obrigatorio-vazio {
+            border: 2px solid #dc3545 !important;
+            background: #fff6f6;
+        }
     </style>
 </head>
 <body>
@@ -230,17 +234,17 @@
         var modalContent = modal.querySelector('.modal-content');
         var formContainer = document.querySelector('.form-container');
 
-        // Verificar se há parâmetro de sucesso na URL
+
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('sucesso') === '1') {
-            // Mostrar modal de sucesso
+
             setTimeout(function() {
                 document.getElementById('modalSucesso').classList.add('show');
                 document.body.classList.add('modal-open');
                 document.body.style.overflow = 'hidden';
             }, 500);
         } else {
-            // Mostrar modal de boas-vindas normalmente
+
             setTimeout(function() {
                 btn.style.display = 'block';
                 aguarde.style.display = 'none';
@@ -264,6 +268,37 @@
             document.body.classList.add('modal-open');
             document.body.style.overflow = 'hidden';
         }
+
+        const form = document.getElementById('formMentoria');
+        const obrigatorios = form.querySelectorAll('[required]');
+
+        form.addEventListener('submit', function(e) {
+            let algumVazio = false;
+            obrigatorios.forEach(function(campo) {
+                if (!campo.value || (campo.type === 'checkbox' && !campo.checked)) {
+                    campo.classList.add('campo-obrigatorio-vazio');
+                    algumVazio = true;
+                } else {
+                    campo.classList.remove('campo-obrigatorio-vazio');
+                }
+            });
+            if (algumVazio) {
+                e.preventDefault();
+            }
+        });
+
+        obrigatorios.forEach(function(campo) {
+            campo.addEventListener('input', function() {
+                if (campo.value || (campo.type === 'checkbox' && campo.checked)) {
+                    campo.classList.remove('campo-obrigatorio-vazio');
+                }
+            });
+            campo.addEventListener('change', function() {
+                if (campo.value || (campo.type === 'checkbox' && campo.checked)) {
+                    campo.classList.remove('campo-obrigatorio-vazio');
+                }
+            });
+        });
     });
 
 
