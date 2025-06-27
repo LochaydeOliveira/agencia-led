@@ -22,47 +22,4 @@ php_value error_reporting E_ALL
 <FilesMatch "^(\.htaccess|\.htpasswd|\.git|\.env|composer\.json|composer\.lock)$">
     Order Allow,Deny
     Deny from all
-</FilesMatch>
-
-# URLs Amigáveis para fornecedores-secretos.php
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    
-    # Redirecionar fornecedores-secretos.html para fornecedores-secretos.php
-    RewriteRule ^fornecedores-secretos\.html$ fornecedores-secretos.php [L,R=301]
-    
-    # URLs amigáveis para produtos específicos
-    RewriteRule ^autopecas-ferramentas/?$ fornecedores-secretos.php [L]
-    RewriteRule ^moda-feminina/?$ fornecedores-secretos.php [L]
-    RewriteRule ^moda-masculina/?$ fornecedores-secretos.php [L]
-    RewriteRule ^semijoias/?$ fornecedores-secretos.php [L]
-    
-    # Redirecionar URLs antigas para novas URLs amigáveis
-    RewriteRule ^produto/([0-9]+)/?$ fornecedores-secretos.php?id=$1 [L,R=301]
-    
-    # Compressão GZIP
-    <IfModule mod_deflate.c>
-        AddOutputFilterByType DEFLATE text/plain
-        AddOutputFilterByType DEFLATE text/html
-        AddOutputFilterByType DEFLATE text/xml
-        AddOutputFilterByType DEFLATE text/css
-        AddOutputFilterByType DEFLATE application/xml
-        AddOutputFilterByType DEFLATE application/xhtml+xml
-        AddOutputFilterByType DEFLATE application/rss+xml
-        AddOutputFilterByType DEFLATE application/javascript
-        AddOutputFilterByType DEFLATE application/x-javascript
-    </IfModule>
-    
-    # Cache de navegador
-    <IfModule mod_expires.c>
-        ExpiresActive on
-        ExpiresByType text/css "access plus 1 year"
-        ExpiresByType application/javascript "access plus 1 year"
-        ExpiresByType image/png "access plus 1 year"
-        ExpiresByType image/jpg "access plus 1 year"
-        ExpiresByType image/jpeg "access plus 1 year"
-        ExpiresByType image/gif "access plus 1 year"
-        ExpiresByType image/webp "access plus 1 year"
-        ExpiresByType image/svg+xml "access plus 1 year"
-    </IfModule>
-</IfModule> 
+</FilesMatch> 
