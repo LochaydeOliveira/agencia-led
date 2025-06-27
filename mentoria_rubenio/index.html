@@ -269,24 +269,43 @@
 
         // Validação do formulário
         const form = document.getElementById('formMentoria');
+        let triedSubmit = false;
         form.addEventListener('submit', function(e) {
+            triedSubmit = true;
             if (!form.checkValidity()) {
                 e.preventDefault();
                 e.stopPropagation();
             }
             form.classList.add('was-validated');
+            // Atualiza feedback visual de todos os campos após submit
+            const inputs = form.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                if (!input.checkValidity()) {
+                    input.classList.remove('is-valid');
+                    input.classList.add('is-invalid');
+                } else {
+                    input.classList.remove('is-invalid');
+                    input.classList.add('is-valid');
+                }
+            });
         });
 
-        // Validação em tempo real
+        // Validação em tempo real apenas após blur OU submit
         const inputs = form.querySelectorAll('input, select, textarea');
         inputs.forEach(input => {
             input.addEventListener('blur', function() {
-                if (this.checkValidity()) {
-                    this.classList.remove('is-invalid');
-                    this.classList.add('is-valid');
+                if (triedSubmit) {
+                    if (this.checkValidity()) {
+                        this.classList.remove('is-invalid');
+                        this.classList.add('is-valid');
+                    } else {
+                        this.classList.remove('is-valid');
+                        this.classList.add('is-invalid');
+                    }
                 } else {
+                    // Só limpa classes se o usuário corrigiu antes do submit
+                    this.classList.remove('is-invalid');
                     this.classList.remove('is-valid');
-                    this.classList.add('is-invalid');
                 }
             });
         });
