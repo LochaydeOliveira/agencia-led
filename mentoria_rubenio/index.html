@@ -73,6 +73,21 @@
         .modal-sucesso.show {
             display: block;
         }
+        
+        /* Validação de campos */
+        .form-control.is-invalid {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+        }
+        .form-control.is-valid {
+            border-color: #198754;
+            box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+        }
+        .invalid-feedback {
+            display: block;
+            font-size: 0.875rem;
+            color: #dc3545;
+        }
     </style>
 </head>
 <body>
@@ -95,7 +110,6 @@
         </div>
       </div>
     </div>
-
 
     <div class="modal fade modal-sucesso" id="modalSucesso" tabindex="-1" aria-modal="true" role="dialog" style="background: rgba(30,30,30,0.85);">
       <div class="modal-dialog modal-dialog-centered">
@@ -123,22 +137,26 @@
                     <div class="card-body p-4">
                         <h2 class="mb-3 text-center">Mentoria Rubênio Gabriel</h2>
                         <p class="text-muted text-center mb-4">Seja muito bem-vindo(a)!<br>Este é um formulário oficial para a <b>mentoria premium com Rubênio Gabriel</b>. Responda com atenção, todos os dados serão analisados.</p>
-                        <form id="formMentoria" action="processar-formulario.php" method="POST" autocomplete="off">
+                        <form id="formMentoria" action="processar-formulario.php" method="POST" autocomplete="off" novalidate>
                             <div class="mb-3">
                                 <label for="nome" class="form-label">1. Qual o seu nome completo?</label>
-                                <input type="text" class="form-control" id="nome" name="nome" required>
+                                <input type="text" class="form-control" id="nome" name="nome" required minlength="3" maxlength="100">
+                                <div class="invalid-feedback">Por favor, informe seu nome completo (mínimo 3 caracteres).</div>
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">2. Qual o seu melhor e-mail?</label>
                                 <input type="email" class="form-control" id="email" name="email" required>
+                                <div class="invalid-feedback">Por favor, informe um e-mail válido.</div>
                             </div>
                             <div class="mb-3">
                                 <label for="whatsapp" class="form-label">3. Qual o seu WhatsApp com DDD?</label>
-                                <input type="text" class="form-control" id="whatsapp" name="whatsapp" required placeholder="(99) 99999-9999">
+                                <input type="text" class="form-control" id="whatsapp" name="whatsapp" required placeholder="(99) 99999-9999" maxlength="15">
+                                <div class="invalid-feedback">Por favor, informe um WhatsApp válido no formato (99) 99999-9999.</div>
                             </div>
                             <div class="mb-3">
                                 <label for="instagram" class="form-label">4. Qual o seu @ do Instagram?</label>
-                                <input type="text" class="form-control" id="instagram" name="instagram" placeholder="@seuusuario">
+                                <input type="text" class="form-control" id="instagram" name="instagram" placeholder="@seuusuario" pattern="^@?[a-zA-Z0-9._]+$">
+                                <div class="invalid-feedback">Por favor, informe um usuário do Instagram válido (ex: @usuario ou usuario).</div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">5. Qual das frases abaixo mais representa seu momento atual?</label>
@@ -150,6 +168,7 @@
                                     <option>Estou buscando uma mentoria premium para escalar e ganhar em moeda forte.</option>
                                     <option>Nenhuma das opções.</option>
                                 </select>
+                                <div class="invalid-feedback">Por favor, selecione uma opção.</div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">6. Qual é a sua faixa de renda mensal atualmente?</label>
@@ -162,6 +181,7 @@
                                     <option>De R$10.001 a R$20.000</option>
                                     <option>Acima de R$20.000</option>
                                 </select>
+                                <div class="invalid-feedback">Por favor, selecione uma opção.</div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">7. Hoje, quanto você teria disponível (PIX ou crédito) para investir em um acompanhamento estratégico voltado a lucros entre R$30.000 e R$150.000 por mês?</label>
@@ -176,10 +196,12 @@
                                     <option>De R$16.000 a R$25.000</option>
                                     <option>Acima de R$26.000</option>
                                 </select>
+                                <div class="invalid-feedback">Por favor, selecione uma opção.</div>
                             </div>
                             <div class="mb-3">
                                 <label for="motivo" class="form-label">8. Por que você acredita que faz sentido ser acompanhado pelo Rubênio e pela equipe dele?</label>
-                                <textarea class="form-control" id="motivo" name="motivo" rows="3" required></textarea>
+                                <textarea class="form-control" id="motivo" name="motivo" rows="3" required minlength="10" maxlength="500"></textarea>
+                                <div class="invalid-feedback">Por favor, explique seu motivo (mínimo 10 caracteres).</div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">9. Compromisso final</label>
@@ -195,6 +217,7 @@
                                         Estou pronto(a) para participar de uma reunião estratégica e, caso faça sentido, iniciar o processo ainda nesta semana.
                                     </label>
                                 </div>
+                                <div class="invalid-feedback">Por favor, aceite ambos os compromissos para continuar.</div>
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Enviar aplicação</button>
                         </form>
@@ -216,17 +239,69 @@
         var modalContent = modal.querySelector('.modal-content');
         var formContainer = document.querySelector('.form-container');
         
+        // Máscara para WhatsApp
+        const whatsappInput = document.getElementById('whatsapp');
+        whatsappInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 11) {
+                value = value.substring(0, 11);
+            }
+            
+            if (value.length >= 2) {
+                value = '(' + value.substring(0, 2) + ') ' + value.substring(2);
+            }
+            if (value.length >= 9) {
+                value = value.substring(0, 9) + '-' + value.substring(9);
+            }
+            
+            e.target.value = value;
+        });
 
+        // Máscara para Instagram
+        const instagramInput = document.getElementById('instagram');
+        instagramInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/[^a-zA-Z0-9._]/g, '');
+            if (value && !value.startsWith('@')) {
+                value = '@' + value;
+            }
+            e.target.value = value;
+        });
+
+        // Validação do formulário
+        const form = document.getElementById('formMentoria');
+        form.addEventListener('submit', function(e) {
+            if (!form.checkValidity()) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        });
+
+        // Validação em tempo real
+        const inputs = form.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.checkValidity()) {
+                    this.classList.remove('is-invalid');
+                    this.classList.add('is-valid');
+                } else {
+                    this.classList.remove('is-valid');
+                    this.classList.add('is-invalid');
+                }
+            });
+        });
+
+        // Verificar se há parâmetro de sucesso na URL
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('sucesso') === '1') {
-
+            // Mostrar modal de sucesso
             setTimeout(function() {
                 document.getElementById('modalSucesso').classList.add('show');
                 document.body.classList.add('modal-open');
                 document.body.style.overflow = 'hidden';
             }, 500);
         } else {
-
+            // Mostrar modal de boas-vindas normalmente
             setTimeout(function() {
                 btn.style.display = 'block';
                 aguarde.style.display = 'none';
@@ -249,20 +324,20 @@
             }, 300);
         });
         
-
+        // Impede scroll enquanto modal está aberto
         if (urlParams.get('sucesso') !== '1') {
             document.body.classList.add('modal-open');
             document.body.style.overflow = 'hidden';
         }
     });
 
-
+    // Função para fechar modal de sucesso
     function fecharModalSucesso() {
         document.getElementById('modalSucesso').classList.remove('show');
         document.body.classList.remove('modal-open');
         document.body.style.overflow = '';
         
-
+        // Redirecionar para o Instagram do Rubênio
         window.location.href = 'https://www.instagram.com/rubeniou/';
     }
     </script>
