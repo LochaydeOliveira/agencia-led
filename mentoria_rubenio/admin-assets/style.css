@@ -108,3 +108,36 @@ input.form-control:focus, select.form-select:focus, textarea.form-control:focus 
     }
 }
 
+@media (max-width: 480px) { 
+    .link-politica {
+        display: flex;
+        justify-content: center;
+        margin: 1.2rem;
+        color: #8b8b8b;
+        font-size: 12px;
+    }
+
+}
+
+@media (min-width: 481px) and (max-width: 768.9px) { 
+    .link-politica {
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1199px) {
+    .link-politica {
+        color: #8b8b8b;
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .link-politica {
+        display: flex;
+        justify-content: center;
+        margin: 1.2rem;
+        color: #8b8b8b;
+        font-size: 15px;
+    }
+}
