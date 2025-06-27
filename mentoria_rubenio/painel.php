@@ -35,11 +35,11 @@ if ($filtro_investimento) {
     $types .= 's';
 }
 if ($filtro_data) {
-    $sql .= " AND DATE(data_cadastro) = ?";
+    $sql .= " AND DATE(data_envio) = ?";
     $params[] = $filtro_data;
     $types .= 's';
 }
-$sql .= " ORDER BY data_cadastro DESC";
+$sql .= " ORDER BY data_envio DESC";
 
 $stmt = $conn->prepare($sql);
 if ($params) {
@@ -153,7 +153,7 @@ $result = $stmt->get_result();
                 while ($lead = $result->fetch_assoc()): 
             ?>
                 <tr>
-                    <td><?php echo date('d/m/Y H:i', strtotime($lead['data_cadastro'])); ?></td>
+                    <td><?php echo date('d/m/Y H:i', strtotime($lead['data_envio'])); ?></td>
                     <td title="<?php echo htmlspecialchars($lead['nome']); ?>"><?php echo htmlspecialchars($lead['nome']); ?></td>
                     <td title="<?php echo htmlspecialchars($lead['email']); ?>"><?php echo htmlspecialchars($lead['email']); ?></td>
                     <td>

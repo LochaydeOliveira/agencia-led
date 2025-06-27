@@ -81,7 +81,7 @@ if ($result) {
 
 // Testar consulta do painel
 echo "<h3>Teste da consulta do painel:</h3>";
-$sql = "SELECT * FROM leads ORDER BY data_cadastro DESC LIMIT 5";
+$sql = "SELECT * FROM leads ORDER BY data_envio DESC LIMIT 5";
 $result = $conn->query($sql);
 
 if ($result) {
@@ -94,7 +94,7 @@ if ($result) {
             echo "<td>" . $row['id'] . "</td>";
             echo "<td>" . htmlspecialchars($row['nome']) . "</td>";
             echo "<td>" . htmlspecialchars($row['email']) . "</td>";
-            echo "<td>" . $row['data_cadastro'] . "</td>";
+            echo "<td>" . $row['data_envio'] . "</td>";
             echo "</tr>";
         }
         echo "</table>";
