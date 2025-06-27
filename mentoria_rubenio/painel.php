@@ -71,7 +71,7 @@ $result = $stmt->get_result();
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 200px;
+            max-width: max-content;
             vertical-align: middle;
         }
         .table td.text-wrap {
