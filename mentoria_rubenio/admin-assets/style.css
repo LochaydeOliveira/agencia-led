@@ -124,6 +124,10 @@ input.form-control:focus, select.form-select:focus, textarea.form-control:focus 
         color: #8b8b8b;
         font-size: 12px;
     }
+    .btn-enviar {
+        width: 30%;
+        display: flex;
+    }
 
 }
 
@@ -131,9 +135,18 @@ input.form-control:focus, select.form-select:focus, textarea.form-control:focus 
     .link-politica {
         font-size: 12px;
     }
+    .btn-enviar {
+        width: 30%;
+        display: flex;
+    }
 }
 
 @media (min-width: 769px) and (max-width: 1199px) {
+    .btn-enviar {
+        width: 30%;
+        display: flex;
+    }
+
     .link-politica {
         color: #8b8b8b;
         font-size: 15px;
