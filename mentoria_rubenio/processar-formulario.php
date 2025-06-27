@@ -25,10 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $sql = "INSERT INTO leads (nome, email, whatsapp, instagram, momento, renda, investimento, motivo, compromisso1, compromisso2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ssssssssii', $nome, $email, $whatsapp, $instagram, $momento, $renda, $investimento, $motivo, $compromisso1, $compromisso2);
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$nome, $email, $whatsapp, $instagram, $momento, $renda, $investimento, $motivo, $compromisso1, $compromisso2]);
 
-    if ($stmt->execute()) {
+    if ($stmt->rowCount() > 0) {
         header('Location: index.html?sucesso=1');
         exit;
     } else {
