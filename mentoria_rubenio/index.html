@@ -64,10 +64,19 @@
             opacity: 1;
             transform: scale(1);
         }
+        
+        /* Modal de sucesso */
+        .modal-sucesso {
+            display: none;
+        }
+        .modal-sucesso.show {
+            display: block;
+        }
     </style>
 </head>
 <body>
 
+    <!-- Modal de Boas-vindas -->
     <div class="modal fade show" id="modalBoasVindas" tabindex="-1" aria-modal="true" role="dialog" style="display: block; background: rgba(30,30,30,0.85);">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border-radius:0; box-shadow:0 2px 12px rgba(30,30,30,0.13);">
@@ -87,6 +96,25 @@
       </div>
     </div>
 
+    <!-- Modal de Sucesso -->
+    <div class="modal fade modal-sucesso" id="modalSucesso" tabindex="-1" aria-modal="true" role="dialog" style="background: rgba(30,30,30,0.85);">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius:0; box-shadow:0 2px 12px rgba(30,30,30,0.13);">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title w-100 text-center" style="font-weight:700; color:#232323;">Obrigado por preencher!</h5>
+          </div>
+          <div class="modal-body text-center pt-2 pb-0" style="color:#232323; font-size:1.08rem;">
+            <p>Sua aplicação foi recebida com sucesso ✅</p>
+            <p>Em breve, um membro da equipe do Rubênio irá analisar suas respostas. Se seu perfil for aprovado para a mentoria individual, você será chamado no WhatsApp para agendar uma aula estratégica.</p>
+            <p>Caso seu perfil esteja em fase inicial ou ainda sem poder de investimento compatível, vamos te direcionar para uma condição especial na mentoria coletiva com acesso imersivo ao método e aulas gravadas.</p>
+            <p><b>Não importa seu ponto de partida: o importante é que você decidiu evoluir!</b></p>
+          </div>
+          <div class="modal-footer border-0 pt-0 justify-content-center">
+            <button type="button" class="btn btn-primary w-100" style="max-width:220px;" onclick="fecharModalSucesso()">Entendi</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="container py-5 form-container">
         <div class="row justify-content-center">
@@ -188,12 +216,23 @@
         var modalContent = modal.querySelector('.modal-content');
         var formContainer = document.querySelector('.form-container');
         
-
-        setTimeout(function() {
-            btn.style.display = 'block';
-            aguarde.style.display = 'none';
-            btn.classList.add('show');
-        }, 10000);
+        // Verificar se há parâmetro de sucesso na URL
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('sucesso') === '1') {
+            // Mostrar modal de sucesso
+            setTimeout(function() {
+                document.getElementById('modalSucesso').classList.add('show');
+                document.body.classList.add('modal-open');
+                document.body.style.overflow = 'hidden';
+            }, 500);
+        } else {
+            // Mostrar modal de boas-vindas normalmente
+            setTimeout(function() {
+                btn.style.display = 'block';
+                aguarde.style.display = 'none';
+                btn.classList.add('show');
+            }, 10000);
+        }
         
         btn.addEventListener('click', function() {
        
@@ -211,9 +250,24 @@
         });
         
         // Impede scroll enquanto modal está aberto
-        document.body.classList.add('modal-open');
-        document.body.style.overflow = 'hidden';
+        if (urlParams.get('sucesso') !== '1') {
+            document.body.classList.add('modal-open');
+            document.body.style.overflow = 'hidden';
+        }
     });
+
+    // Função para fechar modal de sucesso
+    function fecharModalSucesso() {
+        document.getElementById('modalSucesso').classList.remove('show');
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = '';
+        
+        // Mostrar formulário se ainda não estiver visível
+        var formContainer = document.querySelector('.form-container');
+        if (!formContainer.classList.contains('show')) {
+            formContainer.classList.add('show');
+        }
+    }
     </script>
     
     <script src="admin-assets/script.js"></script>
