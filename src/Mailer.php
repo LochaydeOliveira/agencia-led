@@ -6,6 +6,7 @@ define('BASE_PATH', dirname(__DIR__));
 require_once BASE_PATH . '/vendor/PHPMailer/Exception.php';
 require_once BASE_PATH . '/vendor/PHPMailer/PHPMailer.php';
 require_once BASE_PATH . '/vendor/PHPMailer/SMTP.php';
+require_once __DIR__ . '/../config/config.php';    // Configurações gerais (inclui LOG_FILE)
 require_once __DIR__ . '/functions.php';          // Funções utilitárias
 require_once __DIR__ . '/../config/email.php';    // Configurações do email
 
