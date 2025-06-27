@@ -108,7 +108,15 @@ input.form-control:focus, select.form-select:focus, textarea.form-control:focus 
     }
 }
 
-@media (max-width: 480px) { 
+@media (max-width: 480px) {
+    .style-custom {
+        background: #fff;
+        padding: 1rem;
+        margin: 5rem auto;
+        font-size: 13px;
+        width: 90%;
+    }
+
     .link-politica {
         display: flex;
         justify-content: center;
@@ -132,12 +140,3 @@ input.form-control:focus, select.form-select:focus, textarea.form-control:focus 
     }
 }
 
-@media (min-width: 1200px) {
-    .link-politica {
-        display: flex;
-        justify-content: center;
-        margin: 1.2rem;
-        color: #8b8b8b;
-        font-size: 15px;
-    }
-}
