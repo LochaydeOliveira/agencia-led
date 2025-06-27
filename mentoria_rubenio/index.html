@@ -238,86 +238,6 @@
         var modal = document.getElementById('modalBoasVindas');
         var modalContent = modal.querySelector('.modal-content');
         var formContainer = document.querySelector('.form-container');
-        
-
-        const whatsappInput = document.getElementById('whatsapp');
-        whatsappInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 11) {
-                value = value.substring(0, 11);
-            }
-            
-            if (value.length >= 2) {
-                value = '(' + value.substring(0, 2) + ') ' + value.substring(2);
-            }
-            if (value.length >= 9) {
-                value = value.substring(0, 9) + '-' + value.substring(9);
-            }
-            
-            e.target.value = value;
-        });
-
-
-        const instagramInput = document.getElementById('instagram');
-        instagramInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/[^a-zA-Z0-9._]/g, '');
-            if (value && !value.startsWith('@')) {
-                value = '@' + value;
-            }
-            e.target.value = value;
-        });
-
-
-        const form = document.getElementById('formMentoria');
-        const inputs = form.querySelectorAll('input, select, textarea');
-        let triedSubmit = false;
-        let touched = {};
-
-        // Limpa classes ao carregar
-        form.classList.remove('was-validated');
-        inputs.forEach(input => {
-            input.classList.remove('is-invalid', 'is-valid');
-            touched[input.name] = false;
-        });
-
-        // Blur: só mostra erro se o campo foi tocado OU já tentou submit
-        inputs.forEach(input => {
-            input.addEventListener('blur', function() {
-                touched[this.name] = true;
-                if (triedSubmit || touched[this.name]) {
-                    if (this.checkValidity()) {
-                        this.classList.remove('is-invalid');
-                        this.classList.add('is-valid');
-                    } else {
-                        this.classList.remove('is-valid');
-                        this.classList.add('is-invalid');
-                    }
-                } else {
-                    this.classList.remove('is-invalid');
-                    this.classList.remove('is-valid');
-                }
-            });
-        });
-
-        // Submit: valida todos
-        form.addEventListener('submit', function(e) {
-            triedSubmit = true;
-            let formValido = form.checkValidity();
-            if (!formValido) {
-                e.preventDefault();
-                e.stopPropagation();
-                form.classList.add('was-validated');
-            }
-            inputs.forEach(input => {
-                if (input.checkValidity()) {
-                    input.classList.remove('is-invalid');
-                    input.classList.add('is-valid');
-                } else {
-                    input.classList.remove('is-valid');
-                    input.classList.add('is-invalid');
-                }
-            });
-        });
 
         // Verificar se há parâmetro de sucesso na URL
         const urlParams = new URLSearchParams(window.location.search);
@@ -338,34 +258,28 @@
         }
         
         btn.addEventListener('click', function() {
-       
             modal.classList.add('fade-out');
             modalContent.classList.add('fade-out');
-            
             setTimeout(function() {
                 modal.style.display = 'none';
                 document.body.classList.remove('modal-open');
                 document.body.style.overflow = '';
-                
-
                 formContainer.classList.add('show');
             }, 300);
         });
         
-        // Impede scroll enquanto modal está aberto
+
         if (urlParams.get('sucesso') !== '1') {
             document.body.classList.add('modal-open');
             document.body.style.overflow = 'hidden';
         }
     });
 
-    // Função para fechar modal de sucesso
+
     function fecharModalSucesso() {
         document.getElementById('modalSucesso').classList.remove('show');
         document.body.classList.remove('modal-open');
         document.body.style.overflow = '';
-        
-        // Redirecionar para o Instagram do Rubênio
         window.location.href = 'https://www.instagram.com/rubeniou/';
     }
     </script>
