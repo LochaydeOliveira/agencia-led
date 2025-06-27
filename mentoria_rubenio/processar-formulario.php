@@ -29,6 +29,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute([$nome, $email, $whatsapp, $instagram, $momento, $renda, $investimento, $motivo, $compromisso1, $compromisso2]);
 
     if ($stmt->rowCount() > 0) {
+   
+        $to = 'contato@agencialed.com';
+        $subject = 'Novo lead - Mentoria Rubênio Gabriel';
+        $message = "<h2>Novo lead recebido</h2>"
+            . "<b>Nome:</b> $nome<br>"
+            . "<b>E-mail:</b> $email<br>"
+            . "<b>WhatsApp:</b> $whatsapp<br>"
+            . "<b>Instagram:</b> $instagram<br>"
+            . "<b>Momento:</b> $momento<br>"
+            . "<b>Renda:</b> $renda<br>"
+            . "<b>Investimento:</b> $investimento<br>"
+            . "<b>Motivo:</b> $motivo<br>"
+            . "<b>Compromisso 1:</b> " . ($compromisso1 ? 'Sim' : 'Não') . "<br>"
+            . "<b>Compromisso 2:</b> " . ($compromisso2 ? 'Sim' : 'Não') . "<br>"
+            . "<br><small>Enviado em " . date('d/m/Y H:i') . ".</small>";
+        $headers = "MIME-Version: 1.0\r\n";
+        $headers .= "Content-type: text/html; charset=UTF-8\r\n";
+        $headers .= "From: Mentoria Rubênio Gabriel <nao-responda@agencialed.com>\r\n";
+        @mail($to, $subject, $message, $headers);
+
         header('Location: index.html?sucesso=1');
         exit;
     } else {
