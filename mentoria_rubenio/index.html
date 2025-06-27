@@ -142,24 +142,9 @@
                         <h2 class="mb-3 text-center">Mentoria Rubênio Gabriel</h2>
                         <p class="text-muted text-center mb-4">Seja muito bem-vindo(a)!<br>Este é um formulário oficial para a <b>mentoria premium com Rubênio Gabriel</b>. Responda com atenção, todos os dados serão analisados.</p>
                         <form id="formMentoria" action="processar-formulario.php" method="POST" autocomplete="off" novalidate>
+                            
                             <div class="mb-3">
-                                <label for="nome" class="form-label">1. Qual o seu nome completo?</label>
-                                <input type="text" class="form-control" id="nome" name="nome" required minlength="3" maxlength="100">
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">2. Qual o seu melhor e-mail?</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="whatsapp" class="form-label">3. Qual o seu WhatsApp com DDD?</label>
-                                <input type="text" class="form-control" id="whatsapp" name="whatsapp" required placeholder="(99) 99999-9999" maxlength="15">
-                            </div>
-                            <div class="mb-3">
-                                <label for="instagram" class="form-label">4. Qual o seu @ do Instagram?</label>
-                                <input type="text" class="form-control" id="instagram" name="instagram" placeholder="@seuusuario" pattern="^@?[a-zA-Z0-9._]+$">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">5. Qual das frases abaixo mais representa seu momento atual?</label>
+                                <label class="form-label">1. Qual das frases abaixo mais representa seu momento atual?</label>
                                 <select class="form-select" name="momento" required>
                                     <option value="" disabled selected>Selecione uma opção</option>
                                     <option>Quero começar no digital, mas ainda não encontrei o caminho certo.</option>
@@ -169,8 +154,9 @@
                                     <option>Nenhuma das opções.</option>
                                 </select>
                             </div>
+
                             <div class="mb-3">
-                                <label class="form-label">6. Qual é a sua faixa de renda mensal atualmente?</label>
+                                <label class="form-label">2. Qual é a sua faixa de renda mensal atualmente?</label>
                                 <select class="form-select" name="renda" required>
                                     <option value="" disabled selected>Selecione uma opção</option>
                                     <option>Ainda não tenho renda própria</option>
@@ -181,8 +167,10 @@
                                     <option>Acima de R$20.000</option>
                                 </select>
                             </div>
+
+                            
                             <div class="mb-3">
-                                <label class="form-label">7. Hoje, quanto você teria disponível (PIX ou crédito) para investir em um acompanhamento estratégico voltado a lucros entre R$30.000 e R$150.000 por mês?</label>
+                                <label class="form-label">3. Hoje, quanto você teria disponível (PIX ou crédito) para investir em um acompanhamento estratégico voltado a lucros entre R$30.000 e R$150.000 por mês?</label>
                                 <select class="form-select" name="investimento" required>
                                     <option value="" disabled selected>Selecione uma opção</option>
                                     <option>Não posso investir no momento</option>
@@ -195,10 +183,35 @@
                                     <option>Acima de R$26.000</option>
                                 </select>
                             </div>
+                            
+                            
+                            
+                            <div class="mb-3">
+                                <label for="nome" class="form-label">4. Qual o seu nome completo?</label>
+                                <input type="text" class="form-control" id="nome" name="nome" required minlength="3" maxlength="100">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email" class="form-label">5. Qual o seu melhor e-mail?</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="whatsapp" class="form-label">6. Qual o seu WhatsApp com DDD?</label>
+                                <input type="text" class="form-control" id="whatsapp" name="whatsapp" required placeholder="(99) 99999-9999" maxlength="15">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="instagram" class="form-label">7. Qual o seu @ do Instagram?</label>
+                                <input type="text" class="form-control" id="instagram" name="instagram" placeholder="@seuusuario" pattern="^@?[a-zA-Z0-9._]+$">
+                            </div>
+
+
                             <div class="mb-3">
                                 <label for="motivo" class="form-label">8. Por que você acredita que faz sentido ser acompanhado pelo Rubênio e pela equipe dele?</label>
                                 <textarea class="form-control" id="motivo" name="motivo" rows="3" required minlength="10" maxlength="500"></textarea>
                             </div>
+
                             <div class="mb-3">
                                 <label class="form-label">9. Compromisso final</label>
                                 <div class="form-check">
@@ -214,11 +227,12 @@
                                     </label>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">Enviar aplicação</button>
+
+                            <button type="submit" class="btn btn-primary w-100">Enviar</button>
                         </form>
                         <div id="mensagemFinal" class="alert alert-success mt-4 d-none">
                             <h4 class="alert-heading">Obrigado por preencher!</h4>
-                            <p>Sua aplicação foi recebida com sucesso ✅<br>Em breve, um membro da equipe do Rubênio irá analisar suas respostas. Se seu perfil for aprovado para a mentoria individual, você será chamado no WhatsApp para agendar uma aula estratégica.<br><br><b>Caso seu perfil esteja em fase inicial ou ainda sem poder de investimento compatível, vamos te direcionar para uma condição especial na mentoria coletiva</b> com acesso imersivo ao método e aulas gravadas.<br><br>Não importa seu ponto de partida: o importante é que você decidiu evoluir!</p>
+                            <p>Suas respostas foram recebidas com sucesso ✅<br>Em breve, um membro da equipe do Rubênio irá analisar suas respostas. Se seu perfil for aprovado para a mentoria individual, você será chamado no WhatsApp para agendar uma aula estratégica.<br><br><b>Caso seu perfil esteja em fase inicial ou ainda sem poder de investimento compatível, vamos te direcionar para uma condição especial na mentoria coletiva</b> com acesso imersivo ao método e aulas gravadas.<br><br>Não importa seu ponto de partida: o importante é que você decidiu evoluir!</p>
                         </div>
                     </div>
                 </div>
