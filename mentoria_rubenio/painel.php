@@ -1,14 +1,25 @@
 <?php
-$host = 'localhost';
-$usuario = 'paymen58'; // ou seu usuário do banco da mentoria
-$senha = 'u4q7+B6ly)obP_gxN9sNe';
-$banco = 'paymen58_sistema_integrado_led';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-$conn = new mysqli($host, $usuario, $senha, $banco);
-if ($conn->connect_error) {
-    die('Erro na conexão com o banco de dados: ' . $conn->connect_error);
+// Usar o arquivo de conexão correto
+require_once __DIR__ . '/conexao.php';
+
+// Converter PDO para mysqli para compatibilidade
+try {
+    $host = "localhost";
+    $usuario = "paymen58";
+    $senha = "u4q7+B6ly)obP_gxN9sNe";
+    $banco = "paymen58_sistema_integrado_led";
+    
+    $conn = new mysqli($host, $usuario, $senha, $banco);
+    if ($conn->connect_error) {
+        die('Erro na conexão com o banco de dados: ' . $conn->connect_error);
+    }
+    $conn->set_charset('utf8mb4');
+} catch (Exception $e) {
+    die('Erro na conexão: ' . $e->getMessage());
 }
-$conn->set_charset('utf8mb4');
 
 // Filtros
 $filtro_investimento = $_GET['investimento'] ?? '';
@@ -137,7 +148,10 @@ $result = $stmt->get_result();
                 </tr>
             </thead>
             <tbody>
-            <?php while ($lead = $result->fetch_assoc()): ?>
+            <?php 
+            if ($result && $result->num_rows > 0):
+                while ($lead = $result->fetch_assoc()): 
+            ?>
                 <tr>
                     <td><?php echo date('d/m/Y H:i', strtotime($lead['data_cadastro'])); ?></td>
                     <td title="<?php echo htmlspecialchars($lead['nome']); ?>"><?php echo htmlspecialchars($lead['nome']); ?></td>
@@ -175,7 +189,17 @@ $result = $stmt->get_result();
                         </div>
                     </td>
                 </tr>
-            <?php endwhile; ?>
+            <?php 
+                endwhile; 
+            else:
+            ?>
+                <tr>
+                    <td colspan="11" class="text-center text-muted py-4">
+                        <p>Nenhum lead encontrado.</p>
+                        <p><a href="teste_painel.php" class="btn btn-outline-primary btn-sm">Testar Conexão</a></p>
+                    </td>
+                </tr>
+            <?php endif; ?>
             </tbody>
         </table>
     </div>
