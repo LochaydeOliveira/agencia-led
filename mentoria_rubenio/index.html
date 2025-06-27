@@ -274,13 +274,13 @@
         let touched = {};
 
         // Limpa classes ao carregar
+        form.classList.remove('was-validated');
         inputs.forEach(input => {
             input.classList.remove('is-invalid', 'is-valid');
             touched[input.name] = false;
         });
-        form.classList.remove('was-validated');
 
-        // Blur: só mostra erro se já tentou submit OU se o campo foi tocado
+        // Blur: só mostra erro se o campo foi tocado OU já tentou submit
         inputs.forEach(input => {
             input.addEventListener('blur', function() {
                 touched[this.name] = true;
@@ -292,6 +292,9 @@
                         this.classList.remove('is-valid');
                         this.classList.add('is-invalid');
                     }
+                } else {
+                    this.classList.remove('is-invalid');
+                    this.classList.remove('is-valid');
                 }
             });
         });
@@ -299,11 +302,12 @@
         // Submit: valida todos
         form.addEventListener('submit', function(e) {
             triedSubmit = true;
-            if (!form.checkValidity()) {
+            let formValido = form.checkValidity();
+            if (!formValido) {
                 e.preventDefault();
                 e.stopPropagation();
+                form.classList.add('was-validated');
             }
-            form.classList.add('was-validated');
             inputs.forEach(input => {
                 if (input.checkValidity()) {
                     input.classList.remove('is-invalid');
