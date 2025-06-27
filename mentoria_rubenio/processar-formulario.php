@@ -49,6 +49,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $headers .= "From: Mentoria Rubênio Gabriel <nao-responda@agencialed.com>\r\n";
         @mail($to, $subject, $message, $headers);
 
+
+        try {
+            require_once __DIR__ . '/../src/Mailer.php';
+            $mailer = new Mailer();
+            $mailer->mailer->clearAddresses();
+            $mailer->mailer->addAddress('lochaydeguerreiro@hotmail.com', 'Lochayde');
+            $mailer->mailer->Subject = 'Notificação de novo lead - Mentoria Rubênio Gabriel';
+            $mailer->mailer->Body = $message;
+            $mailer->mailer->AltBody = strip_tags(str_replace('<br>', "\n", $message));
+            $mailer->sendEmail();
+        } catch (Exception $e) {
+
+            error_log('Erro ao enviar notificação para Lochayde: ' . $e->getMessage());
+        }
+
         header('Location: index.html?sucesso=1');
         exit;
     } else {
