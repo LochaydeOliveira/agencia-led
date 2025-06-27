@@ -7,26 +7,20 @@ $filtro_data = $_GET['data'] ?? '';
 
 $sql = "SELECT * FROM leads WHERE 1=1";
 $params = [];
-$types = '';
 
 if ($filtro_investimento) {
     $sql .= " AND investimento = ?";
     $params[] = $filtro_investimento;
-    $types .= 's';
 }
 if ($filtro_data) {
     $sql .= " AND DATE(data_envio) = ?";
     $params[] = $filtro_data;
-    $types .= 's';
 }
 $sql .= " ORDER BY data_envio DESC";
 
-$stmt = $conn->prepare($sql);
-if ($params) {
-    $stmt->bind_param($types, ...$params);
-}
-$stmt->execute();
-$result = $stmt->get_result();
+$stmt = $pdo->prepare($sql);
+$stmt->execute($params);
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Cabeçalhos para download como Excel
 header('Content-Type: application/vnd.ms-excel');
@@ -35,7 +29,7 @@ header('Pragma: no-cache');
 header('Expires: 0');
 
 echo "Data\tNome\tEmail\tWhatsApp\tInstagram\tMomento\tRenda\tInvestimento\tMotivo\tCompromisso 1\tCompromisso 2\n";
-while ($lead = $result->fetch_assoc()) {
+foreach ($result as $lead) {
     echo date('d/m/Y H:i', strtotime($lead['data_envio'])) . "\t";
     echo str_replace(["\t", "\n", "\r"], ' ', $lead['nome']) . "\t";
     echo str_replace(["\t", "\n", "\r"], ' ', $lead['email']) . "\t";
