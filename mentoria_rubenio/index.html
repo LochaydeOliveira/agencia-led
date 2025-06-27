@@ -109,7 +109,10 @@
           </div>
           <div class="modal-footer border-0 pt-0 justify-content-center">
             <button id="btnFecharModal" type="button" class="btn btn-primary w-100 btn-fade-in" style="max-width:220px; display:none;" data-bs-dismiss="modal">Acessar Formulário</button>
-            <span id="aguardeMsg" class="text-muted" style="font-size:0.90rem;">Carregando formulário...</span>
+            <span id="aguardeMsg" class="text-muted" style="font-size:0.90rem;">
+                <span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+                Carregando formulário...
+            </span>
           </div>
         </div>
       </div>
@@ -268,7 +271,7 @@
                 btn.style.display = 'block';
                 aguarde.style.display = 'none';
                 btn.classList.add('show');
-            }, 10000);
+            }, 5000);
         }
         
         btn.addEventListener('click', function() {
