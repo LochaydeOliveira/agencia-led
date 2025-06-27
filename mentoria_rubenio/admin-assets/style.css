@@ -154,3 +154,14 @@ input.form-control:focus, select.form-select:focus, textarea.form-control:focus 
     }
 }
 
+@media (min-width: 1200px) {
+    .btn-enviar {
+        width: 50%;
+        margin: 0 auto;
+    }
+
+    .link-politica {
+        color: #8b8b8b;
+        font-size: 15px;
+    }
+}
