@@ -1,5 +1,14 @@
 <?php
-require_once __DIR__ . '/../conexao.php';
+$host = 'localhost';
+$usuario = 'paymen58'; // ou seu usuário do banco da mentoria
+$senha = 'u4q7+B6ly)obP_gxN9sNe';
+$banco = 'paymen58_sistema_integrado_led';
+
+$conn = new mysqli($host, $usuario, $senha, $banco);
+if ($conn->connect_error) {
+    die('Erro na conexão com o banco de dados: ' . $conn->connect_error);
+}
+$conn->set_charset('utf8mb4');
 
 // Filtros
 $filtro_investimento = $_GET['investimento'] ?? '';
@@ -34,7 +43,7 @@ $result = $stmt->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel de Leads - Mentoria Rubênio Gabriel</title>
-    <link rel="stylesheet" href="admin-assets/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="admin-assets/style.css">
 </head>
 <body>
