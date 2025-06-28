@@ -92,6 +92,23 @@
             border: 2px solid #dc3545 !important;
             background: #fff6f6;
         }
+        
+        /* Estilo para campos com ícones */
+        .input-group-text {
+            background-color: #f8f9fa;
+            border-right: none;
+        }
+        .form-control.with-icon {
+            border-left: none;
+        }
+        .form-control.with-icon:focus {
+            border-left: none;
+            box-shadow: none;
+        }
+        .input-group:focus-within .input-group-text {
+            border-color: #86b7fe;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
     </style>
 </head>
 <body>
@@ -191,22 +208,34 @@
                             
                             <div class="mb-5">
                                 <label for="nome" class="form-label">4. Qual o seu nome completo?</label>
-                                <input type="text" class="form-control" id="nome" name="nome" required minlength="3" maxlength="100">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                                    <input type="text" class="form-control with-icon" id="nome" name="nome" required minlength="3" maxlength="100">
+                                </div>
                             </div>
 
                             <div class="mb-5">
                                 <label for="email" class="form-label">5. Qual o seu melhor e-mail?</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                                    <input type="email" class="form-control with-icon" id="email" name="email" required>
+                                </div>
                             </div>
 
                             <div class="mb-5">
                                 <label for="whatsapp" class="form-label">6. Qual o seu WhatsApp com DDD?</label>
-                                <input type="text" class="form-control" id="whatsapp" name="whatsapp" required placeholder="(99) 99999-9999" maxlength="15">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-whatsapp"></i></span>
+                                    <input type="text" class="form-control with-icon" id="whatsapp" name="whatsapp" required placeholder="(99) 99999-9999" maxlength="15">
+                                </div>
                             </div>
 
                             <div class="mb-5">
                                 <label for="instagram" class="form-label">7. Qual o seu @ do Instagram?</label>
-                                <input type="text" class="form-control" id="instagram" name="instagram" placeholder="@seuusuario" pattern="^@?[a-zA-Z0-9._]+$">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-instagram"></i></span>
+                                    <input type="text" class="form-control with-icon" id="instagram" name="instagram" placeholder="@seuusuario" pattern="^@?[a-zA-Z0-9._]+$">
+                                </div>
                             </div>
 
 
