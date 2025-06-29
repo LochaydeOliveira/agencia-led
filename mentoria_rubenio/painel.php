@@ -95,6 +95,7 @@ $result = $stmt->get_result();
             border-radius: 0.375rem;
             margin-bottom: 1.5rem;
         }
+
     </style>
 </head>
 <body>
@@ -165,7 +166,15 @@ $result = $stmt->get_result();
                         echo htmlspecialchars($lead['whatsapp']);
                         ?>
                     </td>
-                    <td title="<?php echo htmlspecialchars($lead['instagram']); ?>"><?php echo htmlspecialchars($lead['instagram']); ?></td>
+                    <td title="<?php echo htmlspecialchars($lead['instagram']); ?>">
+                        <?php echo htmlspecialchars($lead['instagram']); ?>
+                        <?php if ($lead['naoquerofornecer']): ?>
+                            <span class="badge bg-warning text-dark ms-1">Não quis fornecer</span>
+                        <?php endif; ?>
+                        <?php if ($lead['naousoredesociais']): ?>
+                            <span class="badge bg-info text-dark ms-1">Não usa redes sociais</span>
+                        <?php endif; ?>
+                    </td>
                     <td title="<?php echo htmlspecialchars($lead['momento']); ?>"><?php echo htmlspecialchars($lead['momento']); ?></td>
                     <td title="<?php echo htmlspecialchars($lead['renda']); ?>"><?php echo htmlspecialchars($lead['renda']); ?></td>
                     <td title="<?php echo htmlspecialchars($lead['investimento']); ?>"><?php echo htmlspecialchars($lead['investimento']); ?></td>

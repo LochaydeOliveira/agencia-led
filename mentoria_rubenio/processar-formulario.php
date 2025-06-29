@@ -17,6 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $motivo = limpar($_POST['motivo'] ?? '');
     $compromisso1 = isset($_POST['compromisso1']) ? 1 : 0;
     $compromisso2 = isset($_POST['compromisso2']) ? 1 : 0;
+    $naoquerofornecer = isset($_POST['naoquerofornecer']) ? 1 : 0;
+    $naousoredesociais = isset($_POST['naousoredesociais']) ? 1 : 0;
 
     // Validação básica
     if (!$nome || !$email || !$whatsapp || !$momento || !$renda || !$investimento || !$motivo || !$compromisso1 || !$compromisso2) {
@@ -24,9 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    $sql = "INSERT INTO leads (nome, email, whatsapp, instagram, momento, renda, investimento, motivo, compromisso1, compromisso2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO leads (nome, email, whatsapp, instagram, momento, renda, investimento, motivo, compromisso1, compromisso2, naoquerofornecer, naousoredesociais) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$nome, $email, $whatsapp, $instagram, $momento, $renda, $investimento, $motivo, $compromisso1, $compromisso2]);
+    $stmt->execute([$nome, $email, $whatsapp, $instagram, $momento, $renda, $investimento, $motivo, $compromisso1, $compromisso2, $naoquerofornecer, $naousoredesociais]);
 
     if ($stmt->rowCount() > 0) {
    
@@ -37,6 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             . "<b>E-mail:</b> $email<br>"
             . "<b>WhatsApp:</b> $whatsapp<br>"
             . "<b>Instagram:</b> $instagram<br>"
+            . "<b>Não quis fornecer Instagram:</b> " . ($naoquerofornecer ? 'Sim' : 'Não') . "<br>"
+            . "<b>Não usa redes sociais:</b> " . ($naousoredesociais ? 'Sim' : 'Não') . "<br>"
             . "<b>Momento:</b> $momento<br>"
             . "<b>Renda:</b> $renda<br>"
             . "<b>Investimento:</b> $investimento<br>"

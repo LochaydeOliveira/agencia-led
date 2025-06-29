@@ -19,6 +19,21 @@
         .modal-content {
             animation: slideIn 0.4s ease-out;
         }
+        .modal-p {
+            text-align: justify;
+            padding: 0 2rem;
+            font-size: 15px;
+        }
+        .modal-h5{
+            background: #474746;
+            border-radius: 0!important;
+        }
+
+        .modal-h5 h5{
+            color: #fff!important;
+            padding: 0.2rem;
+            margin: 0;
+        }
         @keyframes slideIn {
             from {
                 opacity: 0;
@@ -66,7 +81,7 @@
             transform: scale(1);
         }
         
-        /* Modal de sucesso */
+
         .modal-sucesso {
             display: none;
         }
@@ -74,7 +89,7 @@
             display: block;
         }
         
-        /* Validação de campos */
+
         .form-control.is-invalid {
             border-color: #dc3545;
             box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
@@ -92,8 +107,16 @@
             border: 2px solid #dc3545 !important;
             background: #fff6f6;
         }
+
+
+        .style-icon-form {
+            background: #118193!important;
+            color: #fff!important;
+            border-radius: 0!important;
+            border: none!important;
+        }
         
-        /* Estilo para campos com ícones */
+
         .input-group-text {
             background-color: #f8f9fa;
             border-right: none;
@@ -109,20 +132,120 @@
             border-color: #86b7fe;
             box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
         }
+
+        header.form-header-bg {
+            position: relative;
+            background: url('admin-assets/img/img-bkgd-head.jpg') top center/cover no-repeat;
+            min-height: 260px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+        header.form-header-bg::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, rgb(0 24 28 / 85%) 0%, rgba(17, 129, 147, 0.55) 70%, rgba(17, 129, 147, 0.25) 100%);
+            z-index: 1;
+        }
+        header.form-header-bg > * {
+            position: relative;
+            z-index: 2;
+        }
+        header.form-header-bg h2, header.form-header-bg p {
+            color: #ffd402;
+            text-align: left!important;
+            padding: 0 0 0 2rem;
+        }
+        .text-muted {
+            color: #fff !important;
+            width: 66%!important;
+            font-size: 15px;
+        }
+        .text-aviso-insta {
+            font-size: 12px;
+            color: #767f89;
+            margin: 1rem 0 2rem 0;
+            line-height: 20px;
+        }
+
+        .text-aviso-insta-options {
+            margin: 2rem 0 0;
+        }
+
+        .text-aviso-insta-options label {
+            margin: 0 0 0 6px;
+            font-size: 12px;
+            color: #767f89;
+        }
+
+        .text-aviso-insta-options .form-check {
+            margin: 0 0 1.2rem 0!important;
+        }
+
+        .ul-results {
+            color: #fff;
+            display: flex;
+            font-size: 14px;
+            flex-direction: column;
+            list-style: none;
+            gap: 5px;
+        }
+
+        .ul-results li  {
+            border: 1px solid #fff;
+            border-radius: 20px;
+            padding: 2px  15px;
+            max-width: max-content;
+        }
+
+        .form-check-label {
+            font-size: 12px;
+            color: #767f89;
+            line-height: 20px;
+        }
+
+        body.form-bg {
+            position: relative;
+            min-height: 100vh;
+            background: url('admin-assets/img/bkgd-geral.jpg') center center/cover no-repeat fixed;
+        }
+        body.form-bg::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, rgb(0 24 28 / 88%) 0%, rgb(17 129 147 / 75%) 70%, rgb(9 44 50 / 58%) 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .container, .form-container, .card {
+            position: relative;
+            z-index: 1;
+        }
     </style>
 </head>
-<body>
+<body class="form-bg">
 
     <div class="modal fade show" id="modalBoasVindas" tabindex="-1" aria-modal="true" role="dialog" style="display: block; background: rgba(30,30,30,0.85);">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border-radius:0; box-shadow:0 2px 12px rgba(30,30,30,0.13);">
-          <div class="modal-header border-0 pb-0">
-            <h5 class="modal-title w-100 text-center" style="font-weight:700; color:#232323;">Seja muito bem-vindo(a)!</h5>
+          <div class="modal-header modal-h5">
+            <h5 class="modal-title w-100 text-center" style="font-weight:700;">Seja muito bem-vindo(a)!</h5>
           </div>
           <div class="modal-body text-center pt-2 pb-0" style="color:#232323; font-size:1.08rem;">
-            <p>Se você está aqui, é porque acredita que pode transformar sua realidade financeira com uma loja online no exterior, lucrando em <b>moeda forte</b> com estrutura e previsibilidade.</p>
-            <p>Este é um formulário oficial para uma <b>mentoria premium com Rubênio Gabriel</b>, especialista em dropshipping internacional com operações validadas e resultados reais.</p>
-            <p>Por isso, este formulário serve para selecionar apenas as pessoas com perfil ideal. <b>Responda com atenção</b>, todos os dados serão analisados.</p>
+            <p>
+                <i class="bi bi-exclamation-triangle-fill text-warning me-2" style="font-size:1.2em;vertical-align:-0.15em;"></i>
+                ATENÇÃO!
+            </p>
+            <P class="modal-p">
+                Se você está aqui, é porque acredita que pode transformar sua realidade financeira com uma loja online no exterior, lucrando em <b>moeda forte</b> com estrutura e previsibilidade.
+                Este é um formulário oficial para uma <b>mentoria premium com Rubênio Gabriel</b>, especialista em dropshipping internacional com operações validadas e resultados reais.
+                Por isso, este formulário serve para selecionar apenas as pessoas com perfil ideal. <b>Responda com atenção</b>, todos os dados serão analisados.
+            </p>
+
           </div>
           <div class="modal-footer border-0 pt-0 justify-content-center">
             <button id="btnFecharModal" type="button" class="btn btn-primary w-100 btn-fade-in" style="max-width:220px; display:none;" data-bs-dismiss="modal">Acessar Formulário</button>
@@ -142,8 +265,8 @@
             <h5 class="modal-title w-100 text-center" style="font-weight:700; color:#232323;">Obrigado por preencher!</h5>
           </div>
           <div class="modal-body text-center pt-2 pb-0" style="color:#232323; font-size:1.08rem;">
-            <p>Sua aplicação foi recebida com sucesso ✅</p>
-            <p>Em breve, um membro da equipe do Rubênio irá analisar suas respostas. Se seu perfil for aprovado para a mentoria individual, você será chamado no WhatsApp para agendar uma aula estratégica.</p>
+            <p>Suas respostas foram recebidas com sucesso ✅</p>
+            <p>Em breve, eu mesmo ou um membro da minha equipe irá analisar suas respostas. Se seu perfil for aprovado para a mentoria individual, você será chamado no WhatsApp para agendar uma aula estratégica.</p>
             <p>Caso seu perfil esteja em fase inicial ou ainda sem poder de investimento compatível, vamos te direcionar para uma condição especial na mentoria coletiva com acesso imersivo ao método e aulas gravadas.</p>
             <p><b>Não importa seu ponto de partida: o importante é que você decidiu evoluir!</b></p>
           </div>
@@ -157,10 +280,27 @@
     <div class="container py-5 form-container">
         <div class="row justify-content-center">
             <div class="col-lg-7 col-md-10">
+                
                 <div class="card shadow">
-                    <div class="card-body p-4">
+                    <header class="form-header-bg">
                         <h2 class="mb-3 text-center">Mentoria Rubênio Gabriel</h2>
-                        <p class="text-muted text-center mb-4">Seja muito bem-vindo(a)!<br>Este é um formulário oficial para a <b>mentoria premium com Rubênio Gabriel</b>. Responda com atenção, todos os dados serão analisados.</p>
+
+                        <p class="text-muted text-center mb-4">
+                            Este é o meu formulário oficial de aplicação para a mentoria premium individual.
+                            Responda com atenção, eu mesmo vou analisar seus dados para entender se você tem o perfil ideal para participar.                            
+                            <strong>Aqui o acompanhamento é real e o foco é em resultado</strong>.
+                        </p>
+
+                        <ul class="ul-results">
+                            <li><i class="bi bi-bar-chart-fill me-2"></i>+7 Dígitos lucrados</li>
+                            <li><i class="bi bi-laptop-fill me-2"></i>+5 Anos vivendo do digital</li>
+                            <li><i class="bi bi-person-bounding-box me-2"></i>Te ensino individualmente a lucrar em moeda forte</li>
+                            <li><i class="bi bi-cash-stack me-2"></i>Operação de 30mil/mês lucro mês</li>
+                        </ul>
+
+                    </header>
+
+                    <div class="card-body p-5">                   
                         <form id="formMentoria" action="processar-formulario.php" method="POST" autocomplete="off" novalidate>
                             
                             <div class="mb-5">
@@ -209,7 +349,7 @@
                             <div class="mb-5">
                                 <label for="nome" class="form-label">4. Qual o seu nome completo?</label>
                                 <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                                    <span class="input-group-text style-icon-form"><i class="bi bi-person-fill"></i></span>
                                     <input type="text" class="form-control with-icon" id="nome" name="nome" required minlength="3" maxlength="100">
                                 </div>
                             </div>
@@ -217,7 +357,7 @@
                             <div class="mb-5">
                                 <label for="email" class="form-label">5. Qual o seu melhor e-mail?</label>
                                 <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                                    <span class="input-group-text style-icon-form"><i class="bi bi-envelope-fill"></i></span>
                                     <input type="email" class="form-control with-icon" id="email" name="email" required>
                                 </div>
                             </div>
@@ -225,7 +365,7 @@
                             <div class="mb-5">
                                 <label for="whatsapp" class="form-label">6. Qual o seu WhatsApp com DDD?</label>
                                 <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-whatsapp"></i></span>
+                                    <span class="input-group-text style-icon-form"><i class="bi bi-whatsapp"></i></span>
                                     <input type="text" class="form-control with-icon" id="whatsapp" name="whatsapp" required placeholder="(99) 99999-9999" maxlength="15">
                                 </div>
                             </div>
@@ -233,8 +373,31 @@
                             <div class="mb-5">
                                 <label for="instagram" class="form-label">7. Qual o seu @ do Instagram?</label>
                                 <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-instagram"></i></span>
+                                    <span class="input-group-text style-icon-form"><i class="bi bi-instagram"></i></span>
                                     <input type="text" class="form-control with-icon" id="instagram" name="instagram" placeholder="@seuusuario" pattern="^@?[a-zA-Z0-9._]+$">
+                                </div>
+                                <p class="text-aviso-insta">
+                                    <i class="bi bi-exclamation-triangle-fill text-warning me-2" style="font-size:1.2em;vertical-align:-0.15em;"></i>
+                                    Para garantir que essa mentoria seja oferecida apenas a quem realmente tem perfil, 
+                                    precisamos avaliar seu momento atual: profissão, fonte de renda, estilo de vida e capacidade de investimento.
+                                    Essa não é uma mentoria genérica, é um acompanhamento sério, com foco em grandes resultados. 
+                                    Por isso, solicitamos seu @ do Instagram (ou outra rede social) para uma pré-avaliação.                                    
+                                    Se não tiver Instagram, selecione uma das opções abaixo:
+                                </p>
+
+                                <div class="text-aviso-insta-options">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="naoquerofornecer" name="naoquerofornecer" value="1" required>
+                                        <label class="form-check-label" for="naoquerofornecer">
+                                            Prefiro não fornecer meu Instagram. Não me sinto confortável com esse pedido.
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="naousoredesociais" name="naousoredesociais" value="1" required>
+                                        <label class="form-check-label" for="naousoredesociais">
+                                            Não uso redes sociais, mas afirmo que tenho condições de investir acima de R$3.000 para buscar lucros superiores a R$30.000.
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -244,7 +407,7 @@
                                 <textarea class="form-control" id="motivo" name="motivo" rows="3" required minlength="10" maxlength="500"></textarea>
                             </div>
 
-                            <div class="mb-5">
+                            <div class="mb-5 text-aviso-compromisso">
                                 <label class="form-label">9. Compromisso final</label>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="compromisso1" name="compromisso1" value="1" required>
@@ -269,9 +432,10 @@
                         </form>
                         <div id="mensagemFinal" class="alert alert-success mt-4 d-none">
                             <h4 class="alert-heading">Obrigado por preencher!</h4>
-                            <p>Suas respostas foram recebidas com sucesso ✅<br>Em breve, um membro da equipe do Rubênio irá analisar suas respostas. Se seu perfil for aprovado para a mentoria individual, você será chamado no WhatsApp para agendar uma aula estratégica.<br><br><b>Caso seu perfil esteja em fase inicial ou ainda sem poder de investimento compatível, vamos te direcionar para uma condição especial na mentoria coletiva</b> com acesso imersivo ao método e aulas gravadas.<br><br>Não importa seu ponto de partida: o importante é que você decidiu evoluir!</p>
-                        </div>
+                            <p>Suas respostas foram recebidas com sucesso ✅<br>Em breve, eu mesmo ou um membro da minha equipe irá analisar suas respostas. Se seu perfil for aprovado para a mentoria individual, você será chamado no WhatsApp para agendar uma aula estratégica.<br><br><b>Caso seu perfil esteja em fase inicial ou ainda sem poder de investimento compatível, vamos te direcionar para uma condição especial na mentoria coletiva</b> com acesso imersivo ao método e aulas gravadas.<br><br>Não importa seu ponto de partida: o importante é que você decidiu evoluir!</p>
+                        </div>                        
                     </div>
+
                 </div>
             </div>
         </div>
@@ -333,22 +497,55 @@
                     campo.classList.remove('campo-obrigatorio-vazio');
                 }
             });
-            if (algumVazio) {
+
+            // Validação customizada para Instagram/justificativa
+            var instagram = document.getElementById('instagram');
+            var naoquerofornecer = document.getElementById('naoquerofornecer');
+            var naousoredesociais = document.getElementById('naousoredesociais');
+            let justificativaObrigatoria = false;
+            if (!instagram.value.trim()) {
+                // Se Instagram vazio, pelo menos uma das opções deve ser marcada
+                if (!naoquerofornecer.checked && !naousoredesociais.checked) {
+                    justificativaObrigatoria = true;
+                    naoquerofornecer.classList.add('campo-obrigatorio-vazio');
+                    naousoredesociais.classList.add('campo-obrigatorio-vazio');
+                } else {
+                    naoquerofornecer.classList.remove('campo-obrigatorio-vazio');
+                    naousoredesociais.classList.remove('campo-obrigatorio-vazio');
+                }
+            } else {
+                // Se Instagram preenchido, desmarca e remove obrigatoriedade das opções
+                naoquerofornecer.checked = false;
+                naousoredesociais.checked = false;
+                naoquerofornecer.classList.remove('campo-obrigatorio-vazio');
+                naousoredesociais.classList.remove('campo-obrigatorio-vazio');
+            }
+
+            if (algumVazio || justificativaObrigatoria) {
                 e.preventDefault();
             }
         });
 
-        obrigatorios.forEach(function(campo) {
-            campo.addEventListener('input', function() {
-                if (campo.value || (campo.type === 'checkbox' && campo.checked)) {
-                    campo.classList.remove('campo-obrigatorio-vazio');
-                }
-            });
-            campo.addEventListener('change', function() {
-                if (campo.value || (campo.type === 'checkbox' && campo.checked)) {
-                    campo.classList.remove('campo-obrigatorio-vazio');
-                }
-            });
+        // Atualiza visual ao interagir com Instagram ou opções
+        document.getElementById('instagram').addEventListener('input', function() {
+            if (this.value.trim()) {
+                document.getElementById('naoquerofornecer').checked = false;
+                document.getElementById('naousoredesociais').checked = false;
+                document.getElementById('naoquerofornecer').classList.remove('campo-obrigatorio-vazio');
+                document.getElementById('naousoredesociais').classList.remove('campo-obrigatorio-vazio');
+            }
+        });
+        document.getElementById('naoquerofornecer').addEventListener('change', function() {
+            if (this.checked || document.getElementById('naousoredesociais').checked) {
+                this.classList.remove('campo-obrigatorio-vazio');
+                document.getElementById('naousoredesociais').classList.remove('campo-obrigatorio-vazio');
+            }
+        });
+        document.getElementById('naousoredesociais').addEventListener('change', function() {
+            if (this.checked || document.getElementById('naoquerofornecer').checked) {
+                this.classList.remove('campo-obrigatorio-vazio');
+                document.getElementById('naoquerofornecer').classList.remove('campo-obrigatorio-vazio');
+            }
         });
     });
 
