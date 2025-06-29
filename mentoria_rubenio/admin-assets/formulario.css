@@ -1,0 +1,287 @@
+/* ========================================
+   ESTILOS DO FORMULÁRIO - MENTORIA RUBÊNIO
+   ======================================== */
+
+/* ========================================
+   BACKGROUND E LAYOUT GERAL
+   ======================================== */
+
+body.form-bg {
+    position: relative;
+    min-height: 100vh;
+    background: url('./img/bkgd-geral.webp') center center/cover no-repeat fixed;
+}
+
+body.form-bg::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(90deg, rgb(0 24 28 / 88%) 0%, rgb(17 129 147 / 75%) 70%, rgb(9 44 50 / 58%) 100%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.container, .form-container, .card {
+    position: relative;
+    z-index: 1;
+}
+
+/* ========================================
+   HEADER DO FORMULÁRIO
+   ======================================== */
+
+header.form-header-bg {
+    position: relative;
+    background: url('./img/img-bkgd-head.webp') top center/cover no-repeat;
+    min-height: 260px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem 0;
+}
+
+header.form-header-bg::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(90deg, rgb(0 24 28 / 85%) 0%, rgba(17, 129, 147, 0.55) 70%, rgba(17, 129, 147, 0.25) 100%);
+    z-index: 1;
+}
+
+header.form-header-bg > * {
+    position: relative;
+    z-index: 2;
+}
+
+header.form-header-bg h2, header.form-header-bg p {
+    color: #ffd402;
+    text-align: left!important;
+    padding: 0 0 0 2rem;
+}
+
+.text-muted {
+    color: #fff !important;
+    width: 66%!important;
+    font-size: 15px;
+}
+
+/* Lista de resultados no header */
+.ul-results {
+    color: #fff;
+    display: flex;
+    font-size: 14px;
+    flex-direction: column;
+    list-style: none;
+    gap: 5px;
+}
+
+.ul-results li {
+    border: 1px solid #fff;
+    border-radius: 20px;
+    padding: 2px 15px;
+    max-width: max-content;
+}
+
+/* ========================================
+   CONTAINER E ANIMAÇÕES DO FORMULÁRIO
+   ======================================== */
+
+.form-container {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease-out;
+}
+
+.form-container.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.btn-fade-in {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.4s ease-out;
+}
+
+.btn-fade-in.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ========================================
+   CAMPOS DE INPUT COM ÍCONES
+   ======================================== */
+
+.style-icon-form {
+    background: #118193!important;
+    color: #fff!important;
+    border-radius: 0!important;
+    border: none!important;
+}
+
+.input-group-text {
+    background-color: #f8f9fa;
+    border-right: none;
+}
+
+.form-control.with-icon {
+    border-left: none;
+}
+
+.form-control.with-icon:focus {
+    border-left: none;
+    box-shadow: none;
+}
+
+.input-group:focus-within .input-group-text {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* ========================================
+   VALIDAÇÃO DE CAMPOS
+   ======================================== */
+
+.form-control.is-invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.form-control.is-valid {
+    border-color: #198754;
+    box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+}
+
+.invalid-feedback {
+    display: block;
+    font-size: 0.875rem;
+    color: #dc3545;
+}
+
+.campo-obrigatorio-vazio {
+    border: 2px solid #dc3545 !important;
+    background: #fff6f6;
+}
+
+/* ========================================
+   CAMPOS DE CHECKBOX E LABELS
+   ======================================== */
+
+.form-check-label {
+    font-size: 12px;
+    color: #767f89;
+    line-height: 20px;
+}
+
+/* ========================================
+   AVISO E OPÇÕES DO INSTAGRAM
+   ======================================== */
+
+.text-aviso-insta {
+    font-size: 12px;
+    color: #767f89;
+    margin: 1rem 0 2rem 0;
+    line-height: 20px;
+}
+
+.text-aviso-insta-options {
+    margin: 2rem 0 0;
+    display: none; /* Inicialmente oculto */
+}
+
+.text-aviso-insta-options h5 {
+    margin-bottom: 0.5rem;
+    font-size: 1.08rem;
+    color: #444;
+    font-weight: 700;
+}
+
+.text-aviso-insta-options label {
+    margin: 0 0 0 6px;
+    font-size: 12px;
+    color: #767f89;
+}
+
+.text-aviso-insta-options .form-check {
+    margin: 0 0 1.2rem 0!important;
+}
+
+/* ========================================
+   MODAIS
+   ======================================== */
+
+/* Modal de boas-vindas */
+.modal.fade {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.modal.fade.show {
+    opacity: 1;
+}
+
+.modal-content {
+    animation: slideIn 0.4s ease-out;
+}
+
+.modal.fade-out {
+    opacity: 0;
+}
+
+.modal-content.fade-out {
+    animation: slideOut 0.3s ease-in;
+}
+
+/* Modal de sucesso */
+.modal-sucesso {
+    display: none;
+}
+
+.modal-sucesso.show {
+    display: block;
+}
+
+/* Estilos específicos dos modais */
+.modal-p {
+    text-align: justify;
+    padding: 0 2rem;
+    font-size: 15px;
+}
+
+.modal-h5 {
+    background: #474746;
+    border-radius: 0!important;
+}
+
+.modal-h5 h5 {
+    color: #fff!important;
+    padding: 0.2rem;
+    margin: 0;
+}
+
+/* ========================================
+   ANIMAÇÕES
+   ======================================== */
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+} 
