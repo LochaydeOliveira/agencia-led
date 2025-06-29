@@ -33,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($stmt->rowCount() > 0) {
    
         $to = 'contato@agencialed.com';
-        $subject = 'Novo lead - Mentoria Rubênio Gabriel';
-        $message = "<h2>Novo lead recebido</h2>"
+        $subject = 'NOVO LEAD RECEBIDO - MENTORIA RUBÊNIO GABRIEL';
+        $message = "<h2>Dados Enviado Pelo Lead</h2>"
             . "<b>Nome:</b> $nome<br>"
             . "<b>E-mail:</b> $email<br>"
             . "<b>WhatsApp:</b> $whatsapp<br>"
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mailer = new Mailer();
             $mailer->sendCustomEmail(
                 'lochaydeguerreiro@hotmail.com',
-                'Notificação de novo lead - Mentoria Rubênio Gabriel',
+                '✅NOVO LEAD RECEBIDO - MENTORIA RUBÊNIO GABRIEL',
                 $message
             );
         } catch (Exception $e) {
