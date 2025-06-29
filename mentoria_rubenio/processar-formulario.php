@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    
         $to = 'contato@agencialed.com';
         $subject = 'NOVO LEAD RECEBIDO - MENTORIA RUBÊNIO GABRIEL';
-        $message = "<h2>Dados Enviado Pelo Lead</h2>"
+        $message = "<h2>Dados Enviados Pelo Lead</h2>"
             . "<b>Nome:</b> $nome<br>"
             . "<b>E-mail:</b> $email<br>"
             . "<b>WhatsApp:</b> $whatsapp<br>"
