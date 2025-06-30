@@ -61,8 +61,8 @@ header.form-header-bg h2, header.form-header-bg p {
     padding: 0 0 0 2rem;
 }
 
-/* Para telas muito pequenas (até 480px) */
-@media (max-width: 480px) {
+
+@media (max-width: 480.98px) {
     header.form-header-bg {
         background: url('./img/img-bkgd-head.webp') center right/cover no-repeat;
     }
@@ -71,11 +71,58 @@ header.form-header-bg h2, header.form-header-bg p {
         background: linear-gradient(0deg, rgb(0 24 28) 0%, rgb(9 71 81 / 66%) 70%, rgba(17, 129, 147, 0.25) 100%);
     }
 
+    .modal-dialog {
+        margin: 0 auto;
+        width: 90%;
+    }
+
+    .modal-p {
+        padding: 0!important;
+        font-size: 14px!important;
+    }
+
+    header.form-header-bg p {
+        color: #ffffff;
+        text-align: center!important;
+        padding: 0.8rem;
+        margin: 7rem 0;
+    }
+
+    header.form-header-bg h2 {
+        color: #ffffff;
+        text-align: center!important;
+        padding: 0.8rem;
+        margin: 0;
+        text-transform: uppercase;
+        position: relative;
+        top: 9rem;
+    }
+    .p-custom {
+        padding: 1.2rem;
+    }
+
 }
 
+@media (min-width: 481px) {
+    .p-custom {
+        padding: 3rem;
+    }
+    header.form-header-bg h2 {
+        color: #ffffff;
+        text-align: left!important;
+        padding: 0.8rem 0 0 2rem;
+    }
+
+    header.form-header-bg p {
+        color: #ffffff;
+        text-align: left!important;
+        padding: 0.8rem 0 0 2rem;
+        max-width: 65%;
+    }
+}
 
 .text-muted {
-    color: #fff !important;
+    color: #0a58ca !important;
     width: 66%!important;
     font-size: 15px;
 }
@@ -256,22 +303,26 @@ header.form-header-bg h2, header.form-header-bg p {
 }
 
 /* Estilos específicos dos modais */
-.modal-p {
-    text-align: justify;
-    padding: 0 2rem;
-    font-size: 15px;
-}
 
-.modal-h5 {
-    background: #474746;
-    border-radius: 0!important;
-}
+    .modal-p {
+        text-align: justify;
+        padding: 0 2rem;
+        font-size: 15px;
+    }
+    
+    .modal-h5 {
+        background: #474746;
+        border-radius: 0!important;
+    }
+    
+    .modal-h5 h5 {
+        color: #fff!important;
+        padding: 0.2rem;
+        margin: 0;
+    }    
 
-.modal-h5 h5 {
-    color: #fff!important;
-    padding: 0.2rem;
-    margin: 0;
-}
+
+
 
 /* ========================================
    ANIMAÇÕES
