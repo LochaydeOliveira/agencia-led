@@ -61,6 +61,19 @@ header.form-header-bg h2, header.form-header-bg p {
     padding: 0 0 0 2rem;
 }
 
+/* Para telas muito pequenas (até 480px) */
+@media (max-width: 480px) {
+    header.form-header-bg {
+        background: url('./img/img-bkgd-head.webp') center right/cover no-repeat;
+    }
+    
+    header.form-header-bg::before {
+        background: linear-gradient(0deg, rgb(0 24 28) 0%, rgb(9 71 81 / 66%) 70%, rgba(17, 129, 147, 0.25) 100%);
+    }
+
+}
+
+
 .text-muted {
     color: #fff !important;
     width: 66%!important;
