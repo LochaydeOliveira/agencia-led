@@ -61,63 +61,368 @@ header.form-header-bg h2, header.form-header-bg p {
     padding: 0 0 0 2rem;
 }
 
+/* Classe específica para o texto do header */
+.text-about {
+    color: #ffd402 !important;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
 
-@media (max-width: 480.98px) {
+/* ========================================
+   MEDIA QUERIES RESPONSIVAS
+   ======================================== */
+
+/* Para telas muito pequenas (até 480px) */
+@media (max-width: 480px) {
+    /* Header do formulário */
     header.form-header-bg {
         background: url('./img/img-bkgd-head.webp') center right/cover no-repeat;
+        min-height: 200px;
+        padding: 1.5rem 0;
     }
     
     header.form-header-bg::before {
         background: linear-gradient(0deg, rgb(0 24 28) 0%, rgb(9 71 81 / 66%) 70%, rgba(17, 129, 147, 0.25) 100%);
     }
 
+    header.form-header-bg h2 {
+        font-size: 1.4rem !important;
+        padding: 0 0 0 1rem;
+    }
+
+    header.form-header-bg p {
+        font-size: 0.9rem !important;
+        padding: 0 0 0 1rem;
+    }
+
+    /* Lista de resultados */
+    .ul-results {
+        font-size: 12px;
+        gap: 3px;
+    }
+
+    .ul-results li {
+        padding: 1px 10px;
+        border-radius: 15px;
+    }
+
+    /* Container e cards */
+    .card-body {
+        padding: 1rem 0.5rem !important;
+    }
+
+    .p-custom {
+        padding: 1rem 0.5rem !important;
+    }
+
+    /* Campos do formulário */
+    .form-label {
+        font-size: 0.95rem !important;
+    }
+
+    input.form-control, select.form-select, textarea.form-control {
+        font-size: 0.95rem !important;
+    }
+
+    /* Modais */
     .modal-dialog {
         margin: 0 auto;
-        width: 90%;
+        width: 95%;
     }
 
     .modal-p {
-        padding: 0!important;
-        font-size: 14px!important;
+        padding: 0 !important;
+        font-size: 13px !important;
     }
 
-    header.form-header-bg p {
-        color: #ffffff;
-        text-align: center!important;
-        padding: 0.8rem;
-        margin: 7rem 0;
+    /* Botões */
+    .btn-enviar {
+        width: 100%;
+        margin: 0 auto;
     }
 
-    header.form-header-bg h2 {
-        color: #ffffff;
-        text-align: center!important;
-        padding: 0.8rem;
-        margin: 0;
-        text-transform: uppercase;
-        position: relative;
-        top: 9rem;
-    }
-    .p-custom {
-        padding: 1.2rem;
+    .btn {
+        font-size: 0.95rem !important;
     }
 
+    /* Links */
+    .link-politica {
+        font-size: 11px !important;
+    }
+
+    /* Texto de aviso */
+    .text-aviso-insta {
+        font-size: 0.85rem !important;
+    }
+
+    .text-aviso-insta-options h5 {
+        font-size: 0.9rem !important;
+    }
+
+    .text-aviso-insta-options label {
+        font-size: 11px !important;
+    }
 }
 
-@media (min-width: 481px) {
-    .p-custom {
-        padding: 3rem;
+/* Para celulares (largura entre 481px e 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    /* Header do formulário */
+    header.form-header-bg {
+        min-height: 220px;
+        padding: 1.8rem 0;
     }
+
     header.form-header-bg h2 {
-        color: #ffffff;
-        text-align: left!important;
-        padding: 0.8rem 0 0 2rem;
+        font-size: 1.6rem !important;
     }
 
     header.form-header-bg p {
-        color: #ffffff;
-        text-align: left!important;
-        padding: 0.8rem 0 0 2rem;
-        max-width: 65%;
+        font-size: 0.95rem !important;
+    }
+
+    /* Lista de resultados */
+    .ul-results {
+        font-size: 13px;
+    }
+
+    /* Container e cards */
+    .card-body {
+        padding: 1.5rem 1rem !important;
+    }
+
+    .p-custom {
+        padding: 1.5rem 1rem !important;
+    }
+
+    /* Campos do formulário */
+    .form-label {
+        font-size: 1rem !important;
+    }
+
+    input.form-control, select.form-select, textarea.form-control {
+        font-size: 1rem !important;
+    }
+
+    /* Modais */
+    .modal-p {
+        font-size: 14px !important;
+    }
+
+    /* Botões */
+    .btn-enviar {
+        width: 70%;
+        margin: 0 auto;
+    }
+
+    /* Links */
+    .link-politica {
+        font-size: 12px !important;
+    }
+
+    /* Texto de aviso */
+    .text-aviso-insta {
+        font-size: 0.9rem !important;
+    }
+
+    .text-aviso-insta-options h5 {
+        font-size: 0.95rem !important;
+    }
+
+    .text-aviso-insta-options label {
+        font-size: 12px !important;
+    }
+}
+
+/* Para tablets (largura entre 769px e 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Header do formulário */
+    header.form-header-bg {
+        min-height: 240px;
+        padding: 2rem 0;
+    }
+
+    header.form-header-bg h2 {
+        font-size: 1.8rem !important;
+    }
+
+    header.form-header-bg p {
+        font-size: 1rem !important;
+    }
+
+    /* Lista de resultados */
+    .ul-results {
+        font-size: 14px;
+    }
+
+    /* Container e cards */
+    .card-body {
+        padding: 2rem 1.5rem !important;
+    }
+
+    .p-custom {
+        padding: 2rem 1.5rem !important;
+    }
+
+    /* Campos do formulário */
+    .form-label {
+        font-size: 1.05rem !important;
+    }
+
+    input.form-control, select.form-select, textarea.form-control {
+        font-size: 1.05rem !important;
+    }
+
+    /* Botões */
+    .btn-enviar {
+        width: 60%;
+        margin: 0 auto;
+    }
+
+    /* Links */
+    .link-politica {
+        font-size: 13px !important;
+    }
+
+    /* Texto de aviso */
+    .text-aviso-insta {
+        font-size: 0.95rem !important;
+    }
+
+    .text-aviso-insta-options h5 {
+        font-size: 1rem !important;
+    }
+
+    .text-aviso-insta-options label {
+        font-size: 13px !important;
+    }
+}
+
+/* Para telas médias e desktops menores (largura entre 1025px e 1366px) */
+@media (min-width: 1025px) and (max-width: 1366px) {
+    /* Header do formulário */
+    header.form-header-bg {
+        min-height: 260px;
+        padding: 2.2rem 0;
+    }
+
+    header.form-header-bg h2 {
+        font-size: 2rem !important;
+    }
+
+    header.form-header-bg p {
+        font-size: 1.05rem !important;
+    }
+
+    /* Lista de resultados */
+    .ul-results {
+        font-size: 15px;
+    }
+
+    /* Container e cards */
+    .card-body {
+        padding: 2.5rem 2rem !important;
+    }
+
+    .p-custom {
+        padding: 2.5rem 2rem !important;
+    }
+
+    /* Campos do formulário */
+    .form-label {
+        font-size: 1.08rem !important;
+    }
+
+    input.form-control, select.form-select, textarea.form-control {
+        font-size: 1.08rem !important;
+    }
+
+    /* Botões */
+    .btn-enviar {
+        width: 50%;
+        margin: 0 auto;
+    }
+
+    /* Links */
+    .link-politica {
+        font-size: 14px !important;
+    }
+
+    /* Texto de aviso */
+    .text-aviso-insta {
+        font-size: 1rem !important;
+    }
+
+    .text-aviso-insta-options h5 {
+        font-size: 1.05rem !important;
+    }
+
+    .text-aviso-insta-options label {
+        font-size: 14px !important;
+    }
+}
+
+/* Para telas grandes (acima de 1366px) */
+@media (min-width: 1367px) {
+    /* Header do formulário */
+    header.form-header-bg {
+        min-height: 280px;
+        padding: 2.5rem 0;
+    }
+
+    header.form-header-bg h2 {
+        font-size: 2.2rem !important;
+    }
+
+    header.form-header-bg p {
+        font-size: 1.1rem !important;
+    }
+
+    /* Lista de resultados */
+    .ul-results {
+        font-size: 16px;
+    }
+
+    /* Container e cards */
+    .card-body {
+        padding: 3rem 2.5rem !important;
+    }
+
+    .p-custom {
+        padding: 3rem 2.5rem !important;
+    }
+
+    /* Campos do formulário */
+    .form-label {
+        font-size: 1.1rem !important;
+    }
+
+    input.form-control, select.form-select, textarea.form-control {
+        font-size: 1.1rem !important;
+    }
+
+    /* Botões */
+    .btn-enviar {
+        width: 45%;
+        margin: 0 auto;
+    }
+
+    /* Links */
+    .link-politica {
+        font-size: 15px !important;
+    }
+
+    /* Texto de aviso */
+    .text-aviso-insta {
+        font-size: 1.05rem !important;
+    }
+
+    .text-aviso-insta-options h5 {
+        font-size: 1.1rem !important;
+    }
+
+    .text-aviso-insta-options label {
+        font-size: 15px !important;
     }
 }
 
