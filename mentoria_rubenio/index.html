@@ -34,7 +34,7 @@
           </div>
           <div class="modal-footer border-0 pt-0 justify-content-center">
             <button id="btnFecharModal" type="button" class="btn btn-primary w-100 btn-fade-in" style="max-width:220px; display:none;" data-bs-dismiss="modal">Acessar Formulário</button>
-            <span id="aguardeMsg" class="text-muted" style="font-size:0.90rem;">
+            <span id="aguardeMsg" class="form-load" style="font-size:0.90rem;">
                 <span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
                 Carregando formulário...
             </span>
@@ -242,7 +242,7 @@
 
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('sucesso') === '1') {
-            // Se há sucesso, oculta o modal de boas-vindas imediatamente
+
             modal.style.display = 'none';
             document.body.classList.remove('modal-open');
             document.body.style.overflow = '';
@@ -254,7 +254,7 @@
                 document.body.style.overflow = 'hidden';
             }, 500);
         } else {
-            // Se não há sucesso, mostra o modal de boas-vindas normalmente
+
             setTimeout(function() {
                 btn.style.display = 'block';
                 aguarde.style.display = 'none';
