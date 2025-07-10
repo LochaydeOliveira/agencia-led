@@ -49,5 +49,4 @@ function requireLogin() {
         header('Location: login.php');
         exit();
     }
-}
-?> 
+} 
