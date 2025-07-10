@@ -1,7 +1,3 @@
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 -- Criação do banco de dados
 CREATE DATABASE IF NOT EXISTS paymen58_my_training_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE paymen58_my_training_db;
