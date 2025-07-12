@@ -27,7 +27,9 @@ try {
     createTables($pdo);
     
 } catch (PDOException $e) {
-    die("Erro na conexão com o banco: " . $e->getMessage());
+    // Log do erro em vez de exibir
+    error_log("Erro na conexão com o banco: " . $e->getMessage());
+    die("Erro na conexão com o banco de dados.");
 }
 
 function createTables($pdo) {

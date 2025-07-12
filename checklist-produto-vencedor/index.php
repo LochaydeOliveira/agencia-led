@@ -1,10 +1,18 @@
 <?php
-session_start();
+// Iniciar sessão primeiro, antes de qualquer saída
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Se já estiver logado, redireciona para o dashboard
 if (isset($_SESSION['user_id'])) {
-    header('Location: dashboard.php');
-    exit();
+    if (!headers_sent()) {
+        header('Location: dashboard.php');
+        exit();
+    } else {
+        echo '<script>window.location.href = "dashboard.php";</script>';
+        exit();
+    }
 }
 
 // Processar login
@@ -16,8 +24,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
     
     if (authenticateUser($email, $password)) {
-        header('Location: dashboard.php');
-        exit();
+        if (!headers_sent()) {
+            header('Location: dashboard.php');
+            exit();
+        } else {
+            echo '<script>window.location.href = "dashboard.php";</script>';
+            exit();
+        }
     } else {
         $error = 'Email ou senha incorretos!';
     }

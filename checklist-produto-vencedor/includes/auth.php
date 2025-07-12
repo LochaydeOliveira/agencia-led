@@ -1,5 +1,8 @@
 <?php
-session_start();
+// Iniciar sessão apenas se não foi iniciada
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 function authenticateUser($email, $password) {
     global $pdo;
@@ -29,15 +32,29 @@ function isLoggedIn() {
 
 function requireLogin() {
     if (!isLoggedIn()) {
-        header('Location: index.php');
-        exit();
+        // Verificar se headers já foram enviados
+        if (!headers_sent()) {
+            header('Location: index.php');
+            exit();
+        } else {
+            // Se headers já foram enviados, usar JavaScript
+            echo '<script>window.location.href = "index.php";</script>';
+            exit();
+        }
     }
 }
 
 function logout() {
     session_destroy();
-    header('Location: index.php');
-    exit();
+    // Verificar se headers já foram enviados
+    if (!headers_sent()) {
+        header('Location: index.php');
+        exit();
+    } else {
+        // Se headers já foram enviados, usar JavaScript
+        echo '<script>window.location.href = "index.php";</script>';
+        exit();
+    }
 }
 
 function getCurrentUser() {
