@@ -1,13 +1,7 @@
-const CACHE_NAME = 'my-training-v1';
+const CACHE_NAME = 'my-training-v2'; // ou outro nome novo
 const urlsToCache = [
   '/my-training/',
-  '/my-training/index.php',
-  '/my-training/login.php',
-  '/my-training/cadastro.php',
-  '/my-training/treinos.php',
-  '/my-training/alimentacao.php',
-  '/my-training/progresso.php',
-  '/my-training/perfil.php',
+  // Removi páginas PHP do cache para evitar problemas de atualização
   'https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css',
   'https://cdn.jsdelivr.net/npm/chart.js'
@@ -26,6 +20,11 @@ self.addEventListener('install', event => {
 
 // Interceptar requisições
 self.addEventListener('fetch', event => {
+  // Não cacheia páginas PHP (dinâmicas)
+  if (event.request.url.endsWith('.php')) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
   event.respondWith(
     caches.match(event.request)
       .then(response => {
@@ -33,7 +32,6 @@ self.addEventListener('fetch', event => {
         if (response) {
           return response;
         }
-        
         // Fazer requisição para rede
         return fetch(event.request)
           .then(response => {
@@ -41,15 +39,12 @@ self.addEventListener('fetch', event => {
             if (!response || response.status !== 200 || response.type !== 'basic') {
               return response;
             }
-            
             // Clonar a resposta
             const responseToCache = response.clone();
-            
             caches.open(CACHE_NAME)
               .then(cache => {
                 cache.put(event.request, responseToCache);
               });
-            
             return response;
           });
       })
