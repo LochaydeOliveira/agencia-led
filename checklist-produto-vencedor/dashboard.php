@@ -516,23 +516,45 @@ $nichos = getAllNichos();
         
         // Validação do formulário
         document.getElementById('checklistForm').addEventListener('submit', function(e) {
+            console.log('Formulário submetido!'); // Debug
+            
             const requiredFields = ['promessa_principal', 'cliente_consciente', 'beneficios', 'mecanismo_unico'];
             let isValid = true;
+            let emptyFields = [];
             
             requiredFields.forEach(field => {
                 const element = document.getElementById(field);
-                if (!element.value.trim()) {
-                    element.classList.add('border-red-500');
+                const value = element.value.trim();
+                
+                console.log(`Campo ${field}: "${value}"`); // Debug
+                
+                if (!value) {
+                    element.classList.add('border-red-500', 'bg-red-50');
                     isValid = false;
+                    emptyFields.push(field);
                 } else {
-                    element.classList.remove('border-red-500');
+                    element.classList.remove('border-red-500', 'bg-red-50');
                 }
             });
             
             if (!isValid) {
                 e.preventDefault();
-                alert('Por favor, preencha todas as perguntas obrigatórias.');
+                const message = `Por favor, preencha os seguintes campos obrigatórios:\n\n${emptyFields.join('\n')}`;
+                alert(message);
+                console.log('Formulário inválido:', emptyFields); // Debug
+                return false;
             }
+            
+            console.log('Formulário válido, enviando...'); // Debug
+            
+            // Adicionar loading no botão
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processando...';
+            submitBtn.disabled = true;
+            
+            // Permitir que o formulário seja enviado
+            return true;
         });
 
         // Inicializar preview
