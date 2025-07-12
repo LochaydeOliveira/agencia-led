@@ -6,6 +6,20 @@ $user = "paymen58";
 $pass = "u4q7+B6ly)obP_gxN9sNe";
 
 try {
+    // Primeiro, tentar conectar sem especificar o banco
+    $pdo = new PDO("mysql:host=$host;charset=utf8mb4", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    // Verificar se o banco existe
+    $stmt = $pdo->query("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$db'");
+    $databaseExists = $stmt->fetch();
+    
+    if (!$databaseExists) {
+        // Criar o banco se não existir
+        $pdo->exec("CREATE DATABASE IF NOT EXISTS `$db` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+    }
+    
+    // Agora conectar ao banco específico
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
