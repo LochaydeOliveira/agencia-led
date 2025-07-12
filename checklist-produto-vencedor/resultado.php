@@ -23,18 +23,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $cor_classe = "text-green-600";
         $bg_classe = "bg-green-100";
         $icon = "fas fa-trophy";
+        $recomendacao = "Seu produto tem excelente potencial! Foque em criar campanhas de marketing agressivas e expandir para outros canais.";
+        $proximos_passos = ["Criar campanhas no Facebook Ads", "Desenvolver estratégia de email marketing", "Buscar parcerias com influenciadores"];
     } elseif ($pontos >= 5) {
         $nota_final = $pontos;
         $mensagem = "Produto razoável, com potencial";
         $cor_classe = "text-yellow-600";
         $bg_classe = "bg-yellow-100";
         $icon = "fas fa-star";
+        $recomendacao = "Seu produto tem potencial, mas precisa de alguns ajustes. Foque nos pontos fracos identificados.";
+        $proximos_passos = ["Melhorar os pontos fracos", "Testar diferentes abordagens de marketing", "Refinar o posicionamento"];
     } else {
         $nota_final = $pontos;
         $mensagem = "Produto fraco, repense a escolha";
         $cor_classe = "text-red-600";
         $bg_classe = "bg-red-100";
         $icon = "fas fa-exclamation-triangle";
+        $recomendacao = "Este produto pode não ser a melhor escolha. Considere buscar outras opções ou fazer mudanças significativas.";
+        $proximos_passos = ["Buscar produtos alternativos", "Analisar a concorrência", "Repensar o nicho"];
+    }
+    
+    // Análise detalhada dos pontos
+    $analise_pontos = [];
+    $itens_analise = [
+        'vida_mais_facil' => ['nome' => 'Deixa a vida mais fácil', 'peso' => 1.2],
+        'criativos_dinamicos' => ['nome' => 'Criativos dinâmicos', 'peso' => 1.0],
+        'buscas_google' => ['nome' => 'Buscas no Google', 'peso' => 1.5],
+        'vendido_lojas' => ['nome' => 'Já vendido em lojas', 'peso' => 1.3],
+        'economiza_dinheiro' => ['nome' => 'Economiza dinheiro', 'peso' => 1.4],
+        'economiza_tempo' => ['nome' => 'Economiza tempo', 'peso' => 1.1],
+        'nao_nicho_sensivel' => ['nome' => 'Não é nicho sensível', 'peso' => 1.0],
+        'menos_50_dolares' => ['nome' => 'Menos de $50', 'peso' => 1.2],
+        'so_internet' => ['nome' => 'Só na internet', 'peso' => 1.3],
+        'nao_commodity' => ['nome' => 'Não é commodity', 'peso' => 1.1]
+    ];
+    
+    foreach ($itens_analise as $key => $item) {
+        $marcado = in_array($key, $checklist);
+        $analise_pontos[] = [
+            'nome' => $item['nome'],
+            'marcado' => $marcado,
+            'peso' => $item['peso'],
+            'pontos' => $marcado ? $item['peso'] : 0
+        ];
     }
     
     // Salvar no banco de dados
@@ -70,6 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Resultado - Checklist do Produto Lucrativo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gray-50 min-h-screen">
     <!-- Header -->
@@ -95,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </header>
 
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Resultado Principal -->
         <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
             <div class="text-center mb-8">
@@ -116,44 +148,121 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <h3 class="text-2xl font-bold <?php echo $cor_classe; ?>"><?php echo $mensagem; ?></h3>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Gráfico de Análise -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                <i class="fas fa-chart-bar mr-3 text-blue-600"></i>
+                Análise Detalhada
+            </h3>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Gráfico de Barras -->
+                <div>
+                    <h4 class="text-lg font-semibold text-gray-700 mb-4">Pontuação por Critério</h4>
+                    <canvas id="analiseChart" width="400" height="300"></canvas>
+                </div>
                 
-                <!-- Itens Marcados -->
-                <div class="bg-blue-50 rounded-xl p-6">
-                    <h4 class="text-lg font-semibold text-blue-800 mb-4">Itens marcados (<?php echo $pontos; ?>/10)</h4>
-                    <div class="grid md:grid-cols-2 gap-3 text-sm">
-                        <?php
-                        $itens = [
-                            'vida_mais_facil' => 'Deixa a vida do cliente mais fácil',
-                            'criativos_dinamicos' => 'Criativos são dinâmicos e de qualidade',
-                            'buscas_google' => 'Possui buscas no Google',
-                            'vendido_lojas' => 'Já está sendo vendido em lojas',
-                            'economiza_dinheiro' => 'Economiza dinheiro',
-                            'economiza_tempo' => 'Economiza tempo',
-                            'nao_nicho_sensivel' => 'Não é nicho sensível',
-                            'menos_50_dolares' => 'Custa menos de 50 dólares',
-                            'so_internet' => 'Só encontra na internet',
-                            'nao_commodity' => 'Produto não é commodity'
-                        ];
-                        
-                        foreach ($itens as $key => $item) {
-                            $marcado = in_array($key, $checklist);
-                            $icon = $marcado ? 'fas fa-check-circle text-green-600' : 'fas fa-times-circle text-gray-400';
-                            $text_class = $marcado ? 'text-gray-800' : 'text-gray-500';
-                            ?>
+                <!-- Resumo dos Pontos -->
+                <div>
+                    <h4 class="text-lg font-semibold text-gray-700 mb-4">Resumo dos Critérios</h4>
+                    <div class="space-y-3">
+                        <?php foreach ($analise_pontos as $item): ?>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                             <div class="flex items-center">
-                                <i class="<?php echo $icon; ?> mr-2"></i>
-                                <span class="<?php echo $text_class; ?>"><?php echo $item; ?></span>
+                                <i class="<?php echo $item['marcado'] ? 'fas fa-check-circle text-green-600' : 'fas fa-times-circle text-gray-400'; ?> mr-3"></i>
+                                <span class="<?php echo $item['marcado'] ? 'text-gray-800 font-medium' : 'text-gray-500'; ?>">
+                                    <?php echo $item['nome']; ?>
+                                </span>
                             </div>
-                            <?php
-                        }
-                        ?>
+                            <div class="text-right">
+                                <span class="text-sm font-medium <?php echo $item['marcado'] ? 'text-green-600' : 'text-gray-400'; ?>">
+                                    <?php echo $item['marcado'] ? '+' . $item['peso'] : '0'; ?> pts
+                                </span>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Recomendações -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                <i class="fas fa-lightbulb mr-3 text-yellow-500"></i>
+                Recomendações Personalizadas
+            </h3>
+            
+            <div class="bg-blue-50 rounded-xl p-6 mb-6">
+                <h4 class="text-lg font-semibold text-blue-800 mb-3">Análise do Especialista</h4>
+                <p class="text-blue-700 leading-relaxed"><?php echo $recomendacao; ?></p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-rocket text-green-600 text-2xl mr-3"></i>
+                        <h5 class="text-lg font-semibold text-green-800">Próximos Passos</h5>
+                    </div>
+                    <ul class="space-y-2">
+                        <?php foreach ($proximos_passos as $passo): ?>
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-right text-green-500 mt-1 mr-2 text-sm"></i>
+                            <span class="text-green-700 text-sm"><?php echo $passo; ?></span>
+                        </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-chart-line text-blue-600 text-2xl mr-3"></i>
+                        <h5 class="text-lg font-semibold text-blue-800">Métricas Importantes</h5>
+                    </div>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-eye text-blue-500 mt-1 mr-2 text-sm"></i>
+                            <span class="text-blue-700 text-sm">Taxa de conversão</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-dollar-sign text-blue-500 mt-1 mr-2 text-sm"></i>
+                            <span class="text-blue-700 text-sm">ROI das campanhas</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-users text-blue-500 mt-1 mr-2 text-sm"></i>
+                            <span class="text-blue-700 text-sm">Engajamento do público</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-tools text-purple-600 text-2xl mr-3"></i>
+                        <h5 class="text-lg font-semibold text-purple-800">Ferramentas Úteis</h5>
+                    </div>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-search text-purple-500 mt-1 mr-2 text-sm"></i>
+                            <span class="text-purple-700 text-sm">Google Trends</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-ad text-purple-500 mt-1 mr-2 text-sm"></i>
+                            <span class="text-purple-700 text-sm">Facebook Ads Manager</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-analytics text-purple-500 mt-1 mr-2 text-sm"></i>
+                            <span class="text-purple-700 text-sm">Google Analytics</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <!-- Respostas das Perguntas -->
-        <div class="bg-white rounded-2xl shadow-lg p-8">
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
             <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
                 <i class="fas fa-clipboard-list mr-3 text-blue-600"></i>
                 Suas Respostas
@@ -191,7 +300,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <!-- Botões de Ação -->
-        <div class="text-center mt-8 space-x-4">
+        <div class="text-center space-x-4">
             <a href="dashboard.php" 
                class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200">
                 <i class="fas fa-plus mr-2"></i>
@@ -206,12 +315,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <style>
-        @media print {
-            header, .space-x-4 { display: none; }
-            body { background: white; }
-            .bg-white { box-shadow: none; }
-        }
-    </style>
+    <script>
+        // Dados para o gráfico
+        const dados = <?php echo json_encode($analise_pontos); ?>;
+        
+        // Configurar gráfico
+        const ctx = document.getElementById('analiseChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: dados.map(item => item.nome),
+                datasets: [{
+                    label: 'Pontuação',
+                    data: dados.map(item => item.pontos),
+                    backgroundColor: dados.map(item => item.marcado ? 'rgba(34, 197, 94, 0.8)' : 'rgba(156, 163, 175, 0.5)'),
+                    borderColor: dados.map(item => item.marcado ? 'rgba(34, 197, 94, 1)' : 'rgba(156, 163, 175, 1)'),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 2,
+                        ticks: {
+                            stepSize: 0.5
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html> 

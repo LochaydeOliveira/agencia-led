@@ -6,9 +6,13 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require_once 'includes/db.php';
 require_once 'includes/auth.php';
+require_once 'includes/sugestoes.php';
 
 requireLogin();
 $user = getCurrentUser();
+
+// Obter nichos disponíveis
+$nichos = getAllNichos();
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -18,6 +22,7 @@ $user = getCurrentUser();
     <title>Dashboard - Checklist do Produto Lucrativo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gray-50 min-h-screen">
     <!-- Header -->
@@ -43,56 +48,214 @@ $user = getCurrentUser();
         </div>
     </header>
 
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Preview do Resultado em Tempo Real -->
+        <div id="previewResultado" class="bg-white rounded-2xl shadow-lg p-6 mb-8 hidden">
+            <div class="text-center">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Preview do Resultado</h3>
+                <div class="flex items-center justify-center space-x-8">
+                    <div class="text-center">
+                        <div class="w-20 h-20 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center text-white text-2xl font-bold mb-2">
+                            <span id="previewPontos">0</span>/10
+                        </div>
+                        <p class="text-sm text-gray-600">Pontuação Atual</p>
+                    </div>
+                    <div class="text-center">
+                        <div id="previewStatus" class="text-lg font-semibold text-gray-600">Iniciando...</div>
+                        <p class="text-sm text-gray-500">Status do Produto</p>
+                    </div>
+                    <div class="text-center">
+                        <div id="previewProgress" class="w-32 h-3 bg-gray-200 rounded-full overflow-hidden">
+                            <div id="progressBar" class="h-full bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">Progresso</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="bg-white rounded-2xl shadow-lg p-8">
             <div class="text-center mb-8">
                 <h2 class="text-3xl font-bold text-gray-800 mb-2">Análise do Seu Produto</h2>
-                <p class="text-gray-600">Preencha as informações abaixo para obter sua pontuação</p>
+                <p class="text-gray-600">Escolha um nicho ou clique nas sugestões para preencher automaticamente</p>
+            </div>
+
+            <!-- Seletor de Nichos -->
+            <div class="bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl p-6 mb-8">
+                <h3 class="text-xl font-semibold text-purple-800 mb-4 flex items-center">
+                    <i class="fas fa-tags mr-3"></i>
+                    Escolha seu Nicho (Opcional)
+                </h3>
+                <p class="text-purple-700 mb-4">Selecione um nicho para carregar sugestões específicas automaticamente:</p>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+                    <?php foreach ($nichos as $key => $nicho): ?>
+                    <button type="button" 
+                            class="nicho-btn p-4 bg-white rounded-lg border-2 border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-all duration-200 text-center"
+                            data-nicho="<?php echo $key; ?>">
+                        <div class="text-2xl mb-2">
+                            <?php
+                            $icons = [
+                                'fitness' => 'fas fa-dumbbell',
+                                'beleza' => 'fas fa-spa',
+                                'casa' => 'fas fa-home',
+                                'tecnologia' => 'fas fa-microchip',
+                                'pet' => 'fas fa-paw'
+                            ];
+                            echo '<i class="' . ($icons[$key] ?? 'fas fa-tag') . ' text-purple-600"></i>';
+                            ?>
+                        </div>
+                        <div class="text-sm font-medium text-gray-700"><?php echo $nicho['nome']; ?></div>
+                    </button>
+                    <?php endforeach; ?>
+                </div>
+                
+                <div class="mt-4 text-center">
+                    <button type="button" id="limparNicho" class="text-purple-600 hover:text-purple-800 text-sm font-medium">
+                        <i class="fas fa-times mr-1"></i>Limpar seleção
+                    </button>
+                </div>
             </div>
 
             <form id="checklistForm" method="POST" action="resultado.php" class="space-y-8">
-                <!-- Bloco 1: Perguntas Abertas -->
+                <!-- Bloco 1: Perguntas com Sugestões -->
                 <div class="bg-blue-50 rounded-xl p-6">
                     <h3 class="text-xl font-semibold text-blue-800 mb-6 flex items-center">
-                        <i class="fas fa-question-circle mr-3"></i>
-                        Perguntas de Qualificação
+                        <i class="fas fa-lightbulb mr-3"></i>
+                        Perguntas de Qualificação (Clique nas sugestões!)
                     </h3>
                     
                     <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Promessa Principal -->
                         <div>
-                            <label for="promessa_principal" class="block text-sm font-medium text-gray-700 mb-2">
+                            <label for="promessa_principal" class="block text-sm font-medium text-gray-700 mb-3">
                                 Qual a promessa principal do produto?
                             </label>
+                            
+                            <!-- Sugestões -->
+                            <div id="sugestoes-promessa" class="mb-3 space-y-2">
+                                <button type="button" class="sugestao-btn w-full text-left p-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 text-sm" 
+                                        data-field="promessa_principal" 
+                                        data-value="Transformar a vida do cliente de forma rápida e eficaz">
+                                    <i class="fas fa-magic mr-2 text-blue-500"></i>
+                                    Transformar a vida do cliente de forma rápida e eficaz
+                                </button>
+                                <button type="button" class="sugestao-btn w-full text-left p-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 text-sm" 
+                                        data-field="promessa_principal" 
+                                        data-value="Resolver um problema específico de forma definitiva">
+                                    <i class="fas fa-target mr-2 text-blue-500"></i>
+                                    Resolver um problema específico de forma definitiva
+                                </button>
+                                <button type="button" class="sugestao-btn w-full text-left p-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 text-sm" 
+                                        data-field="promessa_principal" 
+                                        data-value="Economizar tempo e dinheiro do cliente">
+                                    <i class="fas fa-piggy-bank mr-2 text-blue-500"></i>
+                                    Economizar tempo e dinheiro do cliente
+                                </button>
+                            </div>
+                            
                             <textarea id="promessa_principal" name="promessa_principal" rows="3" required
                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                                      placeholder="Descreva a promessa principal..."></textarea>
+                                      placeholder="Ou digite sua própria promessa..."></textarea>
                         </div>
                         
+                        <!-- Cliente Consciente -->
                         <div>
-                            <label for="cliente_consciente" class="block text-sm font-medium text-gray-700 mb-2">
+                            <label for="cliente_consciente" class="block text-sm font-medium text-gray-700 mb-3">
                                 O cliente está consciente da necessidade?
                             </label>
+                            
+                            <!-- Sugestões -->
+                            <div id="sugestoes-consciente" class="mb-3 space-y-2">
+                                <button type="button" class="sugestao-btn w-full text-left p-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 text-sm" 
+                                        data-field="cliente_consciente" 
+                                        data-value="Sim, o cliente já sabe que tem o problema e busca soluções">
+                                    <i class="fas fa-check-circle mr-2 text-green-500"></i>
+                                    Sim, o cliente já sabe que tem o problema e busca soluções
+                                </button>
+                                <button type="button" class="sugestao-btn w-full text-left p-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 text-sm" 
+                                        data-field="cliente_consciente" 
+                                        data-value="Parcialmente, o cliente sente o problema mas não sabe como resolver">
+                                    <i class="fas fa-question-circle mr-2 text-yellow-500"></i>
+                                    Parcialmente, o cliente sente o problema mas não sabe como resolver
+                                </button>
+                                <button type="button" class="sugestao-btn w-full text-left p-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 text-sm" 
+                                        data-field="cliente_consciente" 
+                                        data-value="Não, preciso educar o cliente sobre o problema">
+                                    <i class="fas fa-exclamation-triangle mr-2 text-red-500"></i>
+                                    Não, preciso educar o cliente sobre o problema
+                                </button>
+                            </div>
+                            
                             <textarea id="cliente_consciente" name="cliente_consciente" rows="3" required
                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                                      placeholder="Explique o nível de consciência..."></textarea>
+                                      placeholder="Ou digite sua própria resposta..."></textarea>
                         </div>
                         
+                        <!-- Benefícios -->
                         <div>
-                            <label for="beneficios" class="block text-sm font-medium text-gray-700 mb-2">
+                            <label for="beneficios" class="block text-sm font-medium text-gray-700 mb-3">
                                 Quais benefícios esse produto oferece?
                             </label>
+                            
+                            <!-- Sugestões -->
+                            <div id="sugestoes-beneficios" class="mb-3 space-y-2">
+                                <button type="button" class="sugestao-btn w-full text-left p-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 text-sm" 
+                                        data-field="beneficios" 
+                                        data-value="Economia de tempo, dinheiro e esforço">
+                                    <i class="fas fa-clock mr-2 text-blue-500"></i>
+                                    Economia de tempo, dinheiro e esforço
+                                </button>
+                                <button type="button" class="sugestao-btn w-full text-left p-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 text-sm" 
+                                        data-field="beneficios" 
+                                        data-value="Melhora a qualidade de vida e bem-estar">
+                                    <i class="fas fa-heart mr-2 text-red-500"></i>
+                                    Melhora a qualidade de vida e bem-estar
+                                </button>
+                                <button type="button" class="sugestao-btn w-full text-left p-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 text-sm" 
+                                        data-field="beneficios" 
+                                        data-value="Resolve problemas específicos de forma definitiva">
+                                    <i class="fas fa-tools mr-2 text-green-500"></i>
+                                    Resolve problemas específicos de forma definitiva
+                                </button>
+                            </div>
+                            
                             <textarea id="beneficios" name="beneficios" rows="3" required
                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                                      placeholder="Liste os principais benefícios..."></textarea>
+                                      placeholder="Ou digite seus próprios benefícios..."></textarea>
                         </div>
                         
+                        <!-- Mecanismo Único -->
                         <div>
-                            <label for="mecanismo_unico" class="block text-sm font-medium text-gray-700 mb-2">
+                            <label for="mecanismo_unico" class="block text-sm font-medium text-gray-700 mb-3">
                                 Qual é o mecanismo único?
                             </label>
+                            
+                            <!-- Sugestões -->
+                            <div id="sugestoes-mecanismo" class="mb-3 space-y-2">
+                                <button type="button" class="sugestao-btn w-full text-left p-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 text-sm" 
+                                        data-field="mecanismo_unico" 
+                                        data-value="Tecnologia exclusiva ou patenteada">
+                                    <i class="fas fa-microchip mr-2 text-blue-500"></i>
+                                    Tecnologia exclusiva ou patenteada
+                                </button>
+                                <button type="button" class="sugestao-btn w-full text-left p-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 text-sm" 
+                                        data-field="mecanismo_unico" 
+                                        data-value="Método ou processo único">
+                                    <i class="fas fa-cogs mr-2 text-green-500"></i>
+                                    Método ou processo único
+                                </button>
+                                <button type="button" class="sugestao-btn w-full text-left p-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 text-sm" 
+                                        data-field="mecanismo_unico" 
+                                        data-value="Combinação única de características">
+                                    <i class="fas fa-puzzle-piece mr-2 text-purple-500"></i>
+                                    Combinação única de características
+                                </button>
+                            </div>
+                            
                             <textarea id="mecanismo_unico" name="mecanismo_unico" rows="3" required
                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                                      placeholder="Descreva o mecanismo único..."></textarea>
+                                      placeholder="Ou digite seu próprio mecanismo..."></textarea>
                         </div>
                     </div>
                 </div>
@@ -168,7 +331,7 @@ $user = getCurrentUser();
                     <button type="submit" 
                             class="bg-gradient-to-r from-green-500 to-blue-600 text-white font-semibold py-4 px-8 rounded-lg hover:from-green-600 hover:to-blue-700 transition duration-200 transform hover:scale-105 text-lg">
                         <i class="fas fa-calculator mr-2"></i>
-                        Calcular Resultado
+                        Calcular Resultado Final
                     </button>
                 </div>
             </form>
@@ -176,6 +339,117 @@ $user = getCurrentUser();
     </div>
 
     <script>
+        // Dados dos nichos (convertidos do PHP)
+        const nichosData = <?php echo json_encode($nichos); ?>;
+        
+        // Sistema de seleção de nichos
+        document.querySelectorAll('.nicho-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const nicho = this.getAttribute('data-nicho');
+                const nichoInfo = nichosData[nicho];
+                
+                if (nichoInfo) {
+                    // Atualizar sugestões baseadas no nicho
+                    atualizarSugestoesNicho(nichoInfo);
+                    
+                    // Feedback visual
+                    document.querySelectorAll('.nicho-btn').forEach(b => b.classList.remove('border-purple-500', 'bg-purple-100'));
+                    this.classList.add('border-purple-500', 'bg-purple-100');
+                    
+                    // Mostrar notificação
+                    mostrarNotificacao(`Sugestões carregadas para: ${nichoInfo.nome}`);
+                }
+            });
+        });
+        
+        // Limpar seleção de nicho
+        document.getElementById('limparNicho').addEventListener('click', function() {
+            document.querySelectorAll('.nicho-btn').forEach(b => b.classList.remove('border-purple-500', 'bg-purple-100'));
+            restaurarSugestoesPadrao();
+            mostrarNotificacao('Sugestões restauradas para padrão');
+        });
+        
+        // Atualizar sugestões baseadas no nicho
+        function atualizarSugestoesNicho(nichoInfo) {
+            // Promessa principal
+            const promessaContainer = document.getElementById('sugestoes-promessa');
+            promessaContainer.innerHTML = nichoInfo.promessas.map(promessa => 
+                `<button type="button" class="sugestao-btn w-full text-left p-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 text-sm" 
+                        data-field="promessa_principal" data-value="${promessa}">
+                    <i class="fas fa-magic mr-2 text-blue-500"></i>${promessa}
+                </button>`
+            ).join('');
+            
+            // Benefícios
+            const beneficiosContainer = document.getElementById('sugestoes-beneficios');
+            beneficiosContainer.innerHTML = nichoInfo.beneficios.map(beneficio => 
+                `<button type="button" class="sugestao-btn w-full text-left p-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 text-sm" 
+                        data-field="beneficios" data-value="${beneficio}">
+                    <i class="fas fa-heart mr-2 text-red-500"></i>${beneficio}
+                </button>`
+            ).join('');
+            
+            // Mecanismos
+            const mecanismoContainer = document.getElementById('sugestoes-mecanismo');
+            mecanismoContainer.innerHTML = nichoInfo.mecanismos.map(mecanismo => 
+                `<button type="button" class="sugestao-btn w-full text-left p-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 text-sm" 
+                        data-field="mecanismo_unico" data-value="${mecanismo}">
+                    <i class="fas fa-cogs mr-2 text-green-500"></i>${mecanismo}
+                </button>`
+            ).join('');
+            
+            // Reaplicar event listeners
+            aplicarEventListenersSugestoes();
+        }
+        
+        // Restaurar sugestões padrão
+        function restaurarSugestoesPadrao() {
+            // Recarregar a página para restaurar as sugestões originais
+            location.reload();
+        }
+        
+        // Mostrar notificação
+        function mostrarNotificacao(mensagem) {
+            const notificacao = document.createElement('div');
+            notificacao.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform transition-all duration-300';
+            notificacao.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    <span>${mensagem}</span>
+                </div>
+            `;
+            document.body.appendChild(notificacao);
+            
+            setTimeout(() => {
+                notificacao.style.transform = 'translateX(100%)';
+                setTimeout(() => notificacao.remove(), 300);
+            }, 2000);
+        }
+        
+        // Sistema de sugestões clicáveis
+        function aplicarEventListenersSugestoes() {
+            document.querySelectorAll('.sugestao-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const field = this.getAttribute('data-field');
+                    const value = this.getAttribute('data-value');
+                    const textarea = document.getElementById(field);
+                    
+                    textarea.value = value;
+                    textarea.classList.add('border-green-500', 'bg-green-50');
+                    
+                    // Feedback visual no botão
+                    this.classList.add('bg-green-100', 'border-green-400');
+                    this.innerHTML = '<i class="fas fa-check mr-2 text-green-600"></i>' + value;
+                    
+                    // Atualizar preview
+                    atualizarPreview();
+                });
+            });
+        }
+        
+        // Aplicar event listeners iniciais
+        aplicarEventListenersSugestoes();
+
         // Contador de pontos em tempo real
         const checkboxes = document.querySelectorAll('input[name="checklist[]"]');
         const contador = document.getElementById('pontosContador');
@@ -183,10 +457,61 @@ $user = getCurrentUser();
         function atualizarContador() {
             const marcados = document.querySelectorAll('input[name="checklist[]"]:checked').length;
             contador.textContent = marcados;
+            atualizarPreview();
         }
         
         checkboxes.forEach(checkbox => {
             checkbox.addEventListener('change', atualizarContador);
+        });
+
+        // Preview em tempo real
+        function atualizarPreview() {
+            const pontos = document.querySelectorAll('input[name="checklist[]"]:checked').length;
+            const previewDiv = document.getElementById('previewResultado');
+            const previewPontos = document.getElementById('previewPontos');
+            const previewStatus = document.getElementById('previewStatus');
+            const progressBar = document.getElementById('progressBar');
+            
+            // Mostrar preview se há pelo menos 1 ponto ou campos preenchidos
+            const camposPreenchidos = ['promessa_principal', 'cliente_consciente', 'beneficios', 'mecanismo_unico']
+                .some(field => document.getElementById(field).value.trim() !== '');
+            
+            if (pontos > 0 || camposPreenchidos) {
+                previewDiv.classList.remove('hidden');
+                previewPontos.textContent = pontos;
+                
+                // Atualizar status e progresso
+                let status, progressWidth, statusClass;
+                
+                if (pontos >= 8) {
+                    status = "Alto Potencial! 🏆";
+                    progressWidth = "90%";
+                    statusClass = "text-green-600";
+                } else if (pontos >= 5) {
+                    status = "Potencial Razoável ⭐";
+                    progressWidth = "60%";
+                    statusClass = "text-yellow-600";
+                } else if (pontos >= 3) {
+                    status = "Potencial Baixo ⚠️";
+                    progressWidth = "30%";
+                    statusClass = "text-orange-600";
+                } else {
+                    status = "Precisa Melhorar 📈";
+                    progressWidth = "10%";
+                    statusClass = "text-red-600";
+                }
+                
+                previewStatus.textContent = status;
+                previewStatus.className = `text-lg font-semibold ${statusClass}`;
+                progressBar.style.width = progressWidth;
+            } else {
+                previewDiv.classList.add('hidden');
+            }
+        }
+
+        // Atualizar preview quando campos de texto mudam
+        ['promessa_principal', 'cliente_consciente', 'beneficios', 'mecanismo_unico'].forEach(field => {
+            document.getElementById(field).addEventListener('input', atualizarPreview);
         });
         
         // Validação do formulário
@@ -209,6 +534,9 @@ $user = getCurrentUser();
                 alert('Por favor, preencha todas as perguntas obrigatórias.');
             }
         });
+
+        // Inicializar preview
+        atualizarPreview();
     </script>
 </body>
 </html> 
