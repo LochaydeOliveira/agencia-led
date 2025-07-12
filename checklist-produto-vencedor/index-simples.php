@@ -3,24 +3,31 @@ session_start();
 
 // Se já estiver logado, redireciona para o dashboard
 if (isset($_SESSION['user_id'])) {
-    header('Location: dashboard.php');
+    header('Location: dashboard-simples.php');
     exit();
 }
+
+// Usuários de teste (sem banco de dados)
+$usuarios_teste = [
+    'admin@exemplo.com' => ['senha' => '123456', 'nome' => 'Administrador'],
+    'teste@teste.com' => ['senha' => '123456', 'nome' => 'Usuário Teste'],
+    'user@user.com' => ['senha' => '123456', 'nome' => 'Usuário Padrão']
+];
 
 // Processar login (versão simplificada)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
     
-    // Login temporário para teste
-    if ($email === 'admin@exemplo.com' && $password === '123456') {
+    // Verificar se o usuário existe
+    if (isset($usuarios_teste[$email]) && $usuarios_teste[$email]['senha'] === $password) {
         $_SESSION['user_id'] = 1;
         $_SESSION['user_email'] = $email;
-        $_SESSION['user_name'] = 'Administrador';
-        header('Location: dashboard.php');
+        $_SESSION['user_name'] = $usuarios_teste[$email]['nome'];
+        header('Location: dashboard-simples.php');
         exit();
     } else {
-        $error = 'Email ou senha incorretos!';
+        $error = 'Email ou senha incorretos! Use um dos usuários de teste abaixo.';
     }
 }
 ?>
@@ -82,10 +89,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </p>
         </div>
         
-        <div class="mt-4 text-center">
-            <p class="text-xs text-gray-400">
-                <strong>Teste:</strong> admin@exemplo.com / 123456
+        <div class="mt-4 p-4 bg-blue-50 rounded-lg">
+            <p class="text-xs text-blue-800 font-semibold mb-2">
+                <i class="fas fa-users mr-1"></i>Usuários de Teste:
             </p>
+            <div class="text-xs text-blue-700 space-y-1">
+                <div><strong>admin@exemplo.com</strong> / 123456</div>
+                <div><strong>teste@teste.com</strong> / 123456</div>
+                <div><strong>user@user.com</strong> / 123456</div>
+            </div>
         </div>
     </div>
 </body>
