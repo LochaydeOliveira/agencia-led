@@ -1,11 +1,13 @@
 <?php
-// Iniciar sessão apenas se não foi iniciada
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+// Não iniciar sessão aqui - será iniciada no arquivo principal
+// if (session_status() === PHP_SESSION_NONE) {
+//     session_start();
+// }
 
 function authenticateUser($email, $password) {
     global $pdo;
+    
+    if (!$pdo) return false;
     
     try {
         $stmt = $pdo->prepare("SELECT id, email, password, name FROM users WHERE email = ?");

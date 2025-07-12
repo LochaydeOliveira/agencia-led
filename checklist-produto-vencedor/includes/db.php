@@ -29,10 +29,13 @@ try {
 } catch (PDOException $e) {
     // Log do erro em vez de exibir
     error_log("Erro na conexão com o banco: " . $e->getMessage());
-    die("Erro na conexão com o banco de dados.");
+    // Não usar die() aqui para evitar saída de texto
+    $pdo = null;
 }
 
 function createTables($pdo) {
+    if (!$pdo) return;
+    
     // Tabela de usuários
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS users (
