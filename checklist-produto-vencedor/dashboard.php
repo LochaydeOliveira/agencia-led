@@ -392,6 +392,231 @@ $nichos = getAllNichos();
                     </div>
                 </div>
 
+                <!-- Bloco 3: Análise Estratégica -->
+                <div class="bg-orange-50 rounded-xl p-6 analise-estrategica">
+                    <h3 class="text-xl font-semibold text-orange-800 mb-6 flex items-center">
+                        <i class="fas fa-brain mr-3"></i>
+                        Análise Estratégica do Produto
+                    </h3>
+                    
+                    <div class="mb-4 p-4 bg-white rounded-lg border border-orange-200">
+                        <div class="flex items-center justify-between">
+                            <p class="font-semibold text-orange-800">📊 Score Estratégico: <span id="score-estrategico">0 / 15</span></p>
+                            <div class="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                <div id="progressoEstrategico" class="h-full bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div id="alerta-estrategico" class="mt-2 text-sm text-red-600 hidden">
+                            <i class="fas fa-exclamation-triangle mr-1"></i>
+                            <span id="alerta-texto">Alerta crítico detectado!</span>
+                        </div>
+                    </div>
+
+                    <!-- Categoria 1: Entendimento do Produto -->
+                    <div class="mb-6 p-4 bg-white rounded-lg border border-orange-200">
+                        <h4 class="font-semibold text-orange-800 mb-3 flex items-center">
+                            <i class="fas fa-lightbulb mr-2"></i>
+                            1. Entendimento do Produto (Fundamento)
+                        </h4>
+                        
+                        <div class="space-y-3">
+                            <label class="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-orange-50 cursor-pointer transition duration-200">
+                                <input type="radio" name="q1" value="3" class="mt-1 mr-3 text-orange-600">
+                                <div>
+                                    <span class="font-medium text-gray-800">Sim, a promessa é clara e específica</span>
+                                    <p class="text-sm text-gray-600 mt-1">O produto resolve um problema bem definido e a promessa é fácil de entender</p>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-orange-50 cursor-pointer transition duration-200">
+                                <input type="radio" name="q1" value="2" class="mt-1 mr-3 text-orange-600">
+                                <div>
+                                    <span class="font-medium text-gray-800">Parcialmente, precisa de esclarecimento</span>
+                                    <p class="text-sm text-gray-600 mt-1">A promessa existe mas pode ser mais específica ou clara</p>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-orange-50 cursor-pointer transition duration-200">
+                                <input type="radio" name="q1" value="1" class="mt-1 mr-3 text-orange-600">
+                                <div>
+                                    <span class="font-medium text-gray-800">Não, a promessa é vaga ou confusa</span>
+                                    <p class="text-sm text-gray-600 mt-1">Difícil entender o que o produto realmente entrega</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Categoria 2: Consciência e Desejo do Cliente -->
+                    <div class="mb-6 p-4 bg-white rounded-lg border border-orange-200">
+                        <h4 class="font-semibold text-orange-800 mb-3 flex items-center">
+                            <i class="fas fa-users mr-2"></i>
+                            2. Consciência e Desejo do Cliente
+                        </h4>
+                        
+                        <div class="space-y-3">
+                            <label class="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-orange-50 cursor-pointer transition duration-200">
+                                <input type="radio" name="q2" value="3" class="mt-1 mr-3 text-orange-600">
+                                <div>
+                                    <span class="font-medium text-gray-800">Sim, já busca soluções ativamente</span>
+                                    <p class="text-sm text-gray-600 mt-1">O público já procura por esse tipo de produto/solução</p>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-orange-50 cursor-pointer transition duration-200">
+                                <input type="radio" name="q2" value="2" class="mt-1 mr-3 text-orange-600">
+                                <div>
+                                    <span class="font-medium text-gray-800">Sim, mas precisa ser educado</span>
+                                    <p class="text-sm text-gray-600 mt-1">Sente a dor mas não sabe que existe solução</p>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-orange-50 cursor-pointer transition duration-200">
+                                <input type="radio" name="q2" value="1" class="mt-1 mr-3 text-orange-600">
+                                <div>
+                                    <span class="font-medium text-gray-800">Não, ainda não está consciente</span>
+                                    <p class="text-sm text-gray-600 mt-1">Precisa de muita educação sobre o problema</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Categoria 3: Concorrência e Busca -->
+                    <div class="mb-6 p-4 bg-white rounded-lg border border-orange-200">
+                        <h4 class="font-semibold text-orange-800 mb-3 flex items-center">
+                            <i class="fas fa-search mr-2"></i>
+                            3. Concorrência e Busca
+                        </h4>
+                        
+                        <div class="space-y-3">
+                            <label class="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-orange-50 cursor-pointer transition duration-200">
+                                <input type="radio" name="q3" value="3" class="mt-1 mr-3 text-orange-600">
+                                <div>
+                                    <span class="font-medium text-gray-800">Existem buscas e concorrência moderada</span>
+                                    <p class="text-sm text-gray-600 mt-1">Mercado ativo mas não saturado, com espaço para diferenciação</p>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-orange-50 cursor-pointer transition duration-200">
+                                <input type="radio" name="q3" value="2" class="mt-1 mr-3 text-orange-600">
+                                <div>
+                                    <span class="font-medium text-gray-800">Muitos concorrentes ou poucas buscas</span>
+                                    <p class="text-sm text-gray-600 mt-1">Mercado saturado ou demanda baixa</p>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-orange-50 cursor-pointer transition duration-200">
+                                <input type="radio" name="q3" value="1" class="mt-1 mr-3 text-orange-600">
+                                <div>
+                                    <span class="font-medium text-gray-800">Sem buscas ou concorrência excessiva</span>
+                                    <p class="text-sm text-gray-600 mt-1">Mercado inexistente ou impossível de competir</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Categoria 4: Oferta e Percepção de Valor -->
+                    <div class="mb-6 p-4 bg-white rounded-lg border border-orange-200">
+                        <h4 class="font-semibold text-orange-800 mb-3 flex items-center">
+                            <i class="fas fa-dollar-sign mr-2"></i>
+                            4. Oferta e Percepção de Valor
+                        </h4>
+                        
+                        <div class="space-y-3">
+                            <label class="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-orange-50 cursor-pointer transition duration-200">
+                                <input type="radio" name="q4" value="3" class="mt-1 mr-3 text-orange-600">
+                                <div>
+                                    <span class="font-medium text-gray-800">Margem de 3x ou mais, fácil de comunicar</span>
+                                    <p class="text-sm text-gray-600 mt-1">Boa lucratividade e benefício claro</p>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-orange-50 cursor-pointer transition duration-200">
+                                <input type="radio" name="q4" value="2" class="mt-1 mr-3 text-orange-600">
+                                <div>
+                                    <span class="font-medium text-gray-800">Margem entre 2x e 3x, comunicação possível</span>
+                                    <p class="text-sm text-gray-600 mt-1">Lucratividade aceitável com algum esforço</p>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-orange-50 cursor-pointer transition duration-200">
+                                <input type="radio" name="q4" value="1" class="mt-1 mr-3 text-orange-600">
+                                <div>
+                                    <span class="font-medium text-gray-800">Margem apertada ou difícil de comunicar</span>
+                                    <p class="text-sm text-gray-600 mt-1">Baixa lucratividade ou benefício confuso</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Categoria 5: Logística e Fornecimento -->
+                    <div class="mb-6 p-4 bg-white rounded-lg border border-orange-200">
+                        <h4 class="font-semibold text-orange-800 mb-3 flex items-center">
+                            <i class="fas fa-truck mr-2"></i>
+                            5. Logística e Fornecimento
+                        </h4>
+                        
+                        <div class="space-y-3">
+                            <label class="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-orange-50 cursor-pointer transition duration-200">
+                                <input type="radio" name="q5" value="3" class="mt-1 mr-3 text-orange-600">
+                                <div>
+                                    <span class="font-medium text-gray-800">Fornecedor confiável, entrega rápida</span>
+                                    <p class="text-sm text-gray-600 mt-1">Logística nacional ou internacional confiável</p>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-orange-50 cursor-pointer transition duration-200">
+                                <input type="radio" name="q5" value="2" class="mt-1 mr-3 text-orange-600">
+                                <div>
+                                    <span class="font-medium text-gray-800">Logística possível mas com riscos</span>
+                                    <p class="text-sm text-gray-600 mt-1">Entrega demorada ou fornecedor instável</p>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-orange-50 cursor-pointer transition duration-200">
+                                <input type="radio" name="q5" value="0" class="mt-1 mr-3 text-orange-600">
+                                <div>
+                                    <span class="font-medium text-gray-800">Logística inviável ou muito arriscada</span>
+                                    <p class="text-sm text-gray-600 mt-1">Sem fornecedor confiável ou entrega impossível</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Categoria 6: Percepção Crítica Final -->
+                    <div class="mb-6 p-4 bg-white rounded-lg border border-orange-200">
+                        <h4 class="font-semibold text-orange-800 mb-3 flex items-center">
+                            <i class="fas fa-brain mr-2"></i>
+                            6. Percepção Crítica Final
+                        </h4>
+                        
+                        <div class="space-y-3">
+                            <label class="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-orange-50 cursor-pointer transition duration-200">
+                                <input type="radio" name="q6" value="3" class="mt-1 mr-3 text-orange-600">
+                                <div>
+                                    <span class="font-medium text-gray-800">Você compraria e confiaria anunciar</span>
+                                    <p class="text-sm text-gray-600 mt-1">Produto sólido com potencial de crescimento</p>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-orange-50 cursor-pointer transition duration-200">
+                                <input type="radio" name="q6" value="2" class="mt-1 mr-3 text-orange-600">
+                                <div>
+                                    <span class="font-medium text-gray-800">Testaria com cautela</span>
+                                    <p class="text-sm text-gray-600 mt-1">Potencial limitado ou riscos moderados</p>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-start p-3 bg-gray-50 rounded-lg hover:bg-orange-50 cursor-pointer transition duration-200">
+                                <input type="radio" name="q6" value="1" class="mt-1 mr-3 text-orange-600">
+                                <div>
+                                    <span class="font-medium text-gray-800">Não recomendaria</span>
+                                    <p class="text-sm text-gray-600 mt-1">Muitos riscos ou baixo potencial</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="text-center">
                     <button type="button" 
                             onclick="processarFormularioComPopup(document.getElementById('checklistForm'))"
@@ -641,6 +866,62 @@ $nichos = getAllNichos();
         // Aplicar event listeners iniciais
         aplicarEventListenersSugestoes();
 
+        // Sistema de Análise Estratégica
+        function calcularScoreEstrategico() {
+            let total = 0;
+            const perguntas = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6'];
+            let alertas = [];
+            
+            perguntas.forEach(nome => {
+                const checked = document.querySelector(`input[name="${nome}"]:checked`);
+                if (checked) {
+                    total += parseInt(checked.value);
+                    
+                    // Verificar alertas críticos
+                    if (nome === 'q5' && checked.value === '0') {
+                        alertas.push('⚠️ Logística inviável — repense o produto');
+                    }
+                    if (nome === 'q3' && checked.value === '1') {
+                        alertas.push('⚠️ Mercado inexistente ou saturado');
+                    }
+                    if (nome === 'q6' && checked.value === '1') {
+                        alertas.push('⚠️ Você mesmo não recomendaria o produto');
+                    }
+                }
+            });
+
+            // Atualizar score
+            document.getElementById("score-estrategico").innerText = `${total} / 18`;
+            
+            // Atualizar barra de progresso
+            const progressoEstrategico = document.getElementById("progressoEstrategico");
+            const percentual = (total / 18) * 100;
+            progressoEstrategico.style.width = `${percentual}%`;
+            
+            // Atualizar alertas
+            atualizarAlertaEstrategico(alertas);
+            
+            // Atualizar preview geral
+            atualizarPreview();
+        }
+
+        function atualizarAlertaEstrategico(alertas) {
+            const alertaDiv = document.getElementById("alerta-estrategico");
+            const alertaTexto = document.getElementById("alerta-texto");
+            
+            if (alertas.length > 0) {
+                alertaTexto.textContent = alertas.join(' | ');
+                alertaDiv.classList.remove("hidden");
+            } else {
+                alertaDiv.classList.add("hidden");
+            }
+        }
+
+        // Event listeners para análise estratégica
+        document.querySelectorAll('#analise-estrategica input[type="radio"]').forEach(input => {
+            input.addEventListener('change', calcularScoreEstrategico);
+        });
+
         // Contador de pontos em tempo real
         const checkboxes = document.querySelectorAll('input[name="checklist[]"]');
         const contador = document.getElementById('pontosContador');
@@ -668,11 +949,21 @@ $nichos = getAllNichos();
             const progressoStatus = document.getElementById('progressoStatus');
             const progressoBarra = document.getElementById('progressoBarra');
             
+            // Calcular score estratégico
+            let scoreEstrategico = 0;
+            const perguntas = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6'];
+            perguntas.forEach(nome => {
+                const checked = document.querySelector(`input[name="${nome}"]:checked`);
+                if (checked) {
+                    scoreEstrategico += parseInt(checked.value);
+                }
+            });
+            
             // Mostrar preview se há pelo menos 1 ponto ou campos preenchidos
             const camposPreenchidos = ['promessa_principal', 'cliente_consciente', 'beneficios', 'mecanismo_unico']
                 .some(field => document.getElementById(field).value.trim() !== '');
             
-            if (pontos > 0 || camposPreenchidos) {
+            if (pontos > 0 || camposPreenchidos || scoreEstrategico > 0) {
                 previewDiv.classList.remove('hidden');
                 previewPontos.textContent = pontos;
                 progressoPontos.textContent = pontos;
@@ -696,6 +987,11 @@ $nichos = getAllNichos();
                     status = "Precisa Melhorar 📈";
                     progressWidth = "10%";
                     statusClass = "text-red-600";
+                }
+                
+                // Adicionar informação do score estratégico se disponível
+                if (scoreEstrategico > 0) {
+                    status += ` | Estratégico: ${scoreEstrategico}/18`;
                 }
                 
                 previewStatus.textContent = status;
@@ -865,11 +1161,39 @@ $nichos = getAllNichos();
         function calcularResultado(pontos, promessa, cliente, beneficios, mecanismo) {
             let status, cor, icon, recomendacao, proximosPassos;
             
-            if (pontos >= 8) {
+            // Calcular score estratégico
+            let scoreEstrategico = 0;
+            const perguntas = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6'];
+            perguntas.forEach(nome => {
+                const checked = document.querySelector(`input[name="${nome}"]:checked`);
+                if (checked) {
+                    scoreEstrategico += parseInt(checked.value);
+                }
+            });
+            
+            // Verificar alertas críticos
+            let alertasCriticos = [];
+            perguntas.forEach(nome => {
+                const checked = document.querySelector(`input[name="${nome}"]:checked`);
+                if (checked) {
+                    if (nome === 'q5' && checked.value === '0') {
+                        alertasCriticos.push('Logística inviável');
+                    }
+                    if (nome === 'q3' && checked.value === '1') {
+                        alertasCriticos.push('Mercado inexistente/saturado');
+                    }
+                    if (nome === 'q6' && checked.value === '1') {
+                        alertasCriticos.push('Baixa confiança no produto');
+                    }
+                }
+            });
+            
+            // Determinar resultado baseado nos dois scores
+            if (pontos >= 8 && scoreEstrategico >= 12) {
                 status = "Produto com alto potencial! 🏆";
                 cor = "text-green-600";
                 icon = "fas fa-trophy";
-                recomendacao = "Seu produto tem excelente potencial! Foque em criar campanhas de marketing agressivas, ampliar canais de venda e investir em branding para consolidar sua marca.";
+                recomendacao = "Excelente! Seu produto tem tanto score técnico quanto estratégico alto. Foque em criar campanhas de marketing agressivas, ampliar canais de venda e investir em branding para consolidar sua marca.";
                 proximosPassos = [
                     "Lance campanhas de Facebook Ads e Google Ads segmentadas para o público-alvo.",
                     "Implemente estratégias de remarketing para aumentar conversão.",
@@ -878,7 +1202,7 @@ $nichos = getAllNichos();
                     "Monitore métricas como ROI, CAC e LTV semanalmente.",
                     "Considere expandir para marketplaces ou afiliados."
                 ];
-            } else if (pontos >= 5) {
+            } else if (pontos >= 5 && scoreEstrategico >= 8) {
                 status = "Produto razoável, com potencial ⭐";
                 cor = "text-yellow-600";
                 icon = "fas fa-star";
@@ -889,6 +1213,18 @@ $nichos = getAllNichos();
                     "Colete feedback de clientes e ajuste a oferta conforme necessário.",
                     "Ajuste o preço ou condições de frete para aumentar competitividade.",
                     "Invista em conteúdo para educar o público sobre o diferencial do produto."
+                ];
+            } else if (alertasCriticos.length > 0) {
+                status = "Produto com problemas críticos! 🚨";
+                cor = "text-red-600";
+                icon = "fas fa-exclamation-triangle";
+                recomendacao = `ATENÇÃO: Seu produto apresenta problemas críticos: ${alertasCriticos.join(', ')}. Recomendamos repensar a escolha ou resolver esses pontos antes de investir.`;
+                proximosPassos = [
+                    "Resolva os problemas críticos identificados antes de prosseguir.",
+                    "Pesquise produtos alternativos com menos riscos.",
+                    "Analise a viabilidade logística e de mercado.",
+                    "Considere mudar o nicho ou público-alvo.",
+                    "Reveja sua estratégia de marketing e proposta de valor."
                 ];
             } else {
                 status = "Produto fraco, repense a escolha 📈";
@@ -906,6 +1242,8 @@ $nichos = getAllNichos();
             
             return {
                 pontos,
+                scoreEstrategico,
+                alertasCriticos,
                 status,
                 cor,
                 icon,
@@ -915,7 +1253,7 @@ $nichos = getAllNichos();
                 cliente,
                 beneficios,
                 mecanismo,
-                nomeProduto: document.getElementById('nome_produto').value // Adicionar nome do produto ao resultado
+                nomeProduto: document.getElementById('nome_produto').value
             };
         }
 
@@ -933,10 +1271,22 @@ $nichos = getAllNichos();
             modalResultado.innerHTML = `
                 <!-- Pontuação Principal -->
                 <div class="text-center mb-8">
-                    <div class="inline-flex items-center justify-center w-32 h-32 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-4xl font-bold mb-4">
-                        ${resultado.pontos}/10
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div class="text-center">
+                            <div class="inline-flex items-center justify-center w-32 h-32 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-4xl font-bold mb-4">
+                                ${resultado.pontos}/10
+                            </div>
+                            <p class="text-lg text-gray-600 mb-2">Score Técnico</p>
+                            <p class="text-sm text-gray-500">Checklist de critérios</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="inline-flex items-center justify-center w-32 h-32 rounded-full bg-gradient-to-r from-orange-500 to-red-600 text-white text-4xl font-bold mb-4">
+                                ${resultado.scoreEstrategico}/18
+                            </div>
+                            <p class="text-lg text-gray-600 mb-2">Score Estratégico</p>
+                            <p class="text-sm text-gray-500">Análise de viabilidade</p>
+                        </div>
                     </div>
-                    <p class="text-lg text-gray-600 mb-4">Sua pontuação final</p>
                     
                     <div class="bg-gray-100 rounded-xl p-6 mb-6">
                         <div class="flex items-center justify-center">
@@ -944,6 +1294,23 @@ $nichos = getAllNichos();
                             <h3 class="text-2xl font-bold ${resultado.cor}">${resultado.status}</h3>
                         </div>
                     </div>
+                    
+                    ${resultado.alertasCriticos.length > 0 ? `
+                    <div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
+                        <h4 class="text-lg font-semibold text-red-800 mb-2 flex items-center">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                            Alertas Críticos Detectados
+                        </h4>
+                        <ul class="space-y-1">
+                            ${resultado.alertasCriticos.map(alerta => `
+                                <li class="flex items-start text-red-700">
+                                    <i class="fas fa-times-circle mt-1 mr-2 text-sm"></i>
+                                    <span>${alerta}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                    ` : ''}
                 </div>
                 
                 <!-- Recomendações -->
