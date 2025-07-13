@@ -42,24 +42,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $cor_classe = "text-green-600";
         $bg_classe = "bg-green-100";
         $icon = "fas fa-trophy";
-        $recomendacao = "Seu produto tem excelente potencial! Foque em criar campanhas de marketing agressivas e expandir para outros canais.";
-        $proximos_passos = ["Criar campanhas no Facebook Ads", "Desenvolver estratégia de email marketing", "Buscar parcerias com influenciadores"];
+        $recomendacao = "Seu produto tem excelente potencial! Foque em criar campanhas de marketing agressivas, ampliar canais de venda e investir em branding para consolidar sua marca.";
+        $proximos_passos = [
+            "Lance campanhas de Facebook Ads e Google Ads segmentadas para o público-alvo.",
+            "Implemente estratégias de remarketing para aumentar conversão.",
+            "Crie uma página de vendas otimizada com provas sociais (depoimentos, avaliações).",
+            "Invista em parcerias com influenciadores do nicho.",
+            "Monitore métricas como ROI, CAC e LTV semanalmente.",
+            "Considere expandir para marketplaces ou afiliados."
+        ];
     } elseif ($pontos >= 5) {
         $nota_final = $pontos;
         $mensagem = "Produto razoável, com potencial";
         $cor_classe = "text-yellow-600";
         $bg_classe = "bg-yellow-100";
         $icon = "fas fa-star";
-        $recomendacao = "Seu produto tem potencial, mas precisa de alguns ajustes. Foque nos pontos fracos identificados.";
-        $proximos_passos = ["Melhorar os pontos fracos", "Testar diferentes abordagens de marketing", "Refinar o posicionamento"];
+        $recomendacao = "Seu produto tem potencial, mas precisa de ajustes. Foque em identificar e melhorar os pontos fracos antes de escalar o investimento.";
+        $proximos_passos = [
+            "Analise os critérios não marcados e busque formas de aprimorá-los.",
+            "Realize testes A/B em criativos e páginas de venda.",
+            "Colete feedback de clientes e ajuste a oferta conforme necessário.",
+            "Ajuste o preço ou condições de frete para aumentar competitividade.",
+            "Invista em conteúdo para educar o público sobre o diferencial do produto."
+        ];
     } else {
         $nota_final = $pontos;
         $mensagem = "Produto fraco, repense a escolha";
         $cor_classe = "text-red-600";
         $bg_classe = "bg-red-100";
         $icon = "fas fa-exclamation-triangle";
-        $recomendacao = "Este produto pode não ser a melhor escolha. Considere buscar outras opções ou fazer mudanças significativas.";
-        $proximos_passos = ["Buscar produtos alternativos", "Analisar a concorrência", "Repensar o nicho"];
+        $recomendacao = "Este produto pode não ser a melhor escolha no momento. Reavalie o nicho, procure alternativas ou faça mudanças significativas na oferta.";
+        $proximos_passos = [
+            "Pesquise produtos alternativos com maior demanda ou menos concorrência.",
+            "Analise os principais concorrentes e identifique oportunidades de diferenciação.",
+            "Considere mudar o nicho ou público-alvo.",
+            "Participe de grupos e fóruns para identificar tendências emergentes.",
+            "Reveja sua estratégia de marketing e proposta de valor."
+        ];
     }
     
     // Análise detalhada dos pontos
