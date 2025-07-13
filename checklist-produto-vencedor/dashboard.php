@@ -70,7 +70,7 @@ $nichos = getAllNichos();
                             <p class="text-xs text-gray-500">Status</p>
                         </div>
                         <div class="text-center">
-                            <div class="w-32 h-3 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="w-72 h-3 bg-gray-200 rounded-full overflow-hidden">
                                 <div id="progressoBarra" class="h-full bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 transition-all duration-300" style="width: 0%"></div>
                             </div>
                             <p class="text-xs text-gray-600 mt-1">Progresso</p>
@@ -104,7 +104,7 @@ $nichos = getAllNichos();
                         <p class="text-sm text-gray-500">Status do Produto</p>
                     </div>
                     <div class="text-center">
-                        <div id="previewProgress" class="w-32 h-3 bg-gray-200 rounded-full overflow-hidden">
+                        <div id="previewProgress" class="w-72 h-3 bg-gray-200 rounded-full overflow-hidden">
                             <div id="progressBar" class="h-full bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 transition-all duration-300" style="width: 0%"></div>
                         </div>
                         <p class="text-sm text-gray-600 mt-2">Progresso</p>
