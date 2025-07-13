@@ -196,6 +196,9 @@ $nichos = getAllNichos();
                                 </button>
                             </div>
                             
+                            <!-- Tags Selecionadas -->
+                            <div id="tags-promessa_principal" class="mb-3 flex flex-wrap gap-2"></div>
+                            
                             <textarea id="promessa_principal" name="promessa_principal" rows="3" required
                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                                       placeholder="Ou digite sua própria promessa..."></textarea>
@@ -228,6 +231,9 @@ $nichos = getAllNichos();
                                     Não, preciso educar o cliente sobre o problema
                                 </button>
                             </div>
+                            
+                            <!-- Tags Selecionadas -->
+                            <div id="tags-cliente_consciente" class="mb-3 flex flex-wrap gap-2"></div>
                             
                             <textarea id="cliente_consciente" name="cliente_consciente" rows="3" required
                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
@@ -262,6 +268,9 @@ $nichos = getAllNichos();
                                 </button>
                             </div>
                             
+                            <!-- Tags Selecionadas -->
+                            <div id="tags-beneficios" class="mb-3 flex flex-wrap gap-2"></div>
+                            
                             <textarea id="beneficios" name="beneficios" rows="3" required
                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                                       placeholder="Ou digite seus próprios benefícios..."></textarea>
@@ -294,6 +303,9 @@ $nichos = getAllNichos();
                                     Combinação única de características
                                 </button>
                             </div>
+                            
+                            <!-- Tags Selecionadas -->
+                            <div id="tags-mecanismo_unico" class="mb-3 flex flex-wrap gap-2"></div>
                             
                             <textarea id="mecanismo_unico" name="mecanismo_unico" rows="3" required
                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
@@ -525,19 +537,83 @@ $nichos = getAllNichos();
                 btn.addEventListener('click', function() {
                     const field = this.getAttribute('data-field');
                     const value = this.getAttribute('data-value');
-                    const textarea = document.getElementById(field);
                     
-                    textarea.value = value;
-                    textarea.classList.add('border-green-500', 'bg-green-50');
+                    // Verificar se já existe esta tag
+                    const tagsContainer = document.getElementById(`tags-${field}`);
+                    const existingTags = tagsContainer.querySelectorAll('.tag-item');
+                    const tagExists = Array.from(existingTags).some(tag => tag.getAttribute('data-value') === value);
                     
-                    // Feedback visual no botão
-                    this.classList.add('bg-green-100', 'border-green-400');
-                    this.innerHTML = '<i class="fas fa-check mr-2 text-green-600"></i>' + value;
+                    if (tagExists) {
+                        // Se já existe, remover a tag
+                        const tagToRemove = tagsContainer.querySelector(`[data-value="${value}"]`);
+                        tagToRemove.remove();
+                        
+                        // Remover destaque do botão
+                        this.classList.remove('bg-green-100', 'border-green-400');
+                        this.innerHTML = this.getAttribute('data-original-html') || this.innerHTML;
+                    } else {
+                        // Se não existe, adicionar a tag
+                        const tag = document.createElement('div');
+                        tag.className = 'tag-item inline-flex items-center bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium';
+                        tag.setAttribute('data-value', value);
+                        tag.innerHTML = `
+                            <span>${value}</span>
+                            <button type="button" onclick="removerTag('${field}', '${value.replace(/'/g, "\\'")}')" class="ml-2 text-green-600 hover:text-green-800">
+                                <i class="fas fa-times text-xs"></i>
+                            </button>
+                        `;
+                        tagsContainer.appendChild(tag);
+                        
+                        // Destacar o botão
+                        this.classList.add('bg-green-100', 'border-green-400');
+                        this.setAttribute('data-original-html', this.innerHTML);
+                        this.innerHTML = '<i class="fas fa-check mr-2 text-green-600"></i>' + value;
+                    }
+                    
+                    // Atualizar o textarea com todas as tags
+                    atualizarTextareaComTags(field);
                     
                     // Atualizar preview
                     atualizarPreview();
                 });
             });
+        }
+        
+        // Função para remover tag
+        function removerTag(field, value) {
+            const tagsContainer = document.getElementById(`tags-${field}`);
+            const tagToRemove = tagsContainer.querySelector(`[data-value="${value}"]`);
+            if (tagToRemove) {
+                tagToRemove.remove();
+                
+                // Remover destaque do botão correspondente
+                const btn = document.querySelector(`[data-field="${field}"][data-value="${value}"]`);
+                if (btn) {
+                    btn.classList.remove('bg-green-100', 'border-green-400');
+                    btn.innerHTML = btn.getAttribute('data-original-html') || btn.innerHTML;
+                }
+                
+                // Atualizar textarea
+                atualizarTextareaComTags(field);
+                
+                // Atualizar preview
+                atualizarPreview();
+            }
+        }
+        
+        // Função para atualizar textarea com tags
+        function atualizarTextareaComTags(field) {
+            const tagsContainer = document.getElementById(`tags-${field}`);
+            const textarea = document.getElementById(field);
+            const tags = tagsContainer.querySelectorAll('.tag-item span');
+            
+            if (tags.length > 0) {
+                const values = Array.from(tags).map(tag => tag.textContent);
+                textarea.value = values.join('\n• ');
+                textarea.classList.add('border-green-500', 'bg-green-50');
+            } else {
+                textarea.classList.remove('border-green-500', 'bg-green-50');
+            }
         }
         
         // Aplicar event listeners iniciais
