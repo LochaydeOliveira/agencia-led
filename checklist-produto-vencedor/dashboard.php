@@ -485,6 +485,17 @@ $nichos = getAllNichos();
                 </button>`
             ).join('');
             
+            // Cliente Consciente
+            const clienteContainer = document.getElementById('sugestoes-consciente');
+            if (nichoInfo.cliente_consciente) {
+                clienteContainer.innerHTML = nichoInfo.cliente_consciente.map(cliente => 
+                    `<button type="button" class="sugestao-btn w-full text-left p-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 text-sm" 
+                            data-field="cliente_consciente" data-value="${cliente}">
+                        <i class="fas fa-user-check mr-2 text-purple-500"></i>${cliente}
+                    </button>`
+                ).join('');
+            }
+            
             // Benefícios
             const beneficiosContainer = document.getElementById('sugestoes-beneficios');
             beneficiosContainer.innerHTML = nichoInfo.beneficios.map(beneficio => 

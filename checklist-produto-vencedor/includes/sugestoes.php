@@ -8,6 +8,11 @@ $nichos_populares = [
             'Perder peso de forma saudável e rápida',
             'Ganhar massa muscular sem academia'
         ],
+        'cliente_consciente' => [
+            'Sim, o cliente já sabe que precisa melhorar a forma física',
+            'Parcialmente, o cliente quer resultados mas não sabe como',
+            'O cliente está frustrado com dietas que não funcionam'
+        ],
         'beneficios' => [
             'Melhora a saúde e bem-estar',
             'Aumenta a autoestima',
@@ -25,6 +30,11 @@ $nichos_populares = [
             'Pele perfeita em 7 dias',
             'Cabelo sedoso e brilhante',
             'Maquiagem profissional em casa'
+        ],
+        'cliente_consciente' => [
+            'Sim, o cliente já busca produtos de beleza',
+            'Parcialmente, o cliente quer melhorar mas não sabe qual produto usar',
+            'O cliente está insatisfeito com produtos atuais'
         ],
         'beneficios' => [
             'Aumenta a confiança',
@@ -44,6 +54,11 @@ $nichos_populares = [
             'Espaço otimizado e funcional',
             'Limpeza rápida e eficiente'
         ],
+        'cliente_consciente' => [
+            'Sim, o cliente já sabe que precisa organizar a casa',
+            'Parcialmente, o cliente quer organização mas não sabe por onde começar',
+            'O cliente está sobrecarregado com a desorganização'
+        ],
         'beneficios' => [
             'Mais tempo livre',
             'Menos estresse',
@@ -62,6 +77,11 @@ $nichos_populares = [
             'Tecnologia acessível',
             'Inovação para todos'
         ],
+        'cliente_consciente' => [
+            'Sim, o cliente já busca soluções tecnológicas',
+            'Parcialmente, o cliente quer tecnologia mas não sabe qual escolher',
+            'O cliente está frustrado com produtos tecnológicos complexos'
+        ],
         'beneficios' => [
             'Aumenta a produtividade',
             'Facilita tarefas diárias',
@@ -79,6 +99,11 @@ $nichos_populares = [
             'Pet mais feliz e saudável',
             'Cuidados profissionais em casa',
             'Bem-estar animal garantido'
+        ],
+        'cliente_consciente' => [
+            'Sim, o cliente já busca produtos para o pet',
+            'Parcialmente, o cliente quer cuidar do pet mas não sabe como',
+            'O cliente está preocupado com a saúde do pet'
         ],
         'beneficios' => [
             'Pet mais saudável',
