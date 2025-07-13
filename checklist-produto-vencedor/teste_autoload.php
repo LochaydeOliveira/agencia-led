@@ -10,11 +10,7 @@ echo 'Conteúdo do diretório vendor (na RAIZ):' . PHP_EOL;
 print_r(scandir(__DIR__ . '/../vendor'));
 echo '</pre>';
 
-$autoload = __DIR__ . '/../vendor/autoload.php';
-if (!file_exists($autoload)) {
-    die('Autoload NÃO encontrado em: ' . $autoload);
-}
-require_once $autoload;
+require_once __DIR__ . '/../vendor/autoload.php';
 
 if (class_exists('Mpdf\\Mpdf')) {
     echo 'mPDF CARREGADO COM SUCESSO!';
