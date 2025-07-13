@@ -966,7 +966,72 @@ $nichos = getAllNichos();
         }
 
         function exportarResultado() {
-            alert('Funcionalidade de exportação será implementada em breve!');
+            // Coletar dados do resultado exibido no modal
+            const modalResultado = document.getElementById('modalResultado');
+            if (!modalResultado || modalResultado.classList.contains('hidden')) {
+                alert('O resultado ainda não foi gerado!');
+                return;
+            }
+
+            // Extrair dados do resultado (usando variáveis globais se possível)
+            // Se não houver variáveis globais, extrair do DOM
+            let pontos = document.querySelector('.modalResultado-pontos')?.textContent || document.getElementById('previewPontos')?.textContent || '0';
+            pontos = pontos.replace(/\D/g, '') || '0';
+            let status = document.querySelector('.modalResultado-status')?.textContent || '';
+            let recomendacao = document.querySelector('.modalResultado-recomendacao')?.textContent || '';
+            let proximosPassos = Array.from(document.querySelectorAll('.modalResultado-passos li')).map(li => li.textContent);
+            let promessa = document.querySelector('.modalResultado-promessa')?.textContent || '';
+            let cliente = document.querySelector('.modalResultado-cliente')?.textContent || '';
+            let beneficios = document.querySelector('.modalResultado-beneficios')?.textContent || '';
+            let mecanismo = document.querySelector('.modalResultado-mecanismo')?.textContent || '';
+
+            // Fallback: pegar dos campos do formulário se não encontrar no modal
+            if (!promessa) promessa = document.getElementById('promessa_principal')?.value || '';
+            if (!cliente) cliente = document.getElementById('cliente_consciente')?.value || '';
+            if (!beneficios) beneficios = document.getElementById('beneficios')?.value || '';
+            if (!mecanismo) mecanismo = document.getElementById('mecanismo_unico')?.value || '';
+
+            // Se não encontrar status, pegar do preview
+            if (!status) status = document.getElementById('previewStatus')?.textContent || '';
+
+            // Se não encontrar recomendação, pegar do modal
+            if (!recomendacao) {
+                const recDiv = Array.from(document.querySelectorAll('#modalResultado .bg-blue-50'))[0];
+                if (recDiv) recomendacao = recDiv.textContent.trim();
+            }
+
+            // Se não encontrar próximos passos, pegar do modal
+            if (!proximosPassos.length) {
+                const passosDiv = Array.from(document.querySelectorAll('#modalResultado .bg-green-50 ul li'));
+                proximosPassos = passosDiv.map(li => li.textContent.trim());
+            }
+
+            // Montar form e enviar via POST para exportar_pdf.php
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'exportar_pdf.php';
+            form.target = '_blank';
+
+            const addField = (name, value) => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = name;
+                input.value = typeof value === 'string' ? value : JSON.stringify(value);
+                form.appendChild(input);
+            };
+
+            addField('pontos', pontos);
+            addField('status', status);
+            addField('recomendacao', recomendacao);
+            addField('proximosPassos', proximosPassos);
+            addField('promessa', promessa);
+            addField('cliente', cliente);
+            addField('beneficios', beneficios);
+            addField('mecanismo', mecanismo);
+
+            document.body.appendChild(form);
+            form.submit();
+            document.body.removeChild(form);
         }
 
         // Mostrar barra de progresso quando a página é carregada
