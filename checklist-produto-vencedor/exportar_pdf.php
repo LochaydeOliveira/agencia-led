@@ -61,7 +61,7 @@ $html .= '<div class="secao"><div class="label">Mecanismo Único:</div><div clas
 $html .= '<div class="footer">Checklist gerado em ' . date('d/m/Y H:i') . ' | checklist-produto-vencedor</div>';
 $html .= '</body></html>';
 
-$mpdf = new mPDF();
+$mpdf = new \Mpdf\Mpdf();
 $mpdf->WriteHTML($html);
 
 // Nome do arquivo
