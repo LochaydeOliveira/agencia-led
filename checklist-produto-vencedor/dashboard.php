@@ -24,11 +24,12 @@ $nichos = getAllNichos();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Checklist do Produto Lucrativo</title>
+    <title>Dashboard - ValidaPro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="assets/css/custom.css" rel="stylesheet">
+    <link href="assets/css/logo.css" rel="stylesheet">
 </head>
 <body class="bg-gray-50 min-h-screen">
     <!-- Header -->
@@ -36,10 +37,15 @@ $nichos = getAllNichos();
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center">
-                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center mr-3">
-                        <i class="fas fa-chart-line text-white"></i>
+                    <div class="logo-produtovencedor logo-small">
+                        <div class="logo-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div>
+                            <div class="logo-text">ProdutoVencedor</div>
+                            <div class="logo-tagline">VALIDE. VENDA. CRESÇA.</div>
+                        </div>
                     </div>
-                    <h1 class="text-xl font-bold text-gray-800">Checklist do Produto Lucrativo</h1>
                 </div>
                 <div class="flex items-center space-x-4">
                     <span class="text-sm text-gray-600">
