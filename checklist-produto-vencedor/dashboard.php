@@ -156,7 +156,7 @@ $nichos = getAllNichos();
                 </div>
             </div>
 
-            <form id="checklistForm" method="POST" action="resultado.php" class="space-y-8">
+            <form id="checklistForm" class="space-y-8">
                 <!-- CSRF Token -->
                 <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token'] ?? ''; ?>">
                 
@@ -370,13 +370,64 @@ $nichos = getAllNichos();
                 </div>
 
                 <div class="text-center">
-                    <button type="submit" 
+                    <button type="button" 
+                            onclick="processarFormularioComPopup(document.getElementById('checklistForm'))"
                             class="bg-gradient-to-r from-green-500 to-blue-600 text-white font-semibold py-4 px-8 rounded-lg hover:from-green-600 hover:to-blue-700 transition duration-200 transform hover:scale-105 text-lg">
                         <i class="fas fa-calculator mr-2"></i>
                         Calcular Resultado Final
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Popup Modal de Resultado -->
+    <div id="resultadoModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4 transition-all duration-300">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-300 scale-95 opacity-0" id="modalContent">
+            <!-- Header do Modal -->
+            <div class="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 rounded-t-2xl">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-2xl font-bold text-gray-800">Resultado da Análise</h3>
+                    <button onclick="fecharModal()" class="text-gray-400 hover:text-gray-600 text-2xl transition-colors duration-200">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Conteúdo do Modal -->
+            <div id="modalContent" class="p-6">
+                <!-- Loading -->
+                <div id="modalLoading" class="text-center py-12">
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-2xl mb-4">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-2">Processando Análise...</h4>
+                    <p class="text-gray-600">Calculando pontuação e gerando recomendações</p>
+                </div>
+                
+                <!-- Resultado (será preenchido via JavaScript) -->
+                <div id="modalResultado" class="hidden">
+                    <!-- Conteúdo será inserido aqui -->
+                </div>
+            </div>
+            
+            <!-- Footer do Modal -->
+            <div class="sticky bottom-0 bg-white border-t border-gray-200 px-6 py-4 rounded-b-2xl">
+                <div class="flex flex-wrap justify-center gap-3">
+                    <button onclick="fecharModal()" 
+                            class="px-6 py-2 bg-gray-500 text-white font-semibold rounded-lg hover:bg-gray-600 transition duration-200">
+                        <i class="fas fa-times mr-2"></i>Fechar
+                    </button>
+                    <button onclick="novaAnalise()" 
+                            class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200">
+                        <i class="fas fa-plus mr-2"></i>Nova Análise
+                    </button>
+                    <button onclick="exportarResultado()" 
+                            class="px-6 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition duration-200">
+                        <i class="fas fa-file-pdf mr-2"></i>Exportar PDF
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -573,7 +624,12 @@ $nichos = getAllNichos();
         
         // Validação do formulário
         document.getElementById('checklistForm').addEventListener('submit', function(e) {
-            console.log('Formulário submetido!'); // Debug
+            // PREVENT DEFAULT IMEDIATAMENTE
+            e.preventDefault();
+            e.stopPropagation();
+            
+            console.log('=== DEBUG FORMULÁRIO ===');
+            console.log('Formulário submetido!');
             
             const requiredFields = ['promessa_principal', 'cliente_consciente', 'beneficios', 'mecanismo_unico'];
             let isValid = true;
@@ -583,7 +639,7 @@ $nichos = getAllNichos();
                 const element = document.getElementById(field);
                 const value = element.value.trim();
                 
-                console.log(`Campo ${field}: "${value}"`); // Debug
+                console.log(`Campo ${field}: "${value}"`);
                 
                 if (!value) {
                     element.classList.add('border-red-500', 'bg-red-50');
@@ -594,15 +650,19 @@ $nichos = getAllNichos();
                 }
             });
             
+            // Verificar checkboxes
+            const checkboxes = document.querySelectorAll('input[name="checklist[]"]:checked');
+            console.log('Checkboxes marcados:', checkboxes.length);
+            checkboxes.forEach(cb => console.log('Checkbox:', cb.value));
+            
             if (!isValid) {
-                e.preventDefault(); // Só previne se inválido
                 const message = `Por favor, preencha os seguintes campos obrigatórios:\n\n${emptyFields.join('\n')}`;
                 alert(message);
-                console.log('Formulário inválido:', emptyFields); // Debug
+                console.log('Formulário inválido:', emptyFields);
                 return false;
             }
             
-            console.log('Formulário válido, enviando...'); // Debug
+            console.log('Formulário válido, processando...');
             
             // Adicionar loading no botão
             const submitBtn = this.querySelector('button[type="submit"]');
@@ -610,8 +670,10 @@ $nichos = getAllNichos();
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processando...';
             submitBtn.disabled = true;
             
-            // Não prevenir o envio - deixar o formulário ser enviado normalmente
-            // O formulário será enviado para resultado.php automaticamente
+            // Processar com popup
+            processarFormularioComPopup(this);
+            
+            return false;
         });
 
         // Inicializar preview
@@ -628,6 +690,196 @@ $nichos = getAllNichos();
 
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Funções do Modal
+        function mostrarModal() {
+            const modal = document.getElementById('resultadoModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            
+            // Animar entrada
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function fecharModal() {
+            const modal = document.getElementById('resultadoModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            // Animar saída
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+                
+                // Resetar conteúdo do modal
+                document.getElementById('modalLoading').classList.remove('hidden');
+                document.getElementById('modalResultado').classList.add('hidden');
+            }, 300);
+        }
+
+        function processarFormularioComPopup(form) {
+            console.log('=== PROCESSANDO FORMULÁRIO ===');
+            
+            // Mostrar modal com loading
+            mostrarModal();
+            
+            // Coletar dados do formulário
+            const formData = new FormData(form);
+            console.log('FormData criado:', formData);
+            
+            // Simular processamento (substituir por AJAX real)
+            setTimeout(() => {
+                console.log('=== CALCULANDO RESULTADO ===');
+                
+                const pontos = document.querySelectorAll('input[name="checklist[]"]:checked').length;
+                const promessa = document.getElementById('promessa_principal').value;
+                const cliente = document.getElementById('cliente_consciente').value;
+                const beneficios = document.getElementById('beneficios').value;
+                const mecanismo = document.getElementById('mecanismo_unico').value;
+                
+                console.log('Dados coletados:', { pontos, promessa, cliente, beneficios, mecanismo });
+                
+                // Calcular resultado
+                const resultado = calcularResultado(pontos, promessa, cliente, beneficios, mecanismo);
+                console.log('Resultado calculado:', resultado);
+                
+                // Mostrar resultado no modal
+                mostrarResultadoNoModal(resultado);
+                
+                // Restaurar botão
+                const submitBtn = form.querySelector('button[type="submit"]');
+                submitBtn.innerHTML = '<i class="fas fa-calculator mr-2"></i>Calcular Resultado Final';
+                submitBtn.disabled = false;
+                
+                console.log('=== PROCESSAMENTO CONCLUÍDO ===');
+            }, 2000);
+        }
+
+        function calcularResultado(pontos, promessa, cliente, beneficios, mecanismo) {
+            let status, cor, icon, recomendacao, proximosPassos;
+            
+            if (pontos >= 8) {
+                status = "Produto com alto potencial! 🏆";
+                cor = "text-green-600";
+                icon = "fas fa-trophy";
+                recomendacao = "Seu produto tem excelente potencial! Foque em criar campanhas de marketing agressivas.";
+                proximosPassos = ["Criar campanhas no Facebook Ads", "Desenvolver estratégia de email marketing", "Buscar parcerias"];
+            } else if (pontos >= 5) {
+                status = "Produto razoável, com potencial ⭐";
+                cor = "text-yellow-600";
+                icon = "fas fa-star";
+                recomendacao = "Seu produto tem potencial, mas precisa de alguns ajustes.";
+                proximosPassos = ["Melhorar os pontos fracos", "Testar diferentes abordagens", "Refinar posicionamento"];
+            } else {
+                status = "Produto fraco, repense a escolha 📈";
+                cor = "text-red-600";
+                icon = "fas fa-exclamation-triangle";
+                recomendacao = "Este produto pode não ser a melhor escolha. Considere outras opções.";
+                proximosPassos = ["Buscar produtos alternativos", "Analisar concorrência", "Repensar nicho"];
+            }
+            
+            return {
+                pontos,
+                status,
+                cor,
+                icon,
+                recomendacao,
+                proximosPassos,
+                promessa,
+                cliente,
+                beneficios,
+                mecanismo
+            };
+        }
+
+        function mostrarResultadoNoModal(resultado) {
+            const modalLoading = document.getElementById('modalLoading');
+            const modalResultado = document.getElementById('modalResultado');
+            
+            // Esconder loading
+            modalLoading.classList.add('hidden');
+            
+            // Mostrar resultado
+            modalResultado.classList.remove('hidden');
+            
+            // Gerar HTML do resultado
+            modalResultado.innerHTML = `
+                <!-- Pontuação Principal -->
+                <div class="text-center mb-8">
+                    <div class="inline-flex items-center justify-center w-32 h-32 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-4xl font-bold mb-4">
+                        ${resultado.pontos}/10
+                    </div>
+                    <p class="text-lg text-gray-600 mb-4">Sua pontuação final</p>
+                    
+                    <div class="bg-gray-100 rounded-xl p-6 mb-6">
+                        <div class="flex items-center justify-center">
+                            <i class="${resultado.icon} text-3xl ${resultado.cor} mr-4"></i>
+                            <h3 class="text-2xl font-bold ${resultado.cor}">${resultado.status}</h3>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recomendações -->
+                <div class="bg-blue-50 rounded-xl p-6 mb-6">
+                    <h4 class="text-lg font-semibold text-blue-800 mb-3">Análise do Especialista</h4>
+                    <p class="text-blue-700 leading-relaxed">${resultado.recomendacao}</p>
+                </div>
+                
+                <!-- Próximos Passos -->
+                <div class="bg-green-50 rounded-xl p-6 mb-6">
+                    <h4 class="text-lg font-semibold text-green-800 mb-3">Próximos Passos</h4>
+                    <ul class="space-y-2">
+                        ${resultado.proximosPassos.map(passo => `
+                            <li class="flex items-start">
+                                <i class="fas fa-arrow-right text-green-500 mt-1 mr-2 text-sm"></i>
+                                <span class="text-green-700">${passo}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+                
+                <!-- Respostas -->
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h5 class="font-semibold text-gray-700 mb-2">Promessa Principal</h5>
+                        <p class="text-gray-800">${resultado.promessa}</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h5 class="font-semibold text-gray-700 mb-2">Cliente Consciente</h5>
+                        <p class="text-gray-800">${resultado.cliente}</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h5 class="font-semibold text-gray-700 mb-2">Benefícios</h5>
+                        <p class="text-gray-800">${resultado.beneficios}</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h5 class="font-semibold text-gray-700 mb-2">Mecanismo Único</h5>
+                        <p class="text-gray-800">${resultado.mecanismo}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function novaAnalise() {
+            fecharModal();
+            // Limpar formulário
+            document.getElementById('checklistForm').reset();
+            // Atualizar preview
+            atualizarPreview();
+            // Scroll para topo
+            scrollToTop();
+        }
+
+        function exportarResultado() {
+            alert('Funcionalidade de exportação será implementada em breve!');
         }
 
         // Mostrar barra de progresso quando a página é carregada
