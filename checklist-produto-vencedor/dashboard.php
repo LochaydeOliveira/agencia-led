@@ -160,6 +160,16 @@ $nichos = getAllNichos();
                 <!-- CSRF Token -->
                 <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token'] ?? ''; ?>">
                 
+                <!-- Nome do Produto -->
+                <div class="mb-6">
+                    <label for="nome_produto" class="block text-lg font-semibold text-gray-700 mb-2">
+                        Nome do Produto <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="nome_produto" name="nome_produto" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+                        placeholder="Digite o nome do produto analisado">
+                </div>
+                
                 <!-- Bloco 1: Perguntas com Sugestões -->
                 <div class="bg-blue-50 rounded-xl p-6">
                     <h3 class="text-xl font-semibold text-blue-800 mb-6 flex items-center">
@@ -831,8 +841,9 @@ $nichos = getAllNichos();
                 const cliente = document.getElementById('cliente_consciente').value;
                 const beneficios = document.getElementById('beneficios').value;
                 const mecanismo = document.getElementById('mecanismo_unico').value;
+                const nomeProduto = document.getElementById('nome_produto').value;
                 
-                console.log('Dados coletados:', { pontos, promessa, cliente, beneficios, mecanismo });
+                console.log('Dados coletados:', { pontos, promessa, cliente, beneficios, mecanismo, nomeProduto });
                 
                 // Calcular resultado
                 const resultado = calcularResultado(pontos, promessa, cliente, beneficios, mecanismo);
@@ -883,7 +894,8 @@ $nichos = getAllNichos();
                 promessa,
                 cliente,
                 beneficios,
-                mecanismo
+                mecanismo,
+                nomeProduto: document.getElementById('nome_produto').value // Adicionar nome do produto ao resultado
             };
         }
 
@@ -936,6 +948,10 @@ $nichos = getAllNichos();
                 <!-- Respostas -->
                 <div class="grid md:grid-cols-2 gap-4">
                     <div class="bg-gray-50 rounded-lg p-4">
+                        <h5 class="font-semibold text-gray-700 mb-2">Nome do Produto</h5>
+                        <p class="text-gray-800">${resultado.nomeProduto}</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4">
                         <h5 class="font-semibold text-gray-700 mb-2">Promessa Principal</h5>
                         <p class="text-gray-800">${resultado.promessa}</p>
                     </div>
@@ -984,8 +1000,10 @@ $nichos = getAllNichos();
             let cliente = document.querySelector('.modalResultado-cliente')?.textContent || '';
             let beneficios = document.querySelector('.modalResultado-beneficios')?.textContent || '';
             let mecanismo = document.querySelector('.modalResultado-mecanismo')?.textContent || '';
+            let nomeProduto = document.querySelector('.modalResultado-nomeProduto')?.textContent || '';
 
             // Fallback: pegar dos campos do formulário se não encontrar no modal
+            if (!nomeProduto) nomeProduto = document.getElementById('nome_produto')?.value || '';
             if (!promessa) promessa = document.getElementById('promessa_principal')?.value || '';
             if (!cliente) cliente = document.getElementById('cliente_consciente')?.value || '';
             if (!beneficios) beneficios = document.getElementById('beneficios')?.value || '';
@@ -1028,6 +1046,7 @@ $nichos = getAllNichos();
             addField('cliente', cliente);
             addField('beneficios', beneficios);
             addField('mecanismo', mecanismo);
+            addField('nomeProduto', nomeProduto); // Adicionar nome do produto ao form
 
             document.body.appendChild(form);
             form.submit();

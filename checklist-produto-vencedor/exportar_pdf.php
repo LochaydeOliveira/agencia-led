@@ -13,6 +13,7 @@ $promessa = $_POST['promessa'] ?? '';
 $cliente = $_POST['cliente'] ?? '';
 $beneficios = $_POST['beneficios'] ?? '';
 $mecanismo = $_POST['mecanismo'] ?? '';
+$nomeProduto = $_POST['nomeProduto'] ?? '';
 
 if (is_string($proximosPassos)) {
     $proximosPassos = @json_decode($proximosPassos, true) ?: [];
@@ -25,6 +26,7 @@ $logo = '';
 $html = '<html><head><style>
 body { font-family: Arial, sans-serif; color: #222; }
 .titulo { background: linear-gradient(90deg, #2563eb, #6366f1); color: #fff; padding: 24px; border-radius: 16px 16px 0 0; text-align: center; font-size: 2em; font-weight: bold; }
+.nome-produto { font-size: 1.3em; color: #2563eb; font-weight: bold; margin: 18px 0 8px 0; text-align: center; }
 .secao { margin: 24px 0; padding: 16px; border-radius: 12px; background: #f3f4f6; }
 .pontos { font-size: 2.5em; color: #2563eb; font-weight: bold; }
 .status { font-size: 1.3em; margin: 12px 0; font-weight: bold; }
@@ -36,6 +38,9 @@ body { font-family: Arial, sans-serif; color: #222; }
 </style></head><body>';
 
 $html .= '<div class="titulo">Checklist do Produto Lucrativo</div>';
+if ($nomeProduto) {
+    $html .= '<div class="nome-produto">Produto analisado: ' . htmlspecialchars($nomeProduto) . '</div>';
+}
 if ($logo) {
     $html .= '<div style="text-align:center;margin:16px 0;"><img src="' . $logo . '" height="60"></div>';
 }
