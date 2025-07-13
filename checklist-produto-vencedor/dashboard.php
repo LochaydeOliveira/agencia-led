@@ -54,6 +54,40 @@ $nichos = getAllNichos();
     </header>
 
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Barra de Progresso Fixa -->
+        <div id="progressoFixo" class="fixed top-0 left-0 right-0 bg-white shadow-lg border-b z-50 transform transition-transform duration-300" style="transform: translateY(-100%);">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-6">
+                        <div class="text-center">
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center text-white text-xl font-bold">
+                                <span id="progressoPontos">0</span>/10
+                            </div>
+                            <p class="text-xs text-gray-600 mt-1">Pontos</p>
+                        </div>
+                        <div class="text-center">
+                            <div id="progressoStatus" class="text-lg font-semibold text-gray-600">Iniciando...</div>
+                            <p class="text-xs text-gray-500">Status</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-32 h-3 bg-gray-200 rounded-full overflow-hidden">
+                                <div id="progressoBarra" class="h-full bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                            <p class="text-xs text-gray-600 mt-1">Progresso</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button type="button" onclick="scrollToTop()" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                            <i class="fas fa-arrow-up mr-1"></i>Topo
+                        </button>
+                        <button type="button" onclick="hideProgressoFixo()" class="text-gray-500 hover:text-gray-700 text-sm">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Preview do Resultado em Tempo Real -->
         <div id="previewResultado" class="bg-white rounded-2xl shadow-lg p-6 mb-8 hidden">
             <div class="text-center">
@@ -480,6 +514,11 @@ $nichos = getAllNichos();
             const previewStatus = document.getElementById('previewStatus');
             const progressBar = document.getElementById('progressBar');
             
+            // Elementos da barra fixa
+            const progressoPontos = document.getElementById('progressoPontos');
+            const progressoStatus = document.getElementById('progressoStatus');
+            const progressoBarra = document.getElementById('progressoBarra');
+            
             // Mostrar preview se há pelo menos 1 ponto ou campos preenchidos
             const camposPreenchidos = ['promessa_principal', 'cliente_consciente', 'beneficios', 'mecanismo_unico']
                 .some(field => document.getElementById(field).value.trim() !== '');
@@ -487,6 +526,7 @@ $nichos = getAllNichos();
             if (pontos > 0 || camposPreenchidos) {
                 previewDiv.classList.remove('hidden');
                 previewPontos.textContent = pontos;
+                progressoPontos.textContent = pontos;
                 
                 // Atualizar status e progresso
                 let status, progressWidth, statusClass;
@@ -512,8 +552,17 @@ $nichos = getAllNichos();
                 previewStatus.textContent = status;
                 previewStatus.className = `text-lg font-semibold ${statusClass}`;
                 progressBar.style.width = progressWidth;
+                
+                // Atualizar barra fixa
+                progressoStatus.textContent = status;
+                progressoStatus.className = `text-lg font-semibold ${statusClass}`;
+                progressoBarra.style.width = progressWidth;
+                
+                // Mostrar barra fixa
+                showProgressoFixo();
             } else {
                 previewDiv.classList.add('hidden');
+                hideProgressoFixo();
             }
         }
 
@@ -567,6 +616,22 @@ $nichos = getAllNichos();
 
         // Inicializar preview
         atualizarPreview();
+
+        // Funções para barra de progresso fixa
+        function showProgressoFixo() {
+            document.getElementById('progressoFixo').style.transform = 'translateY(0)';
+        }
+
+        function hideProgressoFixo() {
+            document.getElementById('progressoFixo').style.transform = 'translateY(-100%)';
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Mostrar barra de progresso quando a página é carregada
+        window.addEventListener('load', showProgressoFixo);
     </script>
 </body>
 </html> 
