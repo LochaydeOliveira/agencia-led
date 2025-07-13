@@ -28,6 +28,7 @@ $nichos = getAllNichos();
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="assets/css/custom.css" rel="stylesheet">
 </head>
 <body class="bg-gray-50 min-h-screen">
     <!-- Header -->
@@ -70,8 +71,8 @@ $nichos = getAllNichos();
                             <p class="text-xs text-gray-500">Status</p>
                         </div>
                         <div class="text-center">
-                            <div class="w-72 h-3 bg-gray-200 rounded-full overflow-hidden">
-                                <div id="progressoBarra" class="h-full bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 transition-all duration-300" style="width: 0%"></div>
+                            <div class="progress-bar-container">
+                                <div id="progressoBarra" class="progress-bar-fill" style="width: 0%"></div>
                             </div>
                             <p class="text-xs text-gray-600 mt-1">Progresso</p>
                         </div>
@@ -104,8 +105,8 @@ $nichos = getAllNichos();
                         <p class="text-sm text-gray-500">Status do Produto</p>
                     </div>
                     <div class="text-center">
-                        <div id="previewProgress" class="w-72 h-3 bg-gray-200 rounded-full overflow-hidden">
-                            <div id="progressBar" class="h-full bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 transition-all duration-300" style="width: 0%"></div>
+                        <div id="previewProgress" class="progress-bar-container">
+                            <div id="progressBar" class="progress-bar-fill" style="width: 0%"></div>
                         </div>
                         <p class="text-sm text-gray-600 mt-2">Progresso</p>
                     </div>
