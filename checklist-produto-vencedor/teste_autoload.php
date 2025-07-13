@@ -9,3 +9,5 @@ print_r(scandir(__DIR__));
 echo 'Conteúdo do diretório vendor:' . PHP_EOL;
 print_r(scandir(__DIR__ . '/vendor'));
 echo '</pre>'; 
+
+$autoload = __DIR__ . '/../vendor/autoload.php'; 
