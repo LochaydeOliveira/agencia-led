@@ -7,6 +7,14 @@ $user = getCurrentUser();
 
 // Processar formulário
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Validar CSRF token
+    if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || 
+        !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        error_log("CSRF token inválido");
+        header('Location: dashboard.php?error=csrf');
+        exit();
+    }
+    
     $promessa_principal = $_POST['promessa_principal'] ?? '';
     $cliente_consciente = $_POST['cliente_consciente'] ?? '';
     $beneficios = $_POST['beneficios'] ?? '';

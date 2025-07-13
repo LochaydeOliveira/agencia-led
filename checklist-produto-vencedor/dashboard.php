@@ -11,6 +11,11 @@ require_once 'includes/sugestoes.php';
 requireLogin();
 $user = getCurrentUser();
 
+// Gerar CSRF token se não existir
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 // Obter nichos disponíveis
 $nichos = getAllNichos();
 ?>
@@ -118,6 +123,9 @@ $nichos = getAllNichos();
             </div>
 
             <form id="checklistForm" method="POST" action="resultado.php" class="space-y-8">
+                <!-- CSRF Token -->
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token'] ?? ''; ?>">
+                
                 <!-- Bloco 1: Perguntas com Sugestões -->
                 <div class="bg-blue-50 rounded-xl p-6">
                     <h3 class="text-xl font-semibold text-blue-800 mb-6 flex items-center">
@@ -538,7 +546,7 @@ $nichos = getAllNichos();
             });
             
             if (!isValid) {
-                e.preventDefault();
+                e.preventDefault(); // Só previne se inválido
                 const message = `Por favor, preencha os seguintes campos obrigatórios:\n\n${emptyFields.join('\n')}`;
                 alert(message);
                 console.log('Formulário inválido:', emptyFields); // Debug
@@ -553,8 +561,8 @@ $nichos = getAllNichos();
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processando...';
             submitBtn.disabled = true;
             
-            // Permitir que o formulário seja enviado
-            return true;
+            // Não prevenir o envio - deixar o formulário ser enviado normalmente
+            // O formulário será enviado para resultado.php automaticamente
         });
 
         // Inicializar preview
