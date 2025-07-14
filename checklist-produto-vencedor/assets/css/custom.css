@@ -2,6 +2,17 @@
    CUSTOMIZAÇÕES DO CHECKLIST PRODUTO VENCEDOR
    ======================================== */
 
+/* Botões CTA */
+.cta-button {
+    background: linear-gradient(135deg, #b03d3d 0%, #111111 100%);
+    transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(176, 61, 61, 0.4);
+}
+
 /* Barras de Progresso */
 .progress-bar-container {
     width: 50rem;
