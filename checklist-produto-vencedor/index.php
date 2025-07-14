@@ -44,9 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Checklist do Produto Lucrativo - Login</title>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-    <link rel="apple-touch-icon" href="assets/favicon.svg">
+    <link rel="icon" type="image/png" href="assets/img/favicon-oficial-validapro.png">
+    <link rel="apple-touch-icon" href="assets/img/favicon-oficial-validapro.png">
+
+    <!-- Logo SVG -->
+    <link rel="preload" as="image" href="assets/svg/logo-valida-pro-em-svg.svg">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -54,10 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex items-center justify-center">
     <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
         <div class="text-center mb-8">
-            <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-chart-line text-white text-2xl"></i>
-            </div>
-            <h1 class="text-3xl font-bold text-gray-800 mb-2">Checklist do Produto</h1>
+            <img src="assets/svg/logo-valida-pro-em-svg.svg" alt="ValidaPro Logo" class="h-16 mx-auto mb-4">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">ValidaPro</h1>
             <p class="text-gray-600">Faça login para acessar sua análise</p>
         </div>
 

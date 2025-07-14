@@ -27,9 +27,11 @@ $nichos = getAllNichos();
     <title>Dashboard - ValidaPro</title>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-    <link rel="apple-touch-icon" href="assets/favicon.svg">
+    <link rel="icon" type="image/png" href="assets/img/favicon-oficial-validapro.png">
+    <link rel="apple-touch-icon" href="assets/img/favicon-oficial-validapro.png">
+    
+    <!-- Logo SVG -->
+    <link rel="preload" as="image" href="assets/svg/logo-valida-pro-em-svg.svg">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -44,13 +46,8 @@ $nichos = getAllNichos();
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center">
                     <div class="logo-produtovencedor logo-small">
-                        <div class="logo-icon">
-                            <i class="fas fa-trophy"></i>
-                        </div>
-                        <div>
-                            <div class="logo-text">ProdutoVencedor</div>
-                            <div class="logo-tagline">VALIDE. VENDA. CRESÇA.</div>
-                        </div>
+                        <img src="assets/svg/logo-valida-pro-em-svg.svg" alt="ValidaPro Logo" class="h-12 md:h-16">
+                        <div class="logo-tagline mt-1">VALIDE. VENDA. VENÇA.</div>
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
