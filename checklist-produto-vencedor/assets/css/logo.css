@@ -9,6 +9,7 @@
     font-weight: 800;
     text-decoration: none;
     color: inherit;
+    flex-direction: column;
 }
 
 .logo-icon {
@@ -96,7 +97,8 @@
 }
 
 .logo-white .logo-tagline {
-    color: #d1d5db;
+    color: #ffffff;
+    margin: -1.2rem 0;
 }
 
 .logo-small .logo-icon {
