@@ -47,7 +47,6 @@ $nichos = getAllNichos();
                 <div class="flex items-center">
                     <div class="logo-produtovencedor logo-small">
                         <img src="assets/img/logo-validapro-checklist.svg" alt="ValidaPro Logo" class="h-12 md:h-16">
-                        <div class="logo-tagline mt-1">VALIDE. VENDA. VENÇA.</div>
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
