@@ -64,7 +64,7 @@ $nichos = getAllNichos();
 
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Barra de Progresso Fixa -->
-        <div id="progressoFixo" class="fixed top-0 left-0 right-0 bg-white shadow-lg border-b z-50 transform transition-transform duration-300" style="transform: translateY(-100%);">
+        <div id="progressoFixo" class="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t z-50 transform transition-transform duration-300" style="transform: translateY(100%);">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-6">
@@ -1087,7 +1087,7 @@ $nichos = getAllNichos();
         }
 
         function hideProgressoFixo() {
-            document.getElementById('progressoFixo').style.transform = 'translateY(-100%)';
+            document.getElementById('progressoFixo').style.transform = 'translateY(100%)';
         }
 
         function scrollToTop() {
