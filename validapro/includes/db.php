@@ -1,9 +1,18 @@
 <?php
-// Configuração do banco de dados MySQL
-$host = "localhost";
-$db = "paymen58_checklist_produto_lucrativo";
-$user = "paymen58";
-$pass = "u4q7+B6ly)obP_gxN9sNe";
+// Carregar variáveis de ambiente do .env
+if (!class_exists('Dotenv\\Dotenv')) {
+    require_once __DIR__ . '/../vendor/autoload.php';
+}
+if (file_exists(__DIR__ . '/../.env')) {
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+    $dotenv->load();
+}
+
+// Configuração do banco de dados MySQL usando variáveis de ambiente
+$host = $_ENV['DB_HOST'] ?? 'localhost';
+$db = $_ENV['DB_NAME'] ?? 'validapro';
+$user = $_ENV['DB_USER'] ?? 'root';
+$pass = $_ENV['DB_PASS'] ?? '';
 
 try {
     // Primeiro, tentar conectar sem especificar o banco

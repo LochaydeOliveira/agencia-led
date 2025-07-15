@@ -6,24 +6,20 @@
  */
 
 // Configurações do Banco de Dados (PRODUÇÃO)
-define('DB_TYPE', 'mysql');
-define('DB_HOST', 'localhost'); // Seu host do banco
-define('DB_NAME', 'paymen58_checklist_produto_lucrativo'); // Seu nome do banco
-define('DB_USER', 'paymen58'); // Seu usuário do banco
-define('DB_PASS', 'u4q7+B6ly)obP_gxN9sNe'); // Sua senha do banco
+// (Agora centralizadas no .env)
 
 // Configurações da Aplicação (PRODUÇÃO)
-define('APP_NAME', 'Checklist do Produto Lucrativo');
-define('APP_URL', 'https://seudominio.com/checklist-produto-vencedor/'); // URL da sua aplicação
+define('APP_NAME', 'Valida Pro');
+define('APP_URL', 'https://agencialed.com/validapro'); // URL da sua aplicação
 define('APP_VERSION', '2.0.0');
 
 // Configurações de Email (PRODUÇÃO)
 define('SMTP_HOST', 'smtp.gmail.com');
 define('SMTP_PORT', 587);
-define('SMTP_USERNAME', 'seu-email@gmail.com'); // Seu email
-define('SMTP_PASSWORD', 'sua-senha-app'); // Sua senha de app
-define('FROM_EMAIL', 'seu-email@gmail.com');
-define('FROM_NAME', 'Checklist do Produto');
+define('SMTP_USERNAME', 'validapro@agencialed.com');
+define('SMTP_PASSWORD', 'ProValida@LED$2025');
+define('FROM_EMAIL', 'validapro@agencialed.com');
+define('FROM_NAME', 'Valida Pro');
 
 // Configurações de Segurança (PRODUÇÃO)
 define('SESSION_TIMEOUT', 3600); // 1 hora
