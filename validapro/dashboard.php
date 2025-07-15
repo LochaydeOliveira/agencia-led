@@ -128,6 +128,16 @@ $nichos = getAllNichos();
                 <p class="text-gray-600">Escolha um nicho ou clique nas sugestões para preencher automaticamente</p>
             </div>
 
+            <!-- Nome do Produto -->
+            <div class="mb-8">
+                <label for="nome_produto" class="block text-lg font-semibold text-gray-700 mb-2">
+                    Nome do Produto <span class="text-red-500">*</span>
+                </label>
+                <input type="text" id="nome_produto" name="nome_produto" required
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+                    placeholder="Digite o nome do produto analisado">
+            </div>
+
             <!-- Seletor de Nichos -->
             <div class="bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl p-6 mb-8">
                 <h3 class="text-xl font-semibold text-purple-800 mb-4 flex items-center">
@@ -168,16 +178,6 @@ $nichos = getAllNichos();
             <form id="checklistForm" class="space-y-8">
                 <!-- CSRF Token -->
                 <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token'] ?? ''; ?>">
-                
-                <!-- Nome do Produto -->
-                <div class="mb-6">
-                    <label for="nome_produto" class="block text-lg font-semibold text-gray-700 mb-2">
-                        Nome do Produto <span class="text-red-500">*</span>
-                    </label>
-                    <input type="text" id="nome_produto" name="nome_produto" required
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
-                        placeholder="Digite o nome do produto analisado">
-                </div>
                 
                 <!-- Bloco 1: Perguntas com Sugestões -->
                 <div class="bg-blue-50 rounded-xl p-6">
