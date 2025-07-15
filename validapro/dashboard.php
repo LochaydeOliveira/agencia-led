@@ -46,7 +46,7 @@ $nichos = getAllNichos();
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center">
                     <div class="logo-produtovencedor logo-small">
-                        <img src="assets/svg/logo-valida-pro-em-svg.svg" alt="ValidaPro Logo" class="h-12 md:h-16">
+                        <img src="assets/img/logo-validapro-checklist.svg" alt="ValidaPro Logo" class="h-12 md:h-16">
                         <div class="logo-tagline mt-1">VALIDE. VENDA. VENÇA.</div>
                     </div>
                 </div>
