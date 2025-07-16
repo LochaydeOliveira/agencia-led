@@ -5,16 +5,25 @@
 // Função para iniciar sessão de forma segura
 function initSession() {
     if (session_status() === PHP_SESSION_NONE) {
-        // Configurar parâmetros de sessão seguros
-        ini_set('session.cookie_httponly', 1);
-        ini_set('session.use_only_cookies', 1);
-        ini_set('session.cookie_secure', isset($_SERVER['HTTPS']));
+        // Verificar se headers já foram enviados
+        if (headers_sent()) {
+            // Se headers já foram enviados, usar configurações padrão
+            error_log("Headers já enviados - usando configurações padrão de sessão");
+            session_start();
+        } else {
+            // Configurar parâmetros de sessão seguros apenas se possível
+            @ini_set('session.cookie_httponly', 1);
+            @ini_set('session.use_only_cookies', 1);
+            @ini_set('session.cookie_secure', isset($_SERVER['HTTPS']));
+            
+            session_start();
+        }
         
-        session_start();
-        
-        // Regenerar ID da sessão para segurança
-        if (!isset($_SESSION['initialized'])) {
-            session_regenerate_id(true);
+        // Regenerar ID da sessão para segurança (apenas se possível)
+        if (!isset($_SESSION['initialized']) && !headers_sent()) {
+            @session_regenerate_id(true);
+            $_SESSION['initialized'] = true;
+        } elseif (!isset($_SESSION['initialized'])) {
             $_SESSION['initialized'] = true;
         }
     }

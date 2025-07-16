@@ -46,11 +46,13 @@ date_default_timezone_set('America/Sao_Paulo');
 // Configurações de Idioma
 setlocale(LC_ALL, 'pt_BR.utf-8', 'pt_BR', 'Portuguese_Brazil');
 
-// Headers de Segurança
-header('X-Content-Type-Options: nosniff');
-header('X-Frame-Options: DENY');
-header('X-XSS-Protection: 1; mode=block');
-header('Referrer-Policy: strict-origin-when-cross-origin');
+// Headers de Segurança (apenas se headers não foram enviados)
+if (!headers_sent()) {
+    header('X-Content-Type-Options: nosniff');
+    header('X-Frame-Options: DENY');
+    header('X-XSS-Protection: 1; mode=block');
+    header('Referrer-Policy: strict-origin-when-cross-origin');
+}
 
 // Função para obter configuração
 function getConfig($key, $default = null) {
