@@ -1,6 +1,5 @@
 <?php
 session_name('VALIDAPRO_TESTE');
-// Iniciar sessão primeiro, antes de qualquer saída
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
