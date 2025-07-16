@@ -47,6 +47,9 @@ function requireLogin() {
 }
 
 function logout() {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     session_destroy();
     // Verificar se headers já foram enviados
     if (!headers_sent()) {
