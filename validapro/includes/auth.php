@@ -7,9 +7,25 @@ function initSession() {
     if (session_status() === PHP_SESSION_NONE) {
         // Verificar se headers já foram enviados
         if (headers_sent()) {
-            // Se headers já foram enviados, usar configurações padrão
-            error_log("Headers já enviados - usando configurações padrão de sessão");
-            session_start();
+            // Se headers já foram enviados, tentar iniciar sessão com supressão de warnings
+            error_log("Headers já enviados - tentando iniciar sessão com supressão de warnings");
+            @session_start();
+            
+            // Se ainda não conseguiu, usar sessão alternativa
+            if (session_status() === PHP_SESSION_NONE) {
+                error_log("Sessão não pôde ser iniciada - usando sessão alternativa");
+                // Criar sessão alternativa usando cookies
+                if (!isset($_COOKIE['validapro_session'])) {
+                    $session_id = uniqid('validapro_', true);
+                    setcookie('validapro_session', $session_id, time() + 3600, '/');
+                    $_COOKIE['validapro_session'] = $session_id;
+                }
+                
+                // Simular dados de sessão
+                if (!isset($_SESSION)) {
+                    $_SESSION = [];
+                }
+            }
         } else {
             // Configurar parâmetros de sessão seguros apenas se possível
             @ini_set('session.cookie_httponly', 1);
@@ -20,7 +36,7 @@ function initSession() {
         }
         
         // Regenerar ID da sessão para segurança (apenas se possível)
-        if (!isset($_SESSION['initialized']) && !headers_sent()) {
+        if (!isset($_SESSION['initialized']) && !headers_sent() && session_status() === PHP_SESSION_ACTIVE) {
             @session_regenerate_id(true);
             $_SESSION['initialized'] = true;
         } elseif (!isset($_SESSION['initialized'])) {
@@ -120,6 +136,8 @@ function logout() {
     // Log do logout
     if (isset($_SESSION['user_email'])) {
         error_log("Logout do usuário: " . $_SESSION['user_email']);
+    } else {
+        error_log("Logout sem dados de usuário na sessão");
     }
     
     // Limpar todas as variáveis de sessão
@@ -139,8 +157,16 @@ function logout() {
         );
     }
     
-    // Destruir a sessão
-    session_destroy();
+    // Destruir cookie alternativo se existir
+    if (isset($_COOKIE['validapro_session'])) {
+        setcookie('validapro_session', '', time() - 42000, '/');
+        unset($_COOKIE['validapro_session']);
+    }
+    
+    // Destruir a sessão se estiver ativa
+    if (session_status() === PHP_SESSION_ACTIVE) {
+        session_destroy();
+    }
     
     // Limpar qualquer saída anterior
     if (ob_get_level()) {

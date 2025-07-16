@@ -70,6 +70,12 @@ $_SESSION['last_activity'] = time();
             </div>
 
             <div class="card">
+                <h3>⚡ Logout Ultra Simples</h3>
+                <p>Testa o logout mais simples e confiável</p>
+                <a href="logout_simples.php" class="btn btn-danger">LOGOUT SIMPLES</a>
+            </div>
+
+            <div class="card">
                 <h3>🔵 Logout via JavaScript</h3>
                 <p>Testa o logout usando JavaScript</p>
                 <button onclick="window.location.href='logout.php'" class="btn btn-primary">LOGOUT JS</button>
