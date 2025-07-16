@@ -1,11 +1,12 @@
 <?php
-// Iniciar sessão primeiro, antes de qualquer saída
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+// Sistema de Login ValidaPro - Versão 2.0
+require_once 'includes/auth.php';
+
+// Iniciar sessão
+initSession();
 
 // Se já estiver logado, redireciona para o dashboard
-if (isset($_SESSION['user_id'])) {
+if (isLoggedIn()) {
     if (!headers_sent()) {
         header('Location: index.php');
         exit();
@@ -18,21 +19,26 @@ if (isset($_SESSION['user_id'])) {
 // Processar login
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once 'includes/db.php';
-    require_once 'includes/auth.php';
     
-    $email = $_POST['email'] ?? '';
+    $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
     
-    if (authenticateUser($email, $password)) {
-        if (!headers_sent()) {
-            header('Location: index.php');
-            exit();
-        } else {
-            echo '<script>window.location.href = "index.php";</script>';
-            exit();
-        }
+    // Validação básica
+    if (empty($email) || empty($password)) {
+        $error = 'Por favor, preencha todos os campos!';
     } else {
-        $error = 'Email ou senha incorretos!';
+        if (authenticateUser($email, $password)) {
+            // Login bem-sucedido
+            if (!headers_sent()) {
+                header('Location: index.php');
+                exit();
+            } else {
+                echo '<script>window.location.href = "index.php";</script>';
+                exit();
+            }
+        } else {
+            $error = 'Email ou senha incorretos!';
+        }
     }
 }
 ?>
@@ -74,7 +80,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </label>
                 <input type="email" id="email" name="email" required
                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-                       placeholder="seu@email.com">
+                       placeholder="seu@email.com"
+                       value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
             </div>
 
             <div>
@@ -98,6 +105,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 Acesso restrito - credenciais enviadas por email
             </p>
         </div>
+        
+        <!-- Informações de debug (apenas se DEBUG_MODE estiver ativo) -->
+        <?php if (defined('DEBUG_MODE') && DEBUG_MODE): ?>
+        <div class="mt-6 p-4 bg-gray-100 rounded-lg">
+            <h4 class="font-semibold text-gray-700 mb-2">Debug Info:</h4>
+            <p class="text-xs text-gray-600">Session Status: <?php echo session_status(); ?></p>
+            <p class="text-xs text-gray-600">Session ID: <?php echo session_id(); ?></p>
+            <p class="text-xs text-gray-600">Headers Sent: <?php echo headers_sent() ? 'Sim' : 'Não'; ?></p>
+        </div>
+        <?php endif; ?>
     </div>
 </body>
 </html> 

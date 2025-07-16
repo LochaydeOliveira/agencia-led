@@ -1,14 +1,20 @@
 <?php
-// Iniciar sessão primeiro, antes de qualquer saída
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+// Sistema ValidaPro - Versão 2.0
+require_once 'includes/auth.php';
+
+// Iniciar sessão e verificar login
+initSession();
+requireLogin();
+
+// Verificar timeout da sessão
+checkSessionTimeout();
+
+// Renovar sessão
+renewSession();
 
 require_once 'includes/db.php';
-require_once 'includes/auth.php';
 require_once 'includes/sugestoes.php';
 
-requireLogin();
 $user = getCurrentUser();
 
 // Gerar CSRF token se não existir

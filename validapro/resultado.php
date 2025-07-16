@@ -1,8 +1,19 @@
 <?php
-require_once 'includes/db.php';
+// Sistema ValidaPro - Versão 2.0
 require_once 'includes/auth.php';
 
+// Iniciar sessão e verificar login
+initSession();
 requireLogin();
+
+// Verificar timeout da sessão
+checkSessionTimeout();
+
+// Renovar sessão
+renewSession();
+
+require_once 'includes/db.php';
+
 $user = getCurrentUser();
 
 // Processar formulário

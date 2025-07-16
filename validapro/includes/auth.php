@@ -1,26 +1,60 @@
 <?php
-// Não iniciar sessão aqui - será iniciada no arquivo principal
-// if (session_status() === PHP_SESSION_NONE) {
-//     session_start();
-// }
+// Sistema de Autenticação ValidaPro - Versão 2.0
+// Sistema robusto e testado
 
+// Função para iniciar sessão de forma segura
+function initSession() {
+    if (session_status() === PHP_SESSION_NONE) {
+        // Configurar parâmetros de sessão seguros
+        ini_set('session.cookie_httponly', 1);
+        ini_set('session.use_only_cookies', 1);
+        ini_set('session.cookie_secure', isset($_SERVER['HTTPS']));
+        
+        session_start();
+        
+        // Regenerar ID da sessão para segurança
+        if (!isset($_SESSION['initialized'])) {
+            session_regenerate_id(true);
+            $_SESSION['initialized'] = true;
+        }
+    }
+}
+
+// Função para autenticar usuário
 function authenticateUser($email, $password) {
     global $pdo;
 
-    if (!$pdo) return false;
+    if (!$pdo) {
+        error_log("Erro: Conexão com banco não disponível");
+        return false;
+    }
 
     try {
-        $stmt = $pdo->prepare("SELECT id, email, password, name FROM users WHERE email = ?");
+        $stmt = $pdo->prepare("SELECT id, email, password, name FROM users WHERE email = ? AND active = 1");
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($password, $user['password'])) {
+            // Iniciar sessão
+            initSession();
+            
+            // Limpar sessão anterior
+            $_SESSION = [];
+            
+            // Definir dados do usuário
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_email'] = $user['email'];
             $_SESSION['user_name'] = $user['name'];
+            $_SESSION['login_time'] = time();
+            $_SESSION['last_activity'] = time();
+            
+            // Log de login bem-sucedido
+            error_log("Login bem-sucedido: " . $user['email']);
+            
             return true;
         }
 
+        error_log("Tentativa de login falhou para: " . $email);
         return false;
     } catch (PDOException $e) {
         error_log("Erro na autenticação: " . $e->getMessage());
@@ -28,66 +62,93 @@ function authenticateUser($email, $password) {
     }
 }
 
+// Função para verificar se usuário está logado
 function isLoggedIn() {
-    return isset($_SESSION['user_id']);
+    initSession();
+    
+    // Verificar se há dados de usuário na sessão
+    if (!isset($_SESSION['user_id']) || !isset($_SESSION['login_time'])) {
+        return false;
+    }
+    
+    // Verificar timeout da sessão
+    $timeout = defined('SESSION_TIMEOUT') ? SESSION_TIMEOUT : 3600;
+    if (time() - $_SESSION['last_activity'] > $timeout) {
+        logout();
+        return false;
+    }
+    
+    // Atualizar última atividade
+    $_SESSION['last_activity'] = time();
+    
+    return true;
 }
 
+// Função para requerer login
 function requireLogin() {
     if (!isLoggedIn()) {
+        // Limpar qualquer saída anterior
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
+        
+        // Redirecionar para login
         if (!headers_sent()) {
-            header('Location: index.php');
+            header('Location: login.php');
             exit();
         } else {
-            echo '<script>window.location.href = "index.php";</script>';
+            echo '<script>window.location.href = "login.php";</script>';
             exit();
         }
     }
 }
 
+// Função de logout robusta
 function logout() {
-    echo "<pre>🔵 LOGOUT: iniciando função logout()</pre>";
-
-    // Garante que a sessão foi iniciada
-    if (session_status() === PHP_SESSION_NONE) {
-        echo "<pre>🔵 LOGOUT: iniciando sessão</pre>";
-        session_start();
-    } else {
-        echo "<pre>🔵 LOGOUT: sessão já iniciada</pre>";
+    // Iniciar sessão se necessário
+    initSession();
+    
+    // Log do logout
+    if (isset($_SESSION['user_email'])) {
+        error_log("Logout do usuário: " . $_SESSION['user_email']);
     }
-
-    // Exibir conteúdo da sessão antes de apagar
-    echo "<pre>🔵 LOGOUT: conteúdo da sessão antes do reset:\n" . print_r($_SESSION, true) . "</pre>";
-
-    // Limpa todas as variáveis de sessão
+    
+    // Limpar todas as variáveis de sessão
     $_SESSION = [];
-
-    // Remove o cookie de sessão
+    
+    // Destruir o cookie de sessão
     if (ini_get("session.use_cookies")) {
-        echo "<pre>🔵 LOGOUT: removendo cookie de sessão</pre>";
         $params = session_get_cookie_params();
-        setcookie(session_name(), '', time() - 42000,
-            $params["path"], $params["domain"],
-            $params["secure"], $params["httponly"]
+        setcookie(
+            session_name(),
+            '',
+            time() - 42000,
+            $params["path"],
+            $params["domain"],
+            $params["secure"],
+            $params["httponly"]
         );
     }
-
-    // Destroi a sessão
-    echo "<pre>🔵 LOGOUT: destruindo sessão</pre>";
+    
+    // Destruir a sessão
     session_destroy();
-
-    // Exibir se os headers já foram enviados
-    if (headers_sent($file, $line)) {
-        echo "<pre>🔴 HEADERS JÁ ENVIADOS em $file na linha $line</pre>";
-        echo '<script>window.location.href = "login.php";</script>';
+    
+    // Limpar qualquer saída anterior
+    if (ob_get_level()) {
+        ob_end_clean();
+    }
+    
+    // Redirecionar para login
+    if (!headers_sent()) {
+        header('Location: login.php');
         exit();
     } else {
-        echo "<pre>🟢 HEADERS OK - redirecionando via header()</pre>";
-        header('Location: login.php');
+        echo '<script>window.location.href = "login.php";</script>';
         exit();
     }
 }
 
-
+// Função para obter dados do usuário atual
 function getCurrentUser() {
     if (!isLoggedIn()) {
         return null;
@@ -99,3 +160,28 @@ function getCurrentUser() {
         'name' => $_SESSION['user_name']
     ];
 }
+
+// Função para verificar se a sessão expirou
+function checkSessionTimeout() {
+    if (!isLoggedIn()) {
+        return false;
+    }
+    
+    $timeout = defined('SESSION_TIMEOUT') ? SESSION_TIMEOUT : 3600;
+    if (time() - $_SESSION['last_activity'] > $timeout) {
+        logout();
+        return false;
+    }
+    
+    return true;
+}
+
+// Função para renovar sessão
+function renewSession() {
+    if (isLoggedIn()) {
+        $_SESSION['last_activity'] = time();
+        return true;
+    }
+    return false;
+}
+?>

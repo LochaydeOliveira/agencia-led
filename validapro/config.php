@@ -36,9 +36,9 @@ define('MAX_POINTS', 10);
 define('HIGH_POTENTIAL_MIN', 8);
 define('MEDIUM_POTENTIAL_MIN', 5);
 
-// Configurações de Debug (HABILITADO temporariamente para identificar problemas)
-define('DEBUG_MODE', true);
-define('SHOW_ERRORS', true);
+// Configurações de Debug (DESATIVADO em produção)
+define('DEBUG_MODE', false);
+define('SHOW_ERRORS', false);
 
 // Configurações de Timezone
 date_default_timezone_set('America/Sao_Paulo');

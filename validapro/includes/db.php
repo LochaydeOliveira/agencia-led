@@ -31,16 +31,25 @@ try {
 function createTables($pdo) {
     if (!$pdo) return;
     
-    // Tabela de usuários
+    // Tabela de usuários com campo active
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS users (
             id INT AUTO_INCREMENT PRIMARY KEY,
             email VARCHAR(255) UNIQUE NOT NULL,
             password VARCHAR(255) NOT NULL,
             name VARCHAR(255) NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            active TINYINT(1) DEFAULT 1,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     ");
+    
+    // Adicionar campo active se não existir
+    try {
+        $pdo->exec("ALTER TABLE users ADD COLUMN active TINYINT(1) DEFAULT 1");
+    } catch (PDOException $e) {
+        // Campo já existe, ignorar erro
+    }
     
     // Tabela de resultados
     $pdo->exec("
@@ -65,7 +74,7 @@ function createTables($pdo) {
     
     if ($stmt->fetchColumn() == 0) {
         $hashed_password = password_hash('123456', PASSWORD_DEFAULT);
-        $stmt = $pdo->prepare("INSERT INTO users (email, password, name) VALUES (?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO users (email, password, name, active) VALUES (?, ?, ?, 1)");
         $stmt->execute(['admin@exemplo.com', $hashed_password, 'Administrador']);
     }
 }
