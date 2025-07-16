@@ -1,9 +1,8 @@
 <?php
-session_name('VALIDAPRO_TESTE');
+require_once 'includes/auth.php';
 
 // Se já estiver logado, redireciona para o dashboard
 if (isset($_COOKIE['VALIDAPRO_TESTE'])) {
-    session_start();
     if (isset($_SESSION['user_id'])) {
         if (!headers_sent()) {
             header('Location: dashboard.php');

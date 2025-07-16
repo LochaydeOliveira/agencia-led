@@ -1,10 +1,6 @@
 <?php
-session_name('VALIDAPRO_TESTE');
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-require_once 'includes/db.php';
 require_once 'includes/auth.php';
+require_once 'includes/db.php';
 requireLogin();
 $user = getCurrentUser();
 

@@ -1,9 +1,8 @@
 <?php
-session_name('VALIDAPRO_TESTE');
-// Não iniciar sessão aqui - será iniciada no arquivo principal
-// if (session_status() === PHP_SESSION_NONE) {
-//     session_start();
-// }
+if (session_status() === PHP_SESSION_NONE) {
+    session_name("VALIDAPRO_TESTE");
+    session_start();
+}
 
 function authenticateUser($email, $password) {
     global $pdo;

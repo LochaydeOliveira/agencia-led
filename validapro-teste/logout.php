@@ -1,5 +1,4 @@
 <?php
-session_name('VALIDAPRO_TESTE');
 require_once 'includes/auth.php';
 
 // Debug: registrar sessão antes do logout
