@@ -1,4 +1,5 @@
 <?php
+session_name('VALIDAPRO_PROD');
 // Iniciar sessão primeiro, antes de qualquer saída
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
