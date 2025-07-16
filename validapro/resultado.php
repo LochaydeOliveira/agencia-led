@@ -14,12 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token'])) {
         error_log("CSRF token ausente - POST: " . (isset($_POST['csrf_token']) ? 'sim' : 'não') . ", SESSION: " . (isset($_SESSION['csrf_token']) ? 'sim' : 'não'));
         // Temporariamente desabilitar validação CSRF para debug
-        // header('Location: index.php?error=csrf');
+        // header('Location: dashboard.php?error=csrf');
         // exit();
     } elseif (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         error_log("CSRF token inválido");
         // Temporariamente desabilitar validação CSRF para debug
-        // header('Location: index.php?error=csrf');
+        // header('Location: dashboard.php?error=csrf');
         // exit();
     }
     
@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 } else {
     // Redirecionar se não for POST
-    header('Location: index.php');
+    header('Location: dashboard.php');
     exit();
 }
 ?>
@@ -190,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 <!-- Ações Principais -->
                 <div class="flex flex-wrap justify-center gap-4 mt-8">
-                    <a href="index.php" 
+                    <a href="dashboard.php" 
                        class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-indigo-700 transition duration-200 transform hover:scale-105">
                         <i class="fas fa-plus mr-2"></i>
                         Nova Análise
@@ -367,7 +367,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- Botões de Ação -->
         <div class="text-center space-x-4">
-            <a href="index.php" 
+            <a href="dashboard.php" 
                class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200">
                 <i class="fas fa-plus mr-2"></i>
                 Nova Análise

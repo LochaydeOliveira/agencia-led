@@ -165,13 +165,6 @@ function getTemplatesResposta($campo) {
 // Função para obter todos os nichos
 function getAllNichos() {
     global $nichos_populares;
-    $nichos = [];
-    foreach ($nichos_populares as $key => $nicho) {
-        $nichos[] = [
-            'id' => $key,
-            'nome' => $nicho['nome']
-        ];
-    }
-    return $nichos;
+    return $nichos_populares;
 }
 ?> 

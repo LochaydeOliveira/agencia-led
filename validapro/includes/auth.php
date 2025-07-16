@@ -36,11 +36,11 @@ function requireLogin() {
     if (!isLoggedIn()) {
         // Verificar se headers já foram enviados
         if (!headers_sent()) {
-            header('Location: login.php');
+            header('Location: index.php');
             exit();
         } else {
             // Se headers já foram enviados, usar JavaScript
-            echo '<script>window.location.href = "login.php";</script>';
+            echo '<script>window.location.href = "index.php";</script>';
             exit();
         }
     }
