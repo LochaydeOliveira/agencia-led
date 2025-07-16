@@ -14,12 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token'])) {
         error_log("CSRF token ausente - POST: " . (isset($_POST['csrf_token']) ? 'sim' : 'não') . ", SESSION: " . (isset($_SESSION['csrf_token']) ? 'sim' : 'não'));
         // Temporariamente desabilitar validação CSRF para debug
-        // header('Location: dashboard.php?error=csrf');
+        // header('Location: index.php?error=csrf');
         // exit();
     } elseif (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         error_log("CSRF token inválido");
         // Temporariamente desabilitar validação CSRF para debug
-        // header('Location: dashboard.php?error=csrf');
+        // header('Location: index.php?error=csrf');
         // exit();
     }
     
@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 } else {
     // Redirecionar se não for POST
-    header('Location: dashboard.php');
+    header('Location: index.php');
     exit();
 }
 ?>
@@ -137,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultado - Checklist do Produto Lucrativo</title>
+    <title>Resultado - ValidaPro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center mr-3">
                         <i class="fas fa-chart-line text-white"></i>
                     </div>
-                    <h1 class="text-xl font-bold text-gray-800">Checklist do Produto Lucrativo</h1>
+                    <h1 class="text-xl font-bold text-gray-800">ValidaPro</h1>
                 </div>
                 <div class="flex items-center space-x-4">
                     <span class="text-sm text-gray-600">
@@ -190,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 <!-- Ações Principais -->
                 <div class="flex flex-wrap justify-center gap-4 mt-8">
-                    <a href="dashboard.php" 
+                    <a href="index.php" 
                        class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-indigo-700 transition duration-200 transform hover:scale-105">
                         <i class="fas fa-plus mr-2"></i>
                         Nova Análise
@@ -367,7 +367,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- Botões de Ação -->
         <div class="text-center space-x-4">
-            <a href="dashboard.php" 
+            <a href="index.php" 
                class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200">
                 <i class="fas fa-plus mr-2"></i>
                 Nova Análise

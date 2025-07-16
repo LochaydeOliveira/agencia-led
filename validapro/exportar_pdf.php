@@ -37,7 +37,7 @@ body { font-family: Arial, sans-serif; color: #222; }
 .footer { margin-top: 32px; text-align: center; color: #888; font-size: 0.9em; }
 </style></head><body>';
 
-$html .= '<div class="titulo">Checklist do Produto Lucrativo</div>';
+$html .= '<div class="titulo">ValidaPro</div>';
 if ($nomeProduto) {
     $html .= '<div class="nome-produto">Produto analisado: ' . htmlspecialchars($nomeProduto) . '</div>';
 }

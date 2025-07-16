@@ -23,7 +23,7 @@ define('SMTP_PORT', 587);
 define('SMTP_USERNAME', 'seu-email@gmail.com'); // Seu email
 define('SMTP_PASSWORD', 'sua-senha-app'); // Sua senha de app
 define('FROM_EMAIL', 'seu-email@gmail.com');
-define('FROM_NAME', 'Checklist do Produto');
+define('FROM_NAME', 'ValidaPro');
 
 // Configurações de Segurança (PRODUÇÃO)
 define('SESSION_TIMEOUT', 3600); // 1 hora
