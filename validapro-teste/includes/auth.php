@@ -1,4 +1,5 @@
 <?php
+session_name('VALIDAPRO_TESTE');
 // Não iniciar sessão aqui - será iniciada no arquivo principal
 // if (session_status() === PHP_SESSION_NONE) {
 //     session_start();
