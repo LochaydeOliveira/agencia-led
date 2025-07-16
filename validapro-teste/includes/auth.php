@@ -50,13 +50,27 @@ function logout() {
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
+
+    // Limpa todas as variáveis de sessão
+    $_SESSION = array();
+
+    // Se estiver usando cookies de sessão, apaga o cookie
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+        );
+    }
+
+    // Destroi a sessão
     session_destroy();
-    // Verificar se headers já foram enviados
+
+    // Redireciona para a página inicial
     if (!headers_sent()) {
         header('Location: index.php');
         exit();
     } else {
-        // Se headers já foram enviados, usar JavaScript
         echo '<script>window.location.href = "index.php";</script>';
         exit();
     }
