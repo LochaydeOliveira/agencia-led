@@ -36,9 +36,9 @@ define('MAX_POINTS', 10);
 define('HIGH_POTENTIAL_MIN', 8);
 define('MEDIUM_POTENTIAL_MIN', 5);
 
-// Configurações de Debug (DESATIVADO em produção)
-define('DEBUG_MODE', false);
-define('SHOW_ERRORS', false);
+// Configurações de Debug (HABILITADO temporariamente para identificar problemas)
+define('DEBUG_MODE', true);
+define('SHOW_ERRORS', true);
 
 // Configurações de Timezone
 date_default_timezone_set('America/Sao_Paulo');
@@ -57,10 +57,13 @@ function getConfig($key, $default = null) {
     return defined($key) ? constant($key) : $default;
 }
 
-// Função para debug (desabilitada em produção)
+// Função para debug (habilitada temporariamente)
 function debug($message) {
-    // Não fazer nada em produção
-    return;
+    if (getConfig('DEBUG_MODE', false)) {
+        echo "<div style='background: #f0f0f0; border: 1px solid #ccc; padding: 10px; margin: 10px; font-family: monospace;'>";
+        echo "<strong>DEBUG:</strong> " . htmlspecialchars($message);
+        echo "</div>";
+    }
 }
 
 // Função para obter mensagem baseada na pontuação
