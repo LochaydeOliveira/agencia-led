@@ -75,5 +75,4 @@ function getCurrentUser() {
         'email' => $_SESSION['user_email'],
         'name' => $_SESSION['user_name']
     ];
-}
-?> 
+} 

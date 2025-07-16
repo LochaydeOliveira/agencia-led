@@ -16,7 +16,6 @@ if (isset($_COOKIE['VALIDAPRO_TESTE'])) {
 
 // Processar login
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    session_start(); // Inicia a sessão antes de qualquer uso
     require_once 'includes/db.php';
     require_once 'includes/auth.php';
 
