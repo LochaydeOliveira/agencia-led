@@ -51,20 +51,23 @@ function logout() {
         session_start();
     }
 
+    // Log para debug
+    error_log("Logout chamado. Sessão antes: " . print_r($_SESSION, true));
+
     // Limpa todas as variáveis de sessão
     $_SESSION = array();
 
     // Se estiver usando cookies de sessão, apaga o cookie
     if (ini_get("session.use_cookies")) {
         $params = session_get_cookie_params();
-        setcookie(session_name(), '', time() - 42000,
-            $params["path"], $params["domain"],
-            $params["secure"], $params["httponly"]
-        );
+        setcookie(session_name(), '', time() - 42000, '/');
     }
 
     // Destroi a sessão
     session_destroy();
+
+    // Log para debug
+    error_log("Logout chamado. Sessão depois: " . print_r($_SESSION, true));
 
     // Redireciona para a página inicial
     if (!headers_sent()) {

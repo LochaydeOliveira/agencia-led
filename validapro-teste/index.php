@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
     
     if (authenticateUser($email, $password)) {
+        session_regenerate_id(true);
         if (!headers_sent()) {
             header('Location: dashboard.php');
             exit();
