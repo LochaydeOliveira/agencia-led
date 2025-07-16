@@ -4,13 +4,13 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Se já estiver logado, redireciona para o dashboard
+// Se já estiver logado, redireciona para o index (painel)
 if (isset($_SESSION['user_id'])) {
     if (!headers_sent()) {
-        header('Location: dashboard.php');
+        header('Location: index.php');
         exit();
     } else {
-        echo '<script>window.location.href = "dashboard.php";</script>';
+        echo '<script>window.location.href = "index.php";</script>';
         exit();
     }
 }
@@ -25,10 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if (authenticateUser($email, $password)) {
         if (!headers_sent()) {
-            header('Location: dashboard.php');
+            header('Location: index.php');
             exit();
         } else {
-            echo '<script>window.location.href = "dashboard.php";</script>';
+            echo '<script>window.location.href = "index.php";</script>';
             exit();
         }
     } else {
