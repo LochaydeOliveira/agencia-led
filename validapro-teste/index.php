@@ -1,18 +1,17 @@
 <?php
 session_name('VALIDAPRO_TESTE');
-// Iniciar sessão primeiro, antes de qualquer saída
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 
 // Se já estiver logado, redireciona para o dashboard
-if (isset($_SESSION['user_id'])) {
-    if (!headers_sent()) {
-        header('Location: dashboard.php');
-        exit();
-    } else {
-        echo '<script>window.location.href = "dashboard.php";</script>';
-        exit();
+if (isset($_COOKIE['VALIDAPRO_TESTE'])) {
+    session_start();
+    if (isset($_SESSION['user_id'])) {
+        if (!headers_sent()) {
+            header('Location: dashboard.php');
+            exit();
+        } else {
+            echo '<script>window.location.href = "dashboard.php";</script>';
+            exit();
+        }
     }
 }
 
@@ -20,11 +19,12 @@ if (isset($_SESSION['user_id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once 'includes/db.php';
     require_once 'includes/auth.php';
-    
+
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
-    
+
     if (authenticateUser($email, $password)) {
+        session_start();
         session_regenerate_id(true);
         if (!headers_sent()) {
             header('Location: dashboard.php');
