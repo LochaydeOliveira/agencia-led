@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../config-producao.php';
+require_once __DIR__ . '/../config.php';
 
 try {
     // Primeiro, tentar conectar sem especificar o banco
