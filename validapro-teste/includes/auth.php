@@ -34,13 +34,12 @@ function isLoggedIn() {
 }
 
 function requireLogin() {
-    if (!isLoggedIn()) {
-        // Verificar se headers já foram enviados
+    if (!isset($_SESSION['user_id'])) {
+        // Redireciona para o login se não estiver logado
         if (!headers_sent()) {
             header('Location: index.php');
             exit();
         } else {
-            // Se headers já foram enviados, usar JavaScript
             echo '<script>window.location.href = "index.php";</script>';
             exit();
         }

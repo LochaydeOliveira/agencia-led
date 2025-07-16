@@ -1,4 +1,10 @@
 <?php
+session_name('VALIDAPRO_TESTE');
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+require_once '../includes/auth.php';
+requireLogin();
 require_once '../includes/db.php';
 
 // Configurações de email (ajuste conforme seu servidor)
