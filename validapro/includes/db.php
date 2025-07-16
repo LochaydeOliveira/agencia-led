@@ -1,35 +1,22 @@
 <?php
-// Carregar variáveis de ambiente do .env
-if (!class_exists('Dotenv\\Dotenv')) {
-    require_once __DIR__ . '/../vendor/autoload.php';
-}
-if (file_exists(__DIR__ . '/../.env')) {
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
-    $dotenv->load();
-}
-
-// Configuração do banco de dados MySQL usando variáveis de ambiente
-$host = $_ENV['DB_HOST'] ?? 'localhost';
-$db = $_ENV['DB_NAME'] ?? 'validapro';
-$user = $_ENV['DB_USER'] ?? 'root';
-$pass = $_ENV['DB_PASS'] ?? '';
+require_once __DIR__ . '/../config-producao.php';
 
 try {
     // Primeiro, tentar conectar sem especificar o banco
-    $pdo = new PDO("mysql:host=$host;charset=utf8mb4", $user, $pass);
+    $pdo = new PDO("mysql:host=" . DB_HOST . ";charset=utf8mb4", DB_USER, DB_PASS);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     // Verificar se o banco existe
-    $stmt = $pdo->query("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$db'");
+    $stmt = $pdo->query("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '" . DB_NAME . "'");
     $databaseExists = $stmt->fetch();
     
     if (!$databaseExists) {
         // Criar o banco se não existir
-        $pdo->exec("CREATE DATABASE IF NOT EXISTS `$db` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+        $pdo->exec("CREATE DATABASE IF NOT EXISTS `" . DB_NAME . "` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
     }
     
     // Agora conectar ao banco específico
-    $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass);
+    $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4", DB_USER, DB_PASS);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     // Criar tabelas se não existirem
@@ -38,7 +25,6 @@ try {
 } catch (PDOException $e) {
     // Log do erro em vez de exibir
     error_log("Erro na conexão com o banco: " . $e->getMessage());
-    // Não usar die() aqui para evitar saída de texto
     $pdo = null;
 }
 
