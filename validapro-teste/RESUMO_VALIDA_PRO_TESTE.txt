@@ -1,0 +1,93 @@
+Resumo Geral e Detalhado do Projeto Valida Pro (Ambiente de Teste)
+
+1. Objetivo do Projeto
+O Valida Pro é uma plataforma de checklist para análise de produtos vencedores em dropshipping, com sistema de pontuação, sugestões por nicho, exportação em PDF, autenticação, CSRF, recomendações automáticas e interface moderna.
+
+2. Estrutura de Pastas do Ambiente de Teste (validapro-teste/)
+- index.php: Página inicial/login.
+- dashboard.php: Painel principal, exige autenticação.
+- resultado.php: Exibe resultados das análises.
+- logout.php: Responsável por encerrar a sessão do usuário.
+- config.php: Configurações gerais do sistema.
+- config-producao.php: Configurações específicas de produção.
+- includes/
+  - auth.php: Funções de autenticação (login, logout, verificação de sessão).
+  - db.php: Conexão com banco de dados e carregamento do Dotenv.
+  - sugestoes.php: Sugestões automáticas para o checklist.
+- assets/: Imagens, CSS, JS, etc.
+- admin/: Área administrativa.
+- estrutura-dbs/: Scripts e estrutura do banco de dados.
+- vendor/: Dependências do Composer (incluindo vlucas/phpdotenv).
+- composer.json / composer.lock: Gerenciamento de dependências.
+- README.md, DOCUMENTACAO-COMPLETA.md, IDENTIDADE-VISUAL.md: Documentação.
+
+3. Fluxo de Autenticação e Sessão
+- O login é feito via formulário em index.php, validado por funções em includes/auth.php.
+- Após login, o usuário é redirecionado para dashboard.php, que exige autenticação via requireLogin().
+- O logout é feito por um link para logout.php, que chama a função logout() do auth.php.
+
+4. Função de Logout (Problema Atual)
+- O botão "Sair" chama logout.php.
+- O arquivo logout.php executa:
+  require_once 'includes/auth.php';
+  logout();
+- A função logout() está assim:
+  function logout() {
+      if (session_status() === PHP_SESSION_NONE) {
+          session_start();
+      }
+      $_SESSION = array();
+      if (ini_get("session.use_cookies")) {
+          $params = session_get_cookie_params();
+          setcookie(session_name(), '', time() - 42000,
+              $params["path"], $params["domain"],
+              $params["secure"], $params["httponly"]
+          );
+      }
+      session_destroy();
+      if (!headers_sent()) {
+          header('Location: index.php');
+          exit();
+      } else {
+          echo '<script>window.location.href = "index.php";</script>';
+          exit();
+      }
+  }
+- Problema: Após clicar em "Sair", o usuário é redirecionado para a página inicial, mas continua logado.
+- Tentativas de debug:
+  - Adicionado código para criar logout_debug.txt com o estado da sessão, mas o arquivo não é criado.
+  - Teste de escrita com file_put_contents em outro arquivo (teste_escrita.php) também não cria arquivo.
+  - Isso indica provável falta de permissão de escrita na pasta do projeto no servidor.
+
+5. Outros Pontos Importantes
+- O dashboard exige autenticação e inicia a sessão corretamente:
+  if (session_status() === PHP_SESSION_NONE) {
+      session_start();
+  }
+  require_once 'includes/db.php';
+  require_once 'includes/auth.php';
+  require_once 'includes/sugestoes.php';
+  requireLogin();
+  $user = getCurrentUser();
+- O sistema utiliza variáveis de ambiente carregadas pelo Dotenv.
+- O Composer está corretamente instalado e a pasta vendor está presente.
+- O ambiente de teste é separado do ambiente de produção, cada um com seu próprio banco e dependências.
+
+6. Resumo do Problema Atual
+- Logout não funciona: O usuário continua logado após clicar em "Sair".
+- Debug não funciona: Não é possível criar arquivos de log/debug na pasta do projeto, sugerindo problema de permissão de escrita no servidor.
+- Sessão parece não ser destruída: Mesmo limpando variáveis e cookies, o login persiste.
+
+7. O que já foi tentado
+- Garantir que a sessão é iniciada antes de destruir.
+- Limpar variáveis de sessão e cookies.
+- Redirecionar corretamente após logout.
+- Testar escrita de arquivos para debug (sem sucesso).
+- Conferir início da sessão e verificação de login no dashboard.
+
+8. Sugestão para próxima IA
+- Verificar permissões de escrita na pasta do projeto no servidor.
+- Sugerir outras formas de debug sem escrita em arquivo (ex: exibir na tela, log do servidor).
+- Analisar se há algum mecanismo de cache ou proxy mantendo a sessão ativa.
+- Verificar se o PHP está usando o mesmo diretório de sessão para todos os scripts.
+- Sugerir uso de session_regenerate_id(true) após login/logout para evitar fixação de sessão. 
