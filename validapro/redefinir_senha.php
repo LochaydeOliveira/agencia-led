@@ -14,10 +14,11 @@ if (empty($_SESSION['csrf_token'])) {
 $csrf_token = $_SESSION['csrf_token'];
 
 if ($token) {
-    $stmt = $pdo->prepare('SELECT id, reset_token_expira FROM users WHERE reset_token = ? AND reset_token IS NOT NULL');
+    // Buscar token válido na tabela de recuperação
+    $stmt = $pdo->prepare('SELECT r.id as rec_id, r.cliente_id, r.expira, r.usado, c.email FROM recuperacao_senha r JOIN clientes c ON r.cliente_id = c.id WHERE r.token = ?');
     $stmt->execute([$token]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($user && strtotime($user['reset_token_expira']) > time()) {
+    $rec = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($rec && strtotime($rec['expira']) > time() && !$rec['usado']) {
         $tokenValido = true;
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $senha1 = $_POST['senha1'] ?? '';
@@ -33,15 +34,19 @@ if ($token) {
                 $mensagem = 'Token de segurança inválido. Recarregue a página.';
             } else {
                 $hash = password_hash($senha1, PASSWORD_DEFAULT);
-                $pdo->prepare('UPDATE users SET password = ?, reset_token = NULL, reset_token_expira = NULL WHERE id = ?')
-                    ->execute([$hash, $user['id']]);
+                // Atualizar senha do cliente
+                $pdo->prepare('UPDATE clientes SET senha = ? WHERE id = ?')
+                    ->execute([$hash, $rec['cliente_id']]);
+                // Marcar token como usado
+                $pdo->prepare('UPDATE recuperacao_senha SET usado = 1 WHERE id = ?')
+                    ->execute([$rec['rec_id']]);
                 $mensagem = 'Senha redefinida com sucesso! <a href="login.php" class="text-orange-600 font-semibold">Clique aqui para entrar</a>';
                 $tokenValido = false;
                 unset($_SESSION['csrf_token']);
             }
         }
     } else {
-        $mensagem = 'Token inválido ou expirado. Solicite uma nova recuperação de senha.';
+        $mensagem = 'Token inválido, expirado ou já utilizado. Solicite uma nova recuperação de senha.';
     }
 } else {
     $mensagem = 'Token de redefinição ausente.';
