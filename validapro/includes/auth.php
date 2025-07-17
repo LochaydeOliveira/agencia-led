@@ -180,59 +180,7 @@ function requireLogin() {
 }
 
 // Função de logout robusta e segura
-function logout() {
-    // Iniciar sessão se necessário
-    initSession();
-    
-    // Log do logout
-    if (isset($_SESSION['user_email'])) {
-        error_log("Logout do usuário: " . $_SESSION['user_email'] . " (IP: " . ($_SESSION['ip_address'] ?? 'unknown') . ")");
-    } else {
-        error_log("Logout sem dados de usuário na sessão");
-    }
 
-    // Limpar todas as variáveis de sessão
-    $_SESSION = [];
-
-    // Destruir o cookie de sessão
-    if (ini_get("session.use_cookies")) {
-        $params = session_get_cookie_params();
-        setcookie(
-            session_name(),
-            '',
-            time() - 42000,
-            $params["path"],
-            $params["domain"],
-            $params["secure"],
-            $params["httponly"]
-        );
-    }
-
-    // Destruir cookie alternativo se existir
-    if (isset($_COOKIE['validapro_session'])) {
-        setcookie('validapro_session', '', time() - 42000, '/');
-        unset($_COOKIE['validapro_session']);
-    }
-    
-    // Destruir a sessão se estiver ativa
-    if (session_status() === PHP_SESSION_ACTIVE) {
-    session_destroy();
-    }
-    
-    // Limpar qualquer saída anterior
-    if (ob_get_level()) {
-        ob_end_clean();
-    }
-    
-    // Redirecionar para login
-    if (!headers_sent()) {
-        header('Location: login.php');
-        exit();
-    } else {
-        echo '<script>window.location.href = "login.php";</script>';
-        exit();
-    }
-}
 
 // Função para obter dados do usuário atual
 function getCurrentUser() {
