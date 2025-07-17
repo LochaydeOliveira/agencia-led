@@ -27,17 +27,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($email) || empty($password)) {
         $error = 'Por favor, preencha todos os campos!';
     } else {
-        if (authenticateUser($email, $password)) {
+    if (authenticateUser($email, $password)) {
             // Login bem-sucedido
-            if (!headers_sent()) {
-                header('Location: index.php');
-                exit();
-            } else {
-                echo '<script>window.location.href = "index.php";</script>';
-                exit();
-            }
+        if (!headers_sent()) {
+            header('Location: index.php');
+            exit();
         } else {
-            $error = 'Email ou senha incorretos!';
+            echo '<script>window.location.href = "index.php";</script>';
+            exit();
+        }
+    } else {
+        $error = '---- Email ou senha incorretos! -----';
         }
     }
 }

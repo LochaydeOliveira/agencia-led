@@ -144,8 +144,8 @@ function isLoggedIn() {
         error_log("Possível session hijacking detectado - IP mudou de {$_SESSION['ip_address']} para $current_ip");
         logout();
         return false;
-    }
-    
+}
+
     // Verificar se o User Agent mudou
     $current_ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
     if (isset($_SESSION['user_agent']) && $_SESSION['user_agent'] !== $current_ua) {
@@ -190,10 +190,10 @@ function logout() {
     } else {
         error_log("Logout sem dados de usuário na sessão");
     }
-    
+
     // Limpar todas as variáveis de sessão
     $_SESSION = [];
-    
+
     // Destruir o cookie de sessão
     if (ini_get("session.use_cookies")) {
         $params = session_get_cookie_params();
@@ -207,7 +207,7 @@ function logout() {
             $params["httponly"]
         );
     }
-    
+
     // Destruir cookie alternativo se existir
     if (isset($_COOKIE['validapro_session'])) {
         setcookie('validapro_session', '', time() - 42000, '/');
@@ -216,7 +216,7 @@ function logout() {
     
     // Destruir a sessão se estiver ativa
     if (session_status() === PHP_SESSION_ACTIVE) {
-        session_destroy();
+    session_destroy();
     }
     
     // Limpar qualquer saída anterior

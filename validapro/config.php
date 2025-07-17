@@ -51,10 +51,10 @@ setlocale(LC_ALL, 'pt_BR.utf-8', 'pt_BR', 'Portuguese_Brazil');
 // Headers de Segurança (apenas se headers não foram enviados)
 if (!headers_sent()) {
     // Headers básicos de segurança
-    header('X-Content-Type-Options: nosniff');
-    header('X-Frame-Options: DENY');
-    header('X-XSS-Protection: 1; mode=block');
-    header('Referrer-Policy: strict-origin-when-cross-origin');
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: DENY');
+header('X-XSS-Protection: 1; mode=block');
+header('Referrer-Policy: strict-origin-when-cross-origin');
     
     // Headers adicionais de segurança
     header('Strict-Transport-Security: max-age=315360 includeSubDomains; preload');
