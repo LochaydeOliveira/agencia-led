@@ -45,15 +45,10 @@ $nichos = getAllNichos();
     <link href="assets/css/custom.css" rel="stylesheet">
     <link href="assets/css/logo.css" rel="stylesheet">
 </head>
-<body class="gradient-bg min-h-screen">
-    <!-- Elementos decorativos do background -->
-    <div class="absolute inset-0 opacity-10 pointer-events-none z-0">
-        <div class="absolute top-10 left-10 w-20 h-20 bg-white rounded-full"></div>
-        <div class="absolute top-32 right-20 w-16 h-16 bg-white rounded-full"></div>
-        <div class="absolute bottom-20 left-1/4 w-12 h-12 bg-white rounded-full"></div>
-    </div>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Remover elementos decorativos do background -->
     <!-- Header -->
-    <header class="bg-white bg-opacity-90 shadow-sm border-b relative z-10">
+    <header class="bg-white shadow-sm border-b">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center">
@@ -62,11 +57,11 @@ $nichos = getAllNichos();
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <span class="text-sm text-gray-700 font-semibold">
+                    <span class="text-sm text-gray-600">
                         <i class="fas fa-user mr-1"></i>
                         <?php echo htmlspecialchars($user['name']); ?>
                     </span>
-                    <a href="logout.php" class="btn-cta text-sm py-2 px-4 rounded-lg flex items-center gap-1">
+                    <a href="logout.php" class="text-red-600 hover:text-red-800 text-sm font-medium">
                         <i class="fas fa-sign-out-alt mr-1"></i>Sair
                     </a>
                 </div>
@@ -74,11 +69,70 @@ $nichos = getAllNichos();
         </div>
     </header>
 
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
-        <div class="bg-white bg-opacity-95 rounded-2xl shadow-lg p-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Barra de Progresso Fixa -->
+        <div id="progressoFixo" class="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t z-50 transform transition-transform duration-300" style="transform: translateY(100%);">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-6">
+                        <div class="text-center">
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center text-white text-xl font-bold">
+                                <span id="progressoPontos">0</span>/10
+                            </div>
+                            <p class="text-xs text-gray-600 mt-1">Pontos</p>
+                        </div>
+                        <div class="text-center">
+                            <div id="progressoStatus" class="text-lg font-semibold text-gray-600">Iniciando...</div>
+                            <p class="text-xs text-gray-500">Status</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="progress-bar-container">
+                                <div id="progressoBarra" class="progress-bar-fill" style="width: 0%"></div>
+                            </div>
+                            <p class="text-xs text-gray-600 mt-1">Progresso</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button type="button" onclick="scrollToTop()" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                            <i class="fas fa-arrow-up mr-1"></i>Topo
+                        </button>
+                        <button type="button" onclick="hideProgressoFixo()" class="text-gray-500 hover:text-gray-700 text-sm">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preview do Resultado em Tempo Real -->
+        <div id="previewResultado" class="bg-white rounded-2xl shadow-lg p-6 mb-8 hidden">
+            <div class="text-center">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Preview do Resultado</h3>
+                <div class="flex items-center justify-center space-x-8">
+                    <div class="text-center">
+                        <div class="w-20 h-20 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center text-white text-2xl font-bold mb-2">
+                            <span id="previewPontos">0</span>/10
+                        </div>
+                        <p class="text-sm text-gray-600">Pontuação Atual</p>
+                    </div>
+                    <div class="text-center">
+                        <div id="previewStatus" class="text-lg font-semibold text-gray-600">Iniciando...</div>
+                        <p class="text-sm text-gray-500">Status do Produto</p>
+                    </div>
+                    <div class="text-center">
+                        <div id="previewProgress" class="progress-bar-container">
+                            <div id="progressBar" class="progress-bar-fill" style="width: 0%"></div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">Progresso</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-8">
             <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold title-gradient mb-2">Análise do Seu Produto</h2>
-                <p class="text-gray-700">Escolha um nicho ou clique nas sugestões para preencher automaticamente</p>
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Análise do Seu Produto</h2>
+                <p class="text-gray-600">Escolha um nicho ou clique nas sugestões para preencher automaticamente</p>
             </div>
 
             <!-- Nome do Produto -->
