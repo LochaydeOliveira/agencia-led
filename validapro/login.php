@@ -67,10 +67,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="absolute top-32 right-20 w-16 h-16 bg-white rounded-full"></div>
         <div class="absolute bottom-20 left-1/4 w-12 h-12 bg-white rounded-full"></div>
     </div>
-    <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md relative z-10">
+    <div class="bg-white bg-opacity-90 rounded-2xl shadow-2xl p-8 w-full max-w-md relative z-10">
         <div class="text-center mb-8">
             <img src="assets/img/logo-validapro-checklist.svg" alt="ValidaPro Logo" class="h-16 mx-auto mb-4">
-            <p class="text-gray-600">Faça login para acessar sua análise</p>
+            <h1 class="text-2xl font-bold title-gradient mb-2">Acesse o ValidaPro</h1>
+            <p class="text-gray-700">Faça login para acessar sua análise</p>
         </div>
 
         <?php if (isset($error)): ?>
@@ -86,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <i class="fas fa-envelope mr-2"></i>Email
                 </label>
                 <input type="email" id="email" name="email" required
-                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                       class="input-modern w-full"
                        placeholder="seu@email.com"
                        value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
             </div>
@@ -96,13 +97,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <i class="fas fa-lock mr-2"></i>Senha
                 </label>
                 <input type="password" id="password" name="password" required
-                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                       class="input-modern w-full"
                        placeholder="••••••••">
             </div>
 
             <button type="submit" 
-                    class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold py-3 px-4 rounded-lg hover:from-blue-600 hover:to-indigo-700 transition duration-200 transform hover:scale-105">
-                <i class="fas fa-sign-in-alt mr-2"></i>Entrar
+                    class="w-full btn-cta py-3 px-4 rounded-lg text-lg flex items-center justify-center gap-2">
+                <i class="fas fa-sign-in-alt"></i>Entrar
             </button>
         </form>
 
@@ -112,8 +113,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 Acesso restrito - credenciais enviadas por email
             </p>
         </div>
-        
-        <!-- Informações de debug (apenas se DEBUG_MODE estiver ativo) -->
         <?php if (defined('DEBUG_MODE') && DEBUG_MODE): ?>
         <div class="mt-6 p-4 bg-gray-100 rounded-lg">
             <h4 class="font-semibold text-gray-700 mb-2">Debug Info:</h4>
