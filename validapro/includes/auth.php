@@ -76,11 +76,6 @@ function authenticateUser($email, $password) {
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        error_log("Senha digitada: $password");
-        error_log("Senha no banco: " . ($user['password'] ?? 'N/A'));
-        error_log("Resultado password_verify: " . (password_verify($password, $user['password']) ? 'true' : 'false'));
-
-
         if ($user && password_verify($password, $user['password'])) {
             // Iniciar sessão
             initSession();
