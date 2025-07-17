@@ -1,36 +1,18 @@
 <?php
-// Logout ValidaPro - Versão 3.0 (Ultra Robusta)
-// Sistema que funciona em qualquer situação
+// Logout Ultra Simples - Funciona em qualquer situação
+// Versão 4.0 - Máxima compatibilidade
 
-// 1. Carregar configurações
-require_once 'config.php';
+// Log do início
+error_log("=== LOGOUT ULTRA SIMPLES INICIADO ===");
 
-// 2. Incluir sistema de autenticação
-require_once 'includes/auth.php';
-
-// 3. Log do início do logout
-error_log("=== INÍCIO DO LOGOUT ===");
-error_log("Timestamp: " . date('Y-m-d H:i:s'));
-error_log("User Agent: " . ($_SERVER['HTTP_USER_AGENT'] ?? 'N/A'));
-error_log("IP: " . ($_SERVER['REMOTE_ADDR'] ?? 'N/A'));
-
-// 4. Verificar se há dados de sessão para log
-if (isset($_SESSION['user_email'])) {
-    error_log("Logout do usuário: " . $_SESSION['user_email']);
-} else {
-    error_log("Logout sem dados de usuário na sessão");
-}
-
-// 5. Executar logout
+// 1. Tentar limpar sessão se possível
 try {
-    logout();
-    error_log("Logout executado com sucesso");
-} catch (Exception $e) {
-    error_log("Erro no logout: " . $e->getMessage());
+    if (session_status() === PHP_SESSION_NONE) {
+        @session_start();
+    }
     
-    // Fallback manual
-    try {
-        // Limpar sessão manualmente
+    if (session_status() === PHP_SESSION_ACTIVE) {
+        // Limpar dados da sessão
         $_SESSION = [];
         
         // Destruir cookie de sessão
@@ -49,38 +31,106 @@ try {
         
         // Destruir sessão
         session_destroy();
-        
-        error_log("Fallback manual executado");
-    } catch (Exception $e2) {
-        error_log("Erro no fallback: " . $e2->getMessage());
+        error_log("Sessão destruída com sucesso");
     }
+} catch (Exception $e) {
+    error_log("Erro ao limpar sessão: " . $e->getMessage());
 }
 
-// 6. Verificar se os headers já foram enviados
-if (headers_sent($file, $line)) {
-    error_log("Headers já enviados em $file:$line");
-    
-    // Usar JavaScript para redirecionamento
+// 2. Limpar cookies alternativos
+try {
+    if (isset($_COOKIE['validapro_session'])) {
+        setcookie('validapro_session', '', time() - 42000, '/');
+        unset($_COOKIE['validapro_session']);
+        error_log("Cookie alternativo removido");
+    }
+} catch (Exception $e) {
+    error_log("Erro ao remover cookie alternativo: " . $e->getMessage());
+}
+
+// 3. Redirecionar
+error_log("Tentando redirecionamento...");
+
+if (!headers_sent()) {
+    error_log("Redirecionamento via HTTP header");
+    header('Location: login.php');
+    exit();
+} else {
+    error_log("Headers já enviados - usando JavaScript");
     echo '<!DOCTYPE html>
     <html>
     <head>
         <title>Logout - ValidaPro</title>
         <meta charset="UTF-8">
         <style>
-            body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #f5f5f5; }
-            .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 500px; margin: 0 auto; }
-            .success { color: #28a745; font-size: 24px; margin-bottom: 20px; }
-            .loading { color: #6c757d; margin-bottom: 20px; }
-            .manual-link { margin-top: 20px; }
-            .manual-link a { background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; }
+            body { 
+                font-family: Arial, sans-serif; 
+                text-align: center; 
+                padding: 50px; 
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                margin: 0;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .container { 
+                background: white; 
+                padding: 40px; 
+                border-radius: 15px; 
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+                max-width: 400px; 
+                width: 100%;
+            }
+            .success { 
+                color: #28a745; 
+                font-size: 24px; 
+                margin-bottom: 20px; 
+                font-weight: bold;
+            }
+            .loading { 
+                color: #6c757d; 
+                margin-bottom: 30px; 
+                font-size: 16px;
+            }
+            .manual-link { 
+                margin-top: 30px; 
+            }
+            .manual-link a { 
+                background: #007bff; 
+                color: white; 
+                padding: 12px 24px; 
+                text-decoration: none; 
+                border-radius: 25px; 
+                font-weight: bold;
+                transition: all 0.3s ease;
+            }
+            .manual-link a:hover {
+                background: #0056b3;
+                transform: translateY(-2px);
+            }
+            .spinner {
+                border: 3px solid #f3f3f3;
+                border-top: 3px solid #007bff;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                animation: spin 1s linear infinite;
+                margin: 0 auto 20px;
+            }
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
         </style>
     </head>
     <body>
         <div class="container">
-            <div class="success">✅ Logout realizado com sucesso!</div>
+            <div class="spinner"></div>
+            <div class="success">✅ Logout realizado!</div>
             <div class="loading">Redirecionando para a página de login...</div>
             <div class="manual-link">
-                <a href="login.php">Clique aqui se não for redirecionado automaticamente</a>
+                <a href="login.php">Clique aqui se não for redirecionado</a>
             </div>
         </div>
         <script>
@@ -91,24 +141,24 @@ if (headers_sent($file, $line)) {
             
             // Fallback após 5 segundos
             setTimeout(function() {
-                if (window.location.pathname.indexOf("logout.php") !== -1) {
+                if (window.location.pathname.indexOf("logout") !== -1) {
                     window.location.href = "login.php";
                 }
             }, 5000);
+            
+            // Fallback adicional após 10 segundos
+            setTimeout(function() {
+                if (window.location.pathname.indexOf("logout") !== -1) {
+                    window.location.replace("login.php");
+                }
+            }, 10000);
         </script>
     </body>
     </html>';
-    
-    error_log("Redirecionamento via JavaScript executado");
-    exit();
-} else {
-    // Headers não foram enviados, usar redirecionamento HTTP
-    error_log("Redirecionamento via HTTP header");
-    header('Location: login.php');
     exit();
 }
 
-// 7. Se chegou até aqui, algo deu muito errado
+// 4. Se chegou até aqui, algo deu muito errado
 error_log("ERRO CRÍTICO: Logout não conseguiu redirecionar");
 echo '<script>window.location.href = "login.php";</script>';
 exit();

@@ -28,8 +28,10 @@ define('FROM_NAME', 'ValidaPro');
 // Configurações de Segurança (PRODUÇÃO)
 define('SESSION_TIMEOUT', 3600); // 1 hora
 define('PASSWORD_MIN_LENGTH', 8); // Senha mais forte
-define('MAX_LOGIN_ATTEMPTS', 3); // Menos tentativas
-define('LOGIN_TIMEOUT', 1800); // 30 minutos
+define('MAX_LOGIN_ATTEMPTS', 5); // Máximo de tentativas
+define('LOGIN_TIMEOUT', 90); // 15 minutos de bloqueio
+define('CSRF_TOKEN_TIMEOUT', 1800); // 30 minutos
+define('SESSION_REGENERATION_TIME', 300); // 5 segundos
 
 // Configurações de Pontuação
 define('MAX_POINTS', 10);
@@ -48,10 +50,17 @@ setlocale(LC_ALL, 'pt_BR.utf-8', 'pt_BR', 'Portuguese_Brazil');
 
 // Headers de Segurança (apenas se headers não foram enviados)
 if (!headers_sent()) {
+    // Headers básicos de segurança
     header('X-Content-Type-Options: nosniff');
     header('X-Frame-Options: DENY');
     header('X-XSS-Protection: 1; mode=block');
     header('Referrer-Policy: strict-origin-when-cross-origin');
+    
+    // Headers adicionais de segurança
+    header('Strict-Transport-Security: max-age=315360 includeSubDomains; preload');
+    header('Content-Security-Policy: default-src \'self\'; script-src \'self\' \'unsafe-inline\' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src \'self\' \'unsafe-inline\' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com; img-src \'self\' data: https:; font-src \'self\' https://cdnjs.cloudflare.com; connect-src \'self\' https://cdnjs.cloudflare.com');
+    header('Permissions-Policy: geolocation=(), microphone=(), camera=()');
+    header('X-Permitted-Cross-Domain-Policies: none');
 }
 
 // Função para obter configuração
