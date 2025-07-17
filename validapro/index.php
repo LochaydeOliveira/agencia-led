@@ -176,7 +176,7 @@ $nichos = getAllNichos();
                 </div>
                 
                 <div class="mt-4 text-center">
-                    <button type="button" id="limparNicho" class="text-purple-600 hover:text-purple-800 text-sm font-medium btn-cta">
+                    <button type="button" id="limparNicho" class="text-purple-600 hover:text-purple-800 text-sm font-medium">
                         <i class="fas fa-times mr-1"></i>Limpar seleção
                     </button>
                 </div>
