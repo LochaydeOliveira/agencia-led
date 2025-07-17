@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="absolute top-32 right-20 w-16 h-16 bg-white rounded-full"></div>
         <div class="absolute bottom-20 left-1/4 w-12 h-12 bg-white rounded-full"></div>
     </div>
-    <div class="bg-white bg-opacity-90 rounded-2xl shadow-2xl p-8 w-full max-w-md relative z-10">
+    <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md relative z-10">
         <div class="text-center mb-8">
             <img src="assets/img/logo-validapro-checklist.svg" alt="ValidaPro Logo" class="h-16 mx-auto mb-4">
             <p class="text-gray-700">Faça login para acessar sua análise</p>
