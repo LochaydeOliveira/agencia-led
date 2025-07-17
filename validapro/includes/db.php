@@ -51,6 +51,14 @@ function createTables($pdo) {
         // Campo já existe, ignorar erro
     }
     
+    // Adicionar campos para recuperação de senha se não existirem
+    try {
+        $pdo->exec("ALTER TABLE users ADD COLUMN reset_token VARCHAR(100) DEFAULT NULL");
+    } catch (PDOException $e) {}
+    try {
+        $pdo->exec("ALTER TABLE users ADD COLUMN reset_token_expira DATETIME DEFAULT NULL");
+    } catch (PDOException $e) {}
+    
     // Tabela de resultados
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS results (

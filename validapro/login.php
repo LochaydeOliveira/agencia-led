@@ -104,6 +104,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     class="w-full btn-cta py-3 px-4 rounded-lg text-lg flex items-center justify-center gap-2">
                 <i class="fas fa-sign-in-alt"></i>Entrar
             </button>
+            <div class="mt-4 text-center">
+                <a href="recuperar_senha.php" class="text-sm text-orange-600 hover:text-orange-800 font-semibold transition">Esqueci minha senha?</a>
+            </div>
         </form>
 
         <div class="mt-8 text-center">
