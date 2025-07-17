@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ValidaPro - Login</title>
+    <title>Login - ValidaPro</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/img/favicon-oficial-validapro.png">
@@ -70,7 +70,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="bg-white bg-opacity-90 rounded-2xl shadow-2xl p-8 w-full max-w-md relative z-10">
         <div class="text-center mb-8">
             <img src="assets/img/logo-validapro-checklist.svg" alt="ValidaPro Logo" class="h-16 mx-auto mb-4">
-            <h1 class="text-2xl font-bold title-gradient mb-2">Acesse o ValidaPro</h1>
             <p class="text-gray-700">Faça login para acessar sua análise</p>
         </div>
 
