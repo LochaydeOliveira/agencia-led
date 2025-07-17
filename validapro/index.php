@@ -60,7 +60,7 @@ $nichos = getAllNichos();
                         <i class="fas fa-user mr-1"></i>
                         <?php echo htmlspecialchars($user['name']); ?>
                     </span>
-                    <a href="logout.php" class="text-red-600 hover:text-red-800 text-sm font-medium">
+                    <a href="logout_simples.php" class="text-red-600 hover:text-red-800 text-sm font-medium">
                         <i class="fas fa-sign-out-alt mr-1"></i>Sair
                     </a>
                 </div>
