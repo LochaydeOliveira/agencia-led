@@ -114,3 +114,7 @@
 }
 
 /* Outras customizações podem ser adicionadas aqui */ 
+
+.gradient-bg {
+    background: linear-gradient(135deg, #f97316 0%, #ec4899 100%);
+} 
