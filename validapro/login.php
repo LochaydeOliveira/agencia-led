@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }
     } else {
-        $error = '---- Email ou senha incorretos! -----';
+        $error = 'Email ou senha incorretos!';
         }
     }
 }
