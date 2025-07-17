@@ -148,7 +148,7 @@
 
 /* Inputs modernos */
 .input-modern {
-    border-radius: 0.75rem;
+    border-radius: 0.4rem;
     padding: 0.75rem 1rem;
     font-size: 1rem;
     transition: border 0.2s, box-shadow 0.2s;
