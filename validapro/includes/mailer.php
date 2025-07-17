@@ -93,6 +93,8 @@ function sendAccessEmail($email, $password, $name) {
     </html>
     ";
     
+    error_log('SMTP_USER: ' . SMTP_USER);
+    error_log('SMTP_PASS: ' . SMTP_PASS);
     return sendEmailWithPHPMailer($email, $name, $subject, $message);
 }
 
