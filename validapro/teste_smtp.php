@@ -5,12 +5,12 @@ use PHPMailer\PHPMailer\Exception;
 
 // Configurações de teste (use as mesmas do email_config.php)
 $smtp_host = 'smtp.zoho.com';
-$smtp_user = 'contato@agencialed.com';
-$smtp_pass = 'Lochayde@154719';
+$smtp_user = 'validapro@agencialed.com';
+$smtp_pass = 'Valida@2025';
 $smtp_secure = 'tls';
 $smtp_port = 587;
-$from_email = 'contato@agencialed.com';
-$from_name = 'Teste SMTP';
+$from_email = 'validapro@agencialed.com';
+$from_name = 'Teste SMTP ValidaPro';
 $to_email = 'lochaydeguerreiro@hotmail.com'; // E-mail real do usuário
 $to_name = 'Você';
 
