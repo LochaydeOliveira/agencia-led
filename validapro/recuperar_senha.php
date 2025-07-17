@@ -1,6 +1,7 @@
 <?php
 require_once 'includes/auth.php';
 require_once 'includes/db.php';
+require_once 'includes/mailer.php';
 
 $mensagem = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -21,12 +22,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Salvar token no banco
             $pdo->prepare('UPDATE users SET reset_token = ?, reset_token_expira = ? WHERE id = ?')
                 ->execute([$token, $expira, $user['id']]);
-            // Enviar e-mail
+            // Enviar e-mail com PHPMailer
             $link = APP_URL . 'redefinir_senha.php?token=' . $token;
-            $assunto = 'Recuperação de Senha - ValidaPro';
-            $corpo = "Olá!\n\nRecebemos uma solicitação para redefinir sua senha no ValidaPro.\nClique no link abaixo para criar uma nova senha:\n$link\n\nSe não foi você, ignore este e-mail.";
-            // Função de envio de e-mail (ajuste conforme seu mailer)
-            mail($email, $assunto, $corpo, 'From: ' . FROM_EMAIL);
+            $assunto = 'Recuperação de Senha - Valida Pro';
+            $corpo = "<html><body style='font-family: Arial, sans-serif; color: #333;'>
+                <div style='max-width: 600px; margin: 0 auto; padding: 20px;'>
+                    <div style='background: linear-gradient(135deg, #f97316 0%, #ec4899 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;'>
+                        <h1 style='margin: 0; font-size: 28px;'>Valida Pro</h1>
+                    </div>
+                    <div style='background: #f8f9fa; padding: 30px; border-radius: 0 0 10px 10px;'>
+                        <h2 style='color: #2c3e50; margin-top: 0;'>Recuperação de Senha</h2>
+                        <p>Recebemos uma solicitação para redefinir sua senha no <strong>Valida Pro</strong>.</p>
+                        <p>Para criar uma nova senha, clique no botão abaixo:</p>
+                        <div style='margin: 30px 0; text-align: center;'>
+                            <a href='$link' style='background: linear-gradient(135deg, #f97316 0%, #ec4899 100%); color: white; padding: 16px 32px; border-radius: 8px; text-decoration: none; font-size: 18px; font-weight: bold;'>Redefinir Senha</a>
+                        </div>
+                        <p>Ou copie e cole este link no navegador:<br><a href='$link'>$link</a></p>
+                        <p style='color: #888; font-size: 13px;'>Se você não solicitou, apenas ignore este e-mail.</p>
+                    </div>
+                    <div style='text-align: center; margin-top: 20px; color: #6c757d; font-size: 12px;'>
+                        <p>Este é um email automático. Não responda a esta mensagem.</p>
+                    </div>
+                </div>
+            </body></html>";
+            sendEmailWithPHPMailer($email, '', $assunto, $corpo);
             $mensagem = 'Enviamos um link de recuperação para seu e-mail.';
         } else {
             $mensagem = 'Se o e-mail estiver cadastrado, você receberá um link para redefinir a senha.';

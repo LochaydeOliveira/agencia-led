@@ -6,6 +6,13 @@ $mensagem = '';
 $token = $_GET['token'] ?? '';
 $tokenValido = false;
 
+// Gerar CSRF token se não existir
+if (!isset($_SESSION)) session_start();
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+$csrf_token = $_SESSION['csrf_token'];
+
 if ($token) {
     $stmt = $pdo->prepare('SELECT id, reset_token_expira FROM users WHERE reset_token = ? AND reset_token IS NOT NULL');
     $stmt->execute([$token]);
@@ -15,18 +22,22 @@ if ($token) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $senha1 = $_POST['senha1'] ?? '';
             $senha2 = $_POST['senha2'] ?? '';
+            $csrf_post = $_POST['csrf_token'] ?? '';
             if (empty($senha1) || empty($senha2)) {
                 $mensagem = 'Preencha os dois campos de senha.';
             } elseif ($senha1 !== $senha2) {
                 $mensagem = 'As senhas não coincidem.';
             } elseif (strlen($senha1) < 8) {
                 $mensagem = 'A senha deve ter pelo menos 8 caracteres.';
+            } elseif (empty($csrf_post) || !hash_equals($_SESSION['csrf_token'], $csrf_post)) {
+                $mensagem = 'Token de segurança inválido. Recarregue a página.';
             } else {
                 $hash = password_hash($senha1, PASSWORD_DEFAULT);
                 $pdo->prepare('UPDATE users SET password = ?, reset_token = NULL, reset_token_expira = NULL WHERE id = ?')
                     ->execute([$hash, $user['id']]);
                 $mensagem = 'Senha redefinida com sucesso! <a href="login.php" class="text-orange-600 font-semibold">Clique aqui para entrar</a>';
                 $tokenValido = false;
+                unset($_SESSION['csrf_token']);
             }
         }
     } else {
@@ -58,18 +69,26 @@ if ($token) {
             </div>
         <?php endif; ?>
         <?php if ($tokenValido): ?>
-        <form method="POST" class="space-y-6">
+        <form method="POST" class="space-y-6" autocomplete="off">
+            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
             <div>
                 <label for="senha1" class="block text-sm font-medium text-gray-700 mb-2">
                     <i class="fas fa-lock mr-2"></i>Nova senha
                 </label>
-                <input type="password" id="senha1" name="senha1" required class="input-modern w-full" placeholder="Digite a nova senha">
+                <div class="relative">
+                    <input type="password" id="senha1" name="senha1" required class="input-modern w-full pr-12" placeholder="Digite a nova senha" oninput="checkStrength(this.value)" autocomplete="new-password">
+                    <button type="button" onclick="togglePassword('senha1')" tabindex="-1" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700"><i class="fas fa-eye"></i></button>
+                </div>
+                <div id="senha-strength" class="mt-2 text-xs font-semibold"></div>
             </div>
             <div>
                 <label for="senha2" class="block text-sm font-medium text-gray-700 mb-2">
                     <i class="fas fa-lock mr-2"></i>Confirme a nova senha
                 </label>
-                <input type="password" id="senha2" name="senha2" required class="input-modern w-full" placeholder="Repita a nova senha">
+                <div class="relative">
+                    <input type="password" id="senha2" name="senha2" required class="input-modern w-full pr-12" placeholder="Repita a nova senha" autocomplete="new-password">
+                    <button type="button" onclick="togglePassword('senha2')" tabindex="-1" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700"><i class="fas fa-eye"></i></button>
+                </div>
             </div>
             <button type="submit" class="w-full btn-cta py-3 px-4 rounded-lg text-lg flex items-center justify-center gap-2">
                 <i class="fas fa-key"></i>Redefinir senha
@@ -80,5 +99,31 @@ if ($token) {
             <a href="login.php" class="text-sm text-orange-600 hover:text-orange-800 font-semibold transition">Voltar ao login</a>
         </div>
     </div>
+    <script>
+    function togglePassword(id) {
+        const input = document.getElementById(id);
+        if (input.type === 'password') {
+            input.type = 'text';
+        } else {
+            input.type = 'password';
+        }
+    }
+    function checkStrength(value) {
+        const bar = document.getElementById('senha-strength');
+        let strength = 0;
+        if (value.length >= 8) strength++;
+        if (/[A-Z]/.test(value)) strength++;
+        if (/[a-z]/.test(value)) strength++;
+        if (/[0-9]/.test(value)) strength++;
+        if (/[^A-Za-z0-9]/.test(value)) strength++;
+        let msg = '';
+        let color = 'text-red-600';
+        if (strength <= 2) { msg = 'Senha fraca'; color = 'text-red-600'; }
+        else if (strength === 3) { msg = 'Senha razoável'; color = 'text-yellow-600'; }
+        else if (strength >= 4) { msg = 'Senha forte'; color = 'text-green-600'; }
+        bar.textContent = msg;
+        bar.className = 'mt-2 text-xs font-semibold ' + color;
+    }
+    </script>
 </body>
 </html> 
