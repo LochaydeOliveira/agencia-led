@@ -61,7 +61,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="assets/css/custom.css" rel="stylesheet">
 </head>
 <body class="gradient-bg min-h-screen flex items-center justify-center">
-    <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
+    <!-- Elementos decorativos do background -->
+    <div class="absolute inset-0 opacity-10 pointer-events-none z-0">
+        <div class="absolute top-10 left-10 w-20 h-20 bg-white rounded-full"></div>
+        <div class="absolute top-32 right-20 w-16 h-16 bg-white rounded-full"></div>
+        <div class="absolute bottom-20 left-1/4 w-12 h-12 bg-white rounded-full"></div>
+    </div>
+    <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md relative z-10">
         <div class="text-center mb-8">
             <img src="assets/img/logo-validapro-checklist.svg" alt="ValidaPro Logo" class="h-16 mx-auto mb-4">
             <p class="text-gray-600">Faça login para acessar sua análise</p>
