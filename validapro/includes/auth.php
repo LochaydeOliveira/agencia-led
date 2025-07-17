@@ -72,7 +72,7 @@ function authenticateUser($email, $password) {
     }
 
     try {
-        $stmt = $pdo->prepare("SELECT id, email, password, name, active, last_login FROM users WHERE email = ? AND active = 1");
+        $stmt = $pdo->prepare("SELECT id, email, password, name, active, last_login, usuario FROM users WHERE email = ? AND active = 1");
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -87,6 +87,7 @@ function authenticateUser($email, $password) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_email'] = $user['email'];
             $_SESSION['user_name'] = $user['name'];
+            $_SESSION['user_tipo'] = $user['usuario']; // Salva o tipo de usuário
             $_SESSION['login_time'] = time();
             $_SESSION['last_activity'] = time();
             $_SESSION['session_id'] = session_id();

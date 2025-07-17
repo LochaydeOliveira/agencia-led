@@ -14,17 +14,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (!validateEmail($email)) {
         $mensagem = 'E-mail inválido.';
     } else {
-        // Buscar cliente ativo
-        $stmt = $pdo->prepare('SELECT id, nome FROM clientes WHERE email = ? AND status = "ativo"');
+        // Buscar usuário ativo
+        $stmt = $pdo->prepare('SELECT id, name, usuario FROM users WHERE email = ? AND active = 1');
         $stmt->execute([$email]);
-        $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($cliente) {
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($user) {
             // Gerar token seguro
             $token = bin2hex(random_bytes(32));
             $expira = date('Y-m-d H:i:s', time() + 3600); // 1 hora
-            // Salvar token na tabela de recuperação
-            $stmt = $pdo->prepare('INSERT INTO recuperacao_senha (cliente_id, token, expira) VALUES (?, ?, ?)');
-            $stmt->execute([$cliente['id'], $token, $expira]);
+            // Salvar token e expiração na tabela users
+            $stmt = $pdo->prepare('UPDATE users SET reset_token = ?, reset_token_expira = ? WHERE id = ?');
+            $stmt->execute([$token, $expira, $user['id']]);
             // Enviar e-mail com PHPMailer
             $link = APP_URL . 'redefinir_senha.php?token=' . $token;
             $assunto = 'Recuperação de Senha - Valida Pro';
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div style='background: #f8f9fa; padding: 30px; border-radius: 0 0 10px 10px;'>
                         <h2 style='color: #2c3e50; margin-top: 0;'>Recuperação de Senha</h2>
-                        <p>Olá, <strong>{$cliente['nome']}</strong>!</p>
+                        <p>Olá, <strong>{$user['name']}</strong>!</p>
                         <p>Recebemos uma solicitação para redefinir sua senha no <strong>Valida Pro</strong>.</p>
                         <p>Para criar uma nova senha, clique no botão abaixo:</p>
                         <div style='margin: 30px 0; text-align: center;'>
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
             </body></html>";
-            $enviado = sendEmailWithPHPMailer($email, $cliente['nome'], $assunto, $corpo);
+            $enviado = sendEmailWithPHPMailer($email, $user['name'], $assunto, $corpo);
             if ($enviado) {
                 $mensagem = 'Enviamos um link de recuperação para seu e-mail. Confira também a caixa de spam.';
             } else {
