@@ -1,9 +1,14 @@
 <?php
-require_once __DIR__ . '/../config.php';
+/**
+ * Conexão com Banco de Dados - ValidaPro
+ * Sistema completamente independente
+ */
+
+require_once __DIR__ . '/db_config.php';
 
 try {
     // Primeiro, tentar conectar sem especificar o banco
-    $pdo = new PDO("mysql:host=" . DB_HOST . ";charset=utf8mb4", DB_USER, DB_PASS);
+    $pdo = new PDO("mysql:host=" . DB_HOST . ";charset=" . DB_CHARSET, DB_USER, DB_PASS);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     // Verificar se o banco existe
@@ -12,23 +17,23 @@ try {
     
     if (!$databaseExists) {
         // Criar o banco se não existir
-        $pdo->exec("CREATE DATABASE IF NOT EXISTS `" . DB_NAME . "` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+        $pdo->exec("CREATE DATABASE IF NOT EXISTS `" . DB_NAME . "` CHARACTER SET " . DB_CHARSET . " COLLATE " . DB_COLLATE);
     }
     
     // Agora conectar ao banco específico
-    $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4", DB_USER, DB_PASS);
+    $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET, DB_USER, DB_PASS);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     // Criar tabelas se não existirem
-    createTables($pdo);
+    createValidaProTables($pdo);
     
 } catch (PDOException $e) {
     // Log do erro em vez de exibir
-    error_log("Erro na conexão com o banco: " . $e->getMessage());
+    error_log("Erro na conexão com o banco ValidaPro: " . $e->getMessage());
     $pdo = null;
 }
 
-function createTables($pdo) {
+function createValidaProTables($pdo) {
     if (!$pdo) return;
     
     // Tabela de usuários com campo active
@@ -38,26 +43,30 @@ function createTables($pdo) {
             email VARCHAR(255) UNIQUE NOT NULL,
             password VARCHAR(255) NOT NULL,
             name VARCHAR(255) NOT NULL,
+            usuario ENUM('cliente', 'admin') DEFAULT 'cliente',
             active TINYINT(1) DEFAULT 1,
+            last_login DATETIME DEFAULT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-    ");
+        ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . " COLLATE=" . DB_COLLATE
+    );
     
-    // Adicionar campo active se não existir
-    try {
-        $pdo->exec("ALTER TABLE users ADD COLUMN active TINYINT(1) DEFAULT 1");
-    } catch (PDOException $e) {
-        // Campo já existe, ignorar erro
+    // Adicionar campos se não existirem
+    $fields_to_add = [
+        'active' => 'TINYINT(1) DEFAULT 1',
+        'usuario' => "ENUM('cliente', 'admin') DEFAULT 'cliente'",
+        'last_login' => 'DATETIME DEFAULT NULL',
+        'reset_token' => 'VARCHAR(100) DEFAULT NULL',
+        'reset_token_expira' => 'DATETIME DEFAULT NULL'
+    ];
+    
+    foreach ($fields_to_add as $field => $definition) {
+        try {
+            $pdo->exec("ALTER TABLE users ADD COLUMN $field $definition");
+        } catch (PDOException $e) {
+            // Campo já existe, ignorar erro
+        }
     }
-    
-    // Adicionar campos para recuperação de senha se não existirem
-    try {
-        $pdo->exec("ALTER TABLE users ADD COLUMN reset_token VARCHAR(100) DEFAULT NULL");
-    } catch (PDOException $e) {}
-    try {
-        $pdo->exec("ALTER TABLE users ADD COLUMN reset_token_expira DATETIME DEFAULT NULL");
-    } catch (PDOException $e) {}
     
     // Tabela de resultados
     $pdo->exec("
@@ -73,17 +82,17 @@ function createTables($pdo) {
             mensagem VARCHAR(255),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-    ");
+        ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . " COLLATE=" . DB_COLLATE
+    );
     
     // Inserir usuário padrão se não existir
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE email = ?");
-    $stmt->execute(['admin@exemplo.com']);
+    $stmt->execute(['admin@validapro.com']);
     
     if ($stmt->fetchColumn() == 0) {
         $hashed_password = password_hash('123456', PASSWORD_DEFAULT);
-        $stmt = $pdo->prepare("INSERT INTO users (email, password, name, active) VALUES (?, ?, ?, 1)");
-        $stmt->execute(['admin@exemplo.com', $hashed_password, 'Administrador']);
+        $stmt = $pdo->prepare("INSERT INTO users (email, password, name, usuario, active) VALUES (?, ?, ?, 'admin', 1)");
+        $stmt->execute(['admin@validapro.com', $hashed_password, 'Administrador ValidaPro']);
     }
 }
 ?> 
