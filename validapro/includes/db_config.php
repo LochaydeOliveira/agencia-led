@@ -47,5 +47,4 @@ function isValidaProConnectionActive($pdo) {
     } catch (PDOException $e) {
         return false;
     }
-}
-?> 
+} 

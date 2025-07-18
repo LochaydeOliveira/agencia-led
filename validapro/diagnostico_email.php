@@ -9,15 +9,17 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-echo "<h1>🔍 Diagnóstico Completo de Email - ValidaPro</h1>";
-echo "<hr>";
-
 // Carregar sistema completo do ValidaPro
 require_once 'includes/init.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+
+// Agora sim pode começar a saída
+
+echo "<h1>🔍 Diagnóstico Completo de Email - ValidaPro</h1>";
+echo "<hr>";
 
 echo "<h2>📋 1. Verificação de Configurações</h2>";
 echo "<ul>";
