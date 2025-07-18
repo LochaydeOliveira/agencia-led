@@ -14,7 +14,6 @@ if (empty($_SESSION['csrf_token'])) {
 $csrf_token = $_SESSION['csrf_token'];
 
 if ($token) {
-    // Buscar usuário com token válido
     $stmt = $pdo->prepare('SELECT id, reset_token_expira FROM users WHERE reset_token = ? AND reset_token IS NOT NULL');
     $stmt->execute([$token]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -34,7 +33,6 @@ if ($token) {
                 $mensagem = 'Token de segurança inválido. Recarregue a página.';
             } else {
                 $hash = password_hash($senha1, PASSWORD_DEFAULT);
-                // Atualizar senha do usuário e limpar token
                 $pdo->prepare('UPDATE users SET password = ?, reset_token = NULL, reset_token_expira = NULL WHERE id = ?')
                     ->execute([$hash, $user['id']]);
                 $mensagem = 'Senha redefinida com sucesso! <a href="login.php" class="text-orange-600 font-semibold">Clique aqui para entrar</a>';

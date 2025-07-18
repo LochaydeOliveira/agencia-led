@@ -1,13 +1,10 @@
 <?php
 // Sistema ValidaPro - Versão 2.0
-require_once 'includes/init.php';
-
-// Configurar headers de segurança
-setupValidaProSecurityHeaders();
+require_once 'includes/auth.php';
 
 // Iniciar sessão e verificar login
-initValidaProSession();
-requireValidaProLogin();
+initSession();
+requireLogin();
 
 // Verificar timeout da sessão
 checkSessionTimeout();
@@ -15,7 +12,9 @@ checkSessionTimeout();
 // Renovar sessão
 renewSession();
 
-$user = getCurrentValidaProUser();
+require_once 'includes/db.php';
+
+$user = getCurrentUser();
 
 // Processar formulário
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -23,12 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     error_log("Dados POST recebidos: " . print_r($_POST, true));
     
     // Validar CSRF token (mais flexível para debug)
-    if (!isset($_POST['csrf_token']) || !isset($_SESSION['validapro_csrf_token'])) {
-        error_log("CSRF token ausente - POST: " . (isset($_POST['csrf_token']) ? 'sim' : 'não') . ", SESSION: " . (isset($_SESSION['validapro_csrf_token']) ? 'sim' : 'não'));
+    if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token'])) {
+        error_log("CSRF token ausente - POST: " . (isset($_POST['csrf_token']) ? 'sim' : 'não') . ", SESSION: " . (isset($_SESSION['csrf_token']) ? 'sim' : 'não'));
         // Temporariamente desabilitar validação CSRF para debug
         // header('Location: index.php?error=csrf');
         // exit();
-    } elseif (!hash_equals($_SESSION['validapro_csrf_token'], $_POST['csrf_token'])) {
+    } elseif (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         error_log("CSRF token inválido");
         // Temporariamente desabilitar validação CSRF para debug
         // header('Location: index.php?error=csrf');

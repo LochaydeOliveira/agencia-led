@@ -1,82 +1,69 @@
 <?php
-// Sistema de Autenticação ValidaPro - Versão 2.0 (Completamente Independente)
-// Sistema robusto, testado e seguro - Ecossistema próprio
-
-// Carregar apenas configurações de email (sem security_config.php)
-require_once __DIR__ . '/email_config.php';
-
-// Definir constantes de segurança diretamente aqui para evitar conflitos
-if (!defined('VALIDAPRO_SESSION_NAME')) {
-    define('VALIDAPRO_SESSION_NAME', 'validapro_session');
-}
-if (!defined('VALIDAPRO_CSRF_TOKEN_NAME')) {
-    define('VALIDAPRO_CSRF_TOKEN_NAME', 'validapro_csrf_token');
-}
+// Sistema de Autenticação ValidaPro - Versão 21(Segurança Aprimorada)
+// Sistema robusto, testado e seguro
 
 // Função para iniciar sessão de forma segura
-function initValidaProSession() {
+function initSession() {
     if (session_status() === PHP_SESSION_NONE) {
-        // Verificar se headers já foram enviados ANTES de tentar configurar a sessão
+        // Verificar se headers já foram enviados
         if (headers_sent()) {
-            error_log("ValidaPro: Headers já enviados - usando sessão alternativa");
-            
-            // Se headers já foram enviados, não podemos usar session_name()
-            // Vamos usar uma abordagem alternativa
-            if (!isset($_COOKIE[VALIDAPRO_SESSION_NAME])) {
-                $session_id = uniqid('validapro_', true);
-                setcookie(VALIDAPRO_SESSION_NAME, $session_id, time() + SESSION_TIMEOUT, '/');
-                $_COOKIE[VALIDAPRO_SESSION_NAME] = $session_id;
-            }
-            
-            // Iniciar sessão sem configurar nome
+            // Se headers já foram enviados, tentar iniciar sessão com supressão de warnings
+            error_log("Headers já enviados - tentando iniciar sessão com supressão de warnings");
             @session_start();
             
-            if (!isset($_SESSION)) {
-                $_SESSION = [];
+            // Se ainda não conseguiu, usar sessão alternativa
+            if (session_status() === PHP_SESSION_NONE) {
+                error_log("Sessão não pôde ser iniciada - usando sessão alternativa");
+                // Criar sessão alternativa usando cookies
+                if (!isset($_COOKIE['validapro_session'])) {
+                    $session_id = uniqid('validapro_', true);
+                    setcookie('validapro_session', $session_id, time() + 3600, '/');
+                    $_COOKIE['validapro_session'] = $session_id;
+                }
+                
+                // Simular dados de sessão
+                if (!isset($_SESSION)) {
+                    $_SESSION = [];
+                }
             }
         } else {
-            // Headers ainda não foram enviados, podemos configurar a sessão normalmente
-            // Configurar nome da sessão específico do ValidaPro
-            session_name(VALIDAPRO_SESSION_NAME);
-            
-            // Configurar parâmetros de sessão seguros
+            // Configurar parâmetros de sessão seguros apenas se possível
             @ini_set('session.cookie_httponly', 1);
             @ini_set('session.use_only_cookies', 1);
             @ini_set('session.cookie_secure', isset($_SERVER['HTTPS']));
             @ini_set('session.cookie_samesite', 'Strict');
-            @ini_set('session.gc_maxlifetime', SESSION_TIMEOUT);
+            @ini_set('session.gc_maxlifetime', 3600);
             
             session_start();
-            
-            // Regenerar ID da sessão para segurança
-            if (!isset($_SESSION['validapro_initialized']) && !headers_sent() && session_status() === PHP_SESSION_ACTIVE) {
-                @session_regenerate_id(true);
-                $_SESSION['validapro_initialized'] = true;
-            } elseif (!isset($_SESSION['validapro_initialized'])) {
-                $_SESSION['validapro_initialized'] = true;
-            }
+        }
+        
+        // Regenerar ID da sessão para segurança (apenas se possível)
+        if (!isset($_SESSION['initialized']) && !headers_sent() && session_status() === PHP_SESSION_ACTIVE) {
+            @session_regenerate_id(true);
+            $_SESSION['initialized'] = true;
+        } elseif (!isset($_SESSION['initialized'])) {
+            $_SESSION['initialized'] = true;
         }
     }
 }
 
 // Função para autenticar usuário com proteções adicionais
-function authenticateValidaProUser($email, $password) {
+function authenticateUser($email, $password) {
     global $pdo;
 
     if (!$pdo) {
-        error_log("ValidaPro: Erro - Conexão com banco não disponível");
+        error_log("Erro: Conexão com banco não disponível");
         return false;
     }
 
     // Proteção contra ataques de força bruta
     $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
-    $attempts_key = 'validapro_login_attempts_' . $ip;
-    
+    $attempts_key = 'login_attempts_' . $ip; 
     // Verificar tentativas de login
-    if (isset($_SESSION[$attempts_key]) && $_SESSION[$attempts_key]['count'] >= MAX_LOGIN_ATTEMPTS) {
-        $timeout = LOGIN_TIMEOUT;
+    if (isset($_SESSION[$attempts_key]) && $_SESSION[$attempts_key]['count'] >= 5) {
+        $timeout = 15 * 60; // 15 minutos
         if (time() - $_SESSION[$attempts_key]['time'] < $timeout) {
-            error_log("ValidaPro: Tentativas de login excedidas para IP: $ip");
+            error_log("Tentativas de login excedidas para IP: $ip");
             return false;
         } else {
             // Reset após timeout
@@ -85,27 +72,26 @@ function authenticateValidaProUser($email, $password) {
     }
 
     try {
-        $stmt = $pdo->prepare("SELECT id, email, password, name, active, last_login, usuario FROM users WHERE email = ? AND active = 1");
+        $stmt = $pdo->prepare("SELECT id, email, password, name, active, last_login FROM users WHERE email = ? AND active = 1");
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($password, $user['password'])) {
             // Iniciar sessão
-            initValidaProSession();
+            initSession();
             
             // Limpar sessão anterior
             $_SESSION = [];
             
             // Definir dados do usuário
-            $_SESSION['validapro_user_id'] = $user['id'];
-            $_SESSION['validapro_user_email'] = $user['email'];
-            $_SESSION['validapro_user_name'] = $user['name'];
-            $_SESSION['validapro_user_tipo'] = $user['usuario'];
-            $_SESSION['validapro_login_time'] = time();
-            $_SESSION['validapro_last_activity'] = time();
-            $_SESSION['validapro_session_id'] = session_id();
-            $_SESSION['validapro_ip_address'] = $ip;
-            $_SESSION['validapro_user_agent'] = $_SERVER['HTTP_USER_AGENT'] ?? '';
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_email'] = $user['email'];
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['login_time'] = time();
+            $_SESSION['last_activity'] = time();
+            $_SESSION['session_id'] = session_id();
+            $_SESSION['ip_address'] = $ip;
+            $_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'] ?? '';
             
             // Atualizar último login no banco
             $update_stmt = $pdo->prepare("UPDATE users SET last_login = NOW() WHERE id = ?");
@@ -115,7 +101,7 @@ function authenticateValidaProUser($email, $password) {
             unset($_SESSION[$attempts_key]);
             
             // Log de login bem-sucedido
-            error_log("ValidaPro: Login bem-sucedido: " . $user['email'] . " (IP: $ip)");
+            error_log("Login bem-sucedido: " . $user['email'] . " (IP: $ip)");
             
             return true;
         }
@@ -128,160 +114,170 @@ function authenticateValidaProUser($email, $password) {
             $_SESSION[$attempts_key]['time'] = time();
         }
 
-        error_log("ValidaPro: Tentativa de login falhou para: " . $email . " (IP: $ip)");
+        error_log("Tentativa de login falhou para: " . $email . " (IP: $ip)");
         return false;
     } catch (PDOException $e) {
-        error_log("ValidaPro: Erro na autenticação: " . $e->getMessage());
+        error_log("Erro na autenticação: " . $e->getMessage());
         return false;
     }
 }
 
-// Função para verificar se usuário está logado
-function isValidaProLoggedIn() {
-    initValidaProSession();
+// Função para verificar se usuário está logado com validações adicionais
+function isLoggedIn() {
+    initSession();
     
     // Verificar se há dados de usuário na sessão
-    if (!isset($_SESSION['validapro_user_id']) || !isset($_SESSION['validapro_login_time'])) {
+    if (!isset($_SESSION['user_id']) || !isset($_SESSION['login_time'])) {
         return false;
     }
     
     // Verificar timeout da sessão
-    if (time() - $_SESSION['validapro_last_activity'] > SESSION_TIMEOUT) {
-        logoutValidaPro();
+    $timeout = defined('SESSION_TIMEOUT') ? SESSION_TIMEOUT : 3600;
+    if (time() - $_SESSION['last_activity'] > $timeout) {
+        logout();
         return false;
     }
     
     // Verificar se o IP mudou (proteção contra session hijacking)
     $current_ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
-    if (isset($_SESSION['validapro_ip_address']) && $_SESSION['validapro_ip_address'] !== $current_ip) {
-        error_log("ValidaPro: Possível session hijacking detectado - IP mudou de {$_SESSION['validapro_ip_address']} para $current_ip");
-        logoutValidaPro();
+    if (isset($_SESSION['ip_address']) && $_SESSION['ip_address'] !== $current_ip) {
+        error_log("Possível session hijacking detectado - IP mudou de {$_SESSION['ip_address']} para $current_ip");
+        logout();
         return false;
-    }
+}
 
     // Verificar se o User Agent mudou
     $current_ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
-    if (isset($_SESSION['validapro_user_agent']) && $_SESSION['validapro_user_agent'] !== $current_ua) {
-        error_log("ValidaPro: Possível session hijacking detectado - User Agent mudou");
-        logoutValidaPro();
+    if (isset($_SESSION['user_agent']) && $_SESSION['user_agent'] !== $current_ua) {
+        error_log("Possível session hijacking detectado - User Agent mudou");
+        logout();
         return false;
     }
     
     // Atualizar última atividade
-    $_SESSION['validapro_last_activity'] = time();
+    $_SESSION['last_activity'] = time();
     
     return true;
 }
 
 // Função para requerer login
-function requireValidaProLogin() {
-    if (!isValidaProLoggedIn()) {
+function requireLogin() {
+    if (!isLoggedIn()) {
         // Limpar qualquer saída anterior
         if (ob_get_level()) {
             ob_end_clean();
         }
         
-        // Redirecionar para login apenas se headers ainda não foram enviados
+        // Redirecionar para login
         if (!headers_sent()) {
             header('Location: login.php');
             exit();
         } else {
-            // Se headers já foram enviados, usar JavaScript para redirecionar
             echo '<script>window.location.href = "login.php";</script>';
-            echo '<p>Redirecionando para login...</p>';
             exit();
         }
     }
 }
 
 // Função de logout robusta e segura
-function logoutValidaPro() {
-    initValidaProSession();
-    
-    // Log de logout
-    if (isset($_SESSION['validapro_user_email'])) {
-        error_log("ValidaPro: Logout do usuário: " . $_SESSION['validapro_user_email']);
-    }
-    
-    // Limpar dados da sessão
-    $_SESSION = [];
-    
-    // Destruir cookie da sessão
-    if (isset($_COOKIE[VALIDAPRO_SESSION_NAME])) {
-        setcookie(VALIDAPRO_SESSION_NAME, '', time() - 3600, '/');
-        unset($_COOKIE[VALIDAPRO_SESSION_NAME]);
-    }
-    
-    // Destruir sessão
-    if (session_status() === PHP_SESSION_ACTIVE) {
-        session_destroy();
-    }
-}
+
 
 // Função para obter dados do usuário atual
-function getCurrentValidaProUser() {
-    if (!isValidaProLoggedIn()) {
+function getCurrentUser() {
+    if (!isLoggedIn()) {
         return null;
     }
 
     return [
-        'id' => $_SESSION['validapro_user_id'],
-        'email' => $_SESSION['validapro_user_email'],
-        'name' => $_SESSION['validapro_user_name'],
-        'tipo' => $_SESSION['validapro_user_tipo']
+        'id' => $_SESSION['user_id'],
+        'email' => $_SESSION['user_email'],
+        'name' => $_SESSION['user_name']
     ];
 }
 
-// Funções básicas de segurança (sem carregar security_config.php)
-function validateValidaProEmail($email) {
-    return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
-}
-
-function generateValidaProCSRFToken() {
-    initValidaProSession();
-    if (!isset($_SESSION[VALIDAPRO_CSRF_TOKEN_NAME])) {
-        $_SESSION[VALIDAPRO_CSRF_TOKEN_NAME] = bin2hex(random_bytes(32));
+// Função para verificar se a sessão expirou
+function checkSessionTimeout() {
+    if (!isLoggedIn()) {
+        return false;
     }
-    return $_SESSION[VALIDAPRO_CSRF_TOKEN_NAME];
+    
+    $timeout = defined('SESSION_TIMEOUT') ? SESSION_TIMEOUT : 3600;
+    if (time() - $_SESSION['last_activity'] > $timeout) {
+        logout();
+        return false;
+    }
+    
+    return true;
 }
 
-function validateValidaProCSRFToken($token) {
-    return isset($_SESSION[VALIDAPRO_CSRF_TOKEN_NAME]) && 
-           hash_equals($_SESSION[VALIDAPRO_CSRF_TOKEN_NAME], $token);
+// Função para renovar sessão
+function renewSession() {
+    if (isLoggedIn()) {
+        $_SESSION['last_activity'] = time();
+        return true;
+    }
+    return false;
 }
 
-function sanitizeValidaProInput($input) {
+// Função para gerar token CSRF seguro
+function generateCSRFToken() {
+    if (!isset($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        $_SESSION['csrf_token_time'] = time();
+    }
+    
+    // Renovar token a cada 30 minutos
+    if (time() - $_SESSION['csrf_token_time'] > 1800) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        $_SESSION['csrf_token_time'] = time();
+    }
+    
+    return $_SESSION['csrf_token'];
+}
+
+// Função para validar token CSRF
+function validateCSRFToken($token) {
+    if (!isset($_SESSION['csrf_token']) || !isset($_SESSION['csrf_token_time'])) {
+        return false;
+    }
+    
+    // Verificar se o token não expirou (1 hora)
+    if (time() - $_SESSION['csrf_token_time'] > 3600) {
+        unset($_SESSION['csrf_token'], $_SESSION['csrf_token_time']);
+        return false;
+    }
+    
+    return hash_equals($_SESSION['csrf_token'], $token);
+}
+
+// Função para sanitizar entrada do usuário
+function sanitizeInput($input) {
     if (is_array($input)) {
-        return array_map('sanitizeValidaProInput', $input);
+        return array_map('sanitizeInput', $input);
     }
     return htmlspecialchars(trim($input), ENT_QUOTES, 'UTF-8');
 }
 
-// Funções de compatibilidade (para manter compatibilidade com código existente)
-function initSession() { return initValidaProSession(); }
-function authenticateUser($email, $password) { return authenticateValidaProUser($email, $password); }
-function isLoggedIn() { return isValidaProLoggedIn(); }
-function requireLogin() { return requireValidaProLogin(); }
-function logout() { return logoutValidaPro(); }
-function getCurrentUser() { return getCurrentValidaProUser(); }
-function validateEmail($email) { return validateValidaProEmail($email); }
-function generateCSRFToken() { return generateValidaProCSRFToken(); }
-function validateCSRFToken($token) { return validateValidaProCSRFToken($token); }
-function sanitizeInput($input) { return sanitizeValidaProInput($input); }
-
-// Funções adicionais para compatibilidade
-function checkSessionTimeout() {
-    // Esta função já está integrada em isValidaProLoggedIn()
-    // Apenas retorna true se a sessão ainda é válida
-    return isValidaProLoggedIn();
+// Função para validar email
+function validateEmail($email) {
+    return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
 }
 
-function renewSession() {
-    // Renovar a sessão atualizando a última atividade
-    if (isValidaProLoggedIn()) {
-        $_SESSION['validapro_last_activity'] = time();
-        return true;
-    }
-    return false;
+// Função para registrar atividade suspeita
+function logSuspiciousActivity($activity, $details = []) {
+    $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+    $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? 'unknown';
+    $user_id = $_SESSION['user_id'] ?? 'not_logged_in';
+    
+    $log_data = [
+        'timestamp' => date('Y-m-d H:i:s'),
+        'ip' => $ip,
+        'user_agent' => $user_agent,
+        'user_id' => $user_id,
+        'activity' => $activity,
+        'details' => $details
+    ];
+    
+    error_log("ATIVIDADE SUSPEITA: " . json_encode($log_data));
 }
 ?>
