@@ -129,7 +129,7 @@ $nichos = getAllNichos();
             </div>
         </div>
 
-        <div class="bg-white rounded-2xl shadow-lg p-8">
+        <div class="bg-white rounded-2xl shadow-lg p-8 mg-bt-cst">
             <div class="text-center mb-8">
                 <h2 class="text-3xl font-bold text-gray-800 mb-2">Análise do Seu Produto</h2>
                 <p class="text-gray-600">Escolha um nicho ou clique nas sugestões para preencher automaticamente</p>
