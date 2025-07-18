@@ -1,10 +1,13 @@
 <?php
 // Sistema ValidaPro - Versão 2.0
-require_once 'includes/auth.php';
+require_once 'includes/init.php';
+
+// Configurar headers de segurança
+setupValidaProSecurityHeaders();
 
 // Iniciar sessão e verificar login
-initSession();
-requireLogin();
+initValidaProSession();
+requireValidaProLogin();
 
 // Verificar timeout da sessão
 checkSessionTimeout();
@@ -12,14 +15,13 @@ checkSessionTimeout();
 // Renovar sessão
 renewSession();
 
-require_once 'includes/db.php';
 require_once 'includes/sugestoes.php';
 
-$user = getCurrentUser();
+$user = getCurrentValidaProUser();
 
 // Gerar CSRF token se não existir
-if (!isset($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+if (!isset($_SESSION['validapro_csrf_token'])) {
+    $_SESSION['validapro_csrf_token'] = bin2hex(random_bytes(32));
 }
 
 // Obter nichos disponíveis
@@ -184,7 +186,7 @@ $nichos = getAllNichos();
 
             <form id="checklistForm" class="space-y-8">
                 <!-- CSRF Token -->
-                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token'] ?? ''; ?>">
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['validapro_csrf_token'] ?? ''; ?>">
                 
                 <!-- Bloco 1: Perguntas com Sugestões -->
                 <div class="bg-blue-50 rounded-xl p-6">

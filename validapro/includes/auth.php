@@ -16,27 +16,29 @@ if (!defined('VALIDAPRO_CSRF_TOKEN_NAME')) {
 // Função para iniciar sessão de forma segura
 function initValidaProSession() {
     if (session_status() === PHP_SESSION_NONE) {
-        // Configurar nome da sessão específico do ValidaPro
-        session_name(VALIDAPRO_SESSION_NAME);
-        
-        // Verificar se headers já foram enviados
+        // Verificar se headers já foram enviados ANTES de tentar configurar a sessão
         if (headers_sent()) {
-            error_log("ValidaPro: Headers já enviados - tentando iniciar sessão com supressão de warnings");
+            error_log("ValidaPro: Headers já enviados - usando sessão alternativa");
+            
+            // Se headers já foram enviados, não podemos usar session_name()
+            // Vamos usar uma abordagem alternativa
+            if (!isset($_COOKIE[VALIDAPRO_SESSION_NAME])) {
+                $session_id = uniqid('validapro_', true);
+                setcookie(VALIDAPRO_SESSION_NAME, $session_id, time() + SESSION_TIMEOUT, '/');
+                $_COOKIE[VALIDAPRO_SESSION_NAME] = $session_id;
+            }
+            
+            // Iniciar sessão sem configurar nome
             @session_start();
             
-            if (session_status() === PHP_SESSION_NONE) {
-                error_log("ValidaPro: Sessão não pôde ser iniciada - usando sessão alternativa");
-                if (!isset($_COOKIE[VALIDAPRO_SESSION_NAME])) {
-                    $session_id = uniqid('validapro_', true);
-                    setcookie(VALIDAPRO_SESSION_NAME, $session_id, time() + SESSION_TIMEOUT, '/');
-                    $_COOKIE[VALIDAPRO_SESSION_NAME] = $session_id;
-                }
-                
-                if (!isset($_SESSION)) {
-                    $_SESSION = [];
-                }
+            if (!isset($_SESSION)) {
+                $_SESSION = [];
             }
         } else {
+            // Headers ainda não foram enviados, podemos configurar a sessão normalmente
+            // Configurar nome da sessão específico do ValidaPro
+            session_name(VALIDAPRO_SESSION_NAME);
+            
             // Configurar parâmetros de sessão seguros
             @ini_set('session.cookie_httponly', 1);
             @ini_set('session.use_only_cookies', 1);
@@ -45,14 +47,14 @@ function initValidaProSession() {
             @ini_set('session.gc_maxlifetime', SESSION_TIMEOUT);
             
             session_start();
-        }
-        
-        // Regenerar ID da sessão para segurança
-        if (!isset($_SESSION['validapro_initialized']) && !headers_sent() && session_status() === PHP_SESSION_ACTIVE) {
-            @session_regenerate_id(true);
-            $_SESSION['validapro_initialized'] = true;
-        } elseif (!isset($_SESSION['validapro_initialized'])) {
-            $_SESSION['validapro_initialized'] = true;
+            
+            // Regenerar ID da sessão para segurança
+            if (!isset($_SESSION['validapro_initialized']) && !headers_sent() && session_status() === PHP_SESSION_ACTIVE) {
+                @session_regenerate_id(true);
+                $_SESSION['validapro_initialized'] = true;
+            } elseif (!isset($_SESSION['validapro_initialized'])) {
+                $_SESSION['validapro_initialized'] = true;
+            }
         }
     }
 }
@@ -179,12 +181,14 @@ function requireValidaProLogin() {
             ob_end_clean();
         }
         
-        // Redirecionar para login
+        // Redirecionar para login apenas se headers ainda não foram enviados
         if (!headers_sent()) {
             header('Location: login.php');
             exit();
         } else {
+            // Se headers já foram enviados, usar JavaScript para redirecionar
             echo '<script>window.location.href = "login.php";</script>';
+            echo '<p>Redirecionando para login...</p>';
             exit();
         }
     }
@@ -264,4 +268,20 @@ function validateEmail($email) { return validateValidaProEmail($email); }
 function generateCSRFToken() { return generateValidaProCSRFToken(); }
 function validateCSRFToken($token) { return validateValidaProCSRFToken($token); }
 function sanitizeInput($input) { return sanitizeValidaProInput($input); }
+
+// Funções adicionais para compatibilidade
+function checkSessionTimeout() {
+    // Esta função já está integrada em isValidaProLoggedIn()
+    // Apenas retorna true se a sessão ainda é válida
+    return isValidaProLoggedIn();
+}
+
+function renewSession() {
+    // Renovar a sessão atualizando a última atividade
+    if (isValidaProLoggedIn()) {
+        $_SESSION['validapro_last_activity'] = time();
+        return true;
+    }
+    return false;
+}
 ?>
