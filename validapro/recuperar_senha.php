@@ -11,48 +11,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     if (empty($email)) {
         $mensagem = 'Por favor, informe seu e-mail.';
-    } elseif (!validateEmail($email)) {
-        $mensagem = 'E-mail inválido.';
     } else {
-        // Verificar se o e-mail existe
-        $stmt = $pdo->prepare('SELECT id FROM users WHERE email = ? AND active = 1');
+        // Verifica se o usuário existe
+        $stmt = $pdo->prepare('SELECT id, name FROM users WHERE email = ? AND active = 1');
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
         if ($user) {
-            // Gerar token seguro
+            // Gera token e expiração
             $token = bin2hex(random_bytes(32));
-            $expira = date('Y-m-d H:i:s', time() + 3600); // 1 hora
-            // Salvar token no banco
-            $pdo->prepare('UPDATE users SET reset_token = ?, reset_token_expira = ? WHERE id = ?')
-                ->execute([$token, $expira, $user['id']]);
-            // Enviar e-mail com PHPMailer
+            $expira = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+            // Salva na tabela de recuperação
+            $stmt = $pdo->prepare('INSERT INTO recuperacao_senha (user_id, token, expira) VALUES (?, ?, ?)');
+            $stmt->execute([$user['id'], $token, $expira]);
+
+            // Monta link
             $link = APP_URL . 'redefinir_senha.php?token=' . $token;
-            $assunto = 'Recuperação de Senha - Valida Pro';
-            $corpo = "<html><body style='font-family: Arial, sans-serif; color: #333;'>
-                <div style='max-width: 600px; margin: 0 auto; padding: 20px;'>
-                    <div style='background: linear-gradient(135deg, #f97316 0%, #ec4899 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;'>
-                        <h1 style='margin: 0; font-size: 28px;'>Valida Pro</h1>
-                    </div>
-                    <div style='background: #f8f9fa; padding: 30px; border-radius: 0 0 10px 10px;'>
-                        <h2 style='color: #2c3e50; margin-top: 0;'>Recuperação de Senha</h2>
-                        <p>Recebemos uma solicitação para redefinir sua senha no <strong>Valida Pro</strong>.</p>
-                        <p>Para criar uma nova senha, clique no botão abaixo:</p>
-                        <div style='margin: 30px 0; text-align: center;'>
-                            <a href='$link' style='background: linear-gradient(135deg, #f97316 0%, #ec4899 100%); color: white; padding: 16px 32px; border-radius: 8px; text-decoration: none; font-size: 18px; font-weight: bold;'>Redefinir Senha</a>
-                        </div>
-                        <p>Ou copie e cole este link no navegador:<br><a href='$link'>$link</a></p>
-                        <p style='color: #888; font-size: 13px;'>Se você não solicitou, apenas ignore este e-mail.</p>
-                    </div>
-                    <div style='text-align: center; margin-top: 20px; color: #6c757d; font-size: 12px;'>
-                        <p>Este é um email automático. Não responda a esta mensagem.</p>
-                    </div>
-                </div>
+
+            // Envia e-mail
+            $assunto = 'Recuperação de Senha - ValidaPro';
+            $corpo = "<html><body>
+                <h2>Olá, {$user['name']}!</h2>
+                <p>Recebemos uma solicitação para redefinir sua senha no <b>ValidaPro</b>.</p>
+                <p><a href='$link' style='background:#0d6efd;color:#fff;padding:12px 24px;text-decoration:none;border-radius:5px;'>Redefinir Senha</a></p>
+                <p>Ou copie e cole este link no navegador:<br>$link</p>
+                <p style='color:#888;font-size:13px;'>Se não foi você, ignore este e-mail.</p>
             </body></html>";
-            sendEmailWithPHPMailer($email, '', $assunto, $corpo);
-            $mensagem = 'Enviamos um link de recuperação para seu e-mail.';
-        } else {
-            $mensagem = 'Se o e-mail estiver cadastrado, você receberá um link para redefinir a senha.';
+
+            sendEmailWithPHPMailer($email, $user['name'], $assunto, $corpo);
         }
+        // Mensagem sempre amigável, não revela se o e-mail existe
+        $mensagem = 'Se o e-mail estiver cadastrado, você receberá um link para redefinir a senha.';
     }
 }
 ?>

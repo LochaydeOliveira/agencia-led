@@ -3,8 +3,8 @@ require_once 'includes/auth.php';
 require_once 'includes/db.php';
 
 $mensagem = '';
-$token = $_GET['token'] ?? '';
-$tokenValido = false;
+$token_valido = false;
+$user_id = null;
 
 // Gerar CSRF token se não existir
 if (!isset($_SESSION)) session_start();
@@ -13,38 +13,48 @@ if (empty($_SESSION['csrf_token'])) {
 }
 $csrf_token = $_SESSION['csrf_token'];
 
-if ($token) {
-    $stmt = $pdo->prepare('SELECT id, reset_token_expira FROM users WHERE reset_token = ? AND reset_token IS NOT NULL');
+if (isset($_GET['token'])) {
+    $token = $_GET['token'];
+
+    // Verifica se o token é válido e não expirou
+    $stmt = $pdo->prepare("SELECT user_id FROM recuperacao_senha WHERE token = ? AND expira > NOW() AND usado = 0");
     $stmt->execute([$token]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($user && strtotime($user['reset_token_expira']) > time()) {
-        $tokenValido = true;
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $senha1 = $_POST['senha1'] ?? '';
-            $senha2 = $_POST['senha2'] ?? '';
-            $csrf_post = $_POST['csrf_token'] ?? '';
-            if (empty($senha1) || empty($senha2)) {
-                $mensagem = 'Preencha os dois campos de senha.';
-            } elseif ($senha1 !== $senha2) {
-                $mensagem = 'As senhas não coincidem.';
-            } elseif (strlen($senha1) < 8) {
-                $mensagem = 'A senha deve ter pelo menos 8 caracteres.';
-            } elseif (empty($csrf_post) || !hash_equals($_SESSION['csrf_token'], $csrf_post)) {
-                $mensagem = 'Token de segurança inválido. Recarregue a página.';
-            } else {
-                $hash = password_hash($senha1, PASSWORD_DEFAULT);
-                $pdo->prepare('UPDATE users SET password = ?, reset_token = NULL, reset_token_expira = NULL WHERE id = ?')
-                    ->execute([$hash, $user['id']]);
-                $mensagem = 'Senha redefinida com sucesso! <a href="login.php" class="text-orange-600 font-semibold">Clique aqui para entrar</a>';
-                $tokenValido = false;
-                unset($_SESSION['csrf_token']);
-            }
-        }
+    $res = $stmt->fetch();
+
+    if ($res) {
+        $token_valido = true;
+        $user_id = $res['user_id'];
     } else {
-        $mensagem = 'Token inválido ou expirado. Solicite uma nova recuperação de senha.';
+        $mensagem = "Link inválido ou expirado. Por favor, solicite um novo link de recuperação.";
     }
-} else {
-    $mensagem = 'Token de redefinição ausente.';
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && $token_valido) {
+    $senha = $_POST['senha1'] ?? '';
+    $confirmar = $_POST['senha2'] ?? '';
+    $csrf_post = $_POST['csrf_token'] ?? '';
+
+    if (empty($senha) || empty($confirmar)) {
+        $mensagem = 'Preencha os dois campos de senha.';
+    } elseif ($senha !== $confirmar) {
+        $mensagem = 'As senhas não coincidem.';
+    } elseif (strlen($senha) < 8) {
+        $mensagem = 'A senha deve ter pelo menos 8 caracteres.';
+    } elseif (empty($csrf_post) || !hash_equals($_SESSION['csrf_token'], $csrf_post)) {
+        $mensagem = 'Token de segurança inválido. Recarregue a página.';
+    } else {
+        $hash = password_hash($senha, PASSWORD_DEFAULT);
+        $stmt = $pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
+        $stmt->execute([$hash, $user_id]);
+
+        // Marca o token como usado
+        $stmt = $pdo->prepare("UPDATE recuperacao_senha SET usado = 1 WHERE token = ?");
+        $stmt->execute([$_GET['token']]);
+
+        $mensagem = 'Senha redefinida com sucesso! <a href="login.php" class="text-orange-600 font-semibold">Clique aqui para entrar</a>';
+        $token_valido = false;
+        unset($_SESSION['csrf_token']);
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -68,7 +78,7 @@ if ($token) {
                 <?php echo $mensagem; ?>
             </div>
         <?php endif; ?>
-        <?php if ($tokenValido): ?>
+        <?php if ($token_valido): ?>
         <form method="POST" class="space-y-6" autocomplete="off">
             <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
             <div>
