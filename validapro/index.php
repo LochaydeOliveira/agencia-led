@@ -633,7 +633,7 @@ $nichos = getAllNichos();
                 </div>
 
                 <div class="text-center">
-                    <button type="button" 
+                    <button type="button mg-bt-cst" 
                             onclick="processarFormularioComPopup(document.getElementById('checklistForm'))"
                             class="bg-gradient-to-r from-green-500 to-blue-600 text-white font-semibold py-4 px-8 rounded-lg hover:from-green-600 hover:to-blue-700 transition duration-200 transform hover:scale-105 text-lg btn-cta">
                         <i class="fas fa-calculator mr-2"></i>
