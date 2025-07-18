@@ -161,8 +161,9 @@
 
 /* Títulos com gradiente */
 .title-gradient {
-    background: linear-gradient(135deg, #f97316 0%, #ec4899 100%);
+    background: #000000;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    font-size: 20px!important;
 } 
