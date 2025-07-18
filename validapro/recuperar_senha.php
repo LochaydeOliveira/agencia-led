@@ -7,45 +7,47 @@ require_once 'includes/db.php';
 require_once 'includes/mailer.php';
 
 $mensagem = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email'] ?? '');
-    if (empty($email)) {
-        $mensagem = 'Por favor, informe seu e-mail.';
-    } else {
-        // Verifica se o usuário existe
-        $stmt = $pdo->prepare('SELECT id, name FROM users WHERE email = ? AND active = 1');
-        $stmt->execute([$email]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+$tipo_mensagem = '';
 
-        if ($user) {
-            // Gera token e expiração
-            $token = bin2hex(random_bytes(32));
-            $expira = date('Y-m-d H:i:s', strtotime('+1 hour'));
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
 
-            // Salva na tabela de recuperação
-            $stmt = $pdo->prepare('INSERT INTO recuperacao_senha (user_id, token, expira) VALUES (?, ?, ?)');
-            $stmt->execute([$user['id'], $token, $expira]);
+    $stmt = $pdo->prepare("SELECT id, name FROM users WHERE email = ? AND active = 1");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch();
 
-            // Monta link
-            $link = APP_URL . 'redefinir_senha.php?token=' . $token;
+    if ($user) {
+        $token = bin2hex(random_bytes(32));
+        $expira = date('Y-m-d H:i:s', strtotime('+1 hour'));
 
-            // Envia e-mail
-            $assunto = 'Recuperação de Senha - ValidaPro';
-            $corpo = "<html><body>
-                <h2>Olá, {$user['name']}!</h2>
-                <p>Recebemos uma solicitação para redefinir sua senha no <b>ValidaPro</b>.</p>
-                <p><a href='$link' style='background:#0d6efd;color:#fff;padding:12px 24px;text-decoration:none;border-radius:5px;'>Redefinir Senha</a></p>
-                <p>Ou copie e cole este link no navegador:<br>$link</p>
-                <p style='color:#888;font-size:13px;'>Se não foi você, ignore este e-mail.</p>
-            </body></html>";
+        $stmt = $pdo->prepare("INSERT INTO recuperacao_senha (user_id, token, expira) VALUES (?, ?, ?)");
+        $stmt->execute([$user['id'], $token, $expira]);
 
-            sendEmailWithPHPMailer($email, $user['name'], $assunto, $corpo);
+        $link = "https://agencialed.com/validapro/redefinir_senha.php?token=" . $token;
+
+        $assunto = "Recuperação de Senha - ValidaPro";
+        $corpo = "<h2>Olá, {$user['name']}!</h2>
+                  <p>Recebemos uma solicitação para redefinir sua senha no <b>ValidaPro</b>.</p>
+                  <p><a href='$link'>Redefinir Senha</a></p>
+                  <p>Ou copie e cole este link no navegador:<br>$link</p>
+                  <p style='color:#888;font-size:13px;'>Se não foi você, ignore este e-mail.</p>";
+
+        if (sendEmailWithPHPMailer($email, $user['name'], $assunto, $corpo)) {
+            $mensagem = "Enviamos um email com instruções para redefinir sua senha.";
+            $tipo_mensagem = "success";
+        } else {
+            $mensagem = "Erro ao enviar email. Por favor, tente novamente.";
+            $tipo_mensagem = "danger";
         }
-        // Mensagem sempre amigável, não revela se o e-mail existe
-        $mensagem = 'Se o e-mail estiver cadastrado, você receberá um link para redefinir a senha.';
+    } else {
+        $mensagem = "Se o e-mail estiver cadastrado, você receberá um link para redefinir a senha.";
+        $tipo_mensagem = "info";
     }
 }
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>

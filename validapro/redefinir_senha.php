@@ -3,6 +3,7 @@ require_once 'includes/auth.php';
 require_once 'includes/db.php';
 
 $mensagem = '';
+$tipo_mensagem = '';
 $token_valido = false;
 $user_id = null;
 
@@ -26,22 +27,27 @@ if (isset($_GET['token'])) {
         $user_id = $res['user_id'];
     } else {
         $mensagem = "Link inválido ou expirado. Por favor, solicite um novo link de recuperação.";
+        $tipo_mensagem = "danger";
     }
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $token_valido) {
-    $senha = $_POST['senha1'] ?? '';
-    $confirmar = $_POST['senha2'] ?? '';
+    $senha = $_POST['senha'] ?? '';
+    $confirmar = $_POST['confirmar_senha'] ?? '';
     $csrf_post = $_POST['csrf_token'] ?? '';
 
     if (empty($senha) || empty($confirmar)) {
         $mensagem = 'Preencha os dois campos de senha.';
+        $tipo_mensagem = "danger";
     } elseif ($senha !== $confirmar) {
         $mensagem = 'As senhas não coincidem.';
+        $tipo_mensagem = "danger";
     } elseif (strlen($senha) < 8) {
         $mensagem = 'A senha deve ter pelo menos 8 caracteres.';
+        $tipo_mensagem = "danger";
     } elseif (empty($csrf_post) || !hash_equals($_SESSION['csrf_token'], $csrf_post)) {
         $mensagem = 'Token de segurança inválido. Recarregue a página.';
+        $tipo_mensagem = "danger";
     } else {
         $hash = password_hash($senha, PASSWORD_DEFAULT);
         $stmt = $pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
@@ -52,6 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $token_valido) {
         $stmt->execute([$_GET['token']]);
 
         $mensagem = 'Senha redefinida com sucesso! <a href="login.php" class="text-orange-600 font-semibold">Clique aqui para entrar</a>';
+        $tipo_mensagem = "success";
         $token_valido = false;
         unset($_SESSION['csrf_token']);
     }
@@ -86,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $token_valido) {
                     <i class="fas fa-lock mr-2"></i>Nova senha
                 </label>
                 <div class="relative">
-                    <input type="password" id="senha1" name="senha1" required class="input-modern w-full pr-12" placeholder="Digite a nova senha" oninput="checkStrength(this.value)" autocomplete="new-password">
+                    <input type="password" id="senha1" name="senha" required class="input-modern w-full pr-12" placeholder="Digite a nova senha" oninput="checkStrength(this.value)" autocomplete="new-password">
                     <button type="button" onclick="togglePassword('senha1')" tabindex="-1" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700"><i class="fas fa-eye"></i></button>
                 </div>
                 <div id="senha-strength" class="mt-2 text-xs font-semibold"></div>
@@ -96,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $token_valido) {
                     <i class="fas fa-lock mr-2"></i>Confirme a nova senha
                 </label>
                 <div class="relative">
-                    <input type="password" id="senha2" name="senha2" required class="input-modern w-full pr-12" placeholder="Repita a nova senha" autocomplete="new-password">
+                    <input type="password" id="senha2" name="confirmar_senha" required class="input-modern w-full pr-12" placeholder="Repita a nova senha" autocomplete="new-password">
                     <button type="button" onclick="togglePassword('senha2')" tabindex="-1" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700"><i class="fas fa-eye"></i></button>
                 </div>
             </div>
