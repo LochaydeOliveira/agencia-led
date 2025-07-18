@@ -11,9 +11,8 @@ error_reporting(E_ALL);
 echo "<h1>📧 Teste Simples de Email - ValidaPro</h1>";
 echo "<hr>";
 
-// Carregar configurações independentes do ValidaPro
-require_once 'includes/email_config.php';
-require_once 'includes/mailer.php';
+// Carregar sistema completo do ValidaPro
+require_once 'includes/init.php';
 
 echo "<h2>📋 Verificando Configurações:</h2>";
 echo "<ul>";

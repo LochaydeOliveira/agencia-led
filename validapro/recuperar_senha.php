@@ -3,11 +3,11 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Carregar configurações independentes do ValidaPro
-require_once 'includes/email_config.php';
-require_once 'includes/auth.php';
-require_once 'includes/db.php';
-require_once 'includes/mailer.php';
+// Carregar sistema completo do ValidaPro
+require_once 'includes/init.php';
+
+// Configurar headers de segurança
+setupValidaProSecurityHeaders();
 
 $mensagem = '';
 $tipo_mensagem = '';

@@ -2,9 +2,16 @@
 // Sistema de Autenticação ValidaPro - Versão 2.0 (Completamente Independente)
 // Sistema robusto, testado e seguro - Ecossistema próprio
 
-// Carregar configurações independentes
+// Carregar apenas configurações de email (sem security_config.php)
 require_once __DIR__ . '/email_config.php';
-require_once __DIR__ . '/security_config.php';
+
+// Definir constantes de segurança diretamente aqui para evitar conflitos
+if (!defined('VALIDAPRO_SESSION_NAME')) {
+    define('VALIDAPRO_SESSION_NAME', 'validapro_session');
+}
+if (!defined('VALIDAPRO_CSRF_TOKEN_NAME')) {
+    define('VALIDAPRO_CSRF_TOKEN_NAME', 'validapro_csrf_token');
+}
 
 // Função para iniciar sessão de forma segura
 function initValidaProSession() {
@@ -68,7 +75,6 @@ function authenticateValidaProUser($email, $password) {
         $timeout = LOGIN_TIMEOUT;
         if (time() - $_SESSION[$attempts_key]['time'] < $timeout) {
             error_log("ValidaPro: Tentativas de login excedidas para IP: $ip");
-            logValidaProSuspiciousActivity('login_attempts_exceeded', ['ip' => $ip]);
             return false;
         } else {
             // Reset após timeout
@@ -121,7 +127,6 @@ function authenticateValidaProUser($email, $password) {
         }
 
         error_log("ValidaPro: Tentativa de login falhou para: " . $email . " (IP: $ip)");
-        logValidaProSuspiciousActivity('login_failed', ['email' => $email, 'ip' => $ip]);
         return false;
     } catch (PDOException $e) {
         error_log("ValidaPro: Erro na autenticação: " . $e->getMessage());
@@ -148,10 +153,6 @@ function isValidaProLoggedIn() {
     $current_ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
     if (isset($_SESSION['validapro_ip_address']) && $_SESSION['validapro_ip_address'] !== $current_ip) {
         error_log("ValidaPro: Possível session hijacking detectado - IP mudou de {$_SESSION['validapro_ip_address']} para $current_ip");
-        logValidaProSuspiciousActivity('session_hijacking_suspected', [
-            'old_ip' => $_SESSION['validapro_ip_address'],
-            'new_ip' => $current_ip
-        ]);
         logoutValidaPro();
         return false;
     }
@@ -160,7 +161,6 @@ function isValidaProLoggedIn() {
     $current_ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
     if (isset($_SESSION['validapro_user_agent']) && $_SESSION['validapro_user_agent'] !== $current_ua) {
         error_log("ValidaPro: Possível session hijacking detectado - User Agent mudou");
-        logValidaProSuspiciousActivity('session_hijacking_suspected', ['user_agent_changed' => true]);
         logoutValidaPro();
         return false;
     }
@@ -226,6 +226,31 @@ function getCurrentValidaProUser() {
         'name' => $_SESSION['validapro_user_name'],
         'tipo' => $_SESSION['validapro_user_tipo']
     ];
+}
+
+// Funções básicas de segurança (sem carregar security_config.php)
+function validateValidaProEmail($email) {
+    return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+}
+
+function generateValidaProCSRFToken() {
+    initValidaProSession();
+    if (!isset($_SESSION[VALIDAPRO_CSRF_TOKEN_NAME])) {
+        $_SESSION[VALIDAPRO_CSRF_TOKEN_NAME] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION[VALIDAPRO_CSRF_TOKEN_NAME];
+}
+
+function validateValidaProCSRFToken($token) {
+    return isset($_SESSION[VALIDAPRO_CSRF_TOKEN_NAME]) && 
+           hash_equals($_SESSION[VALIDAPRO_CSRF_TOKEN_NAME], $token);
+}
+
+function sanitizeValidaProInput($input) {
+    if (is_array($input)) {
+        return array_map('sanitizeValidaProInput', $input);
+    }
+    return htmlspecialchars(trim($input), ENT_QUOTES, 'UTF-8');
 }
 
 // Funções de compatibilidade (para manter compatibilidade com código existente)
