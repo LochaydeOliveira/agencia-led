@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p class="text-gray-700">Informe seu e-mail para receber o link de redefinição.</p>
         </div>
         <?php if ($mensagem): ?>
-            <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded mb-4 text-center">
+            <div class="bg-blue-100 border border-blue-400 text-blue-700 py-3 rounded mb-4 text-center">
                 <?php echo htmlspecialchars($mensagem); ?>
             </div>
         <?php endif; ?>
