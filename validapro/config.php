@@ -20,9 +20,9 @@ define('APP_VERSION', '2.0.0');
 // Configurações de Email (PRODUÇÃO)
 define('SMTP_HOST', 'smtp.gmail.com');
 define('SMTP_PORT', 587);
-define('SMTP_USERNAME', 'seu-email@gmail.com'); // Seu email
-define('SMTP_PASSWORD', 'sua-senha-app'); // Sua senha de app
-define('FROM_EMAIL', 'seu-email@gmail.com');
+define('SMTP_USERNAME', 'validapro@agencialed.com'); // Seu email
+define('SMTP_PASSWORD', 'Valida@2025'); // Sua senha de app
+define('FROM_EMAIL', 'validapro@agencialed.com');
 define('FROM_NAME', 'ValidaPro');
 
 // Configurações de Segurança (PRODUÇÃO)
