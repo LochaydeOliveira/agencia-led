@@ -284,19 +284,35 @@ function logSuspiciousActivity($activity, $details = []) {
 function gerarTokenSenha($email) {
     global $pdo;
 
+    error_log('[RECUPERAÇÃO] Iniciando processo para: ' . $email);
     $stmt = $pdo->prepare("SELECT id, name FROM users WHERE email = ? AND active = 1");
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$user) return false;
+    if (!$user) {
+        error_log('[RECUPERAÇÃO] Usuário não encontrado ou inativo: ' . $email);
+        return false;
+    }
 
     $token = hash('sha256', bin2hex(random_bytes(32)));
     $expira = date('Y-m-d H:i:s', strtotime('+1 hour'));
 
-    $stmt = $pdo->prepare("INSERT INTO recuperacao_senha (user_id, token, expira) VALUES (?, ?, ?)");
-    $stmt->execute([$user['id'], $token, $expira]);
+    try {
+        $stmt = $pdo->prepare("INSERT INTO recuperacao_senha (user_id, token, expira) VALUES (?, ?, ?)");
+        $stmt->execute([$user['id'], $token, $expira]);
+        error_log('[RECUPERAÇÃO] Token gerado e salvo para user_id ' . $user['id'] . ' | Token: ' . $token);
+    } catch (PDOException $e) {
+        error_log('[RECUPERAÇÃO] ERRO ao salvar token: ' . $e->getMessage());
+        return false;
+    }
 
     require_once __DIR__ . '/mailer.php';
-    return sendRecoveryEmail($email, $user['name'], $token);
+    $enviado = sendRecoveryEmail($email, $user['name'], $token);
+    if ($enviado) {
+        error_log('[RECUPERAÇÃO] E-mail enviado com sucesso para: ' . $email);
+    } else {
+        error_log('[RECUPERAÇÃO] FALHA ao enviar e-mail para: ' . $email);
+    }
+    return $enviado;
 }
 ?>
