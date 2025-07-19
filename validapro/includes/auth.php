@@ -280,4 +280,23 @@ function logSuspiciousActivity($activity, $details = []) {
     
     error_log("ATIVIDADE SUSPEITA: " . json_encode($log_data));
 }
+
+function gerarTokenSenha($email) {
+    global $pdo;
+
+    $stmt = $pdo->prepare("SELECT id, name FROM users WHERE email = ? AND active = 1");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$user) return false;
+
+    $token = hash('sha256', bin2hex(random_bytes(32)));
+    $expira = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+    $stmt = $pdo->prepare("INSERT INTO recuperacao_senha (user_id, token, expira) VALUES (?, ?, ?)");
+    $stmt->execute([$user['id'], $token, $expira]);
+
+    require_once __DIR__ . '/mailer.php';
+    return sendRecoveryEmail($email, $user['name'], $token);
+}
 ?>

@@ -1,69 +1,38 @@
 <?php
-require_once 'includes/auth.php';
 require_once 'includes/db.php';
 
-$mensagem = '';
-$tipo_mensagem = '';
-$token_valido = false;
-$user_id = null;
+$token = $_GET['token'] ?? '';
+$stmt = $pdo->prepare("SELECT rs.user_id, u.email FROM recuperacao_senha rs JOIN users u ON u.id = rs.user_id WHERE rs.token = ? AND rs.expira > NOW() AND rs.usado = 0");
+$stmt->execute([$token]);
 
-// Gerar CSRF token se não existir
-if (!isset($_SESSION)) session_start();
-if (empty($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
-$csrf_token = $_SESSION['csrf_token'];
-
-if (isset($_GET['token'])) {
-    $token = $_GET['token'];
-
-    // Verifica se o token é válido e não expirou
-    $stmt = $pdo->prepare("SELECT user_id FROM recuperacao_senha WHERE token = ? AND expira > NOW() AND usado = 0");
-    $stmt->execute([$token]);
-    $res = $stmt->fetch();
-
-    if ($res) {
-        $token_valido = true;
-        $user_id = $res['user_id'];
-    } else {
-        $mensagem = "Link inválido ou expirado. Por favor, solicite um novo link de recuperação.";
-        $tipo_mensagem = "danger";
-    }
+if ($stmt->rowCount() === 0) {
+    exit("Token inválido ou expirado.");
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && $token_valido) {
+$usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $senha = $_POST['senha'] ?? '';
-    $confirmar = $_POST['confirmar_senha'] ?? '';
-    $csrf_post = $_POST['csrf_token'] ?? '';
+    $confirmar = $_POST['confirmar'] ?? '';
 
-    if (empty($senha) || empty($confirmar)) {
-        $mensagem = 'Preencha os dois campos de senha.';
-        $tipo_mensagem = "danger";
-    } elseif ($senha !== $confirmar) {
-        $mensagem = 'As senhas não coincidem.';
-        $tipo_mensagem = "danger";
-    } elseif (strlen($senha) < 8) {
-        $mensagem = 'A senha deve ter pelo menos 8 caracteres.';
-        $tipo_mensagem = "danger";
-    } elseif (empty($csrf_post) || !hash_equals($_SESSION['csrf_token'], $csrf_post)) {
-        $mensagem = 'Token de segurança inválido. Recarregue a página.';
-        $tipo_mensagem = "danger";
+    if ($senha !== $confirmar) {
+        $erro = "As senhas não coincidem.";
+    } elseif (strlen($senha) < 6) {
+        $erro = "A senha deve ter pelo menos 6 caracteres.";
     } else {
         $hash = password_hash($senha, PASSWORD_DEFAULT);
-        $stmt = $pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
-        $stmt->execute([$hash, $user_id]);
 
-        // Marca o token como usado
-        $stmt = $pdo->prepare("UPDATE recuperacao_senha SET usado = 1 WHERE token = ?");
-        $stmt->execute([$_GET['token']]);
+        $pdo->beginTransaction();
+        $pdo->prepare("UPDATE users SET password = ? WHERE id = ?")->execute([$hash, $usuario['user_id']]);
+        $pdo->prepare("UPDATE recuperacao_senha SET usado = 1 WHERE token = ?")->execute([$token]);
+        $pdo->commit();
 
-        $mensagem = 'Senha redefinida com sucesso! <a href="login.php" class="text-orange-600 font-semibold">Clique aqui para entrar</a>';
-        $tipo_mensagem = "success";
-        $token_valido = false;
-        unset($_SESSION['csrf_token']);
+        echo "Senha redefinida com sucesso.";
+        exit;
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
