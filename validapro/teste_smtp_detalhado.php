@@ -35,7 +35,7 @@ try {
     
     // Configurações do e-mail
     $mail->setFrom(FROM_EMAIL, FROM_NAME);
-    $mail->addAddress('teste@exemplo.com', 'Teste');
+    $mail->addAddress('lochaydeguerreiro@hotmail.com', 'Teste');
     $mail->Subject = 'Teste SMTP ValidaPro';
     $mail->isHTML(true);
     $mail->Body = '<h1>Teste de envio</h1><p>Se você receber este e-mail, o SMTP está funcionando!</p>';
