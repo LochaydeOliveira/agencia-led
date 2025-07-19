@@ -5,21 +5,21 @@ use PHPMailer\PHPMailer\Exception;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 function sendRecoveryEmail($email, $nome, $token) {
-    require __DIR__ . '/email_config.php'; // Define: $smtp_host, $smtp_user, $smtp_pass, $smtp_port
+    require __DIR__ . '/email_config.php'; // Define as constantes SMTP_*
 
     $link = "https://agencialed.com/validapro/redefinir_senha.php?token=" . urlencode($token);
 
     try {
         $mail = new PHPMailer(true);
         $mail->isSMTP();
-        $mail->Host = $smtp_host;
+        $mail->Host = SMTP_HOST;
         $mail->SMTPAuth = true;
-        $mail->Username = $smtp_user;
-        $mail->Password = $smtp_pass;
-        $mail->SMTPSecure = 'tls';
-        $mail->Port = $smtp_port;
+        $mail->Username = SMTP_USER;
+        $mail->Password = SMTP_PASS;
+        $mail->SMTPSecure = SMTP_SECURE;
+        $mail->Port = SMTP_PORT;
 
-        $mail->setFrom($smtp_user, 'Suporte ValidaPro');
+        $mail->setFrom(FROM_EMAIL, FROM_NAME);
         $mail->addAddress($email, $nome);
         $mail->Subject = 'Recuperação de Senha - ValidaPro';
         $mail->isHTML(true);
